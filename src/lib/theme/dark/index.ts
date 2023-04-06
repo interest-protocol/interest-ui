@@ -1,16 +1,27 @@
+import {
+  breakpoints,
+  fontSizes,
+  lineHeights,
+  radii,
+  space,
+} from '../design-system';
+import { Theme } from '../theme.types';
 import { boxes, typography } from '../variants';
-import { breakpoints } from './../design-system/breakpoints';
-import { fontSizes } from './../design-system/font-sizes';
-import { lineHeights } from './../design-system/line-heights';
-import { space } from './../design-system/space';
 import { colors } from './colors';
+import { buttonSizes, buttonVariants } from './variants';
 
-export default {
+const theme: Theme = {
+  dark: true,
   typography,
   fontSizes,
   lineHeights,
   breakpoints,
   space,
+  radii,
   colors,
   boxes,
+  buttonVariants,
+  buttonSizes,
 };
+
+export default theme;
