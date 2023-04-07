@@ -8,7 +8,7 @@ import {
 import { Theme } from '../theme.types';
 import { boxes, typography } from '../variants';
 import { colors } from './colors';
-import { buttonSizes, buttonVariants } from './variants';
+import { buttons } from './variants';
 
 const theme: Theme = {
   dark: true,
@@ -20,8 +20,7 @@ const theme: Theme = {
   radii,
   colors,
   boxes,
-  buttonVariants,
-  buttonSizes,
+  buttons,
 };
 
 export default theme;
