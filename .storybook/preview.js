@@ -29,9 +29,16 @@ const onThemeSwitch = (context) => {
     parameters,
   };
 };
-const themingDecorator = withThemes(ThemeProvider, [lightTheme, darkTheme], {
-  onThemeSwitch,
-});
+const themingDecorator = withThemes(
+  ThemeProvider,
+  [
+    { name: 'light', ...lightTheme },
+    { name: 'dark', ...darkTheme },
+  ],
+  {
+    onThemeSwitch,
+  }
+);
 addDecorator(themingDecorator);
 
 export const parameters = {
