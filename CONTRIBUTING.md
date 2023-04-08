@@ -5,7 +5,7 @@ Feel free to contribute in any way you like, and if you feel comfortable doing s
 ## Project structure
 
 - **constants** contains the constant values and settings
-- **src/storybook** contains the Items or components that will be used within the storys design system used in the app, from breakpoints to the color system
+- **src/storybook** contains the Items or components that will be used within the stories design system used in the app, from breakpoints to the color system
 - **src/lib** Contains our component library that components our ui kit, thus our theming files
 - **src/lib/components** contains the generic components
 - **src/lib/elements** contains the atomic components used within the generic components
@@ -25,6 +25,11 @@ Below are instructions on how to optimally report a bug:
 - **Open a git issue**: Explain what happened, and give as much detail as possible so we can try to reproduce the same situation.
 
 _A good bug report shouldn't leave others needing to chase you up for more._
+
+## Branch
+When creating the new branch follow the naming rule:
+- for new feature: ```feature/<task-name>```
+- for bug: ```bugfix/<task-name>```
 
 ## Commit
 

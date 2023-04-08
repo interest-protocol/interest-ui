@@ -24,7 +24,8 @@ You must install it in your Editor text
 ## Technologies
 
 - [Typescript](https://typescriptlang.org)
-- [Styled System](https://styled-system.com)
+- [Jest](https://jestjs.io/)
+- [React Testing Library](https://testing-library.com/)
 - [Emotion](https://emotion.sh/docs/introduction)
 - [Stylin.js](https://www.npmjs.com/package/@stylin.js/react)
 - [Ramda](https://ramdajs.com/)
