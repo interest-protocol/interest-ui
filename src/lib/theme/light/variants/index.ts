@@ -1,1 +1,1 @@
-export { sizes as buttonSizes, variants as buttonVariants } from './buttons';
+export { variants as buttons } from './buttons';
