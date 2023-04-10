@@ -24,5 +24,6 @@ Normal.args = {
   label: 'Escolha o sexo',
   name: 'radio',
   size: '30px',
+  checked: false,
   hideLabel: false,
 };

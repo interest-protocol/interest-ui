@@ -19,37 +19,7 @@ export const RadioButton: FC<PropsWithChildren<RadioButtonProps>> = ({
 }) => {
   const { colors } = useTheme() as Theme;
   const RadioButtonElement = stylin<RadioButtonElementProps>('input')();
-  const LabelElement = stylin<LabelElementProps>('label')(`
-    & span {
-      &:after {
-        content: '';
-        position: absolute;
-        top: calc(${size}/4);
-        left: calc(${size}/4);
-        width: calc(${size}/2);
-        height: calc(${size}/2);
-        border-radius: 100%;
-        transform: scale(0);
-        background: ${props.disabled ? colors.disabled : colors.accent};
-        transition: all .2s ease;
-        opacity: .08;
-        pointer-events: none;
-      }
-    }
-    &:hover, & > input[type="radio"]:active{
-      & span:after {
-        transform: scale(3.6);
-      }
-    }
-    & > input[type="radio"]:checked + span{
-      border-color: ${props.disabled ? colors.disabled : colors.accent};
-      &:after{
-        transform: scale(1);
-        transition: all .2s cubic-bezier(.35,.9,.4,.9);
-        opacity: 1;
-      }
-    }
-  `);
+  const LabelElement = stylin<LabelElementProps>('label')(``);
   return (
     <LabelElement
       {...props}
@@ -65,6 +35,15 @@ export const RadioButton: FC<PropsWithChildren<RadioButtonProps>> = ({
         name={name}
         display="none"
         disabled={props.disabled || false}
+        checked={props.checked}
+        nChecked={{
+          '~ span': {
+            borderColor: props.disabled ? colors.disabled : colors.accent,
+          },
+          '~ span:after': {
+            display: 'block',
+          },
+        }}
       />
       <Typography
         variant="medium"
@@ -75,9 +54,22 @@ export const RadioButton: FC<PropsWithChildren<RadioButtonProps>> = ({
         mr="10px"
         width={size}
         height={size}
-        border="2px solid"
-        borderColor="outline"
+        border={`calc(${size}/12) solid`}
+        borderColor="disabled"
+        opacity={props.disabled ? 0.8 : 1}
         borderRadius="100%"
+        nAfter={{
+          content: '""',
+          position: 'absolute',
+          bg: props.disabled ? 'disabled' : 'accent',
+          display: 'none',
+          opacity: props.disabled ? 0.8 : 1,
+          width: `calc(${size}/2)`,
+          height: `calc(${size}/2)`,
+          borderRadius: '50%',
+          top: `calc(${size}/4)`,
+          left: `calc(${size}/4)`,
+        }}
       />
       {!hideLabel && label}
     </LabelElement>

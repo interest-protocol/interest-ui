@@ -1,4 +1,9 @@
-import { InputHTMLAttributes, LabelHTMLAttributes } from 'react';
+import {
+  HTMLAttributes,
+  InputHTMLAttributes,
+  LabelHTMLAttributes,
+  RefAttributes,
+} from 'react';
 
 export type RadioButtonElementProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,
@@ -9,6 +14,12 @@ export type LabelElementProps = Omit<
   LabelHTMLAttributes<HTMLInputElement>,
   'color' | 'width' | 'height' | 'size'
 >;
+
+export type SpanElementProps = Omit<
+  HTMLAttributes<HTMLElement>,
+  'color' | 'translate'
+> &
+  RefAttributes<unknown>;
 
 export interface RadioButtonProps extends RadioButtonElementProps {
   label: string;
