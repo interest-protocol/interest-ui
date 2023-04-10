@@ -23,7 +23,34 @@ export const Normal = Template.bind({});
 Normal.args = {
   label: 'Escolha o sexo',
   name: 'radio',
-  size: '30px',
-  checked: false,
+  size: '18px',
   hideLabel: false,
+};
+
+export const Checked = Template.bind({});
+
+Checked.args = {
+  label: 'Escolha o sexo',
+  name: 'radio',
+  size: '18px',
+  checked: true,
+};
+
+export const CheckedDisabled = Template.bind({});
+
+CheckedDisabled.args = {
+  label: 'Escolha o sexo',
+  name: 'radio',
+  size: '18px',
+  checked: true,
+  disabled: true,
+};
+
+export const WithoutLabel = Template.bind({});
+
+WithoutLabel.args = {
+  label: 'Escolha o sexo',
+  name: 'radio',
+  size: '18px',
+  hideLabel: true,
 };
