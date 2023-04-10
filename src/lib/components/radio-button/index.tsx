@@ -19,7 +19,7 @@ export const RadioButton: FC<PropsWithChildren<RadioButtonProps>> = ({
 }) => {
   const { colors } = useTheme() as Theme;
   const RadioButtonElement = stylin<RadioButtonElementProps>('input')();
-  const LabelElement = stylin<LabelElementProps>('label')(``);
+  const LabelElement = stylin<LabelElementProps>('label')();
   return (
     <LabelElement
       {...props}
