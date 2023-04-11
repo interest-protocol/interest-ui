@@ -21,7 +21,7 @@ const Template: ComponentStory<typeof RadioButton> = (args) => (
 export const Normal = Template.bind({});
 
 Normal.args = {
-  label: 'Escolha o sexo',
+  label: 'Gender',
   name: 'radio',
   size: '18px',
   hideLabel: false,
@@ -30,7 +30,7 @@ Normal.args = {
 export const Checked = Template.bind({});
 
 Checked.args = {
-  label: 'Escolha o sexo',
+  label: 'Gender',
   name: 'radio',
   size: '18px',
   checked: true,
@@ -39,7 +39,7 @@ Checked.args = {
 export const CheckedDisabled = Template.bind({});
 
 CheckedDisabled.args = {
-  label: 'Escolha o sexo',
+  label: 'Gender',
   name: 'radio',
   size: '18px',
   checked: true,
@@ -49,7 +49,7 @@ CheckedDisabled.args = {
 export const WithoutLabel = Template.bind({});
 
 WithoutLabel.args = {
-  label: 'Escolha o sexo',
+  label: 'Gender',
   name: 'radio',
   size: '18px',
   hideLabel: true,
