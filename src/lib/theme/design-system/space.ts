@@ -1,4 +1,6 @@
 export const space = {
+  '2xs': '0.25rem',
+  xs: '0.375rem',
   s: '0.5rem',
   m: '0.75rem',
   l: '1rem',
