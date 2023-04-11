@@ -12,9 +12,9 @@ import {
 } from './radio-button.types';
 
 export const RadioButton: FC<PropsWithChildren<RadioButtonProps>> = ({
-  label,
   size,
   hideLabel,
+  options,
   ...props
 }) => {
   const { colors } = useTheme() as Theme;
@@ -22,7 +22,7 @@ export const RadioButton: FC<PropsWithChildren<RadioButtonProps>> = ({
   const LabelElement = stylin<LabelElementProps>('label')();
   return (
     <Box display="flex" gap="1rem" flexWrap="wrap">
-      {[1, 2].map(() => (
+      {options.map((option) => (
         <LabelElement
           key={v4()}
           display="flex"
@@ -31,6 +31,7 @@ export const RadioButton: FC<PropsWithChildren<RadioButtonProps>> = ({
           fontSize={size}
           position="relative"
           cursor="pointer"
+          textTransform="capitalize"
           color={props.disabled ? 'disabled' : 'textDisabled'}
           nHover={{
             'input[type="radio"]:checked ~ span:before': {
@@ -95,7 +96,7 @@ export const RadioButton: FC<PropsWithChildren<RadioButtonProps>> = ({
               left: `calc(-${size}/2.85)`,
             }}
           />
-          {!hideLabel && label}
+          {!hideLabel && option}
         </LabelElement>
       ))}
     </Box>

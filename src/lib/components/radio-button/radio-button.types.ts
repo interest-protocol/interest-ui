@@ -10,8 +10,8 @@ export type LabelElementProps = Omit<
   'color' | 'width' | 'height' | 'size'
 >;
 export interface RadioButtonProps extends RadioButtonElementProps {
-  label: string;
   name: string;
   size: string;
   hideLabel?: boolean;
+  options: ReadonlyArray<string>;
 }
