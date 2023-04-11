@@ -13,5 +13,6 @@ export interface RadioButtonProps extends RadioButtonElementProps {
   name: string;
   size: string;
   hideLabel?: boolean;
-  options: ReadonlyArray<string>;
+  options: ReadonlyArray<{ label: string; value: string }>;
+  initialValue: string;
 }

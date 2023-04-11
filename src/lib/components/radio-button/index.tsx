@@ -1,6 +1,6 @@
 import { useTheme } from '@emotion/react';
 import stylin from '@stylin.js/react';
-import React, { FC, PropsWithChildren } from 'react';
+import React, { FC, PropsWithChildren, useState } from 'react';
 import { v4 } from 'uuid';
 
 import { Box, Typography } from '../../elements';
@@ -15,9 +15,11 @@ export const RadioButton: FC<PropsWithChildren<RadioButtonProps>> = ({
   size,
   hideLabel,
   options,
+  initialValue,
   ...props
 }) => {
   const { colors } = useTheme() as Theme;
+  const [selector, setSelector] = useState(initialValue || '');
   const RadioButtonElement = stylin<RadioButtonElementProps>('input')();
   const LabelElement = stylin<LabelElementProps>('label')();
   return (
@@ -50,6 +52,8 @@ export const RadioButton: FC<PropsWithChildren<RadioButtonProps>> = ({
             {...props}
             type="radio"
             display="none"
+            value={option.value}
+            checked={selector == option.value}
             nChecked={{
               '~ span': {
                 borderColor: props.disabled ? colors.disabled : colors.accent,
@@ -58,6 +62,7 @@ export const RadioButton: FC<PropsWithChildren<RadioButtonProps>> = ({
                 display: 'block',
               },
             }}
+            onChange={() => setSelector(option.value)}
           />
           <Typography
             variant="medium"
@@ -96,7 +101,7 @@ export const RadioButton: FC<PropsWithChildren<RadioButtonProps>> = ({
               left: `calc(-${size}/2.85)`,
             }}
           />
-          {!hideLabel && option}
+          {!hideLabel && option.label}
         </LabelElement>
       ))}
     </Box>

@@ -24,7 +24,37 @@ Normal.args = {
   name: 'radio',
   size: '18px',
   hideLabel: false,
-  options: ['male', 'female'],
+  options: [
+    { label: 'male', value: 'male' },
+    { label: 'female', value: 'female' },
+  ],
+};
+
+export const Checked = Template.bind({});
+
+Checked.args = {
+  name: 'radio',
+  size: '18px',
+  options: [
+    { label: 'male', value: 'male' },
+    { label: 'female', value: 'female' },
+  ],
+  initialValue: 'male',
+  hideLabel: false,
+};
+
+export const CheckedDisabled = Template.bind({});
+
+CheckedDisabled.args = {
+  name: 'radio',
+  size: '18px',
+  options: [
+    { label: 'male', value: 'male' },
+    { label: 'female', value: 'female' },
+  ],
+  initialValue: 'female',
+  disabled: true,
+  hideLabel: false,
 };
 
 export const WithoutLabel = Template.bind({});
@@ -32,6 +62,9 @@ export const WithoutLabel = Template.bind({});
 WithoutLabel.args = {
   name: 'radio',
   size: '18px',
+  options: [
+    { label: 'male', value: 'male' },
+    { label: 'female', value: 'female' },
+  ],
   hideLabel: true,
-  options: ['male', 'female'],
 };
