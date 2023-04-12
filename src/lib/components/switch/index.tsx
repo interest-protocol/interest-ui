@@ -12,11 +12,11 @@ import {
 
 export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
   hideLabel,
-  options,
-  initialValue,
+  labels,
+  defaultValue,
   ...props
 }) => {
-  const [switcher, setSwitcher] = useState(initialValue || false);
+  const [switcher, setSwitcher] = useState(defaultValue || false);
 
   const theme = useTheme() as Theme;
   const CheckedButtonElement = stylin<CheckedButtonElementProps>('input')();
@@ -50,7 +50,7 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
       color="textSoft"
       fontWeight="300"
     >
-      {!hideLabel && options[switcher ? 1 : 0]}
+      {!hideLabel && labels[switcher ? 1 : 0]}
       <LabelElement
         display="flex"
         position="relative"
@@ -86,7 +86,6 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
           height="1.063rem"
           bottom="0"
           backgroundColor={backgroundColor}
-          transition="transform .4s"
           borderRadius="6.25rem"
           nBefore={{
             content: '""',
@@ -97,7 +96,6 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
             bottom: '0.063rem',
             left: '0.063rem',
             backgroundColor: selectedColor,
-            transition: 'transform .4s',
             opacity: props.disabled ? 0.7 : 1,
           }}
         />

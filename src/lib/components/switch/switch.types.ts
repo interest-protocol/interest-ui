@@ -2,16 +2,16 @@ import { InputHTMLAttributes, LabelHTMLAttributes } from 'react';
 
 export type CheckedButtonElementProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,
-  'color' | 'width' | 'height' | 'size'
+  'color' | 'defaultValue'
 >;
 
 export type LabelElementProps = Omit<
   LabelHTMLAttributes<HTMLInputElement>,
-  'color' | 'width' | 'height' | 'size'
+  'color'
 >;
 export interface CheckedButtonProps extends CheckedButtonElementProps {
   name: string;
   hideLabel?: boolean;
-  options: ReadonlyArray<string>;
-  initialValue: boolean;
+  labels: [string, string];
+  defaultValue: boolean;
 }
