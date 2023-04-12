@@ -19,7 +19,7 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
 }) => {
   const [switcher, setSwitcher] = useState(initialValue || false);
 
-  const { colors } = useTheme() as Theme;
+  const { colors, dark } = useTheme() as Theme;
   const CheckedButtonElement = stylin<CheckedButtonElementProps>('input')();
   const LabelElement = stylin<LabelElementProps>('label')();
 
@@ -30,6 +30,8 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
       alignItems="center"
       flexWrap="wrap"
       textTransform="capitalize"
+      color="foreground"
+      fontWeight="300"
     >
       {!hideLabel && options[switcher ? 1 : 0]}
       <LabelElement
@@ -49,6 +51,7 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
             },
             '~ span:before': {
               transform: `translateX(115%)`,
+              backgroundColor: dark ? colors['accentBackground'] : 'background',
             },
           }}
           checked={switcher}
@@ -63,8 +66,8 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
           left="0"
           right="0"
           bottom="0"
-          backgroundColor="#ccc"
-          transition=".4s"
+          backgroundColor={dark ? 'background' : 'foreground'}
+          transition="transform .4s"
           borderRadius={`calc(${size}/2.3)`}
           nBefore={{
             content: '""',
@@ -74,8 +77,9 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
             borderRadius: '50%',
             bottom: `calc(${size}/30)`,
             left: `calc(${size}/30)`,
-            bg: 'background',
-            transition: '.4s',
+            bg: dark ? 'foreground' : 'background',
+            transition: 'transform .4s',
+            opacity: props.disabled ? 0.7 : 1,
           }}
         />
       </LabelElement>

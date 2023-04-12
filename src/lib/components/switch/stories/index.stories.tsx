@@ -18,11 +18,39 @@ const Template: ComponentStory<typeof SwitchButton> = (args) => (
   <SwitchButton {...args} />
 );
 
-export const Filled = Template.bind({});
+export const Normal = Template.bind({});
 
-Filled.args = {
+Normal.args = {
   hideLabel: false,
   initialValue: false,
-  size: '60px',
+  size: '30px',
+  options: ['off', 'on'],
+};
+
+export const Selected = Template.bind({});
+
+Selected.args = {
+  hideLabel: false,
+  initialValue: true,
+  size: '30px',
+  options: ['off', 'on'],
+};
+
+export const SelectedDisabled = Template.bind({});
+
+SelectedDisabled.args = {
+  hideLabel: false,
+  initialValue: true,
+  size: '30px',
+  options: ['off', 'on'],
+  disabled: true,
+};
+
+export const WithoutLabel = Template.bind({});
+
+WithoutLabel.args = {
+  hideLabel: true,
+  initialValue: false,
+  size: '30px',
   options: ['off', 'on'],
 };
