@@ -56,7 +56,6 @@ export const RadioButton: FC<PropsWithChildren<RadioButtonProps>> = ({
         variants={variants}
         onMouseEnter={() => setVariant('hover')}
         onMouseLeave={() => setVariant('withoutHover')}
-        onClick={() => !disabled && setSelector(!selector)}
       >
         <RadioCircleSVG
           maxWidth="1.25rem"
