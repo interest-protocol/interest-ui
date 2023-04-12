@@ -8,13 +8,13 @@ export default {
   component: Progress,
   argTypes: {
     variant: {
-      options: ['bar', 'circle'],
+      options: ['bar', 'circle', 'rotating'],
       control: { type: 'radio' },
     },
-    value: {
-      type: 'number',
-      defaultValue: 50,
-    },
+  },
+  value: {
+    type: 'number',
+    defaultValue: 50,
   },
   size: {
     type: 'number',
@@ -94,4 +94,12 @@ CircleOneHundredPercent.args = {
   variant: 'circle',
   value: 100,
   size: 50,
+};
+
+export const RotatingCircle = Template.bind({});
+
+RotatingCircle.args = {
+  variant: 'rotating',
+  size: 50,
+  strokeWidth: 5,
 };
