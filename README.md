@@ -1,5 +1,7 @@
 # [Interest](https://www.interestprotocol.com/) UI Kit
-<p> <img width="50px"height="50px" src="./public/logo.png" /></p> Welcome to the UI kit repository used in the [Interest](https://www.interestprotocol.com/) portals, stay up-to-date on everything in an isolated environment.
+<p> <img width="50px"height="50px" src="./public/logo.png" /></p> 
+
+Welcome to the UI kit repository used in the [Interest](https://www.interestprotocol.com/) portals, stay up-to-date on everything in an isolated environment.
 
 ## Contributing
 We always want to be better.
@@ -30,6 +32,7 @@ You must install it in your Editor text
 - [Stylin.js](https://www.npmjs.com/package/@stylin.js/react)
 - [Ramda](https://ramdajs.com/)
 - [Storybook](https://github.com/storybookjs/storybook/tree/main)
+- [Framer Motion](https://www.framer.com/motion/)
 
 ## Live
 
