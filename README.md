@@ -30,6 +30,7 @@ You must install it in your Editor text
 - [Stylin.js](https://www.npmjs.com/package/@stylin.js/react)
 - [Ramda](https://ramdajs.com/)
 - [Storybook](https://github.com/storybookjs/storybook/tree/main)
+- [Framer Motion](https://www.framer.com/motion/)
 
 ## Live
 
