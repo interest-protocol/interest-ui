@@ -10,7 +10,7 @@ export const Progress: FC<PropsWithChildren<ProgressProps>> = ({
   if (variant === 'circle')
     return <ProgressCircle variant={'circle'} value={value} />;
 
-  return <ProgressBar variant={'circle'} value={value} />;
+  return <ProgressBar variant={'bar'} value={value} />;
 };
 
 export * from './progress-indicator.types';
