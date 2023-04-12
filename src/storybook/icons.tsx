@@ -1,7 +1,6 @@
-import { always } from 'ramda';
 import React, { FC } from 'react';
 
-export const SwapIcon: FC = () =>(
+export const SwapIcon: FC = () => (
   <svg width="18" height="14" viewBox="0 0 18 14" fill="none">
     <path
       d="M13.875 9.25H16.5L13.5 12.25"
@@ -34,7 +33,7 @@ export const SwapIcon: FC = () =>(
   </svg>
 );
 
-export const PlusIcon: FC = () =>(
+export const PlusIcon: FC = () => (
   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
     <path
       d="M13.6666 7.83333H7.83331V13.6667H6.16665V7.83333H0.333313V6.16666H6.16665V0.333328H7.83331V6.16666H13.6666V7.83333Z"

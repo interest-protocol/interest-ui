@@ -29,6 +29,17 @@ export type LineHeights =
   | '5xl'
   | '6xl'
   | '7xl';
+export type Colors =
+  | 'text'
+  | 'error'
+  | 'accent'
+  | 'outline'
+  | 'success'
+  | 'disabled'
+  | 'background'
+  | 'textAccent'
+  | 'textDisabled'
+  | 'textPlaceholder';
 export type Typographies =
   | 'displayLarge'
   | 'displaySmall'
@@ -42,14 +53,6 @@ export type Typographies =
   | 'title4'
   | 'title5'
   | 'title6';
-export type Colors =
-  | 'accent'
-  | 'outline'
-  | 'background'
-  | 'text'
-  | 'textAccent'
-  | 'textDisabled'
-  | 'disabled';
 
 interface MaybeNestedObject {
   [key: string]: string | number | Partial<MaybeNestedObject>;
