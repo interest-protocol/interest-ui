@@ -12,4 +12,5 @@ export const colors = {
   foreground: palette.NEUTRAL_700,
   textDisabled: palette.NEUTRAL_900,
   textPlaceholder: palette.NEUTRAL_300,
+  border: palette.NEUTRAL_300,
 };

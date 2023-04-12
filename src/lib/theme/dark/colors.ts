@@ -9,6 +9,8 @@ export const colors = {
   disabled: palette.NEUTRAL_200,
   textAccent: palette.NEUTRAL_800,
   background: palette.NEUTRAL_900,
+  foreground: palette.NEUTRAL_200,
   textDisabled: palette.NEUTRAL_50,
   textPlaceholder: palette.NEUTRAL_500,
+  border: palette.NEUTRAL_200,
 };

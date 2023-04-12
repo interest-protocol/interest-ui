@@ -32,6 +32,7 @@ export type Colors =
   | 'text'
   | 'error'
   | 'accent'
+  | 'border'
   | 'outline'
   | 'success'
   | 'disabled'
