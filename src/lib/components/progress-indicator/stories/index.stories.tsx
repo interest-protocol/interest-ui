@@ -15,10 +15,10 @@ export default {
       options: [0, 25, 50, 75, 100],
       control: { type: 'select' },
     },
-    size: {
-      type: 'number',
-      defaultValue: 50,
-    },
+  },
+  size: {
+    type: 'number',
+    defaultValue: 50,
   },
 } as ComponentMeta<typeof Progress>;
 
@@ -61,37 +61,42 @@ BarOneHundredPercent.args = {
   value: 100,
 };
 
-export const CirlceZeroPercent = Template.bind({});
+export const CircleZeroPercent = Template.bind({});
 
-CirlceZeroPercent.args = {
+CircleZeroPercent.args = {
   variant: 'circle',
   value: 0,
+  size: 50,
 };
 
-export const CirlceTwentyFivePercent = Template.bind({});
+export const CircleTwentyFivePercent = Template.bind({});
 
-CirlceTwentyFivePercent.args = {
+CircleTwentyFivePercent.args = {
   variant: 'circle',
   value: 25,
+  size: 50,
 };
 
-export const CirlceFiftyPercent = Template.bind({});
+export const CircleFiftyPercent = Template.bind({});
 
-CirlceFiftyPercent.args = {
+CircleFiftyPercent.args = {
   variant: 'circle',
   value: 50,
+  size: 50,
 };
 
-export const CirlceSeventyFivePercent = Template.bind({});
+export const CircleSeventyFivePercent = Template.bind({});
 
-CirlceSeventyFivePercent.args = {
+CircleSeventyFivePercent.args = {
   variant: 'circle',
   value: 75,
+  size: 50,
 };
 
-export const CirlceOneHundredPercent = Template.bind({});
+export const CircleOneHundredPercent = Template.bind({});
 
-CirlceOneHundredPercent.args = {
+CircleOneHundredPercent.args = {
   variant: 'circle',
   value: 100,
+  size: 50,
 };
