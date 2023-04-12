@@ -1,55 +1,98 @@
-import stylin, { StylinComponent, variant } from '@stylin.js/react';
-import React, { FC, PropsWithChildren } from 'react';
+import { useTheme } from '@emotion/react';
+import React, {
+  FC,
+  MouseEvent as ReactMouseEvent,
+  MouseEventHandler,
+  useEffect,
+  useRef,
+  useState,
+  useTransition,
+} from 'react';
 
 import { Box } from '../../elements';
-import { colors } from '../../theme/light/colors';
-import { fontSizes } from '../../theme/design-system';
-import { InputElementProps } from './slider.types';
-import { ToolTip } from './slider-tooltip';
+import { Theme } from '../../theme';
+import { SliderProps } from './slider.types';
+import SliderToolTip from './slider-tooltip';
 
-export const Slider: FC = React.forwardRef((_, ref) => {
-  const [toggle, setToggle] = React.useState(false);
-  const InputElement = stylin<InputElementProps>('input')();
+export const Slider: FC<SliderProps> = ({ min, max, value, onChange }) => {
+  const { colors } = useTheme() as Theme;
+  const [, startTransition] = useTransition();
+  const [hover, setHover] = useState(false);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const handleRef = useRef<HTMLDivElement>(null);
+
+  const [sliderWidth, setSliderWidth] = useState(0);
+
+  useEffect(() => {
+    startTransition(() => setSliderWidth(sliderRef.current?.offsetWidth ?? 0));
+  }, [sliderRef]);
+
+  const handleChange = (
+    event: ReactMouseEvent<HTMLDivElement, MouseEvent> | MouseEvent
+  ) => {
+    const percent = event.clientX / sliderWidth;
+    const newValue = Math.round(min + percent * (max - min));
+    onChange(newValue);
+  };
+
+  const handleMouseUp = () => {
+    window.removeEventListener('mousemove', handleChange);
+    window.removeEventListener('mouseup', handleMouseUp);
+  };
+
+  const handleMouseDown: MouseEventHandler<HTMLDivElement> = (event) => {
+    event.preventDefault();
+    window.addEventListener('mousemove', handleChange);
+    window.addEventListener('mouseup', handleMouseUp);
+  };
+
+  const handleActivateHover = () => setHover(true);
+  const handleDeactivateHover = () => setHover(false);
+
+  const percent = value > 100 ? 100 : ~~(((value - min) / (max - min)) * 100);
 
   return (
-    <Box position={'relative'} width={'fit-content'}>
-      <ToolTip value={ref.current?.value} visible={toggle} />
-      <InputElement
-        ref={ref}
-        type="range"
-        onMouseEnter={() => setToggle(true)}
-        onMouseLeave={() => setToggle(false)}
-        max={100}
-        min={0}
-        marginTop={40}
-        step={1}
-        appearance={'none'}
-        height={4}
-        width={200}
-        position={'relative'}
-        background={`linear-gradient(90deg, ${
-          colors.accent
-        } ${value}%, rgba(${parseInt(
-          colors.accent.substring(1, 3),
-          16
-        )}, ${parseInt(colors.accent.substring(3, 5), 16)}, ${parseInt(
-          colors.accent.substring(5, 7),
-          16
-        )}, 0.12) 0%)`}
-        nWebkitSliderThumb={{
-          appearance: 'none',
-          width: 20,
-          height: 20,
-          position: 'relative',
-          borderRadius: '50%',
-          background: colors.accent,
-          boxShadow:
-            '0px 1px 2px rgba(0, 0, 0, 0.3), 0px 1px 3px rgba(0, 0, 0, 0.15);',
-          cursor: 'pointer',
-        }}
+    <Box
+      py="2xl"
+      display="flex"
+      ref={sliderRef}
+      position="relative"
+      alignItems="center"
+      onClick={handleChange}
+      onMouseEnter={handleActivateHover}
+      onMouseLeave={handleDeactivateHover}
+    >
+      <Box
+        width="100%"
+        height="0.25rem"
+        position="absolute"
+        bg={`${colors.accent}1F`}
       />
+      <Box flex="1" display="flex" position="relative" alignItems="center">
+        <Box bg="accent" height="0.25rem" width={`${percent}%`} />
+        <Box
+          bg="accent"
+          color="accent"
+          display="flex"
+          ref={handleRef}
+          width="1.25rem"
+          height="1.25rem"
+          borderRadius="50%"
+          position="absolute"
+          justifyContent="center"
+          transform="translateX(-50%)"
+          onMouseDown={handleMouseDown}
+          boxShadow="0 0.05rem 0.1rem #0004"
+          left={`${percent}%`}
+          nHover={{
+            boxShadow: `0 0 0 0.625rem ${colors.accent}14`,
+          }}
+        >
+          <SliderToolTip value={percent} visible={hover} />
+        </Box>
+      </Box>
     </Box>
   );
-});
+};
 
 export * from './slider.types';

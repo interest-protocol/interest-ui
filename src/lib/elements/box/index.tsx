@@ -1,16 +1,10 @@
 import stylin, { variant } from '@stylin.js/react';
-import React, {
-  FC,
-  forwardRef,
-  PropsWithChildren,
-  PropsWithRef,
-  RefAttributes,
-} from 'react';
+import React, { forwardRef, PropsWithChildren, RefAttributes } from 'react';
 
 import { BoxElementProps, BoxProps } from '../box/box.types';
 
-export const Box: FC<PropsWithRef<PropsWithChildren<BoxProps>>> = forwardRef(
-  ({ as, ...props }, ref) => {
+export const Box = forwardRef(
+  ({ as, ...props }: PropsWithChildren<BoxProps>, ref) => {
     const BoxElement = stylin<BoxElementProps & RefAttributes<unknown>>(
       as || 'div'
     )(
@@ -24,5 +18,5 @@ export const Box: FC<PropsWithRef<PropsWithChildren<BoxProps>>> = forwardRef(
   }
 );
 
-// Box.displayName = 'Box';
+Box.displayName = 'Box';
 export * from '../box/box.types';

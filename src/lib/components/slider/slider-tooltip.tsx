@@ -1,50 +1,43 @@
-import stylin, { variant } from '@stylin.js/react';
 import React, { FC, PropsWithChildren } from 'react';
 
-import { Box } from '../../elements';
-import { colors } from '../../theme/light/colors';
-import { fontSizes } from '../../theme/design-system';
+import { Box, Typography } from '../../elements';
 
 type TooltipProps = {
   value: number;
   visible: boolean;
 };
 
-export const ToolTip: FC<PropsWithChildren<TooltipProps>> = ({
+const SliderToolTip: FC<PropsWithChildren<TooltipProps>> = ({
   value,
   visible,
 }) => {
   if (!visible) return null;
+
   return (
     <Box
+      fontSize="xs"
+      width="1.75rem"
+      borderRadius="m"
+      height="2.125rem"
+      bottom="1.25rem"
+      color="textAccent"
+      textAlign="center"
       position="absolute"
-      background={colors.accent}
-      top={0}
-      bottom={30}
-      fontSize={fontSizes.xs}
-      color={'white'}
-      left={value + '%'}
-      transform={'translateX(-' + value + '%)'}
-      width={28}
-      height={25}
-      display={'flex'}
-      justifyContent={'center'}
-      alignItems={'center'}
-      borderRadius={2}
-      nAfter={{
-        content: '""',
-        position: 'absolute',
-        background: `${colors.accent}`,
-        width: '100%',
-        height: '100%',
-        top: '38.5%',
-        left: '50%',
-        clipPath: 'polygon(50% 100%,3% 60%,97% 60%)',
-        transformOrigin: '0',
-        transform: 'translateX(-50%)',
-      }}
+      background="accent"
+      clipPath="polygon(0% 0%, 100% 0%, 100% 60%, 50% 100%, 0% 60%)"
     >
-      {value}
+      <Typography
+        display="flex"
+        width="1.75rem"
+        height="1.75rem"
+        alignItems="center"
+        variant="extraSmall"
+        justifyContent="center"
+      >
+        {value}
+      </Typography>
     </Box>
   );
 };
+
+export default SliderToolTip;

@@ -1,8 +1,12 @@
-import { StylinComponentProps } from '@stylin.js/react';
 import { InputHTMLAttributes } from 'react';
-import { SliderVariants } from '../../theme';
 
 export type InputElementProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,
   'color' | 'translate' | 'height' | 'width'
 >;
+export interface SliderProps {
+  min: number;
+  max: number;
+  value: number;
+  onChange: (value: number) => void;
+}
