@@ -5,6 +5,7 @@ export const colors = {
   text: palette.NEUTRAL_0,
   success: palette.LIME_200,
   accent: palette.PRIMARY_200,
+  warning: palette.ORANGE_200,
   outline: palette.NEUTRAL_600,
   disabled: palette.NEUTRAL_200,
   textAccent: palette.NEUTRAL_800,

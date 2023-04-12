@@ -2,6 +2,7 @@ export type Radii = 'm';
 export type Boxes = 'container';
 export type Space = 's' | 'm' | 'l' | 'xl' | '2xl' | '3xl';
 export type ButtonVariants = 'filled' | 'outline' | 'text' | 'icon';
+export type ProgressVariants = 'bar' | 'round';
 export type FontSizes =
   | 'xs'
   | 's'
@@ -32,6 +33,7 @@ export type Colors =
   | 'text'
   | 'error'
   | 'accent'
+  | 'warning'
   | 'outline'
   | 'success'
   | 'disabled'
