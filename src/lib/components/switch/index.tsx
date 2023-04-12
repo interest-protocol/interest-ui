@@ -1,6 +1,6 @@
 import { useTheme } from '@emotion/react';
 import stylin from '@stylin.js/react';
-import React, { FC, PropsWithChildren, useState } from 'react';
+import React, { FC, PropsWithChildren, useMemo, useState } from 'react';
 
 import { Box, Typography } from '../../elements';
 import { Theme } from '../../theme';
@@ -11,7 +11,6 @@ import {
 } from './switch.types';
 
 export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
-  size,
   hideLabel,
   options,
   initialValue,
@@ -19,27 +18,45 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
 }) => {
   const [switcher, setSwitcher] = useState(initialValue || false);
 
-  const { colors, dark } = useTheme() as Theme;
+  const theme = useTheme() as Theme;
   const CheckedButtonElement = stylin<CheckedButtonElementProps>('input')();
   const LabelElement = stylin<LabelElementProps>('label')();
 
+  const selectedColor = useMemo(() => {
+    return theme.dark
+      ? switcher
+        ? theme.colors.accentBackground
+        : theme.colors.textSoft
+      : switcher
+      ? theme.colors.textAccent
+      : theme.colors.background;
+  }, [switcher, theme.dark]);
+
+  const backgroundColor = useMemo(() => {
+    return switcher
+      ? theme.colors.accent
+      : theme.dark
+      ? theme.colors.background
+      : theme.colors.textSoft;
+  }, [switcher, theme.dark]);
+
   return (
     <Box
-      fontSize={`calc(${size}/2)`}
+      fontSize="0.875rem"
       display="flex"
       alignItems="center"
       flexWrap="wrap"
       textTransform="capitalize"
-      color="foreground"
+      color="textSoft"
       fontWeight="300"
     >
       {!hideLabel && options[switcher ? 1 : 0]}
       <LabelElement
         display="flex"
         position="relative"
-        width={size}
-        height={`calc(${size}/2)`}
-        ml="5px"
+        width="2.125rem"
+        height="1.063rem"
+        ml="0.375rem"
       >
         <CheckedButtonElement
           {...props}
@@ -47,11 +64,11 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
           display="none"
           nChecked={{
             '~ span': {
-              backgroundColor: colors.accent,
+              backgroundColor: theme.colors.accent,
             },
             '~ span:before': {
               transform: `translateX(115%)`,
-              backgroundColor: dark ? colors['accentBackground'] : 'background',
+              backgroundColor: selectedColor,
             },
           }}
           checked={switcher}
@@ -65,19 +82,21 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
           top="0"
           left="0"
           right="0"
+          width="2.125rem"
+          height="1.063rem"
           bottom="0"
-          backgroundColor={dark ? 'background' : 'foreground'}
+          backgroundColor={backgroundColor}
           transition="transform .4s"
-          borderRadius={`calc(${size}/2.3)`}
+          borderRadius="6.25rem"
           nBefore={{
             content: '""',
             position: 'absolute',
-            width: `calc(${size}/2.3)`,
-            height: `calc(${size}/2.3)`,
-            borderRadius: '50%',
-            bottom: `calc(${size}/30)`,
-            left: `calc(${size}/30)`,
-            bg: dark ? 'foreground' : 'background',
+            width: '0.938rem',
+            height: '0.938rem',
+            borderRadius: '1.438rem',
+            bottom: '0.063rem',
+            left: '0.063rem',
+            backgroundColor: selectedColor,
             transition: 'transform .4s',
             opacity: props.disabled ? 0.7 : 1,
           }}

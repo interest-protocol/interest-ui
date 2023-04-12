@@ -21,27 +21,27 @@ const Template: ComponentStory<typeof SwitchButton> = (args) => (
 export const Normal = Template.bind({});
 
 Normal.args = {
+  name: 'switch',
   hideLabel: false,
   initialValue: false,
-  size: '30px',
   options: ['off', 'on'],
 };
 
 export const Selected = Template.bind({});
 
 Selected.args = {
+  name: 'switch',
   hideLabel: false,
   initialValue: true,
-  size: '30px',
   options: ['off', 'on'],
 };
 
 export const SelectedDisabled = Template.bind({});
 
 SelectedDisabled.args = {
+  name: 'switch',
   hideLabel: false,
   initialValue: true,
-  size: '30px',
   options: ['off', 'on'],
   disabled: true,
 };
@@ -49,8 +49,8 @@ SelectedDisabled.args = {
 export const WithoutLabel = Template.bind({});
 
 WithoutLabel.args = {
+  name: 'switch',
   hideLabel: true,
   initialValue: false,
-  size: '30px',
   options: ['off', 'on'],
 };

@@ -7,7 +7,7 @@ export const colors = {
   accent: palette.PRIMARY_200,
   accentBackground: palette.PRIMARY_900,
   outline: palette.NEUTRAL_600,
-  foreground: palette.NEUTRAL_300,
+  textSoft: palette.NEUTRAL_300,
   disabled: palette.NEUTRAL_200,
   textAccent: palette.NEUTRAL_800,
   background: palette.NEUTRAL_900,

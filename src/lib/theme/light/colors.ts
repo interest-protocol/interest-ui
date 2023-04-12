@@ -9,7 +9,7 @@ export const colors = {
   disabled: palette.NEUTRAL_200,
   textAccent: palette.PRIMARY_50,
   background: palette.NEUTRAL_50,
-  foreground: palette.NEUTRAL_500,
+  textSoft: palette.NEUTRAL_500,
   textDisabled: palette.NEUTRAL_900,
   textPlaceholder: palette.NEUTRAL_300,
 };
