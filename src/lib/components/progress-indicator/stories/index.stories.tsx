@@ -12,8 +12,8 @@ export default {
       control: { type: 'radio' },
     },
     value: {
-      options: [0, 25, 50, 75, 100],
-      control: { type: 'select' },
+      type: 'number',
+      defaultValue: 50,
     },
   },
   size: {
@@ -29,35 +29,30 @@ const Template: ComponentStory<typeof Progress> = (args) => (
 export const BarZeroPercent = Template.bind({});
 
 BarZeroPercent.args = {
-  variant: 'bar',
   value: 0,
 };
 
 export const BarTwentyFivePercent = Template.bind({});
 
 BarTwentyFivePercent.args = {
-  variant: 'bar',
   value: 25,
 };
 
 export const BarFiftyPercent = Template.bind({});
 
 BarFiftyPercent.args = {
-  variant: 'bar',
   value: 50,
 };
 
 export const BarSeventyFivePercent = Template.bind({});
 
 BarSeventyFivePercent.args = {
-  variant: 'bar',
   value: 75,
 };
 
 export const BarOneHundredPercent = Template.bind({});
 
 BarOneHundredPercent.args = {
-  variant: 'bar',
   value: 100,
 };
 

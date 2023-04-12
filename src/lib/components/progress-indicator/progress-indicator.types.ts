@@ -10,6 +10,6 @@ export type ProgressElementProps = Omit<
 
 export interface ProgressProps extends StylinComponentProps, ProgressElementProps {
   variant: ProgressVariants;
-  value: 0 | 25 | 50 | 75 | 100;
+  value: number;
   size?: number;
 }
