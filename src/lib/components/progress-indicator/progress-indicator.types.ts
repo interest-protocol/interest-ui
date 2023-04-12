@@ -8,9 +8,8 @@ export type ProgressElementProps = Omit<
   'color' | 'translate'
 >;
 
-export interface ProgressProps
-  extends StylinComponentProps,
-    ProgressElementProps {
+export interface ProgressProps extends StylinComponentProps, ProgressElementProps {
   variant: ProgressVariants;
   value: 0 | 25 | 50 | 75 | 100;
+  size?: number;
 }
