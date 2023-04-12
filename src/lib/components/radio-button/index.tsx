@@ -1,109 +1,68 @@
 import { useTheme } from '@emotion/react';
 import stylin from '@stylin.js/react';
 import React, { FC, PropsWithChildren, useState } from 'react';
-import { v4 } from 'uuid';
 
-import { Box, Typography } from '../../elements';
+import { Box } from '../../elements';
+import { RadioCircleSVG } from '../../icons';
 import { Theme } from '../../theme';
 import {
-  LabelElementProps,
   RadioButtonElementProps,
   RadioButtonProps,
 } from './radio-button.types';
 
 export const RadioButton: FC<PropsWithChildren<RadioButtonProps>> = ({
-  size,
-  hideLabel,
-  options,
-  initialValue,
   ...props
 }) => {
-  const { colors } = useTheme() as Theme;
-  const [selector, setSelector] = useState(initialValue || '');
+  const { dark } = useTheme() as Theme;
+  const [selector, setSelector] = useState(props.checked || false);
   const RadioButtonElement = stylin<RadioButtonElementProps>('input')();
-  const LabelElement = stylin<LabelElementProps>('label')();
   return (
     <Box display="flex" gap="1rem" flexWrap="wrap">
-      {options.map((option) => (
-        <LabelElement
-          key={v4()}
-          display="flex"
-          alignItems="center"
-          flexWrap="wrap"
-          fontSize={size}
-          position="relative"
+      <RadioButtonElement
+        {...props}
+        type="radio"
+        display="none"
+        checked={selector}
+      />
+      <Box
+        width="2.5rem"
+        height="2.5rem"
+        color={
+          props.disabled
+            ? 'disabled'
+            : selector
+            ? 'accent'
+            : dark
+            ? 'disabled'
+            : 'textPlaceholder'
+        }
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        borderRadius="50%"
+        transition="background-color .5s"
+        nHover={{
+          bg: props.disabled
+            ? 'unset'
+            : selector
+            ? dark
+              ? '#99bbff14'
+              : '#0055ff14'
+            : dark
+            ? '#c8c6ca14'
+            : '#47464a14',
+        }}
+      >
+        <RadioCircleSVG
+          maxWidth="1.25rem"
+          maxHeight="1.25rem"
+          width="1.25rem"
+          height="1.25rem"
           cursor="pointer"
-          textTransform="capitalize"
-          color={props.disabled ? 'disabled' : 'textDisabled'}
-          nHover={{
-            'input[type="radio"]:checked ~ span:before': {
-              display: 'block',
-              backgroundColor: props.disabled ? colors.disabled : colors.accent,
-              opacity: 0.1,
-            },
-            'input[type="radio"] ~ span:before': {
-              display: 'block',
-              backgroundColor: colors.disabled,
-              opacity: 0.2,
-            },
-          }}
-        >
-          <RadioButtonElement
-            {...props}
-            type="radio"
-            display="none"
-            value={option.value}
-            checked={selector == option.value}
-            nChecked={{
-              '~ span': {
-                borderColor: props.disabled ? colors.disabled : colors.accent,
-              },
-              '~ span:after': {
-                display: 'block',
-              },
-            }}
-            onChange={() => setSelector(option.value)}
-          />
-          <Typography
-            variant="medium"
-            as="span"
-            position="relative"
-            display="block"
-            float="left"
-            mr="10px"
-            width={`calc(${size}/1.7)`}
-            height={`calc(${size}/1.7)`}
-            border={`calc(${size}/12) solid`}
-            borderColor="disabled"
-            opacity={props.disabled ? 0.8 : 1}
-            borderRadius="100%"
-            nAfter={{
-              content: '""',
-              position: 'absolute',
-              bg: props.disabled ? 'disabled' : 'accent',
-              display: 'none',
-              opacity: props.disabled ? 0.8 : 1,
-              width: `calc(${size}/2.85)`,
-              height: `calc(${size}/2.85)`,
-              borderRadius: '50%',
-              top: `calc(${size}/8.85)`,
-              left: `calc(${size}/8.85)`,
-            }}
-            nBefore={{
-              content: '""',
-              position: 'absolute',
-              display: 'none',
-              opacity: props.disabled ? 0.8 : 1,
-              width: `calc(${size}*1.3)`,
-              height: `calc(${size}*1.3)`,
-              borderRadius: '50%',
-              top: `calc(-${size}/2.85)`,
-              left: `calc(-${size}/2.85)`,
-            }}
-          />
-          {!hideLabel && option.label}
-        </LabelElement>
-      ))}
+          isChecked={selector}
+          onClick={() => !props.disabled && setSelector(!selector)}
+        />
+      </Box>
     </Box>
   );
 };
