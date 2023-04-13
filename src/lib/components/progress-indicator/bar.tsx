@@ -21,9 +21,8 @@ export const ProgressBar: FC<PropsWithChildren<ProgressProps>> = ({
   return (
     <ProgressBarElement
       max={100}
-      height={4}
+      height=".25rem"
       width="100%"
-      borderRadius={0}
       appearance="none"
       value={value}
       nWebkitProgressBar={{

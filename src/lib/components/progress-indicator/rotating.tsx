@@ -2,11 +2,11 @@ import { useTheme } from '@emotion/react';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 import React, { FC } from 'react';
 import { Theme } from '../../theme';
-import { Box } from '../../elements';
+import { Box, Motion } from '../../elements';
 
 interface ProgressCircleProps {
-  size: number;
-  strokeWidth: number;
+  size: number | string;
+  strokeWidth: number | string;
 }
 
 const ProgressCircleRotating: FC<ProgressCircleProps> = ({ size }) => {
@@ -16,7 +16,7 @@ const ProgressCircleRotating: FC<ProgressCircleProps> = ({ size }) => {
   const rotation = useTransform(rotate, [0, 360], ['0deg', '360deg']);
 
   return (
-    <motion.div
+    <Motion
       style={{
         width: size,
         height: size,
@@ -40,7 +40,7 @@ const ProgressCircleRotating: FC<ProgressCircleProps> = ({ size }) => {
         borderRadius="50%"
         background="background"
       />
-    </motion.div>
+    </Motion>
   );
 };
 

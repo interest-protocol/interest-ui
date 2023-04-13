@@ -17,7 +17,7 @@ export default {
     defaultValue: 50,
   },
   size: {
-    type: 'number',
+    type: 'string',
     defaultValue: 50,
   },
 } as ComponentMeta<typeof Progress>;
@@ -61,7 +61,7 @@ export const CircleZeroPercent = Template.bind({});
 CircleZeroPercent.args = {
   variant: 'circle',
   value: 0,
-  size: 50,
+  size: '3.125rem',
 };
 
 export const CircleTwentyFivePercent = Template.bind({});
@@ -69,7 +69,7 @@ export const CircleTwentyFivePercent = Template.bind({});
 CircleTwentyFivePercent.args = {
   variant: 'circle',
   value: 25,
-  size: 50,
+  size: '3.125rem',
 };
 
 export const CircleFiftyPercent = Template.bind({});
@@ -77,7 +77,7 @@ export const CircleFiftyPercent = Template.bind({});
 CircleFiftyPercent.args = {
   variant: 'circle',
   value: 50,
-  size: 50,
+  size: '3.125rem',
 };
 
 export const CircleSeventyFivePercent = Template.bind({});
@@ -85,7 +85,7 @@ export const CircleSeventyFivePercent = Template.bind({});
 CircleSeventyFivePercent.args = {
   variant: 'circle',
   value: 75,
-  size: 50,
+  size: '3.125rem',
 };
 
 export const CircleOneHundredPercent = Template.bind({});
@@ -93,13 +93,13 @@ export const CircleOneHundredPercent = Template.bind({});
 CircleOneHundredPercent.args = {
   variant: 'circle',
   value: 100,
-  size: 50,
+  size: '3.125rem',
 };
 
 export const RotatingCircle = Template.bind({});
 
 RotatingCircle.args = {
   variant: 'rotating',
-  size: 50,
-  strokeWidth: 5,
+  size: '3.125rem',
+  strokeWidth: '.3125rem',
 };

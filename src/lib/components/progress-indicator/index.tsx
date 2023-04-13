@@ -13,13 +13,11 @@ export const Progress: FC<PropsWithChildren<ProgressProps>> = ({
   if (variant === 'circle')
     return <ProgressCircle variant="circle" value={value} />;
 
-  if (variant === 'bar') return <ProgressBar variant="bar" value={value} />;
-
   if (variant === 'rotating')
     return (
       <ProgressCircleRotating
-        size={size || 50}
-        strokeWidth={strokeWidth || 8}
+        size={size || '3.125rem'}
+        strokeWidth={strokeWidth || '.5rem'}
       />
     );
 

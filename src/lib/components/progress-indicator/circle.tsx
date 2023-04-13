@@ -27,8 +27,8 @@ export const ProgressCircle: FC<PropsWithChildren<ProgressProps>> = ({
       alignItems="center"
       position="relative"
       justifyContent="center"
-      width={size || 50}
-      height={size || 50}
+      width={size || '3.125rem'}
+      height={size || '3.125rem'}
       backgroundImage={
         value
           ? 'conic-gradient( ' +
