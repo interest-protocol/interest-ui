@@ -11,9 +11,9 @@ export const Progress: FC<PropsWithChildren<ProgressProps>> = ({
   strokeWidth,
 }) => {
   if (variant === 'circle')
-    return <ProgressCircle variant={'circle'} value={value} />;
+    return <ProgressCircle variant="circle" value={value} />;
 
-  if (variant === 'bar') return <ProgressBar variant={'bar'} value={value} />;
+  if (variant === 'bar') return <ProgressBar variant="bar" value={value} />;
 
   if (variant === 'rotating')
     return (
@@ -23,7 +23,7 @@ export const Progress: FC<PropsWithChildren<ProgressProps>> = ({
       />
     );
 
-  return <ProgressBar variant={'bar'} value={value} />;
+  return <ProgressBar variant="bar" value={value} />;
 };
 
 export * from './progress-indicator.types';
