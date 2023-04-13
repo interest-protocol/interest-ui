@@ -82,11 +82,11 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
         },
         focus: {
           borderWidth: '1px',
-          borderColor: theme.colors.accent,
+          borderColor: theme.colors.primary,
         },
         valid: {
           borderWidth: valid ? '1px' : '2px',
-          borderColor: valid ? theme.colors.success : theme.colors.accent,
+          borderColor: valid ? theme.colors.success : theme.colors.primary,
         },
         error: {
           borderWidth: '1px',
