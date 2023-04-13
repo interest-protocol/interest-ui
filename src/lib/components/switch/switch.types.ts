@@ -11,7 +11,6 @@ export type LabelElementProps = Omit<
 >;
 export interface CheckedButtonProps extends CheckedButtonElementProps {
   name: string;
-  hideLabel?: boolean;
-  labels: [string, string];
   defaultValue: boolean;
+  labels: string | [string, string];
 }

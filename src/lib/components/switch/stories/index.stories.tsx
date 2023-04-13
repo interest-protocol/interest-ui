@@ -22,28 +22,33 @@ export const Normal = Template.bind({});
 
 Normal.args = {
   name: 'switch',
-  hideLabel: false,
+  labels: 'Switch',
   defaultValue: false,
-  labels: ['off', 'on'],
 };
 
 export const Selected = Template.bind({});
 
 Selected.args = {
   name: 'switch',
-  hideLabel: false,
+  labels: 'Switch',
   defaultValue: true,
-  labels: ['off', 'on'],
 };
 
 export const SelectedDisabled = Template.bind({});
 
 SelectedDisabled.args = {
   name: 'switch',
-  hideLabel: false,
-  defaultValue: true,
-  labels: ['off', 'on'],
   disabled: true,
+  labels: 'Switch',
+  defaultValue: true,
+};
+
+export const DoubleLabel = Template.bind({});
+
+DoubleLabel.args = {
+  name: 'switch',
+  defaultValue: true,
+  labels: ['on', 'off'],
 };
 
 export const WithoutLabel = Template.bind({});
@@ -52,5 +57,4 @@ WithoutLabel.args = {
   name: 'switch',
   hideLabel: true,
   defaultValue: false,
-  labels: ['off', 'on'],
 };

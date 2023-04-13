@@ -1,104 +1,100 @@
 import { useTheme } from '@emotion/react';
 import stylin from '@stylin.js/react';
-import React, { FC, PropsWithChildren, useMemo, useState } from 'react';
+import { useMotionValue, useSpring } from 'framer-motion';
+import { isEmpty, not } from 'ramda';
+import React, {
+  ChangeEventHandler,
+  FC,
+  PropsWithChildren,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
-import { Box, Typography } from '../../elements';
-import { Theme } from '../../theme';
+import { Box, Motion } from '../../elements';
+import { Colors, Theme } from '../../theme';
 import {
   CheckedButtonElementProps,
   CheckedButtonProps,
   LabelElementProps,
 } from './switch.types';
+import { getBackground, getLabel } from './switch.utils';
+
+const CheckedButtonElement = stylin<CheckedButtonElementProps>('input')();
+const LabelElement = stylin<LabelElementProps>('label')();
 
 export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
-  hideLabel,
   labels,
+  onChange,
+  disabled,
   defaultValue,
   ...props
 }) => {
+  const { dark } = useTheme() as Theme;
   const [switcher, setSwitcher] = useState(defaultValue || false);
+  const ative = useMotionValue(switcher ? '1rem' : '0rem');
+  const translateX = useSpring(ative, { stiffness: 1000, damping: 100 });
 
-  const theme = useTheme() as Theme;
-  const CheckedButtonElement = stylin<CheckedButtonElementProps>('input')();
-  const LabelElement = stylin<LabelElementProps>('label')();
+  useEffect(() => {
+    translateX.set(switcher ? '1rem' : '0rem');
+  }, [switcher]);
 
-  const selectedColor = useMemo(() => {
-    return theme.dark
-      ? switcher
-        ? theme.colors.accentBackground
-        : theme.colors.textSoft
-      : switcher
-      ? theme.colors.textAccent
-      : theme.colors.background;
-  }, [switcher, theme.dark]);
+  const selectedColor: Colors = useMemo(() => {
+    if (dark) {
+      if (switcher) return 'secondary';
 
-  const backgroundColor = useMemo(() => {
-    return switcher
-      ? theme.colors.accent
-      : theme.dark
-      ? theme.colors.background
-      : theme.colors.textSoft;
-  }, [switcher, theme.dark]);
+      return 'textSoft';
+    }
+
+    if (switcher) return 'textAccent';
+
+    return 'background';
+  }, [switcher, dark]);
+
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    onChange?.(event);
+    setSwitcher(not);
+  };
 
   return (
     <Box
-      fontSize="0.875rem"
+      fontSize="s"
       display="flex"
-      alignItems="center"
       flexWrap="wrap"
-      textTransform="capitalize"
       color="textSoft"
       fontWeight="300"
+      alignItems="center"
+      textTransform="capitalize"
     >
-      {!hideLabel && labels[switcher ? 1 : 0]}
-      <LabelElement
-        display="flex"
-        position="relative"
-        width="2.125rem"
-        height="1.063rem"
-        ml="0.375rem"
-      >
+      {!isEmpty(labels) && getLabel(labels, switcher)}
+      <LabelElement ml="0.375rem" display="flex" position="relative">
         <CheckedButtonElement
-          {...props}
-          type="checkbox"
           display="none"
-          nChecked={{
-            '~ span': {
-              backgroundColor: theme.colors.accent,
-            },
-            '~ span:before': {
-              transform: `translateX(115%)`,
-              backgroundColor: selectedColor,
-            },
-          }}
+          type="checkbox"
           checked={switcher}
-          onChange={() => setSwitcher(!switcher)}
+          disabled={disabled}
+          onChange={handleChange}
+          {...props}
         />
-        <Typography
-          variant="medium"
-          as="span"
-          position="absolute"
+        <Box
+          p="3xs"
+          width="2rem"
+          display="flex"
           cursor="pointer"
-          top="0"
-          left="0"
-          right="0"
-          width="2.125rem"
-          height="1.063rem"
-          bottom="0"
-          backgroundColor={backgroundColor}
+          alignItems="center"
           borderRadius="6.25rem"
-          nBefore={{
-            content: '""',
-            position: 'absolute',
-            width: '0.938rem',
-            height: '0.938rem',
-            borderRadius: '1.438rem',
-            bottom: '0.063rem',
-            left: '0.063rem',
-            backgroundColor: selectedColor,
-            opacity: props.disabled ? 0.7 : 1,
-          }}
-        />
+          transition="background 300ms ease-in-out"
+          bg={getBackground(switcher, dark)}
+        >
+          <Motion
+            width="1rem"
+            height="1rem"
+            borderRadius="50%"
+            style={{ translateX }}
+            background={selectedColor}
+            opacity={disabled ? 0.7 : 1}
+          />
+        </Box>
       </LabelElement>
     </Box>
   );
