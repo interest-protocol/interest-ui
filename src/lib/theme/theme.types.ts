@@ -1,4 +1,4 @@
-export type Radii = 'm';
+export type Radii = 'm' | 'full';
 export type Boxes = 'container';
 export type Space = 's' | 'm' | 'l' | 'xl' | '2xl' | '3xl';
 export type ButtonVariants = 'filled' | 'outline' | 'text' | 'icon';
@@ -31,14 +31,16 @@ export type LineHeights =
 export type Colors =
   | 'text'
   | 'error'
-  | 'accent'
   | 'warning'
+  | 'primary'
   | 'outline'
   | 'success'
   | 'disabled'
   | 'background'
   | 'textAccent'
+  | 'textSoft'
   | 'textDisabled'
+  | 'secondary'
   | 'textPlaceholder';
 export type Typographies =
   | 'displayLarge'
