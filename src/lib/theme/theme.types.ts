@@ -1,7 +1,6 @@
-export type Radii = 'm';
+export type Radii = 'm' | 'full';
 export type Boxes = 'container';
-export type ButtonSizes = 'icon' | 'medium' | 'large';
-export type Space = 's' | 'm' | 'l' | 'xl' | '2xl' | '3xl';
+export type Space = 's' | 'm' | 'l' | 'xl' | '2xl' | '3xl' | '4xl';
 export type ButtonVariants = 'filled' | 'outline' | 'text' | 'icon';
 export type FontSizes =
   | 'xs'
@@ -29,6 +28,22 @@ export type LineHeights =
   | '5xl'
   | '6xl'
   | '7xl';
+export type Colors =
+  | 'text'
+  | 'error'
+  | 'border'
+  | 'warning'
+  | 'primary'
+  | 'outline'
+  | 'success'
+  | 'disabled'
+  | 'background'
+  | 'textAccent'
+  | 'textSoft'
+  | 'textDisabled'
+  | 'secondary'
+  | 'textPlaceholder'
+  | 'foreground';
 export type Typographies =
   | 'displayLarge'
   | 'displaySmall'
@@ -42,14 +57,6 @@ export type Typographies =
   | 'title4'
   | 'title5'
   | 'title6';
-export type Colors =
-  | 'accent'
-  | 'outline'
-  | 'background'
-  | 'text'
-  | 'textAccent'
-  | 'textDisabled'
-  | 'disabled';
 
 interface MaybeNestedObject {
   [key: string]: string | number | Partial<MaybeNestedObject>;
@@ -65,6 +72,5 @@ export interface Theme {
   boxes: Record<Boxes, MaybeNestedObject>;
   lineHeights: Record<LineHeights, string>;
   typography: Record<Typographies, MaybeNestedObject>;
-  buttonSizes: Record<ButtonSizes, MaybeNestedObject>;
-  buttonVariants: Record<ButtonVariants, MaybeNestedObject>;
+  buttons: Record<ButtonVariants, MaybeNestedObject>;
 }

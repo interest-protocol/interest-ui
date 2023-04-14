@@ -11,9 +11,11 @@
     "@emotion/react": "^11.10.6",
     "@react-theming/storybook-addon": "^1.1.10",
     "@stylin.js/react": "^1.0.1",
+    "framer-motion": "^10.11.2",
     "ramda": "^0.29.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.21.3",

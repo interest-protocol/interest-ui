@@ -8,7 +8,7 @@ import {
 import { Theme } from '../theme.types';
 import { boxes, typography } from '../variants';
 import { colors } from './colors';
-import { buttonSizes, buttonVariants } from './variants';
+import { buttons } from './variants';
 
 const theme: Theme = {
   dark: false,
@@ -20,8 +20,7 @@ const theme: Theme = {
   space,
   colors,
   boxes,
-  buttonSizes,
-  buttonVariants,
+  buttons,
 };
 
 export default theme;
