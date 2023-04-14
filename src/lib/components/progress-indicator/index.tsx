@@ -1,27 +1,21 @@
 import React, { FC, PropsWithChildren } from 'react';
-import { ProgressProps } from '../progress-indicator';
-import { ProgressBar } from './bar';
-import { ProgressCircle } from './circle';
-import ProgressCircleRotating from './rotating';
 
-export const Progress: FC<PropsWithChildren<ProgressProps>> = ({
-  variant,
-  value,
-  size,
-  strokeWidth,
-}) => {
-  if (variant === 'circle')
-    return <ProgressCircle variant="circle" value={value} />;
+import { ProgressIndicatorProps } from '../progress-indicator';
+import { ProgressBar } from './progress-bar';
+import { ProgressCircle } from './progress-circle';
 
-  if (variant === 'rotating')
-    return (
-      <ProgressCircleRotating
-        size={size || '3.125rem'}
-        strokeWidth={strokeWidth || '.5rem'}
-      />
-    );
+export const ProgressIndicator: FC<
+  PropsWithChildren<ProgressIndicatorProps>
+> = ({ size, value, variant, ...props }) => {
+  if (variant === 'bar') return <ProgressBar value={value ?? 0} {...props} />;
 
-  return <ProgressBar variant="bar" value={value} />;
+  return (
+    <ProgressCircle
+      value={variant === 'loading' ? -1 : value ?? 0}
+      size={size}
+      {...props}
+    />
+  );
 };
 
 export * from './progress-indicator.types';

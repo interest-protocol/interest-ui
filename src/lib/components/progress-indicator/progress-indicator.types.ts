@@ -1,16 +1,26 @@
 import { StylinComponentProps } from '@stylin.js/react';
-import { ProgressHTMLAttributes, ReactNode } from 'react';
+import { ProgressHTMLAttributes } from 'react';
 
-import { ProgressVariants } from '../../theme/theme.types';
+export type ProgressVariants = 'bar' | 'circle' | 'loading';
 
 export type ProgressElementProps = Omit<
   ProgressHTMLAttributes<HTMLProgressElement>,
   'color' | 'translate'
 >;
 
-export interface ProgressProps extends StylinComponentProps, ProgressElementProps {
-  variant: ProgressVariants;
+export interface ProgressItemProps
+  extends StylinComponentProps,
+    ProgressElementProps {
+  size?: number;
   value: number;
-  size?: number | string;
-  strokeWidth?: number | string;
+}
+
+export interface ProgressIndicatorProps
+  extends Omit<ProgressItemProps, 'value'> {
+  variant: ProgressVariants;
+  value?: number;
+}
+
+export interface CirclePathProps {
+  size: number;
 }

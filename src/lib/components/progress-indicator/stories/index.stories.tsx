@@ -1,14 +1,14 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import React from 'react';
 
-import { Progress } from '..';
+import { ProgressIndicator } from '..';
 
 export default {
-  title: 'Progress',
-  component: Progress,
+  title: 'Progress Indicator',
+  component: ProgressIndicator,
   argTypes: {
     variant: {
-      options: ['bar', 'circle', 'rotating'],
+      options: ['bar', 'circle', 'loading'],
       control: { type: 'radio' },
     },
   },
@@ -20,86 +20,47 @@ export default {
     type: 'string',
     defaultValue: 50,
   },
-} as ComponentMeta<typeof Progress>;
+} as ComponentMeta<typeof ProgressIndicator>;
 
-const Template: ComponentStory<typeof Progress> = (args) => (
-  <Progress {...args} />
+const Template: ComponentStory<typeof ProgressIndicator> = (args) => (
+  <ProgressIndicator {...args} />
 );
 
-export const BarZeroPercent = Template.bind({});
+export const NormalBar = Template.bind({});
 
-BarZeroPercent.args = {
-  value: 0,
-};
-
-export const BarTwentyFivePercent = Template.bind({});
-
-BarTwentyFivePercent.args = {
+NormalBar.args = {
   value: 25,
 };
 
-export const BarFiftyPercent = Template.bind({});
+export const WarningBar = Template.bind({});
 
-BarFiftyPercent.args = {
-  value: 50,
-};
-
-export const BarSeventyFivePercent = Template.bind({});
-
-BarSeventyFivePercent.args = {
+WarningBar.args = {
   value: 75,
 };
 
-export const BarOneHundredPercent = Template.bind({});
+export const DangerousBar = Template.bind({});
 
-BarOneHundredPercent.args = {
-  value: 100,
+DangerousBar.args = {
+  value: 95,
 };
 
-export const CircleZeroPercent = Template.bind({});
+export const Circle = Template.bind({});
 
-CircleZeroPercent.args = {
-  variant: 'circle',
-  value: 0,
-  size: '3.125rem',
-};
-
-export const CircleTwentyFivePercent = Template.bind({});
-
-CircleTwentyFivePercent.args = {
+Circle.args = {
   variant: 'circle',
   value: 25,
-  size: '3.125rem',
 };
 
-export const CircleFiftyPercent = Template.bind({});
+export const BigCircle = Template.bind({});
 
-CircleFiftyPercent.args = {
+BigCircle.args = {
   variant: 'circle',
   value: 50,
-  size: '3.125rem',
+  size: 80,
 };
 
-export const CircleSeventyFivePercent = Template.bind({});
+export const LoadingCircle = Template.bind({});
 
-CircleSeventyFivePercent.args = {
-  variant: 'circle',
-  value: 75,
-  size: '3.125rem',
-};
-
-export const CircleOneHundredPercent = Template.bind({});
-
-CircleOneHundredPercent.args = {
-  variant: 'circle',
-  value: 100,
-  size: '3.125rem',
-};
-
-export const RotatingCircle = Template.bind({});
-
-RotatingCircle.args = {
-  variant: 'rotating',
-  size: '3.125rem',
-  strokeWidth: '.3125rem',
+LoadingCircle.args = {
+  variant: 'loading',
 };

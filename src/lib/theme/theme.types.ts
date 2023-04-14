@@ -2,7 +2,6 @@ export type Radii = 'm';
 export type Boxes = 'container';
 export type Space = 's' | 'm' | 'l' | 'xl' | '2xl' | '3xl';
 export type ButtonVariants = 'filled' | 'outline' | 'text' | 'icon';
-export type ProgressVariants = 'bar' | 'circle' | 'rotating';
 export type FontSizes =
   | 'xs'
   | 's'
