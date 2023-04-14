@@ -2,7 +2,7 @@ import { useTheme } from '@emotion/react';
 import React, { FC } from 'react';
 
 import { Button } from '../lib/components/button';
-import { ArrowRightSVG, RadioTmpSVG } from '../lib/icons';
+import { ArrowRightSVG } from '../lib/icons';
 import { Theme } from '../lib/theme';
 
 export const SwapIcon: FC = () => (
@@ -64,18 +64,5 @@ export const ArrowRightIcon: FC = () => {
         height="100%"
       />
     </Button>
-  );
-};
-
-export const RadioIcon: FC = () => {
-  const theme = useTheme() as Theme;
-  return (
-    <RadioTmpSVG
-      maxWidth={'1.25rem'}
-      maxHeight={'1.25rem'}
-      width={'1.25rem'}
-      height={'1.25rem'}
-      fill={theme.colors.primary}
-    />
   );
 };

@@ -1,9 +1,9 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import React from 'react';
 
-import { ArrowRightIcon, RadioIcon } from '../../../../storybook/icons';
+import { ArrowRightIcon } from '../../../../storybook/icons';
 import { ArrowRightSVG } from '../../../icons';
-import { SwitchButton } from '../../';
+import { RadioButton, SwitchButton } from '../../';
 import { ListItem } from '..';
 
 export default {
@@ -92,14 +92,14 @@ WithSuffixRadio.args = {
   title: 'List item',
   description: 'Supporting Text',
   metadata: '100+',
-  SuffixIcon: <RadioIcon />,
+  SuffixIcon: <RadioButton name={'radio1'} />,
 };
 
 export const WithSuffixRadioWithoutDescription = Template.bind({});
 
 WithSuffixRadioWithoutDescription.args = {
   title: 'List item',
-  SuffixIcon: <RadioIcon />,
+  SuffixIcon: <RadioButton name={'radio1'} />,
 };
 
 export const WithPrefixAndSuffixRadioWithoutDescription = Template.bind({});
@@ -114,7 +114,7 @@ WithPrefixAndSuffixRadioWithoutDescription.args = {
       height="100%"
     />
   ),
-  SuffixIcon: <RadioIcon />,
+  SuffixIcon: <RadioButton name={'radio1'} />,
 };
 
 export const WithPrefixAndSuffixSwitchWithoutDescription = Template.bind({});
