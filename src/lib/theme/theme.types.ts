@@ -40,7 +40,8 @@ export type Colors =
   | 'textSoft'
   | 'textDisabled'
   | 'secondary'
-  | 'textPlaceholder';
+  | 'textPlaceholder'
+  | 'specialBackground';
 export type Typographies =
   | 'displayLarge'
   | 'displaySmall'

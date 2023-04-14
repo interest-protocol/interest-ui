@@ -2,8 +2,9 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 import React from 'react';
 import { v4 } from 'uuid';
 
-import { ArrowRightIcon, SwitchIcon } from '../../../../storybook/icons';
+import { ArrowRightIcon } from '../../../../storybook/icons';
 import { ListItem } from '../../list-item';
+import { SwitchButton } from '../../switch';
 import { List } from '..';
 
 export default {
@@ -28,7 +29,9 @@ Normal.args = {
     <ListItem
       title="List Option B"
       description="Supporting Text"
-      SuffixIcon={<SwitchIcon />}
+      SuffixIcon={
+        <SwitchButton name={'switch'} defaultValue={false} labels="" />
+      }
       key={v4()}
     />,
     <ListItem
