@@ -1,17 +1,14 @@
 {
   "name": "@interest-protocol/ui-kit",
-  "version": "0.0.0-alpha.1",
+  "version": "0.0.0-alpha.2",
   "description": "Interest Protocol interface UI Kit",
-  "main": "./dist/components/index.js",
-  "exports": {
-    "./": "./dist/components/index.js",
-    "./theme": "./dist/theme/index.js",
-    "./elements": "./dist/elements/index.js"
-  },
+  "main": "./dist/index.js",
   "repository": "https://github.com/interest-protocol/interest-ui",
   "author": "git-marcopitra <marcomorete73@hotmail.com>",
   "license": "MIT",
   "private": false,
+  "sideEffects": false,
+  "homepage": "https://interest-ui.netlify.app/",
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@stylin.js/react": "^1.0.1",
