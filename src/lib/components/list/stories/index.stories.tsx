@@ -24,7 +24,7 @@ export const Normal = Template.bind({});
 
 Normal.args = {
   title: 'List Title',
-  Items: [
+  items: [
     <ListItem title="List Option A" metadata="100+" key={v4()} />,
     <ListItem
       title="List Option B"

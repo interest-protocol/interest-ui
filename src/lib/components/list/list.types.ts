@@ -8,5 +8,5 @@ export type BoxElementProps = Omit<
 
 export interface ListProps extends StylinComponentProps, BoxElementProps {
   title: string;
-  Items: ReadonlyArray<ReactNode>;
+  items: ReadonlyArray<ReactNode>;
 }
