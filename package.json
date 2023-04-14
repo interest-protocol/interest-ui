@@ -14,7 +14,8 @@
     "framer-motion": "^10.11.2",
     "ramda": "^0.29.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.21.3",
@@ -51,8 +52,7 @@
     "prettier": "^2.8.7",
     "pretty-quick": "^3.1.3",
     "react-docgen-typescript-plugin": "^1.0.5",
-    "storybook": "^6.5.16",
-    "uuid": "^8.3.2"
+    "storybook": "^6.5.16"
   },
   "engines": {
     "node": "16.18.1"

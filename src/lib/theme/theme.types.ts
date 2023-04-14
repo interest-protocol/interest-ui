@@ -1,6 +1,6 @@
 export type Radii = 'm' | 'full';
 export type Boxes = 'container';
-export type Space = 's' | 'm' | 'l' | 'xl' | '2xl' | '3xl';
+export type Space = 's' | 'm' | 'l' | 'xl' | '2xl' | '3xl' | '4xl';
 export type ButtonVariants = 'filled' | 'outline' | 'text' | 'icon';
 export type FontSizes =
   | 'xs'
@@ -42,8 +42,8 @@ export type Colors =
   | 'textSoft'
   | 'textDisabled'
   | 'secondary'
-  | 'foreground'
-  | 'textPlaceholder';
+  | 'textPlaceholder'
+  | 'foreground';
 export type Typographies =
   | 'displayLarge'
   | 'displaySmall'
