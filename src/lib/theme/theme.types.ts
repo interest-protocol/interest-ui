@@ -31,6 +31,7 @@ export type LineHeights =
 export type Colors =
   | 'text'
   | 'error'
+  | 'warning'
   | 'primary'
   | 'outline'
   | 'success'

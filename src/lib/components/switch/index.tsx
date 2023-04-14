@@ -82,7 +82,7 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
           display="flex"
           cursor="pointer"
           alignItems="center"
-          borderRadius="6.25rem"
+          borderRadius="full"
           transition="background 300ms ease-in-out"
           bg={getBackground(switcher, dark)}
         >
