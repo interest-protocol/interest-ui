@@ -31,6 +31,8 @@ export type LineHeights =
 export type Colors =
   | 'text'
   | 'error'
+  | 'border'
+  | 'warning'
   | 'primary'
   | 'outline'
   | 'success'
@@ -41,7 +43,8 @@ export type Colors =
   | 'textDisabled'
   | 'secondary'
   | 'textPlaceholder'
-  | 'specialBackground';
+  | 'specialBackground'
+  | 'foreground';
 export type Typographies =
   | 'displayLarge'
   | 'displaySmall'
