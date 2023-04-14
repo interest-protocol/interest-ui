@@ -3,7 +3,6 @@ import React, { FC, PropsWithChildren } from 'react';
 
 import { Box, Typography } from '../../elements';
 import { Theme } from '../../theme';
-import { Button } from '../button';
 import { ListItemProps } from './list-item.types';
 
 export const ListItem: FC<PropsWithChildren<ListItemProps>> = ({
@@ -12,44 +11,45 @@ export const ListItem: FC<PropsWithChildren<ListItemProps>> = ({
   metadata,
   SuffixIcon,
   PrefixIcon,
+  ...props
 }) => {
-  const theme = useTheme() as Theme;
+  const { dark } = useTheme() as Theme;
+
   return (
     <Box
+      py="l"
+      px="2xl"
+      display="flex"
+      position="relative"
+      alignItems="center"
       width={['100%', '100%', '22.5rem', '22.5rem']}
       maxHeight={description ? '4.75rem' : '3.5rem'}
-      background="specialBackground"
-      py="l"
-      pr="2xl"
-      display="flex"
-      alignItems="center"
-      position="relative"
+      background={
+        dark
+          ? 'linear-gradient(0deg, #b6c4ff0a, #b6c4ff0a), #1B1B1F'
+          : 'linear-gradient(0deg, #0055ff0a, #0055ff0a), #F2F0F4'
+      }
+      {...props}
     >
       {PrefixIcon && (
-        <Button
-          width="0.313rem"
-          height="0.625rem"
-          color={theme.dark ? '#F2F0F4' : '#001133'}
-          ml="2.125rem"
-          variant="icon"
-        >
+        <Box mx="4xl" color={dark ? 'textDisabled' : 'secondary'}>
           {PrefixIcon}
-        </Button>
+        </Box>
       )}
       <Box display="flex" flexDirection="column" ml="2xl" width="100%">
         <Typography
-          variant="medium"
           as="span"
+          variant="medium"
           fontWeight="400"
-          color={theme.dark ? '#F2F0F4' : '#001133'}
+          color={dark ? 'textDisabled' : 'secondary'}
         >
           {title}
         </Typography>
         {description && (
           <Typography
-            variant="small"
             as="span"
-            color={theme.dark ? '#ACAAAF' : '#47464A'}
+            variant="small"
+            color={dark ? 'textSoft' : 'foreground'}
           >
             {description}
           </Typography>
@@ -57,11 +57,11 @@ export const ListItem: FC<PropsWithChildren<ListItemProps>> = ({
       </Box>
       {metadata && (
         <Typography
-          variant="extraSmall"
-          as="span"
-          mr={SuffixIcon ? '2xl' : 'unset'}
           ml="l"
-          color={theme.dark ? '#ACAAAF' : '#47464A'}
+          as="span"
+          variant="extraSmall"
+          mr={SuffixIcon ? '2xl' : 'unset'}
+          color={dark ? 'textSoft' : 'foreground'}
         >
           {metadata}
         </Typography>
@@ -70,4 +70,5 @@ export const ListItem: FC<PropsWithChildren<ListItemProps>> = ({
     </Box>
   );
 };
+
 export * from './list-item.types';

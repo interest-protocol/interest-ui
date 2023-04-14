@@ -1,15 +1,11 @@
-import { StylinComponentProps } from '@stylin.js/react';
-import { HTMLAttributes, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
-export type BoxElementProps = Omit<
-  HTMLAttributes<HTMLDivElement>,
-  'color' | 'translate'
->;
+import { BoxProps } from '../../elements';
 
-export interface ListItemProps extends StylinComponentProps, BoxElementProps {
+export interface ListItemProps extends BoxProps {
   title: string;
-  description?: string;
   metadata?: string;
+  description?: string;
   SuffixIcon?: ReactNode;
   PrefixIcon?: ReactNode;
 }

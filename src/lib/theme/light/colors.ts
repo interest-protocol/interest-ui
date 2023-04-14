@@ -16,6 +16,5 @@ export const colors: Record<Colors, string> = {
   textSoft: palette.NEUTRAL_500,
   textDisabled: palette.NEUTRAL_900,
   textPlaceholder: palette.NEUTRAL_300,
-  specialBackground: 'linear-gradient(0deg, #0055ff0a, #0055ff0a), #F2F0F4;',
   border: palette.NEUTRAL_300,
 };

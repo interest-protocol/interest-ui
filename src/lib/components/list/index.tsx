@@ -1,6 +1,5 @@
 import { useTheme } from '@emotion/react';
 import React, { FC, PropsWithChildren, useState } from 'react';
-import { v4 } from 'uuid';
 
 import { Box, Motion } from '../../elements';
 import { ArrowRightSVG } from '../../icons';
@@ -8,9 +7,10 @@ import { Theme } from '../../theme';
 import { ListItem } from '../list-item';
 import { ListProps } from './list.types';
 
-export const List: FC<PropsWithChildren<ListProps>> = ({ title, Items }) => {
+export const List: FC<PropsWithChildren<ListProps>> = ({ title, items }) => {
   const theme = useTheme() as Theme;
   const [openList, setOpenList] = useState(false);
+
   return (
     <Box
       onMouseEnter={() => setOpenList(true)}
@@ -49,7 +49,7 @@ export const List: FC<PropsWithChildren<ListProps>> = ({ title, Items }) => {
         animate={{ display: openList ? 'block' : 'none' }}
         initial={{ display: 'none' }}
       >
-        {Items && Items.map((Item) => <Box key={v4()}>{Item}</Box>)}
+        {items.map((item) => item)}
       </Motion>
     </Box>
   );
