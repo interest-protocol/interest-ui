@@ -23,7 +23,7 @@ export const RadioButton: FC<PropsWithChildren<RadioButtonProps>> = ({
   const RadioButtonElement = stylin<RadioButtonElementProps>('input')();
 
   const RadioCircleColor = useMemo(() => {
-    return selector ? theme.colors.accent : theme.colors.border;
+    return selector ? theme.colors.primary : theme.colors.border;
   }, [selector, theme]);
 
   const variants = {

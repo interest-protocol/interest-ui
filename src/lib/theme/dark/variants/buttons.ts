@@ -18,18 +18,18 @@ const defaultButton = mergeDeepRight(button, {
 export const variants = {
   filled: mergeDeepRight(defaultButton, {
     color: colors.textAccent,
-    background: colors.accent,
+    background: colors.primary,
     ':disabled': {
       background: colors.disabled,
     },
   }),
   outline: mergeDeepRight(defaultButton, {
     border: '1px solid',
-    color: colors.accent,
+    color: colors.primary,
     borderColor: colors.outline,
     ':hover': {
-      borderColor: colors.accent,
-      background: `${colors.accent}08`,
+      borderColor: colors.primary,
+      background: `${colors.primary}08`,
     },
     ':disabled': {
       borderColor: colors.disabled,
@@ -37,9 +37,9 @@ export const variants = {
     },
   }),
   text: mergeDeepRight(defaultButton, {
-    color: colors.accent,
+    color: colors.primary,
     ':hover': {
-      background: `${colors.accent}08`,
+      background: `${colors.primary}08`,
     },
   }),
   icon: mergeDeepRight(button, {
