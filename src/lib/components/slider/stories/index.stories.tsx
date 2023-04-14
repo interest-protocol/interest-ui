@@ -16,11 +16,15 @@ export default {
 } as ComponentMeta<typeof Slider>;
 
 const Template: ComponentStory<typeof Slider> = (args) => {
-  const [value, setValue] = useState(50);
-
   return (
-    <Box p="3xl" bg="white">
-      <Slider {...args} onChange={setValue} value={value} />
+    <Box
+      p="3xl"
+      bg="white"
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+    >
+      <Slider {...args} />
     </Box>
   );
 };
