@@ -11,4 +11,5 @@ export const colors = {
   background: palette.NEUTRAL_50,
   textDisabled: palette.NEUTRAL_900,
   textPlaceholder: palette.NEUTRAL_300,
+  specialBackground: 'linear-gradient(0deg, #0055ff0a, #0055ff0a), #F2F0F4;',
 };
