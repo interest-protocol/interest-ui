@@ -1,8 +1,8 @@
 {
   "name": "@interestprotocol/ui-kit",
-  "version": "0.0.0-alpha.1",
+  "version": "0.0.0-alpha.2",
   "description": "Interest Protocol interface UI Kit",
-  "main": "index.js",
+  "main": "./dist/components/index.js",
   "repository": "https://github.com/interest-protocol/interest-ui",
   "author": "git-marcopitra <marcomorete73@hotmail.com>",
   "license": "MIT",
@@ -67,6 +67,8 @@
   "scripts": {
     "build": "rimraf dist && tsc",
     "prepublish": "yarn build",
+    "publish:alpha": "yarn build && npm publish --tag alpha",
+    "publish:latest": "yarn build && npm publish",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   }
