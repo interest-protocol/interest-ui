@@ -12,7 +12,9 @@ export const colors: Record<Colors, string> = {
   disabled: palette.NEUTRAL_200,
   textAccent: palette.PRIMARY_50,
   background: palette.NEUTRAL_50,
+  foreground: palette.NEUTRAL_700,
   textSoft: palette.NEUTRAL_500,
   textDisabled: palette.NEUTRAL_900,
   textPlaceholder: palette.NEUTRAL_300,
+  border: palette.NEUTRAL_300,
 };

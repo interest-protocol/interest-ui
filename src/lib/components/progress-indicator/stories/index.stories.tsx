@@ -8,17 +8,10 @@ export default {
   component: ProgressIndicator,
   argTypes: {
     variant: {
+      defaultValue: 'bar',
       options: ['bar', 'circle', 'loading'],
       control: { type: 'radio' },
     },
-  },
-  value: {
-    type: 'number',
-    defaultValue: 50,
-  },
-  size: {
-    type: 'string',
-    defaultValue: 50,
   },
 } as ComponentMeta<typeof ProgressIndicator>;
 
