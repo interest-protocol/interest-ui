@@ -1,8 +1,13 @@
 {
-  "name": "@interestprotocol/ui-kit",
-  "version": "0.0.0-alpha.2",
+  "name": "@interest-protocol/ui-kit",
+  "version": "0.0.0-alpha.1",
   "description": "Interest Protocol interface UI Kit",
   "main": "./dist/components/index.js",
+  "exports": {
+    "./": "./dist/components/index.js",
+    "./theme": "./dist/theme/index.js",
+    "./elements": "./dist/elements/index.js"
+  },
   "repository": "https://github.com/interest-protocol/interest-ui",
   "author": "git-marcopitra <marcomorete73@hotmail.com>",
   "license": "MIT",
