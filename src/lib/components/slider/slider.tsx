@@ -15,7 +15,6 @@ type TooltipProps = {
 const SliderElement: FC<TooltipProps> = ({ max, min, step, initial }) => {
   const theme = useTheme() as Theme;
   const [values, setValues] = useState([initial]);
-  const [isVisible, setIsVisible] = useState(false);
   return (
     <Range
       values={values}
@@ -49,11 +48,9 @@ const SliderElement: FC<TooltipProps> = ({ max, min, step, initial }) => {
           </Box>
         </Box>
       )}
-      renderThumb={({ props }) => (
+      renderThumb={({ props, isDragged }) => (
         <Box
           {...props}
-          onMouseOver={() => setIsVisible(true)}
-          onMouseOut={() => setIsVisible(false)}
           height="1.5rem"
           width="1.5rem"
           borderRadius="50%"
@@ -66,7 +63,7 @@ const SliderElement: FC<TooltipProps> = ({ max, min, step, initial }) => {
             boxShadow: `0 0 0 .625rem ${theme.colors.accent}1F`,
           }}
         >
-          {isVisible ? (
+          {isDragged ? (
             <Box
               marginTop="-4.125rem"
               color="#fff"
