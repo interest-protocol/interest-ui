@@ -5,7 +5,7 @@ import { ButtonVariants } from '../../theme/theme.types';
 
 export type ButtonElementProps = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
-  'color' | 'translate'
+  'color' | 'translate' | 'content'
 >;
 
 export interface ButtonProps extends StylinComponentProps, ButtonElementProps {

@@ -55,6 +55,5 @@ export const WithoutLabel = Template.bind({});
 
 WithoutLabel.args = {
   name: 'switch',
-  hideLabel: true,
   defaultValue: false,
 };

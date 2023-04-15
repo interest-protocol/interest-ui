@@ -5,7 +5,7 @@ export type ProgressVariants = 'bar' | 'circle' | 'loading';
 
 export type ProgressElementProps = Omit<
   ProgressHTMLAttributes<HTMLProgressElement>,
-  'color' | 'translate'
+  'color' | 'translate' | 'content'
 >;
 
 export interface ProgressItemProps
