@@ -1,6 +1,6 @@
 {
   "name": "@interest-protocol/ui-kit",
-  "version": "0.0.0-alpha.12",
+  "version": "0.0.0-alpha.16",
   "description": "Interest Protocol interface UI Kit",
   "main": "dist/index.cjs.js",
   "src": "src/lib/index.ts",
@@ -14,15 +14,6 @@
   "sideEffects": false,
   "homepage": "https://interest-ui.netlify.app/",
   "dependencies": {
-    "@emotion/react": "^11.10.6",
-    "@stylin.js/react": "^1.0.1",
-    "framer-motion": "^10.11.2",
-    "ramda": "^0.29.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "uuid": "^8.3.2"
-  },
-  "peerDependencies": {
     "@emotion/react": "^11.10.6",
     "@stylin.js/react": "^1.0.1",
     "framer-motion": "^10.11.2",
