@@ -2,11 +2,16 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 import React from 'react';
 
 import { Slider } from '..';
+import { Box } from '../../../elements';
 
 export default {
   title: 'Slider',
   component: Slider,
   argTypes: {
+    disabled: {
+      defaultValue: false,
+      control: { type: 'boolean' },
+    },
     initial: {
       options: [0, 50, 100],
       control: { type: 'number' },
@@ -15,7 +20,11 @@ export default {
 } as ComponentMeta<typeof Slider>;
 
 const Template: ComponentStory<typeof Slider> = (args) => {
-  return <Slider {...args} />;
+  return (
+    <Box p="3xl" bg="white">
+      <Slider {...args} />;
+    </Box>
+  );
 };
 
 export const Default = Template.bind({});

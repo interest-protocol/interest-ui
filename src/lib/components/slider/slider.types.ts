@@ -10,4 +10,5 @@ export interface SliderProps {
   value: number;
   step?: number;
   initial?: number;
+  disabled?: boolean;
 }

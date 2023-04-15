@@ -10,13 +10,21 @@ type TooltipProps = {
   max: number;
   step: number;
   initial: number;
+  disabled?: boolean;
 };
 
-const SliderElement: FC<TooltipProps> = ({ max, min, step, initial }) => {
+const SliderElement: FC<TooltipProps> = ({
+  max,
+  min,
+  step,
+  initial,
+  disabled,
+}) => {
   const theme = useTheme() as Theme;
   const [values, setValues] = useState([initial]);
   return (
     <Range
+      disabled={disabled}
       values={values}
       step={step}
       min={min}
@@ -54,16 +62,21 @@ const SliderElement: FC<TooltipProps> = ({ max, min, step, initial }) => {
           height="1.5rem"
           width="1.5rem"
           borderRadius="50%"
-          backgroundColor={theme.colors.accent}
+          backgroundColor={
+            !disabled ? theme.colors.accent : theme.colors.disabled
+          }
+          cursor={disabled ? 'not-allowed !important' : 'pointer'}
           display="flex"
           justifyContent="center"
           alignItems="center"
           boxShadow="0rem .125rem .375rem #AAA"
-          nHover={{
-            boxShadow: `0 0 0 .625rem ${theme.colors.accent}1F`,
-          }}
+          nHover={
+            !disabled && {
+              boxShadow: `0 0 0 .625rem ${theme.colors.accent}1F`,
+            }
+          }
         >
-          {isDragged ? (
+          {isDragged && (
             <Box
               marginTop="-4.125rem"
               color="#fff"
@@ -79,7 +92,7 @@ const SliderElement: FC<TooltipProps> = ({ max, min, step, initial }) => {
             >
               {values[0]}
             </Box>
-          ) : null}
+          )}
         </Box>
       )}
     />
