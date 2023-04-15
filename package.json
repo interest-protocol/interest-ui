@@ -1,28 +1,12 @@
 {
   "name": "@interest-protocol/ui-kit",
-  "version": "0.0.0-alpha.7",
+  "version": "0.0.0-alpha.11",
   "description": "Interest Protocol interface UI Kit",
-  "main": "dist/components/index.js",
-  "types": "dist/components/index.d.ts",
-  "exports": {
-    ".": "./dist/components/index.js",
-    "./elements": "./dist/elements/index.js",
-    "./theme": "./dist/theme/index.js"
-  },
-  "typesVersions": {
-    "*": {
-      ".": [
-        "./dist/components/index.d.ts"
-      ],
-      "./elements": [
-        "./dist/elements/index.d.ts"
-      ],
-      "./theme": [
-        "./dist/theme/index.d.ts"
-      ]
-    }
-  },
-  "type": "module",
+  "main": "dist/index.cjs.js",
+  "src": "src/lib/index.ts",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "declarationTypes": "types/index.d.ts",
   "repository": "https://github.com/interest-protocol/interest-ui",
   "author": "git-marcopitra <marcomorete73@hotmail.com>",
   "license": "MIT",
@@ -44,6 +28,10 @@
     "@commitlint/config-conventional": "^17.4.4",
     "@emotion/eslint-plugin": "^11.10.0",
     "@react-theming/storybook-addon": "^1.1.10",
+    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-commonjs": "^24.1.0",
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.2",
     "@storybook/addon-actions": "^6.5.16",
     "@storybook/addon-essentials": "^6.5.16",
     "@storybook/addon-interactions": "^6.5.16",
@@ -60,6 +48,7 @@
     "@typescript-eslint/eslint-plugin": "^5.57.0",
     "@typescript-eslint/parser": "^5.57.0",
     "babel-loader": "^8.3.0",
+    "babel-plugin-ramda": "^2.1.1",
     "commitlint-config-gitmoji": "^2.3.1",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.8.0",
@@ -77,6 +66,13 @@
     "pretty-quick": "^3.1.3",
     "react-docgen-typescript-plugin": "^1.0.5",
     "rimraf": "^5.0.0",
+    "rollup": "^3.20.2",
+    "rollup-plugin-delete": "^2.0.0",
+    "rollup-plugin-dts-bundle": "^1.0.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript-paths": "^1.4.0",
+    "rollup-plugin-typescript2": "^0.34.1",
     "storybook": "^6.5.16"
   },
   "engines": {
@@ -88,7 +84,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "rimraf dist && tsc",
+    "build": "tsc && rollup -c",
     "publish:alpha": "yarn build && npm publish --tag alpha",
     "publish:latest": "yarn build && npm publish",
     "storybook": "start-storybook -p 6006",

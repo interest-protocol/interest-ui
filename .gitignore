@@ -4,3 +4,4 @@ storybook-static
 .DS_Store
 .vscode/
 dist/
+types/
