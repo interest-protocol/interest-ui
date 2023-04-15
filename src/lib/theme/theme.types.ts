@@ -38,6 +38,7 @@ export type Colors =
   | 'background'
   | 'textAccent'
   | 'textDisabled'
+  | 'textBackground'
   | 'textPlaceholder';
 export type Typographies =
   | 'displayLarge'

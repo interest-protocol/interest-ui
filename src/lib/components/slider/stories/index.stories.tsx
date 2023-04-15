@@ -20,7 +20,7 @@ export default {
 
 const Template: ComponentStory<typeof Slider> = (args) => {
   return (
-    <Box p="3xl" bg="white">
+    <Box p="3xl" backgroundColor="#fff">
       <Slider {...args} />
     </Box>
   );

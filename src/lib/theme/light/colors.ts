@@ -10,5 +10,6 @@ export const colors = {
   textAccent: palette.PRIMARY_50,
   background: palette.NEUTRAL_50,
   textDisabled: palette.NEUTRAL_900,
+  textBackground: palette.NEUTRAL_0,
   textPlaceholder: palette.NEUTRAL_300,
 };

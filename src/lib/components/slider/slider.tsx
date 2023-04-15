@@ -6,8 +6,8 @@ import { Box } from '../../elements';
 import { Theme } from '../../theme';
 
 type TooltipProps = {
-  min?: number;
   max: number;
+  min?: number;
   step: number;
   initial: number;
   disabled?: boolean;
@@ -24,33 +24,33 @@ const SliderElement: FC<TooltipProps> = ({
   const [values, setValues] = useState([initial]);
   return (
     <Range
-      disabled={disabled}
-      values={values}
-      step={step}
-      min={min}
       max={max}
+      min={min}
+      step={step}
+      values={values}
+      disabled={disabled}
       onChange={(values) => setValues(values)}
       renderTrack={({ props, children }) => (
         <Box
+          width="100%"
+          display="flex"
+          height="2.25rem"
+          alignItems="center"
+          marginTop="1.25rem"
           onMouseDown={props.onMouseDown}
           onTouchStart={props.onTouchStart}
-          alignItems="center"
-          height="2.25rem"
-          display="flex"
-          width="100%"
-          marginTop="1.25rem"
         >
           <Box
+            width="100%"
             ref={props.ref}
             height=".3125rem"
-            width="100%"
+            alignSelf="center"
             background={getTrackBackground({
               values,
               colors: [`${theme.colors.accent}`, `${theme.colors.accent}1F`],
               min: min || 0,
               max: max,
             })}
-            alignSelf="center"
           >
             {children}
           </Box>
@@ -59,35 +59,35 @@ const SliderElement: FC<TooltipProps> = ({
       renderThumb={({ props, isDragged }) => (
         <Box
           {...props}
-          height="1.5rem"
-          width="1.5rem"
-          borderRadius="50%"
-          backgroundColor={
-            !disabled ? theme.colors.accent : theme.colors.disabled
-          }
-          cursor={disabled ? 'not-allowed !important' : 'pointer'}
           display="flex"
-          justifyContent="center"
+          width="1.5rem"
+          height="1.5rem"
+          borderRadius="50%"
           alignItems="center"
-          boxShadow="0rem .125rem .375rem #AAA"
+          justifyContent="center"
+          boxShadow="0rem .0625rem .375rem #0000007f"
+          cursor={disabled ? 'not-allowed !important' : 'pointer'}
           nHover={
             !disabled && {
               boxShadow: `0 0 0 .625rem ${theme.colors.accent}1F`,
             }
           }
+          backgroundColor={
+            !disabled ? theme.colors.accent : theme.colors.disabled
+          }
         >
           {isDragged && (
             <Box
-              marginTop="-4.125rem"
-              color="#fff"
               display="flex"
               height="1.875rem"
-              minWidth="1.875rem"
-              justifyContent="center"
-              paddingTop=".25rem"
               fontSize=".875rem"
-              clipPath="polygon(0 60%, 0 0, 100% 0, 100% 60%, 50% 100%)"
+              paddingTop=".25rem"
+              minWidth="1.875rem"
+              marginTop="-4.125rem"
               borderRadius=".125rem"
+              justifyContent="center"
+              color={theme.colors.textBackground}
+              clipPath="polygon(0 60%, 0 0, 100% 0, 100% 60%, 50% 100%)"
               backgroundColor={theme.colors.accent}
             >
               {values[0]}
