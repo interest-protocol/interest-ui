@@ -5,7 +5,7 @@ import { lightTheme } from '../../theme';
 
 export type TypographyElementProps = Omit<
   HTMLAttributes<HTMLElement>,
-  'color' | 'translate'
+  'color' | 'translate' | 'content'
 > &
   RefAttributes<unknown>;
 
