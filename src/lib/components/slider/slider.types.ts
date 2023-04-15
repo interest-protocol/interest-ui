@@ -8,5 +8,6 @@ export interface SliderProps {
   min: number;
   max: number;
   value: number;
-  step: number;
+  step?: number;
+  initial?: number;
 }

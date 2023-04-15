@@ -1,21 +1,10 @@
-import { useTheme } from '@emotion/react';
-import React, {
-  FC,
-  MouseEvent as ReactMouseEvent,
-  MouseEventHandler,
-  useEffect,
-  useRef,
-  useState,
-  useTransition,
-} from 'react';
+import React, { FC } from 'react';
 
-import { Box } from '../../elements';
-import { Theme } from '../../theme';
 import { SliderProps } from './slider.types';
 import SliderElement from './slider';
 
-export const Slider: FC<SliderProps> = ({ min, max, step }) => (
-  <SliderElement min={min} max={max} step={step} />
+export const Slider: FC<SliderProps> = ({ min, max, step, initial }) => (
+  <SliderElement initial={initial || 0} max={max} step={step || 1} />
 );
 
 export * from './slider.types';

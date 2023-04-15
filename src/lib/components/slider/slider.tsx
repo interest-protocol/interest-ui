@@ -6,14 +6,15 @@ import { Box } from '../../elements';
 import { Theme } from '../../theme';
 
 type TooltipProps = {
-  min: number;
+  min?: number;
   max: number;
   step: number;
+  initial: number;
 };
 
-const SliderElement: FC<TooltipProps> = ({ max, min, step }) => {
+const SliderElement: FC<TooltipProps> = ({ max, min, step, initial }) => {
   const theme = useTheme() as Theme;
-  const [values, setValues] = useState([0]);
+  const [values, setValues] = useState([initial]);
   const [isVisible, setIsVisible] = useState(false);
   return (
     <Range
@@ -39,7 +40,7 @@ const SliderElement: FC<TooltipProps> = ({ max, min, step }) => {
             background={getTrackBackground({
               values,
               colors: [`${theme.colors.accent}`, `${theme.colors.accent}1F`],
-              min: min,
+              min: min || 0,
               max: max,
             })}
             alignSelf="center"
