@@ -21,7 +21,7 @@ export default {
 const Template: ComponentStory<typeof Slider> = (args) => {
   return (
     <Box p="3xl" bg="white">
-      <Slider {...args} />;
+      <Slider {...args} />
     </Box>
   );
 };
