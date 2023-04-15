@@ -12,10 +12,10 @@ import React, {
 import { Box } from '../../elements';
 import { Theme } from '../../theme';
 import { SliderProps } from './slider.types';
-import SliderToolTip from './slider-tooltip';
+import SliderElement from './slider';
 
-export const Slider: FC<SliderProps> = ({ min, max, step, value }) => (
-  <SliderToolTip min={min} max={max} step={step} />
+export const Slider: FC<SliderProps> = ({ min, max, step }) => (
+  <SliderElement min={min} max={max} step={step} />
 );
 
 export * from './slider.types';

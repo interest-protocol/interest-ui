@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { Range, getTrackBackground } from 'react-range';
 import { useTheme } from '@emotion/react';
 
@@ -11,9 +11,10 @@ type TooltipProps = {
   step: number;
 };
 
-const SliderToolTip: FC<TooltipProps> = ({ max, min, step }) => {
+const SliderElement: FC<TooltipProps> = ({ max, min, step }) => {
   const theme = useTheme() as Theme;
-  const [values, setValues] = React.useState([0]);
+  const [values, setValues] = useState([0]);
+  const [isVisible, setIsVisible] = useState(false);
   return (
     <Range
       values={values}
@@ -25,9 +26,11 @@ const SliderToolTip: FC<TooltipProps> = ({ max, min, step }) => {
         <Box
           onMouseDown={props.onMouseDown}
           onTouchStart={props.onTouchStart}
+          alignItems="center"
           height="2.25rem"
           display="flex"
           width="100%"
+          marginTop="1.25rem"
         >
           <Box
             ref={props.ref}
@@ -45,36 +48,44 @@ const SliderToolTip: FC<TooltipProps> = ({ max, min, step }) => {
           </Box>
         </Box>
       )}
-      renderThumb={({ props, isDragged }) => (
+      renderThumb={({ props }) => (
         <Box
           {...props}
-          height="2.625rem"
-          width="2.625rem"
+          onMouseOver={() => setIsVisible(true)}
+          onMouseOut={() => setIsVisible(false)}
+          height="1.5rem"
+          width="1.5rem"
           borderRadius="50%"
           backgroundColor={theme.colors.accent}
           display="flex"
           justifyContent="center"
           alignItems="center"
           boxShadow="0rem .125rem .375rem #AAA"
+          nHover={{
+            boxShadow: `0 0 0 .625rem ${theme.colors.accent}1F`,
+          }}
         >
-          <Box
-            position="absolute"
-            top="-1.875rem"
-            color="#fff"
-            fontWeight="bold"
-            fontSize=".875rem"
-            fontFamily="Arial,Helvetica Neue,Helvetica,sans-serif"
-            padding=".25rem"
-            clipPath="polygon(0 60%, 0 0, 100% 0, 100% 60%, 50% 100%)"
-            borderRadius=".25rem"
-            backgroundColor={theme.colors.accent}
-          >
-            {values[0].toFixed(1)}
-          </Box>
+          {isVisible ? (
+            <Box
+              marginTop="-4.125rem"
+              color="#fff"
+              display="flex"
+              height="1.875rem"
+              minWidth="1.875rem"
+              justifyContent="center"
+              paddingTop=".25rem"
+              fontSize=".875rem"
+              clipPath="polygon(0 60%, 0 0, 100% 0, 100% 60%, 50% 100%)"
+              borderRadius=".125rem"
+              backgroundColor={theme.colors.accent}
+            >
+              {values[0]}
+            </Box>
+          ) : null}
         </Box>
       )}
     />
   );
 };
 
-export default SliderToolTip;
+export default SliderElement;
