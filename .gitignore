@@ -3,4 +3,4 @@ storybook-static
 *.log
 .DS_Store
 .vscode/
-dist
+dist/
