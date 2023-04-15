@@ -13,7 +13,6 @@ export default {
       control: { type: 'boolean' },
     },
     initial: {
-      options: [0, 50, 100],
       control: { type: 'number' },
     },
   },
