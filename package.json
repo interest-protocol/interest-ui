@@ -75,9 +75,6 @@
     "rollup-plugin-typescript2": "^0.34.1",
     "storybook": "^6.5.16"
   },
-  "engines": {
-    "node": "16.18.1"
-  },
   "files": [
     "package.json",
     "README",
