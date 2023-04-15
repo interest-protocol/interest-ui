@@ -5,7 +5,7 @@ import { BoxProps } from '../../elements';
 
 export type TextFieldElementProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,
-  'color' | 'translate' | 'height' | 'width'
+  'color' | 'translate' | 'height' | 'width' | 'content'
 >;
 
 export interface TextFieldProps

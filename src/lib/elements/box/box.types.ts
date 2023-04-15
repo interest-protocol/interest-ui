@@ -5,7 +5,7 @@ import { lightTheme } from '../../theme';
 
 export type BoxElementProps = Omit<
   HTMLAttributes<HTMLDivElement>,
-  'color' | 'translate'
+  'color' | 'translate' | 'content'
 >;
 
 export interface BoxProps extends StylinComponentProps, BoxElementProps {

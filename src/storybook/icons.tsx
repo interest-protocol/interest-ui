@@ -1,4 +1,9 @@
+import { useTheme } from '@emotion/react';
 import React, { FC } from 'react';
+
+import { Button } from '../lib/components/button';
+import { ArrowRightSVG } from '../lib/icons';
+import { Theme } from '../lib/theme';
 
 export const SwapIcon: FC = () => (
   <svg width="18" height="14" viewBox="0 0 18 14" fill="none">
@@ -41,3 +46,23 @@ export const PlusIcon: FC = () => (
     />
   </svg>
 );
+
+export const ArrowRightIcon: FC = () => {
+  const theme = useTheme() as Theme;
+  return (
+    <Button
+      width="0.313rem"
+      height="0.625rem"
+      color={theme.dark ? '#F2F0F4' : '#001133'}
+      ml="2xl"
+      variant="icon"
+    >
+      <ArrowRightSVG
+        maxWidth={'0.313rem'}
+        maxHeight={'0.625rem'}
+        width="100%"
+        height="100%"
+      />
+    </Button>
+  );
+};
