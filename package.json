@@ -83,6 +83,7 @@
   "scripts": {
     "build": "tsc && rollup -c",
     "publish:alpha": "yarn build && npm publish --tag alpha",
+    "publish:alpha": "yarn build && npm publish --tag beta",
     "publish:latest": "yarn build && npm publish",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
