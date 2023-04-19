@@ -8,7 +8,7 @@ export type ButtonElementProps = Omit<
   'color' | 'translate' | 'content'
 >;
 
-export interface ButtonProps extends StylinComponentProps, ButtonElementProps {
+export interface ButtonProps extends Omit<StylinComponentProps, 'transition' | 'onAnimationStart'>, ButtonElementProps {
   variant: ButtonVariants;
   SuffixIcon?: ReactNode;
   PrefixIcon?: ReactNode;
