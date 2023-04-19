@@ -1,4 +1,5 @@
 import stylin, { variant } from '@stylin.js/react';
+import { CustomDomComponent, easeInOut, motion } from 'framer-motion';
 import React, { FC, PropsWithChildren } from 'react';
 
 import { Box } from '../../elements';
@@ -11,13 +12,21 @@ const ButtonElement = stylin<ButtonElementProps>('button')(
   })
 );
 
+const MotionButton = motion(ButtonElement) as CustomDomComponent<ButtonProps>;
+
 export const Button: FC<PropsWithChildren<ButtonProps>> = ({
+  children,
   PrefixIcon,
   SuffixIcon,
-  children,
   ...props
 }) => (
-  <ButtonElement {...props}>
+  <MotionButton
+    whileTap={{
+      scale: 0.97,
+      transition: { duration: 0.005, ease: easeInOut },
+    }}
+    {...props}
+  >
     {props.variant == 'icon' ? (
       <Box
         as="span"
@@ -36,7 +45,7 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
         {SuffixIcon}
       </>
     )}
-  </ButtonElement>
+  </MotionButton>
 );
 
 export * from './button.types';
