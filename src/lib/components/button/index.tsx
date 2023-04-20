@@ -22,7 +22,11 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
 }) => (
   <MotionButton
     whileTap={{
-      scale: 0.97,
+      scale: props.disabled ? 1 : 0.97,
+      transition: { duration: 0.005, ease: easeInOut },
+    }}
+    whileHover={{
+      scale: props.disabled ? 1 : 1.05,
       transition: { duration: 0.005, ease: easeInOut },
     }}
     {...props}
