@@ -3,6 +3,10 @@ import { Props } from 'react-modal';
 
 import { ButtonProps } from '../button/button.types';
 
+interface IOpenState {
+  isOpen: boolean;
+}
+
 export interface CustomContent {
   custom: boolean;
 }
@@ -18,14 +22,17 @@ export interface StandardizedContentWithButton extends StandardizedContent {
   buttonProps: ButtonProps;
 }
 
-export type ModalContentProps =
-  | CustomContent
-  | StandardizedContent
-  | StandardizedContentWithButton;
+export type ModalContentProps = IOpenState &
+  (CustomContent | StandardizedContent | StandardizedContentWithButton);
 
 export type ModalProps = Props &
+  IOpenState &
   ModalContentProps & {
-    isOpen: boolean;
     opaque?: boolean;
+    allowClose?: boolean;
     onClose?: () => void;
   };
+
+export interface ModalContentWrapperProps extends IOpenState {
+  button?: ReactNode;
+}

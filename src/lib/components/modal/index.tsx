@@ -12,6 +12,8 @@ export { setAppElement } from 'react-modal';
 export const Modal: FC<PropsWithChildren<ModalProps>> = ({
   isOpen,
   opaque,
+  onClose,
+  allowClose,
   ...props
 }) => {
   const { colors } = useTheme() as Theme;
@@ -21,6 +23,9 @@ export const Modal: FC<PropsWithChildren<ModalProps>> = ({
     <ReactModal
       {...props}
       isOpen={isOpen}
+      onRequestClose={onClose}
+      shouldCloseOnEsc={allowClose}
+      shouldCloseOnOverlayClick={allowClose}
       style={{
         overlay: {
           background,
@@ -41,7 +46,7 @@ export const Modal: FC<PropsWithChildren<ModalProps>> = ({
         },
       }}
     >
-      <ModalContent {...props} />
+      <ModalContent isOpen={isOpen} {...props} />
     </ReactModal>
   );
 };

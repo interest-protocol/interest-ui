@@ -28,5 +28,5 @@ export const Box: FC<PropsWithRef<PropsWithChildren<BoxProps>>> = forwardRef(
   }
 );
 
-// Box.displayName = 'Box';
+Box.displayName = 'Box';
 export * from '../box/box.types';

@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
+import { v4 } from 'uuid';
 
 import { Box } from '../../../elements';
 import { Modal } from '..';
@@ -9,7 +10,13 @@ const meta: Meta<typeof Modal> = {
   component: Modal,
   argTypes: {
     isOpen: {
-      defaultValue: true,
+      defaultValue: false,
+      control: { type: 'boolean' },
+    },
+    allowClose: {
+      control: { type: 'boolean' },
+    },
+    hasCloseButton: {
       control: { type: 'boolean' },
     },
   },
@@ -19,21 +26,30 @@ export default meta;
 
 type Story = StoryObj<typeof Modal>;
 
+let isNormalOpen = false;
+const toggleModal = () => {
+  console.log('>> before :: ', isNormalOpen);
+  isNormalOpen = !isNormalOpen;
+  console.log('>> after :: ', isNormalOpen);
+};
 export const Normal: Story = {
   args: {
-    isOpen: true,
+    isOpen: false,
+    allowClose: true,
     title: 'IPX Balance',
-    children: (
-      <Box p="4xl" borderTop="1px solid" borderColor="textAccent">
-        Marco Pitra
+    hasCloseButton: true,
+    onClose: toggleModal,
+    children: ['Modal', 'Content'].map((text) => (
+      <Box p="4xl" borderTop="1px solid" borderColor="textAccent" key={v4()}>
+        {text}
       </Box>
-    ),
+    )),
   },
 };
 
 export const WithMainButton: Story = {
   args: {
-    isOpen: true,
+    isOpen: false,
     title: 'IPX Balance',
     children: 'Marco Pitra',
     buttonProps: {
@@ -46,7 +62,7 @@ export const WithMainButton: Story = {
 
 export const WithCloseButton: Story = {
   args: {
-    isOpen: true,
+    isOpen: false,
     title: 'IPX Balance',
     hasCloseButton: true,
     children: 'Marco Pitra',

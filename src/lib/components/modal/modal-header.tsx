@@ -33,7 +33,7 @@ export const ModalHeader: FC<StandardizedContent> = ({
       </Typography>
     )}
     {hasCloseButton && (
-      <Box gridColumn="3/4">
+      <Box ml="auto" gridColumn="3/4">
         <Button variant="icon" color="text">
           <TimesSVG maxWidth="1rem" maxHeight="1rem" width="100%" />
         </Button>
