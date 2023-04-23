@@ -46,7 +46,7 @@ export const Modal: FC<PropsWithChildren<ModalProps>> = ({
         },
       }}
     >
-      <ModalContent isOpen={isOpen} {...props} />
+      <ModalContent isOpen={isOpen} onClose={onClose} {...props} />
     </ReactModal>
   );
 };
