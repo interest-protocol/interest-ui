@@ -7,30 +7,39 @@ interface IOpenState {
   isOpen: boolean;
 }
 
-export interface CustomContent {
+export interface Custom {
   custom: boolean;
 }
 
-export interface StandardizedContent {
+export interface Standardized {
   title: string;
   Icon?: ReactNode;
-  hasCloseButton?: boolean;
 }
 
-export interface StandardizedContentWithButton extends StandardizedContent {
+export interface StandardizedWithCloseButton extends Standardized {
+  onClose: () => void;
+  hasCloseButton: boolean;
+}
+
+export type StandardizedWithButton = (
+  | Standardized
+  | StandardizedWithCloseButton
+) & {
   buttonText: string;
   buttonProps: ButtonProps;
-}
+};
+
+type StandardizedTypes = Standardized | StandardizedWithCloseButton;
 
 export type ModalContentProps = IOpenState &
-  (CustomContent | StandardizedContent | StandardizedContentWithButton);
+  (Custom | StandardizedTypes | StandardizedWithButton);
 
 export type ModalProps = Props &
   IOpenState &
   ModalContentProps & {
     opaque?: boolean;
     allowClose?: boolean;
-    onClose?: () => void;
+    onClose?: StandardizedWithCloseButton['onClose'];
   };
 
 export interface ModalContentWrapperProps extends IOpenState {

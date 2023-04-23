@@ -11,7 +11,6 @@ import { hasModalButton, isCustomContent } from './modal.utils';
 import { ModalHeader } from './modal-header';
 
 const renderMaybeChildrenArray = (children: ReactNode, dark: boolean) => {
-  console.log(Array.isArray(children));
   if (Array.isArray(children))
     return children.map((child) => (
       <Box
@@ -65,6 +64,7 @@ const ModalContentWrapper: FC<PropsWithChildren<ModalContentWrapperProps>> = ({
 );
 
 const ModalContent: FC<PropsWithChildren<ModalContentProps>> = ({
+  isOpen,
   children,
   ...props
 }) => {
@@ -72,7 +72,7 @@ const ModalContent: FC<PropsWithChildren<ModalContentProps>> = ({
 
   if (isCustomContent(props)) return <>{children}</>;
 
-  const { isOpen, title, hasCloseButton, Icon } = props;
+  const { title, Icon } = props;
 
   if (hasModalButton(props)) {
     const { buttonText, buttonProps } = props;
@@ -82,11 +82,7 @@ const ModalContent: FC<PropsWithChildren<ModalContentProps>> = ({
         isOpen={isOpen}
         button={<Button {...buttonProps}>{buttonText}</Button>}
       >
-        <ModalHeader
-          Icon={Icon}
-          title={title}
-          hasCloseButton={hasCloseButton}
-        />
+        <ModalHeader {...props} Icon={Icon} title={title} />
         {renderMaybeChildrenArray(children, dark)}
       </ModalContentWrapper>
     );
@@ -94,7 +90,7 @@ const ModalContent: FC<PropsWithChildren<ModalContentProps>> = ({
 
   return (
     <ModalContentWrapper isOpen={isOpen}>
-      <ModalHeader Icon={Icon} title={title} hasCloseButton={hasCloseButton} />
+      <ModalHeader {...props} Icon={Icon} title={title} />
       {renderMaybeChildrenArray(children, dark)}
     </ModalContentWrapper>
   );

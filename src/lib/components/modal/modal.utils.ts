@@ -1,23 +1,32 @@
-import { prop } from 'ramda';
+import { hasPath } from 'ramda';
 
 import {
-  CustomContent,
+  Custom,
   ModalContentProps,
-  StandardizedContentWithButton,
+  StandardizedWithButton,
+  StandardizedWithCloseButton,
 } from './modal.types';
 
 export const isCustomContent = (
-  props: ModalContentProps
-): props is CustomContent => {
-  if (prop('custom', props)) return true;
+  props: Omit<ModalContentProps, 'isOpen'>
+): props is Custom => {
+  if (hasPath(['custom'], props)) return true;
 
   return false;
 };
 
 export const hasModalButton = (
-  props: ModalContentProps
-): props is StandardizedContentWithButton => {
-  if (prop('buttonText', props)) return true;
+  props: Omit<ModalContentProps, 'isOpen'>
+): props is StandardizedWithButton => {
+  if (hasPath(['buttonText'], props)) return true;
+
+  return false;
+};
+
+export const hasCloseButton = (
+  props: Omit<ModalContentProps, 'isOpen'>
+): props is StandardizedWithCloseButton => {
+  if (hasPath(['hasCloseButton'], props)) return true;
 
   return false;
 };
