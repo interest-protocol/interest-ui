@@ -42,7 +42,7 @@ export type Colors =
   | 'textSoft'
   | 'textDisabled'
   | 'textBackground'
-  | 'textPlaceholder';
+  | 'textPlaceholder'
   | 'secondary'
   | 'textPlaceholder'
   | 'foreground';

@@ -2,7 +2,6 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 import React from 'react';
 
 import { Slider } from '..';
-import { Box } from '../../../elements';
 
 export default {
   title: 'Slider',
@@ -18,13 +17,7 @@ export default {
   },
 } as ComponentMeta<typeof Slider>;
 
-const Template: ComponentStory<typeof Slider> = (args) => {
-  return (
-    <Box p="3xl" backgroundColor="#fff">
-      <Slider {...args} />
-    </Box>
-  );
-};
+const Template: ComponentStory<typeof Slider> = (args) => <Slider {...args} />;
 
 export const Default = Template.bind({});
 
