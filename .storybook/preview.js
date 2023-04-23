@@ -1,49 +1,47 @@
 import { Global, ThemeProvider } from '@emotion/react';
-import { withThemes } from '@react-theming/storybook-addon';
-import { addDecorator } from '@storybook/react';
 import React from 'react';
 
 import { darkTheme, lightTheme } from '../src/lib/theme';
 import GlobalStyles from '../src/lib/theme/global-styles';
 
-const Decorator = (Store) => (
-  <>
-    <Global styles={GlobalStyles} />
-    <Store />
-  </>
-);
-export const decorators = [Decorator];
-
-const onThemeSwitch = (context) => {
-  const { theme } = context;
-  const {
-    colors: { background },
-  } = theme;
-  const parameters = {
-    backgrounds: {
-      default: background,
-    },
-    // Pass backgrounds: null to disable background switching at all
-  };
-  return {
-    parameters,
-  };
+const themes = {
+  dark: darkTheme,
+  light: lightTheme,
 };
-const themingDecorator = withThemes(
-  ThemeProvider,
-  [
-    { name: 'light', ...lightTheme },
-    { name: 'dark', ...darkTheme },
-  ],
-  {
-    onThemeSwitch,
-  }
-);
-addDecorator(themingDecorator);
+
+// Function to obtain the intended theme
+const getTheme = (themeName) => themes[themeName];
+
+const Decorator = (Story, context) => {
+  const theme = getTheme(context.globals.theme);
+
+  return (
+    <div id="__wrapper">
+      <ThemeProvider theme={theme}>
+        <Global styles={GlobalStyles} />
+        <Story />
+      </ThemeProvider>
+    </div>
+  );
+};
+
+export const decorators = [Decorator];
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
-  backgrounds: { disable: true },
+  backgrounds: {
+    default: 'light',
+    values: [
+      {
+        name: 'light',
+        value: lightTheme.colors.background,
+      },
+      {
+        name: 'dark',
+        value: darkTheme.colors.background,
+      },
+    ],
+  },
   controls: {
     matchers: {
       color: /(background|color)$/i,
@@ -51,3 +49,21 @@ export const parameters = {
     },
   },
 };
+
+const preview = {
+  globalTypes: {
+    theme: {
+      name: 'Theme',
+      description: 'Global theme for components',
+      defaultValue: 'light',
+      toolbar: {
+        icon: 'circlehollow',
+        items: ['light', 'dark'],
+        showName: true,
+        dynamicTitle: true,
+      },
+    },
+  },
+};
+
+export default preview;
