@@ -35,15 +35,15 @@ const SliderElement: FC<TooltipProps> = ({
           width="100%"
           display="flex"
           height="2.25rem"
+          marginTop="1.5rem"
           alignItems="center"
-          marginTop="1.25rem"
           onMouseDown={props.onMouseDown}
           onTouchStart={props.onTouchStart}
         >
           <Box
             width="100%"
             ref={props.ref}
-            height=".3125rem"
+            height=".25rem"
             alignSelf="center"
             background={getTrackBackground({
               values,
@@ -60,16 +60,16 @@ const SliderElement: FC<TooltipProps> = ({
         <Box
           {...props}
           display="flex"
-          width="1.5rem"
-          height="1.5rem"
+          width="1.25rem"
+          height="1.25rem"
           borderRadius="50%"
           alignItems="center"
           justifyContent="center"
-          boxShadow="0rem .0625rem .375rem #0000007f"
+          boxShadow="-0.0313rem .0313rem .125rem .0125rem #0000007f"
           cursor={disabled ? 'not-allowed !important' : 'pointer'}
           nHover={
             !disabled && {
-              boxShadow: `0 0 0 .625rem ${theme.colors.primary}1F`,
+              boxShadow: `0 0 0 .625rem ${theme.colors.primary}1F, -0.0313rem .0313rem .125rem .0125rem #0000007f`,
             }
           }
           backgroundColor={
@@ -78,17 +78,17 @@ const SliderElement: FC<TooltipProps> = ({
         >
           {isDragged && (
             <Box
+              marginTop="-55px"
               display="flex"
-              height="1.875rem"
+              height="2.125rem"
               fontSize=".875rem"
+              paddingBottom=".25rem"
               paddingTop=".25rem"
-              minWidth="1.875rem"
-              marginTop="-4.125rem"
-              borderRadius=".125rem"
+              minWidth="1.75rem"
+              color="textBackground"
               justifyContent="center"
-              color={theme.colors.textBackground}
-              clipPath="polygon(0 60%, 0 0, 100% 0, 100% 60%, 50% 100%)"
-              backgroundColor={theme.colors.primary}
+              backgroundColor="primary"
+              clipPath="path('M0 2C0 0.89543 0.895431 0 2 0H26C27.1046 0 28 0.89543 28 2V22.5C28 23.1295 27.7036 23.7223 27.2 24.1L14 34L0.8 24.1C0.296388 23.7223 0 23.1295 0 22.5V2Z')"
             >
               {values[0]}
             </Box>
