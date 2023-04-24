@@ -8,14 +8,21 @@ module.exports = {
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
     '@react-theming/storybook-addon',
+    '@storybook/addon-mdx-gfm',
   ],
-  framework: '@storybook/react',
+  framework: {
+    name: '@storybook/react-webpack5',
+    options: {},
+  },
   webpackFinal: async (config) => {
     config.module.rules.push({
       test: /\.mjs$/,
       include: /node_modules/,
-      type: "javascript/auto",
+      type: 'javascript/auto',
     });
     return config;
-  }
+  },
+  docs: {
+    autodocs: true,
+  },
 };
