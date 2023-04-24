@@ -1,7 +1,7 @@
 import { StylinComponentProps } from '@stylin.js/react';
-import { HTMLAttributes, RefObject } from 'react';
+import { HTMLAttributes } from 'react';
 
-import { lightTheme } from '../../theme';
+import { Boxes, Surface } from '../../theme';
 
 export type BoxElementProps = Omit<
   HTMLAttributes<HTMLDivElement>,
@@ -10,6 +10,6 @@ export type BoxElementProps = Omit<
 
 export interface BoxProps extends StylinComponentProps, BoxElementProps {
   as?: keyof JSX.IntrinsicElements;
-  ref?: RefObject<HTMLDivElement>;
-  variant?: keyof (typeof lightTheme)['boxes'];
+  variant?: Boxes;
+  surface?: Surface;
 }

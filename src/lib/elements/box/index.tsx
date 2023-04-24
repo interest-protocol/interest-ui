@@ -11,6 +11,10 @@ export const Box = forwardRef(
       variant({
         scale: 'boxes',
         property: 'variant',
+      }),
+      variant({
+        scale: 'surface',
+        property: 'surface',
       })
     );
 
