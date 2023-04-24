@@ -22,14 +22,12 @@ const Template: ComponentStory<typeof Slider> = (args) => <Slider {...args} />;
 export const Default = Template.bind({});
 
 Default.args = {
-  min: 0,
   max: 100,
 };
 
 export const InTheMiddle = Template.bind({});
 
 InTheMiddle.args = {
-  min: 0,
   max: 100,
   initial: 50,
 };
@@ -37,7 +35,6 @@ InTheMiddle.args = {
 export const InTheEnd = Template.bind({});
 
 InTheEnd.args = {
-  min: 0,
   max: 100,
   initial: 100,
 };
