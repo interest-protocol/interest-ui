@@ -1,6 +1,6 @@
-import React, { FC, useState } from 'react';
-import { Range, getTrackBackground } from 'react-range';
 import { useTheme } from '@emotion/react';
+import React, { FC, useState } from 'react';
+import { getTrackBackground, Range } from 'react-range';
 
 import { Box } from '../../elements';
 import { Theme } from '../../theme';
@@ -47,7 +47,7 @@ const SliderElement: FC<TooltipProps> = ({
             alignSelf="center"
             background={getTrackBackground({
               values,
-              colors: [`${theme.colors.accent}`, `${theme.colors.accent}1F`],
+              colors: [`${theme.colors.primary}`, `${theme.colors.primary}1F`],
               min: min || 0,
               max: max,
             })}
@@ -69,11 +69,11 @@ const SliderElement: FC<TooltipProps> = ({
           cursor={disabled ? 'not-allowed !important' : 'pointer'}
           nHover={
             !disabled && {
-              boxShadow: `0 0 0 .625rem ${theme.colors.accent}1F`,
+              boxShadow: `0 0 0 .625rem ${theme.colors.primary}1F`,
             }
           }
           backgroundColor={
-            !disabled ? theme.colors.accent : theme.colors.disabled
+            !disabled ? theme.colors.primary : theme.colors.disabled
           }
         >
           {isDragged && (
@@ -88,7 +88,7 @@ const SliderElement: FC<TooltipProps> = ({
               justifyContent="center"
               color={theme.colors.textBackground}
               clipPath="polygon(0 60%, 0 0, 100% 0, 100% 60%, 50% 100%)"
-              backgroundColor={theme.colors.accent}
+              backgroundColor={theme.colors.primary}
             >
               {values[0]}
             </Box>
