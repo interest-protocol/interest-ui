@@ -15,6 +15,7 @@ export const colors: Record<Colors, string> = {
   foreground: palette.NEUTRAL_700,
   textSoft: palette.NEUTRAL_500,
   textDisabled: palette.NEUTRAL_900,
+  textBackground: palette.NEUTRAL_0,
   textPlaceholder: palette.NEUTRAL_300,
   border: palette.NEUTRAL_300,
 };

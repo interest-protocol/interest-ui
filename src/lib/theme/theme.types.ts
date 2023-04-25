@@ -50,6 +50,7 @@ export type Colors =
   | 'textAccent'
   | 'foreground'
   | 'textDisabled'
+  | 'textBackground'
   | 'textPlaceholder';
 export type Typographies =
   | 'displayLarge'
