@@ -21,6 +21,8 @@ const tabs = [
 ];
 
 const Template: ComponentStory<typeof TabsNavigator> = (args) => (
-  <TabsNavigator {...args} tabs={tabs} />
+  <Box width={['unset', 'unset', '56.25rem', '56.25rem']}>
+    <TabsNavigator {...args} tabs={tabs} />
+  </Box>
 );
 export const Default = Template.bind({});
