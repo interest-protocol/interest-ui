@@ -17,15 +17,13 @@ const TabsNavigator: React.FC<TabsNavigatorProps> = ({ tabs }) => {
           <Box
             key={tab.label}
             color="primary"
+            cursor="pointer"
             textAlign="center"
             backgroundColor="#1B1B1F"
             borderRadius=".25rem .25rem 0 0"
             padding="1.5rem .75rem 1.5rem .75rem"
             onClick={() => handleTabClick(index)}
             width={['100%', '100%', '30%', '30%']}
-            nHover={{
-              backgroundColor: 'secondary',
-            }}
           >
             <Typography variant="title6">{tab.label}</Typography>
           </Box>
