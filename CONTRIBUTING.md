@@ -12,6 +12,25 @@ Feel free to contribute in any way you like, and if you feel comfortable doing s
 - **src/lib/theme** Contains the files to manage our dark and light themes, as well as the design system definitions that will be used in the components or elements
 - **src/lib/theme/design-system** contains the files that standardize the design system used in the app, from breakpoints to the color system
 
+## Increase the productivity with VSCode Interest Snippets
+
+Get rid of typing everytime similar code parts such as: Components, Components Props and Component Story.
+There's available three base snippets.
+
+### Snippet prefixes
+
+- For **components** you should just use our snippet prefix: ```ipc```, that stands for _Interest Protocol Component_ as bellow:
+
+<img alt="gif" src="https://i.imgur.com/yipg4xC.gif" />
+
+- For **component's props** you should just use our snippet prefix: ```ipcp```, that stands for _Interest Protocol Component Props_ as bellow:
+
+<img alt="gif" src="https://i.imgur.com/ARPtTgY.gif" />
+
+- For **components story** you should just use our snippet prefix: ```ipsc```, that stands for _Interest Protocol Story Component_ as bellow:
+
+<img alt="gif" src="https://i.imgur.com/1zyBDeg.gif" />
+
 ## Issue reports
 
 A bug usually happens when something doesn't work as expected, and it can be caused by some code in the repository. Reports are important to help us overcome them.
