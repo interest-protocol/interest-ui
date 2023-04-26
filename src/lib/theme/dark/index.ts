@@ -8,6 +8,7 @@ import {
 import { Theme } from '../theme.types';
 import { boxes, typography } from '../variants';
 import { colors } from './colors';
+import { surface } from './surface';
 import { buttons } from './variants';
 
 const theme: Theme = {
@@ -21,6 +22,7 @@ const theme: Theme = {
   colors,
   boxes,
   buttons,
+  surface,
 };
 
 export default theme;

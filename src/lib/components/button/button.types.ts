@@ -5,10 +5,18 @@ import { ButtonVariants } from '../../theme/theme.types';
 
 export type ButtonElementProps = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
-  'color' | 'translate'
+  | 'color'
+  | 'translate'
+  | 'content'
+  | 'onAnimationStart'
+  | 'onDragStart'
+  | 'onDragEnd'
+  | 'onDrag'
 >;
 
-export interface ButtonProps extends StylinComponentProps, ButtonElementProps {
+export interface ButtonProps
+  extends Omit<StylinComponentProps, 'transition'>,
+    ButtonElementProps {
   variant: ButtonVariants;
   SuffixIcon?: ReactNode;
   PrefixIcon?: ReactNode;
