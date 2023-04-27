@@ -39,7 +39,7 @@ const TabsNavigator: React.FC<TabsNavigatorProps> = ({ tabs }) => {
 
       <Motion
         color="text"
-        surface="surface1"
+        overflow="hidden"
         borderRadius={
           activeIndex === 0
             ? '.25rem 0 .25rem .25rem'
@@ -50,7 +50,7 @@ const TabsNavigator: React.FC<TabsNavigatorProps> = ({ tabs }) => {
         }
         width={['unset', 'unset', 'calc(50% - .125rem)', 'calc(50% - .125rem)']}
       >
-        <Box p="3xl">{tabs[activeIndex].content}</Box>
+        <Box>{tabs[activeIndex].content}</Box>
       </Motion>
     </Box>
   );
