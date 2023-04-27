@@ -1,10 +1,10 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 
 import { PlusIcon, SwapIcon } from '../../../../storybook/icons';
 import { Button } from '..';
 
-export default {
+const meta: Meta<typeof Button> = {
   title: 'Button',
   component: Button,
   argTypes: {
@@ -17,109 +17,115 @@ export default {
       control: { type: 'boolean' },
     },
   },
-} as ComponentMeta<typeof Button>;
-
-const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
-
-export const Filled = Template.bind({});
-
-Filled.args = {
-  variant: 'filled',
-  children: 'Enabled',
 };
 
-export const FilledWithPrefix = Template.bind({});
+export default meta;
 
-FilledWithPrefix.args = {
-  variant: 'filled',
-  children: 'Enabled',
-  PrefixIcon: <PlusIcon />,
+type Story = StoryObj<typeof Button>;
+
+export const Filled: Story = {
+  args: {
+    variant: 'filled',
+    children: 'Enabled',
+    disabled: false,
+  },
 };
 
-export const FilledWithSuffix = Template.bind({});
-
-FilledWithSuffix.args = {
-  variant: 'filled',
-  children: 'Enabled',
-  SuffixIcon: <PlusIcon />,
+export const FilledWithSuffix: Story = {
+  args: {
+    variant: 'filled',
+    children: 'Enabled',
+    PrefixIcon: <PlusIcon />,
+    disabled: false,
+  },
 };
 
-export const FilledWithCombined = Template.bind({});
-
-FilledWithCombined.args = {
-  variant: 'filled',
-  children: 'Enabled',
-  PrefixIcon: <PlusIcon />,
-  SuffixIcon: <PlusIcon />,
+export const FilledWithCombined: Story = {
+  args: {
+    variant: 'filled',
+    children: 'Enabled',
+    PrefixIcon: <PlusIcon />,
+    SuffixIcon: <PlusIcon />,
+    disabled: false,
+  },
 };
 
-export const Outline = Template.bind({});
-
-Outline.args = {
-  variant: 'outline',
-  children: 'Enabled',
+export const Outline: Story = {
+  args: {
+    variant: 'outline',
+    children: 'Enabled',
+    disabled: false,
+  },
 };
 
-export const OutlineWithPrefix = Template.bind({});
-
-OutlineWithPrefix.args = {
-  variant: 'outline',
-  children: 'Enabled',
-  PrefixIcon: <PlusIcon />,
+export const OutlineWithPrefix: Story = {
+  args: {
+    variant: 'outline',
+    children: 'Enabled',
+    PrefixIcon: <PlusIcon />,
+    disabled: false,
+  },
 };
 
-export const OutlineWithSuffix = Template.bind({});
-
-OutlineWithSuffix.args = {
-  variant: 'outline',
-  children: 'Enabled',
-  SuffixIcon: <PlusIcon />,
+export const OutlineWithSuffix: Story = {
+  args: {
+    variant: 'outline',
+    children: 'Enabled',
+    SuffixIcon: <PlusIcon />,
+    disabled: false,
+  },
 };
 
-export const OutlineWithCombined = Template.bind({});
-
-OutlineWithCombined.args = {
-  variant: 'outline',
-  children: 'Enabled',
-  PrefixIcon: <PlusIcon />,
-  SuffixIcon: <PlusIcon />,
+export const OutlineWithCombined: Story = {
+  args: {
+    variant: 'outline',
+    children: 'Enabled',
+    PrefixIcon: <PlusIcon />,
+    SuffixIcon: <PlusIcon />,
+    disabled: false,
+  },
 };
 
-export const Text = Template.bind({});
-
-Text.args = {
-  variant: 'text',
-  children: 'Enabled',
+export const Text: Story = {
+  args: {
+    variant: 'text',
+    children: 'Enabled',
+    disabled: false,
+  },
 };
 
-export const TextWithPrefix = Template.bind({});
-
-TextWithPrefix.args = {
-  variant: 'text',
-  children: 'Enabled',
-  PrefixIcon: <PlusIcon />,
+export const TextWithPrefix: Story = {
+  args: {
+    variant: 'text',
+    children: 'Enabled',
+    PrefixIcon: <PlusIcon />,
+    disabled: false,
+  },
 };
 
-export const TextWithSuffix = Template.bind({});
-
-TextWithSuffix.args = {
-  variant: 'text',
-  children: 'Enabled',
-  SuffixIcon: <PlusIcon />,
+export const TextWithSuffix: Story = {
+  args: {
+    variant: 'text',
+    children: 'Enabled',
+    SuffixIcon: <PlusIcon />,
+    disabled: false,
+  },
 };
 
-export const TextWithCombined = Template.bind({});
-
-TextWithCombined.args = {
-  variant: 'text',
-  children: 'Enabled',
-  PrefixIcon: <PlusIcon />,
-  SuffixIcon: <PlusIcon />,
+export const TextWithCombined: Story = {
+  args: {
+    variant: 'text',
+    children: 'Enabled',
+    PrefixIcon: <PlusIcon />,
+    SuffixIcon: <PlusIcon />,
+    disabled: false,
+  },
 };
 
-export const Icon = Template.bind({});
-
-Icon.args = {
-  variant: 'icon',
-  children: <SwapIcon />,
+export const Icon: Story = {
+  args: {
+    variant: 'icon',
+    children: <SwapIcon />,
+    disabled: false,
+  },
 };
