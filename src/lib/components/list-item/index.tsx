@@ -32,11 +32,12 @@ export const ListItem: FC<PropsWithChildren<ListItemProps>> = ({
       {...props}
     >
       {PrefixIcon && (
-        <Box mx="4xl" color={dark ? 'textDisabled' : 'secondary'}>
+        <Box mr="2xl" color={dark ? 'textDisabled' : 'secondary'}>
           {PrefixIcon}
         </Box>
       )}
-      <Box display="flex" flexDirection="column" ml="2xl" width="100%">
+
+      <Box display="flex" flexDirection="column" width="100%">
         <Typography
           as="span"
           variant="medium"

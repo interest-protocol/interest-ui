@@ -54,7 +54,6 @@ export const ArrowRightIcon: FC = () => {
       width="0.313rem"
       height="0.625rem"
       color={theme.dark ? '#F2F0F4' : '#001133'}
-      ml="2xl"
       variant="icon"
     >
       <ArrowRightSVG

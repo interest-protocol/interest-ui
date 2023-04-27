@@ -46,21 +46,14 @@ export const WithPrefix: Story = {
   args: {
     title: 'List item',
     description: 'Supporting Text',
-    PrefixIcon: (
-      <ArrowRightSVG
-        maxWidth={'0.313rem'}
-        maxHeight={'0.625rem'}
-        width="100%"
-        height="100%"
-      />
-    ),
+    PrefixIcon: <ArrowRightIcon />,
   },
 };
 
 export const WithPrefixWithoutDescription: Story = {
   args: {
     title: 'List item',
-    PrefixIcon: <ArrowRightSVG maxWidth={'0.313rem'} maxHeight={'0.625rem'} />,
+    PrefixIcon: <ArrowRightIcon />,
   },
 };
 
