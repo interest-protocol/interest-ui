@@ -22,6 +22,7 @@ const SliderElement: FC<TooltipProps> = ({
 }) => {
   const theme = useTheme() as Theme;
   const [values, setValues] = useState([initial]);
+
   return (
     <Range
       max={max}
@@ -42,6 +43,8 @@ const SliderElement: FC<TooltipProps> = ({
         >
           <Box
             width="100%"
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             ref={props.ref}
             height=".25rem"
             alignSelf="center"
