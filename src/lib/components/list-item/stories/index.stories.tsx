@@ -33,6 +33,7 @@ export const Normal: Story = {
   args: {
     title: 'List item',
     description: 'Supporting Text',
+    onClick: () => alert('clicked'),
   },
 };
 
@@ -121,14 +122,7 @@ export const WithPrefixAndSuffixRadioWithoutDescription: Story = {
 export const WithPrefixAndSuffixSwitchWithoutDescription: Story = {
   args: {
     title: 'List item',
-    PrefixIcon: (
-      <ArrowRightSVG
-        maxWidth={'0.313rem'}
-        maxHeight={'0.625rem'}
-        width="100%"
-        height="100%"
-      />
-    ),
+    PrefixIcon: <ArrowRightIcon />,
     SuffixIcon: <SwitchButton name={'switch'} defaultValue={false} labels="" />,
   },
 };

@@ -1,7 +1,7 @@
 import { useTheme } from '@emotion/react';
 import React, { FC } from 'react';
 
-import { Button } from '../lib/components/button';
+import { Box } from '../lib/elements';
 import { ArrowRightSVG } from '../lib/icons';
 import { Theme } from '../lib/theme';
 
@@ -50,11 +50,11 @@ export const PlusIcon: FC = () => (
 export const ArrowRightIcon: FC = () => {
   const theme = useTheme() as Theme;
   return (
-    <Button
+    <Box
       width="0.313rem"
       height="0.625rem"
+      display="flex"
       color={theme.dark ? '#F2F0F4' : '#001133'}
-      variant="icon"
     >
       <ArrowRightSVG
         maxWidth={'0.313rem'}
@@ -62,6 +62,6 @@ export const ArrowRightIcon: FC = () => {
         width="100%"
         height="100%"
       />
-    </Button>
+    </Box>
   );
 };
