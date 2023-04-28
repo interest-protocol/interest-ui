@@ -17,6 +17,10 @@ export const Box: FC<PropsWithRef<PropsWithChildren<BoxProps>>> = forwardRef(
       variant({
         scale: 'boxes',
         property: 'variant',
+      }),
+      variant({
+        scale: 'surface',
+        property: 'surface',
       })
     );
 
@@ -24,5 +28,5 @@ export const Box: FC<PropsWithRef<PropsWithChildren<BoxProps>>> = forwardRef(
   }
 );
 
-// Box.displayName = 'Box';
+Box.displayName = 'Box';
 export * from '../box/box.types';

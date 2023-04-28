@@ -1,5 +1,5 @@
-export type Radii = 'm' | 'full';
 export type Boxes = 'container';
+export type Radii = 's' | 'm' | 'full';
 export type Space = 's' | 'm' | 'l' | 'xl' | '2xl' | '3xl' | '4xl';
 export type ButtonVariants = 'filled' | 'outline' | 'text' | 'icon';
 export type FontSizes =
@@ -28,6 +28,13 @@ export type LineHeights =
   | '5xl'
   | '6xl'
   | '7xl';
+export type Surface =
+  | 'surface'
+  | 'surface1'
+  | 'surface2'
+  | 'surface3'
+  | 'surface4'
+  | 'surface5';
 export type Colors =
   | 'text'
   | 'error'
@@ -37,13 +44,14 @@ export type Colors =
   | 'outline'
   | 'success'
   | 'disabled'
+  | 'textSoft'
+  | 'secondary'
   | 'background'
   | 'textAccent'
-  | 'textSoft'
+  | 'foreground'
   | 'textDisabled'
-  | 'secondary'
-  | 'textPlaceholder'
-  | 'foreground';
+  | 'textBackground'
+  | 'textPlaceholder';
 export type Typographies =
   | 'displayLarge'
   | 'displaySmall'
@@ -58,7 +66,7 @@ export type Typographies =
   | 'title5'
   | 'title6';
 
-interface MaybeNestedObject {
+export interface MaybeNestedObject {
   [key: string]: string | number | Partial<MaybeNestedObject>;
 }
 
@@ -73,4 +81,5 @@ export interface Theme {
   lineHeights: Record<LineHeights, string>;
   typography: Record<Typographies, MaybeNestedObject>;
   buttons: Record<ButtonVariants, MaybeNestedObject>;
+  surface: Record<Surface, MaybeNestedObject>;
 }
