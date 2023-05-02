@@ -3,8 +3,8 @@ import { Colors } from '../theme.types';
 
 export const colors: Record<Colors, string> = {
   error: palette.RED_200,
-  success: palette.LIME_200,
   text: palette.NEUTRAL_0,
+  success: palette.LIME_200,
   warning: palette.ORANGE_200,
   primary: palette.PRIMARY_200,
   secondary: palette.PRIMARY_900,
@@ -17,6 +17,5 @@ export const colors: Record<Colors, string> = {
   textDisabled: palette.NEUTRAL_50,
   textBackground: palette.PRIMARY_800,
   textPlaceholder: palette.NEUTRAL_500,
-  textHighlighter: palette.CYAN_200,
   border: palette.NEUTRAL_200,
 };
