@@ -25,10 +25,5 @@
     "src/**/*.test.tsx",
     "src/**/*.stories.tsx",
     "src/storybook"
-  ],
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
-  }
+  ]
 }
