@@ -45,6 +45,17 @@ Below are instructions on how to optimally report a bug:
 
 _A good bug report shouldn't leave others needing to chase you up for more._
 
+## Node version
+To use the node version corresponding to this repository, follow these instructions:
+### With NVM
+If you use the node version manager, nvm, type the command:
+```bash 
+    nvm use
+``` 
+for a node to select the version automatically, and if it is not installed you will be asked to install it.
+### Without NVM
+You will have to download a corresponding node version, check the .nvmrc file for the version, and install it manually.
+
 ## Branch
 When creating the new branch follow the naming rule:
 - for new feature: ```feature/<task-name>```
