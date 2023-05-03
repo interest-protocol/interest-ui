@@ -83,6 +83,7 @@
     "dist"
   ],
   "scripts": {
+    "prepare": "husky install",
     "build": "tsc && rollup -c",
     "publish:alpha": "yarn build && npm publish --tag alpha",
     "publish:beta": "yarn build && npm publish --tag beta",
