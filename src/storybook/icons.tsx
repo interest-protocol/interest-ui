@@ -49,6 +49,7 @@ export const PlusIcon: FC = () => (
 
 export const ArrowRightIcon: FC = () => {
   const theme = useTheme() as Theme;
+
   return (
     <Button
       width="0.313rem"
