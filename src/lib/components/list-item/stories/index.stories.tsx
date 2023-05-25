@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 
 import { ArrowRightIcon } from '../../../../storybook/icons';
@@ -6,128 +6,123 @@ import { ArrowRightSVG } from '../../../icons';
 import { RadioButton, SwitchButton } from '../../';
 import { ListItem } from '..';
 
-export default {
-  title: 'List item',
+const meta: Meta<typeof ListItem> = {
+  title: 'ListItem',
   component: ListItem,
   argTypes: {
-    disabled: {
-      defaultValue: false,
-      control: { type: 'boolean' },
+    title: {
+      control: { type: 'text' },
+    },
+    description: {
+      control: { type: 'text' },
+    },
+    PrefixIcon: {
+      control: { type: 'object' },
+    },
+    SuffixIcon: {
+      control: { type: 'object' },
     },
   },
-} as ComponentMeta<typeof ListItem>;
-
-const Template: ComponentStory<typeof ListItem> = (args) => (
-  <ListItem {...args} />
-);
-
-export const Normal = Template.bind({});
-
-Normal.args = {
-  title: 'List item',
-  description: 'Supporting Text',
 };
 
-export const WithoutDescription = Template.bind({});
+export default meta;
 
-WithoutDescription.args = {
-  title: 'List item',
+type Story = StoryObj<typeof ListItem>;
+
+export const Normal: Story = {
+  args: {
+    title: 'List item',
+    description: 'Supporting Text',
+    onClick: () => alert('clicked'),
+  },
 };
 
-export const WithPrefix = Template.bind({});
-
-WithPrefix.args = {
-  title: 'List item',
-  description: 'Supporting Text',
-  PrefixIcon: (
-    <ArrowRightSVG
-      maxWidth={'0.313rem'}
-      maxHeight={'0.625rem'}
-      width="100%"
-      height="100%"
-    />
-  ),
+export const WithoutDescription: Story = {
+  args: {
+    title: 'List item',
+  },
 };
 
-export const WithPrefixWithoutDescription = Template.bind({});
-
-WithPrefixWithoutDescription.args = {
-  title: 'List item',
-  PrefixIcon: <ArrowRightSVG maxWidth={'0.313rem'} maxHeight={'0.625rem'} />,
+export const WithPrefix: Story = {
+  args: {
+    title: 'List item',
+    description: 'Supporting Text',
+    PrefixIcon: <ArrowRightIcon />,
+  },
 };
 
-export const WithSuffix = Template.bind({});
-
-WithSuffix.args = {
-  title: 'List item',
-  description: 'Supporting Text',
-  SuffixIcon: <ArrowRightIcon />,
+export const WithPrefixWithoutDescription: Story = {
+  args: {
+    title: 'List item',
+    PrefixIcon: <ArrowRightIcon />,
+  },
 };
 
-export const WithSuffixWithoutDescription = Template.bind({});
-
-WithSuffixWithoutDescription.args = {
-  title: 'List item',
-  SuffixIcon: <ArrowRightIcon />,
+export const WithSuffix: Story = {
+  args: {
+    title: 'List item',
+    description: 'Supporting Text',
+    SuffixIcon: <ArrowRightIcon />,
+  },
 };
 
-export const WithSuffixSwitch = Template.bind({});
-
-WithSuffixSwitch.args = {
-  title: 'List item',
-  description: 'Supporting Text',
-  SuffixIcon: <SwitchButton name={'switch'} defaultValue={false} labels="" />,
+export const WithSuffixWithoutDescription: Story = {
+  args: {
+    title: 'List item',
+    SuffixIcon: <ArrowRightIcon />,
+  },
 };
 
-export const WithSuffixSwitchWithoutDescription = Template.bind({});
-
-WithSuffixSwitchWithoutDescription.args = {
-  title: 'List item',
-  SuffixIcon: <SwitchButton name={'switch'} defaultValue={false} labels="" />,
+export const WithSuffixSwitch: Story = {
+  args: {
+    title: 'List item',
+    description: 'Supporting Text',
+    SuffixIcon: <SwitchButton name={'switch'} defaultValue={false} labels="" />,
+  },
 };
 
-export const WithSuffixRadio = Template.bind({});
-
-WithSuffixRadio.args = {
-  title: 'List item',
-  description: 'Supporting Text',
-  metadata: '100+',
-  SuffixIcon: <RadioButton name={'radio1'} />,
+export const WithSuffixSwitchWithoutDescription: Story = {
+  args: {
+    title: 'List item',
+    SuffixIcon: <SwitchButton name={'switch'} defaultValue={false} labels="" />,
+  },
 };
 
-export const WithSuffixRadioWithoutDescription = Template.bind({});
-
-WithSuffixRadioWithoutDescription.args = {
-  title: 'List item',
-  SuffixIcon: <RadioButton name={'radio1'} />,
+export const WithSuffixRadio: Story = {
+  args: {
+    title: 'List item',
+    description: 'Supporting Text',
+    metadata: '100+',
+    SuffixIcon: <RadioButton name={'radio1'} />,
+  },
 };
 
-export const WithPrefixAndSuffixRadioWithoutDescription = Template.bind({});
-
-WithPrefixAndSuffixRadioWithoutDescription.args = {
-  title: 'List item',
-  PrefixIcon: (
-    <ArrowRightSVG
-      maxWidth={'0.313rem'}
-      maxHeight={'0.625rem'}
-      width="100%"
-      height="100%"
-    />
-  ),
-  SuffixIcon: <RadioButton name={'radio1'} />,
+export const WithSuffixRadioWithoutDescription: Story = {
+  args: {
+    title: 'List item',
+    SuffixIcon: <RadioButton name={'radio1'} />,
+  },
 };
 
-export const WithPrefixAndSuffixSwitchWithoutDescription = Template.bind({});
+export const WithPrefixAndSuffixRadioWithoutDescription: Story = {
+  args: {
+    title: 'List item',
+    PrefixIcon: (
+      <ArrowRightSVG
+        maxWidth={'0.313rem'}
+        maxHeight={'0.625rem'}
+        width="100%"
+        height="100%"
+      />
+    ),
+    SuffixIcon: <RadioButton name={'radio1'} />,
+  },
+};
 
-WithPrefixAndSuffixSwitchWithoutDescription.args = {
-  title: 'List item',
-  PrefixIcon: (
-    <ArrowRightSVG
-      maxWidth={'0.313rem'}
-      maxHeight={'0.625rem'}
-      width="100%"
-      height="100%"
-    />
-  ),
-  SuffixIcon: <SwitchButton name={'switch'} defaultValue={false} labels="" />,
+export const WithPrefixAndSuffixSwitchWithoutDescription: Story = {
+  args: {
+    title: 'List item',
+    PrefixIcon: <ArrowRightIcon />,
+    SuffixIcon: <SwitchButton name={'switch'} defaultValue={false} labels="" />,
+  },
 };

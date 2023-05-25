@@ -8,4 +8,5 @@ export interface ListItemProps extends BoxProps {
   description?: string;
   SuffixIcon?: ReactNode;
   PrefixIcon?: ReactNode;
+  onClick?: () => void;
 }

@@ -1,9 +1,8 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
-import React from 'react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { Slider } from '..';
 
-export default {
+const meta: Meta<typeof Slider> = {
   title: 'Slider',
   component: Slider,
   argTypes: {
@@ -15,26 +14,28 @@ export default {
       control: { type: 'number' },
     },
   },
-} as ComponentMeta<typeof Slider>;
-
-const Template: ComponentStory<typeof Slider> = (args) => <Slider {...args} />;
-
-export const Default = Template.bind({});
-
-Default.args = {
-  max: 100,
 };
 
-export const InTheMiddle = Template.bind({});
+export default meta;
 
-InTheMiddle.args = {
-  max: 100,
-  initial: 50,
+type Story = StoryObj<typeof Slider>;
+
+export const Default: Story = {
+  args: {
+    max: 100,
+  },
 };
 
-export const InTheEnd = Template.bind({});
+export const InTheMiddle: Story = {
+  args: {
+    max: 100,
+    initial: 50,
+  },
+};
 
-InTheEnd.args = {
-  max: 100,
-  initial: 100,
+export const InTheEnd: Story = {
+  args: {
+    max: 100,
+    initial: 100,
+  },
 };

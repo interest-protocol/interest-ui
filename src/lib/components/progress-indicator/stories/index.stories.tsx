@@ -1,9 +1,8 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
-import React from 'react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { ProgressIndicator } from '..';
 
-export default {
+const meta: Meta<typeof ProgressIndicator> = {
   title: 'Progress Indicator',
   component: ProgressIndicator,
   argTypes: {
@@ -12,48 +11,54 @@ export default {
       options: ['bar', 'circle', 'loading'],
       control: { type: 'radio' },
     },
+    value: {
+      constrol: { type: 'number' },
+    },
+    size: {
+      constrol: { type: 'number' },
+    },
   },
-} as ComponentMeta<typeof ProgressIndicator>;
-
-const Template: ComponentStory<typeof ProgressIndicator> = (args) => (
-  <ProgressIndicator {...args} />
-);
-
-export const NormalBar = Template.bind({});
-
-NormalBar.args = {
-  value: 25,
 };
 
-export const WarningBar = Template.bind({});
+export default meta;
 
-WarningBar.args = {
-  value: 75,
+type Story = StoryObj<typeof ProgressIndicator>;
+
+export const NormalBar: Story = {
+  args: {
+    value: 25,
+  },
 };
 
-export const DangerousBar = Template.bind({});
-
-DangerousBar.args = {
-  value: 95,
+export const WarningBar: Story = {
+  args: {
+    value: 75,
+  },
 };
 
-export const Circle = Template.bind({});
-
-Circle.args = {
-  variant: 'circle',
-  value: 25,
+export const DangerousBar: Story = {
+  args: {
+    value: 95,
+  },
 };
 
-export const BigCircle = Template.bind({});
-
-BigCircle.args = {
-  variant: 'circle',
-  value: 50,
-  size: 80,
+export const Circle: Story = {
+  args: {
+    variant: 'circle',
+    value: 25,
+  },
 };
 
-export const LoadingCircle = Template.bind({});
+export const BigCircle: Story = {
+  args: {
+    variant: 'circle',
+    value: 50,
+    size: 80,
+  },
+};
 
-LoadingCircle.args = {
-  variant: 'loading',
+export const LoadingCircle: Story = {
+  args: {
+    variant: 'loading',
+  },
 };
