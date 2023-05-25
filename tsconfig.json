@@ -16,7 +16,7 @@
     "isolatedModules": true,
     "jsx": "react",
     "outDir": "dist",
-    "sourceMap": false,
+    "sourceMap": false
   },
   "include": ["src/lib"],
   "exclude": [

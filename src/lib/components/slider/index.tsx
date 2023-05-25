@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
-import { SliderProps } from './slider.types';
 import SliderElement from './slider';
+import { SliderProps } from './slider.types';
 
 export const Slider: FC<SliderProps> = ({
   min,
@@ -13,6 +13,7 @@ export const Slider: FC<SliderProps> = ({
   <SliderElement
     initial={initial || 0}
     max={max}
+    min={min}
     step={step || 1}
     disabled={disabled}
   />
