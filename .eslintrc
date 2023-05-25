@@ -1,4 +1,7 @@
 {
+  "settings": {
+    "react": { "version": "detect" }
+  },
   "env": {
     "browser": true,
     "es2021": true
@@ -6,9 +9,9 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:prettier/recommended",
+    "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended"
   ],
   "parser": "@typescript-eslint/parser",
@@ -20,11 +23,11 @@
     "sourceType": "module"
   },
   "plugins": [
-    "simple-import-sort",
-    "@emotion",
     "react",
-    "@typescript-eslint",
-    "unused-imports"
+    "@emotion",
+    "unused-imports",
+    "simple-import-sort",
+    "@typescript-eslint"
   ],
   "rules": {
     "react/react-in-jsx-scope": "off",
