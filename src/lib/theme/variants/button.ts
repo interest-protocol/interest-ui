@@ -18,6 +18,9 @@ export const buttonSizes = {
     },
   },
   small: {
-    padding: `${space.m} ${space['2xl']}`,
+    padding: `${space.m} ${space['xl']}`,
+    '@media (min-width: 36rem)': {
+      padding: `${space.m} ${space['xl']}`,
+    },
   },
 };
