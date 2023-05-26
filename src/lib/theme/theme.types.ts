@@ -2,6 +2,7 @@ export type Boxes = 'container';
 export type Radii = 's' | 'm' | 'full';
 export type Space = 's' | 'm' | 'l' | 'xl' | '2xl' | '3xl' | '4xl';
 export type ButtonVariants = 'filled' | 'outline' | 'text' | 'icon';
+export type ButtonSizes = 'small' | 'medium';
 export type FontSizes =
   | 'xs'
   | 's'
@@ -82,5 +83,6 @@ export interface Theme {
   lineHeights: Record<LineHeights, string>;
   typography: Record<Typographies, MaybeNestedObject>;
   buttons: Record<ButtonVariants, MaybeNestedObject>;
+  buttonSizes: Record<ButtonSizes, MaybeNestedObject>;
   surface: Record<Surface, MaybeNestedObject>;
 }

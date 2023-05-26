@@ -13,6 +13,8 @@ export interface TextFieldProps
     TextFieldElementProps {
   error?: string;
   valid?: string;
+  Prefix?: ReactNode;
+  Suffix?: ReactNode;
   SuffixIcon?: ReactNode;
   PrefixIcon?: ReactNode;
   fieldProps?: BoxProps;
