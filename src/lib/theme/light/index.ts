@@ -7,6 +7,7 @@ import {
 } from '../design-system';
 import { Theme } from '../theme.types';
 import { boxes, typography } from '../variants';
+import { buttonSizes } from './../variants/button';
 import { colors } from './colors';
 import { surface } from './surface';
 import { buttons } from './variants';
@@ -17,6 +18,7 @@ const theme: Theme = {
   typography,
   lineHeights,
   breakpoints,
+  buttonSizes,
   radii,
   space,
   colors,

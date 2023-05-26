@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 
 import { PlusIcon, SwapIcon } from '../../../../storybook/icons';
+import { Button } from '../../button';
 import { TextField } from '..';
 
 const meta: Meta<typeof TextField> = {
@@ -28,11 +29,34 @@ export const Default: Story = {
 export const WithPrefix: Story = {
   args: {
     placeholder: '0.123',
-    PrefixIcon: <SwapIcon />,
+    textAlign: 'right',
+    Prefix: (
+      <Button size="small" variant="filled">
+        Prefix
+      </Button>
+    ),
   },
 };
 
 export const WithSuffix: Story = {
+  args: {
+    placeholder: '0.123',
+    Suffix: (
+      <Button size="small" variant="filled">
+        Prefix
+      </Button>
+    ),
+  },
+};
+
+export const WithPrefixIcon: Story = {
+  args: {
+    placeholder: '0.123',
+    PrefixIcon: <SwapIcon />,
+  },
+};
+
+export const WithSuffixIcon: Story = {
   args: {
     placeholder: '0.123',
     SuffixIcon: <PlusIcon />,
@@ -46,7 +70,7 @@ export const Error: Story = {
   },
 };
 
-export const ErrorWithPrefix: Story = {
+export const ErrorWithPrefixIcon: Story = {
   args: {
     error: 'Supporting text',
     placeholder: '0.123',
@@ -54,7 +78,7 @@ export const ErrorWithPrefix: Story = {
   },
 };
 
-export const ErrorWithSuffix: Story = {
+export const ErrorWithSuffixIcon: Story = {
   args: {
     error: 'Supporting text',
     placeholder: '0.123',
@@ -69,7 +93,7 @@ export const Success: Story = {
   },
 };
 
-export const SuccessWithPrefix: Story = {
+export const SuccessWithPrefixIcon: Story = {
   args: {
     valid: 'Supporting text',
     placeholder: '0.123',
@@ -77,7 +101,7 @@ export const SuccessWithPrefix: Story = {
   },
 };
 
-export const SuccessWithSuffix: Story = {
+export const SuccessWithSuffixIcon: Story = {
   args: {
     valid: 'Supporting text',
     placeholder: '0.123',

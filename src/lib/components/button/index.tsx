@@ -9,6 +9,10 @@ const ButtonElement = stylin<ButtonElementProps>('button')(
   variant({
     scale: 'buttons',
     property: 'variant',
+  }),
+  variant({
+    scale: 'buttonSizes',
+    property: 'size',
   })
 );
 
@@ -21,6 +25,7 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
   ...props
 }) => (
   <MotionButton
+    size="medium"
     whileTap={{
       scale: props.disabled ? 1 : 0.97,
       transition: { duration: 0.005, ease: easeInOut },
