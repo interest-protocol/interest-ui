@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 
 import { Box, Motion, Typography } from '../../elements';
 import { Theme, useTheme } from '../../theme';
 import { TabsNavigatorProps } from './tabs-navigator.types';
 
-const TabsNavigator: React.FC<TabsNavigatorProps> = ({ tabs }) => {
+export const TabsNavigator: FC<TabsNavigatorProps> = ({ tabs }) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const handleTabClick = (index: number) => {
@@ -55,5 +55,3 @@ const TabsNavigator: React.FC<TabsNavigatorProps> = ({ tabs }) => {
     </Box>
   );
 };
-
-export default TabsNavigator;
