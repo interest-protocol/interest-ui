@@ -50,6 +50,17 @@ export const FilledWithCombined: Story = {
   },
 };
 
+export const SmallFilledWithCombined: Story = {
+  args: {
+    size: 'small',
+    variant: 'filled',
+    children: 'Enabled',
+    PrefixIcon: <PlusIcon />,
+    SuffixIcon: <PlusIcon />,
+    disabled: false,
+  },
+};
+
 export const Outline: Story = {
   args: {
     variant: 'outline',
@@ -76,8 +87,9 @@ export const OutlineWithSuffix: Story = {
   },
 };
 
-export const OutlineWithCombined: Story = {
+export const SmallOutlineWithCombined: Story = {
   args: {
+    size: 'small',
     variant: 'outline',
     children: 'Enabled',
     PrefixIcon: <PlusIcon />,
@@ -114,6 +126,17 @@ export const TextWithSuffix: Story = {
 
 export const TextWithCombined: Story = {
   args: {
+    variant: 'text',
+    children: 'Enabled',
+    PrefixIcon: <PlusIcon />,
+    SuffixIcon: <PlusIcon />,
+    disabled: false,
+  },
+};
+
+export const SmallTextWithCombined: Story = {
+  args: {
+    size: 'small',
     variant: 'text',
     children: 'Enabled',
     PrefixIcon: <PlusIcon />,
