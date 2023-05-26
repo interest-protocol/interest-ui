@@ -7,12 +7,12 @@ import { ButtonElementProps, ButtonProps } from './button.types';
 
 const ButtonElement = stylin<ButtonElementProps>('button')(
   variant({
-    scale: 'buttons',
-    property: 'variant',
-  }),
-  variant({
     scale: 'buttonSizes',
     property: 'size',
+  }),
+  variant({
+    scale: 'buttons',
+    property: 'variant',
   })
 );
 
