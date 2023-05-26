@@ -1,9 +1,8 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
-import React from 'react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { SwitchButton } from '..';
 
-export default {
+const meta: Meta<typeof SwitchButton> = {
   title: 'Switch',
   component: SwitchButton,
   argTypes: {
@@ -12,48 +11,48 @@ export default {
       control: { type: 'boolean' },
     },
   },
-} as ComponentMeta<typeof SwitchButton>;
-
-const Template: ComponentStory<typeof SwitchButton> = (args) => (
-  <SwitchButton {...args} />
-);
-
-export const Normal = Template.bind({});
-
-Normal.args = {
-  name: 'switch',
-  labels: 'Switch',
-  defaultValue: false,
 };
 
-export const Selected = Template.bind({});
+export default meta;
 
-Selected.args = {
-  name: 'switch',
-  labels: 'Switch',
-  defaultValue: true,
+type Story = StoryObj<typeof SwitchButton>;
+
+export const Normal: Story = {
+  args: {
+    name: 'switch',
+    labels: 'Switch',
+    defaultValue: false,
+  },
 };
 
-export const SelectedDisabled = Template.bind({});
-
-SelectedDisabled.args = {
-  name: 'switch',
-  disabled: true,
-  labels: 'Switch',
-  defaultValue: true,
+export const Selected: Story = {
+  args: {
+    name: 'switch',
+    labels: 'Switch',
+    defaultValue: true,
+  },
 };
 
-export const DoubleLabel = Template.bind({});
-
-DoubleLabel.args = {
-  name: 'switch',
-  defaultValue: true,
-  labels: ['on', 'off'],
+export const SelectedDisabled: Story = {
+  args: {
+    name: 'switch',
+    disabled: true,
+    labels: 'Switch',
+    defaultValue: true,
+  },
 };
 
-export const WithoutLabel = Template.bind({});
+export const DoubleLabel: Story = {
+  args: {
+    name: 'switch',
+    defaultValue: true,
+    labels: ['on', 'off'],
+  },
+};
 
-WithoutLabel.args = {
-  name: 'switch',
-  defaultValue: false,
+export const WithoutLabel: Story = {
+  args: {
+    name: 'switch',
+    defaultValue: false,
+  },
 };

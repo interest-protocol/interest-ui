@@ -8,6 +8,7 @@ import { ListItemProps } from './list-item.types';
 export const ListItem: FC<PropsWithChildren<ListItemProps>> = ({
   title,
   description,
+  onClick,
   metadata,
   SuffixIcon,
   PrefixIcon,
@@ -15,6 +16,9 @@ export const ListItem: FC<PropsWithChildren<ListItemProps>> = ({
 }) => {
   const { dark } = useTheme() as Theme;
 
+  const BG_COLOR = dark
+    ? 'linear-gradient(0deg, #b6c4ff0a, #b6c4ff0a), #1B1B1F'
+    : 'linear-gradient(0deg, #0055ff0a, #0055ff0a), #F2F0F4';
   return (
     <Box
       py="l"
@@ -24,19 +28,21 @@ export const ListItem: FC<PropsWithChildren<ListItemProps>> = ({
       alignItems="center"
       width={['100%', '100%', '22.5rem', '22.5rem']}
       maxHeight={description ? '4.75rem' : '3.5rem'}
-      background={
-        dark
-          ? 'linear-gradient(0deg, #b6c4ff0a, #b6c4ff0a), #1B1B1F'
-          : 'linear-gradient(0deg, #0055ff0a, #0055ff0a), #F2F0F4'
-      }
+      background={BG_COLOR}
       {...props}
+      onClick={onClick}
+      nHover={{
+        cursor: onClick ? 'pointer' : 'unset',
+        background: onClick ? (dark ? '#1B1B1F' : '#F2F0F4') : BG_COLOR,
+      }}
     >
       {PrefixIcon && (
-        <Box mx="4xl" color={dark ? 'textDisabled' : 'secondary'}>
+        <Box mr="2xl" color={dark ? 'textDisabled' : 'secondary'}>
           {PrefixIcon}
         </Box>
       )}
-      <Box display="flex" flexDirection="column" ml="2xl" width="100%">
+
+      <Box display="flex" flexDirection="column" width="100%">
         <Typography
           as="span"
           variant="medium"

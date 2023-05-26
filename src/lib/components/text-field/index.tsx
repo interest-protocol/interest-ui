@@ -25,7 +25,17 @@ const TextFieldElement = stylin<TextFieldElementProps & RefAttributes<unknown>>(
 
 export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
   (
-    { onFocus, onBlur, PrefixIcon, SuffixIcon, error, valid, ...props },
+    {
+      onFocus,
+      onBlur,
+      Prefix,
+      PrefixIcon,
+      Suffix,
+      SuffixIcon,
+      error,
+      valid,
+      ...props
+    },
     ref
   ) => {
     const theme = useTheme() as Theme;
@@ -107,7 +117,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
     return (
       <Box color={statusColor || 'text'}>
         <Motion
-          p="l"
+          p="s"
           display="flex"
           borderRadius="m"
           animate={variant}
@@ -117,6 +127,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
           variants={wrapperVariants}
           transition={{ duration: 0.3 }}
         >
+          {Prefix}
           {PrefixIcon && (
             <Button variant="icon" mr="s">
               {PrefixIcon}
@@ -124,7 +135,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
           )}
           <TextFieldElement
             all="unset"
-            my="xs"
+            m="xs"
             flex="1"
             ref={ref}
             type="text"
@@ -158,6 +169,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
               />
             )) ||
             SuffixIcon}
+          {Suffix}
         </Motion>
         {statusColor && (
           <Typography variant="small" mt="2xs">
