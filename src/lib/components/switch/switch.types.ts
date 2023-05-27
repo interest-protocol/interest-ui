@@ -2,7 +2,7 @@ import { InputHTMLAttributes, LabelHTMLAttributes } from 'react';
 
 export type CheckedButtonElementProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,
-  'color' | 'defaultValue'
+  'color' | 'defaultValue' | 'size'
 >;
 
 export type LabelElementProps = Omit<
@@ -12,5 +12,6 @@ export type LabelElementProps = Omit<
 export interface CheckedButtonProps extends CheckedButtonElementProps {
   name: string;
   defaultValue: boolean;
-  labels: string | [string, string];
+  size?: 'small' | 'medium';
+  labels?: string | [string, string];
 }

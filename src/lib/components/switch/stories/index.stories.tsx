@@ -25,6 +25,15 @@ export const Normal: Story = {
   },
 };
 
+export const Medium: Story = {
+  args: {
+    size: 'medium',
+    name: 'switch',
+    labels: 'Switch',
+    defaultValue: false,
+  },
+};
+
 export const Selected: Story = {
   args: {
     name: 'switch',
