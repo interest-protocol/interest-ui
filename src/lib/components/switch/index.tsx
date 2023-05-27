@@ -31,12 +31,12 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
   ...props
 }) => {
   const { dark } = useTheme() as Theme;
+  const ative = useMotionValue('0rem');
   const [switcher, setSwitcher] = useState(defaultValue || false);
-  const ative = useMotionValue(switcher ? '1rem' : '0rem');
   const translateX = useSpring(ative, { stiffness: 1000, damping: 100 });
 
   useEffect(() => {
-    translateX.set(switcher ? '1rem' : '0rem');
+    translateX.set(switcher ? '0.85rem' : '0rem');
   }, [switcher]);
 
   const selectedColor: Colors = useMemo(() => {
@@ -66,7 +66,7 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
       alignItems="center"
       textTransform="capitalize"
     >
-      {!isEmpty(labels) && getLabel(labels, switcher)}
+      {labels && !isEmpty(labels) && getLabel(labels, switcher)}
       <LabelElement ml="0.375rem" display="flex" position="relative">
         <CheckedButtonElement
           display="none"
@@ -77,7 +77,7 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
           {...props}
         />
         <Box
-          p="3xs"
+          p="2xs"
           width="2rem"
           display="flex"
           cursor="pointer"
@@ -87,8 +87,8 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
           bg={getBackground(switcher, dark)}
         >
           <Motion
-            width="1rem"
-            height="1rem"
+            width="1.1rem"
+            height="1.1rem"
             borderRadius="50%"
             style={{ translateX }}
             background={selectedColor}
