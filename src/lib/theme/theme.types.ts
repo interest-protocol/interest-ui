@@ -83,6 +83,5 @@ export interface Theme {
   lineHeights: Record<LineHeights, string>;
   typography: Record<Typographies, MaybeNestedObject>;
   buttons: Record<ButtonVariants, MaybeNestedObject>;
-  buttonSizes: Record<ButtonSizes, MaybeNestedObject>;
   surface: Record<Surface, MaybeNestedObject>;
 }
