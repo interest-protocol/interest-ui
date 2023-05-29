@@ -26,14 +26,16 @@ const TextFieldElement = stylin<TextFieldElementProps & RefAttributes<unknown>>(
 export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
   (
     {
-      onFocus,
-      onBlur,
-      Prefix,
-      PrefixIcon,
-      Suffix,
-      SuffixIcon,
       error,
       valid,
+      Prefix,
+      Suffix,
+      onBlur,
+      onFocus,
+      bottomText,
+      PrefixIcon,
+      SuffixIcon,
+      fieldProps,
       ...props
     },
     ref
@@ -117,7 +119,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
     return (
       <Box color={statusColor || 'text'}>
         <Motion
-          p="s"
+          p="xs"
           display="flex"
           borderRadius="m"
           animate={variant}
@@ -126,6 +128,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
           initial={lastVariant}
           variants={wrapperVariants}
           transition={{ duration: 0.3 }}
+          {...fieldProps}
         >
           {Prefix}
           {PrefixIcon && (
@@ -133,25 +136,43 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
               {PrefixIcon}
             </Button>
           )}
-          <TextFieldElement
-            all="unset"
+          <Box
             m="xs"
             flex="1"
-            ref={ref}
-            type="text"
-            fontSize="xl"
-            lineHeight="xl"
-            autoFocus={focus}
-            onBlur={handleBlur}
-            onFocus={handleFocus}
-            onChange={handleChange}
-            color={statusColor || 'text'}
-            defaultValue={value || props.defaultValue}
-            nPlaceholder={{
-              color: 'textPlaceholder',
-            }}
-            {...props}
-          />
+            width="100%"
+            display="flex"
+            alignItems="stretch"
+            flexDirection="column"
+            justifyContent="center"
+          >
+            <TextFieldElement
+              ref={ref}
+              all="unset"
+              type="text"
+              width="100%"
+              fontSize="xl"
+              lineHeight="xl"
+              autoFocus={focus}
+              onBlur={handleBlur}
+              onFocus={handleFocus}
+              onChange={handleChange}
+              color={statusColor || 'text'}
+              defaultValue={value || props.defaultValue}
+              nPlaceholder={{
+                color: 'textPlaceholder',
+              }}
+              {...props}
+            />
+            {bottomText && (
+              <Typography
+                color="text"
+                variant="small"
+                textAlign={props.textAlign}
+              >
+                {bottomText}
+              </Typography>
+            )}
+          </Box>
           {(variant == 'error' && (
             <ErrorSVG
               maxWidth="1.25rem"

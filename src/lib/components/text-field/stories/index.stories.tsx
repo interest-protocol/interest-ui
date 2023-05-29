@@ -38,6 +38,19 @@ export const WithPrefix: Story = {
   },
 };
 
+export const WithPrefixAndBottomText: Story = {
+  args: {
+    placeholder: '0.123',
+    textAlign: 'right',
+    Prefix: (
+      <Button size="small" variant="filled">
+        Prefix
+      </Button>
+    ),
+    bottomText: '$0.123 USD',
+  },
+};
+
 export const WithSuffix: Story = {
   args: {
     placeholder: '0.123',
