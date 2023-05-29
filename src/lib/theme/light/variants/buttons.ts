@@ -45,9 +45,6 @@ export const variants = {
   icon: mergeDeepRight(defaultButton, {
     padding: space.s,
     color: colors.text,
-    '@media (min-width: 36rem)': {
-      padding: space.s,
-    },
     ':hover': {
       background: `${colors.text}08`,
     },
