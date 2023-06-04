@@ -1,7 +1,7 @@
 export type Boxes = 'container';
 export type Radii = 's' | 'm' | 'full';
 export type Space = 's' | 'm' | 'l' | 'xl' | '2xl' | '3xl' | '4xl';
-export type ButtonVariants = 'filled' | 'outline' | 'text' | 'icon';
+export type ButtonVariants = 'filled' | 'outline' | 'text' | 'tonal' | 'icon';
 export type FontSizes =
   | 'xs'
   | 's'
@@ -29,29 +29,38 @@ export type LineHeights =
   | '6xl'
   | '7xl';
 export type Surface =
+  // | 'surface'
+  // | 'surface1'
+  // | 'surface2'
+  // | 'surface3'
+  // | 'surface4'
+  // | 'surface5';
   | 'surface'
-  | 'surface1'
-  | 'surface2'
-  | 'surface3'
-  | 'surface4'
-  | 'surface5';
+  | 'containerHighest'
+  | 'containerHigh'
+  | 'container'
+  | 'containerLow'
+  | 'containerLowest'
+  | 'dim'
+  | 'surfaceVariant';
 export type Colors =
-  | 'text'
-  | 'error'
-  | 'border'
-  | 'warning'
-  | 'primary'
-  | 'outline'
-  | 'success'
-  | 'disabled'
-  | 'textSoft'
-  | 'secondary'
-  | 'background'
-  | 'textAccent'
-  | 'foreground'
-  | 'textDisabled'
-  | 'textBackground'
-  | 'textPlaceholder';
+  // | 'text'
+  // | 'error'
+  // | 'border'
+  // | 'warning'
+  // | 'primary'
+  // | 'outline'
+  // | 'success'
+  // | 'disabled'
+  // | 'textSoft'
+  // | 'secondary'
+  // | 'background'
+  // | 'textAccent'
+  // | 'foreground'
+  // | 'textDisabled'
+  // | 'textBackground'
+  // | 'textPlaceholder'
+  'onSurface' | 'surface' | 'primary' | 'secondary' | 'outline' | 'semantic';
 export type Typographies =
   | 'displayLarge'
   | 'displaySmall'
@@ -74,12 +83,11 @@ export interface Theme {
   dark: boolean;
   radii: Record<Radii, string>;
   space: Record<Space, string>;
-  colors: Record<Colors, string>;
+  colors: Record<Colors, MaybeNestedObject>;
   breakpoints: ReadonlyArray<string>;
   fontSizes: Record<FontSizes, string>;
   boxes: Record<Boxes, MaybeNestedObject>;
   lineHeights: Record<LineHeights, string>;
   typography: Record<Typographies, MaybeNestedObject>;
   buttons: Record<ButtonVariants, MaybeNestedObject>;
-  surface: Record<Surface, MaybeNestedObject>;
 }

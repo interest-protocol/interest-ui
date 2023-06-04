@@ -24,7 +24,7 @@ export const ProgressBar: FC<PropsWithChildren<ProgressItemProps>> = ({
       appearance="none"
       value={value}
       nWebkitProgressBar={{
-        backgroundColor: `${colors.primary}1F`,
+        backgroundColor: `${colors.onSurface.inverseOnSurface}`,
       }}
       nWebkitProgressValue={{
         background: getProgressBarColor(value, colors),
