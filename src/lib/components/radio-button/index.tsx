@@ -23,7 +23,9 @@ export const RadioButton: FC<PropsWithChildren<RadioButtonProps>> = ({
   const RadioButtonElement = stylin<RadioButtonElementProps>('input')();
 
   const RadioCircleColor = useMemo(() => {
-    return selector ? theme.colors.primary : theme.colors.border;
+    return selector
+      ? theme.colors.primary.primary
+      : theme.colors.outline.outline;
   }, [selector, theme]);
 
   const variants = {
@@ -46,7 +48,9 @@ export const RadioButton: FC<PropsWithChildren<RadioButtonProps>> = ({
       <Motion
         width="1.25rem"
         height="1.25rem"
-        color={disabled ? 'disabled' : RadioCircleColor}
+        color={
+          disabled ? `${theme.colors.onSurface.onSurface}` : RadioCircleColor
+        }
         display="flex"
         alignItems="center"
         justifyContent="center"

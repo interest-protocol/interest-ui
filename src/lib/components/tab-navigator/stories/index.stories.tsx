@@ -14,19 +14,11 @@ export default meta;
 const tabs = [
   {
     label: 'Borrow',
-    content: (
-      <Box p="3xl" surface="surface5">
-        First Tab Content: Borrow
-      </Box>
-    ),
+    content: <Box p="3xl">First Tab Content: Borrow</Box>,
   },
   {
     label: 'Repay',
-    content: (
-      <Box p="3xl" surface="surface1">
-        Second Tab Content: Repay
-      </Box>
-    ),
+    content: <Box p="3xl">Second Tab Content: Repay</Box>,
   },
 ];
 

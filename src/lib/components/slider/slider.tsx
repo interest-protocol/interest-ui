@@ -50,7 +50,10 @@ const SliderElement: FC<TooltipProps> = ({
             alignSelf="center"
             background={getTrackBackground({
               values,
-              colors: [`${theme.colors.primary}`, `${theme.colors.primary}1F`],
+              colors: [
+                `${theme.colors.primary.primary}`,
+                `${theme.colors.primary.primary}1F`,
+              ],
               min: min || 0,
               max: max,
             })}
@@ -72,11 +75,8 @@ const SliderElement: FC<TooltipProps> = ({
           cursor={disabled ? 'not-allowed !important' : 'pointer'}
           nHover={
             !disabled && {
-              boxShadow: `0 0 0 .625rem ${theme.colors.primary}1F, -0.0313rem .0313rem .125rem .0125rem #0000007f`,
+              boxShadow: `0 0 0 .625rem ${theme.colors.primary.primary}1F, -0.0313rem .0313rem .125rem .0125rem #0000007f`,
             }
-          }
-          backgroundColor={
-            !disabled ? theme.colors.primary : theme.colors.disabled
           }
         >
           {isDragged && (
@@ -88,9 +88,9 @@ const SliderElement: FC<TooltipProps> = ({
               paddingBottom=".25rem"
               paddingTop=".25rem"
               minWidth="1.75rem"
-              color="textBackground"
+              color={`${theme.colors.primary.onPrimary}`}
               justifyContent="center"
-              backgroundColor="primary"
+              backgroundColor={`${theme.colors.primary.primary}`}
               clipPath="path('M0 2C0 0.89543 0.895431 0 2 0H26C27.1046 0 28 0.89543 28 2V22.5C28 23.1295 27.7036 23.7223 27.2 24.1L14 34L0.8 24.1C0.296388 23.7223 0 23.1295 0 22.5V2Z')"
             >
               {values[0]}

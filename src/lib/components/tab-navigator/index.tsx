@@ -21,14 +21,15 @@ const TabsNavigator: React.FC<TabsNavigatorProps> = ({ tabs }) => {
             key={tab.label}
             cursor="pointer"
             textAlign="center"
-            surface="surface1"
             borderRadius=".25rem .25rem 0 0"
             padding="1.5rem .75rem 1.5rem .75rem"
             onClick={() => handleTabClick(index)}
             width={['100%', '100%', '30%', '30%']}
-            color={activeIndex === index ? 'primary' : 'text'}
+            color={
+              activeIndex === index ? `${theme.colors.primary.primary}` : 'text'
+            }
             whileHover={{
-              color: theme.colors.primary,
+              color: theme.colors.primary.primary,
               transition: { duration: 0.2 },
             }}
           >
@@ -38,7 +39,7 @@ const TabsNavigator: React.FC<TabsNavigatorProps> = ({ tabs }) => {
       </Box>
 
       <Motion
-        color="text"
+        color={`${theme.colors.primary.onPrimary}`}
         overflow="hidden"
         borderRadius={
           activeIndex === 0

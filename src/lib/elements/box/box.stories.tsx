@@ -7,17 +7,17 @@ const meta: Meta<typeof Box> = {
   title: 'Box',
   component: Box,
   argTypes: {
-    surface: {
-      options: [
-        'surface',
-        'surface1',
-        'surface2',
-        'surface3',
-        'surface4',
-        'surface5',
-      ],
-      control: { type: 'select' },
-    },
+    // surface: {
+    //   options: [
+    //     'surface',
+    //     'surface1',
+    //     'surface2',
+    //     'surface3',
+    //     'surface4',
+    //     'surface5',
+    //   ],
+    //   control: { type: 'select' },
+    // },
   },
 };
 
