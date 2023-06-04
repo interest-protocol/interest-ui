@@ -32,7 +32,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
       Suffix,
       onBlur,
       onFocus,
-      bottomText,
+      Bottom,
       PrefixIcon,
       SuffixIcon,
       fieldProps,
@@ -163,13 +163,13 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
               }}
               {...props}
             />
-            {bottomText && (
+            {Bottom && (
               <Typography
                 color="text"
                 variant="small"
                 textAlign={props.textAlign}
               >
-                {bottomText}
+                {Bottom}
               </Typography>
             )}
           </Box>
