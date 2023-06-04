@@ -15,7 +15,7 @@ export interface TextFieldProps
   valid?: string;
   Prefix?: ReactNode;
   Suffix?: ReactNode;
-  bottomText?: string;
+  Bottom?: ReactNode;
   SuffixIcon?: ReactNode;
   PrefixIcon?: ReactNode;
   fieldProps?: MotionProps;
