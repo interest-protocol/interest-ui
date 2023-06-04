@@ -1,6 +1,6 @@
-import { Colors, MaybeNestedObject } from '../theme.types';
+import { Theme } from '../theme.types';
 
-export const colors: Record<Colors, MaybeNestedObject> = {
+export const colors: Theme['colors'] = {
   // error: palette.RED_200,
   // text: palette.NEUTRAL_0,
   // success: palette.LIME_200,
@@ -17,17 +17,13 @@ export const colors: Record<Colors, MaybeNestedObject> = {
   // textBackground: palette.PRIMARY_800,
   // textPlaceholder: palette.NEUTRAL_500,
   // border: palette.NEUTRAL_200,
-  semantic: {
-    error: '#FECACA',
-    success: '#D9F99D',
-    warning: '#FED7AA',
-  },
-  onSurface: {
-    onSurface: '#C7C6CA',
-    onSurfaceVariant: '#C5C6D0',
-    inverseSurface: '#E4E2E6',
-    inverseOnSurface: '#1B1B1F',
-  },
+  error: '#FECACA',
+  success: '#D9F99D',
+  warning: '#FED7AA',
+  onSurface: '#C7C6CA',
+  onSurfaceVariant: '#C5C6D0',
+  inverseSurface: '#E4E2E6',
+  inverseOnSurface: '#1B1B1F',
   primary: {
     primary: '#B4C5FF',
     onPrimary: '#002A78',

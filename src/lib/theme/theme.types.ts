@@ -28,21 +28,6 @@ export type LineHeights =
   | '5xl'
   | '6xl'
   | '7xl';
-export type Surface =
-  // | 'surface'
-  // | 'surface1'
-  // | 'surface2'
-  // | 'surface3'
-  // | 'surface4'
-  // | 'surface5';
-  | 'surface'
-  | 'containerHighest'
-  | 'containerHigh'
-  | 'container'
-  | 'containerLow'
-  | 'containerLowest'
-  | 'dim'
-  | 'surfaceVariant';
 export type Colors =
   // | 'text'
   // | 'error'
@@ -60,7 +45,19 @@ export type Colors =
   // | 'textDisabled'
   // | 'textBackground'
   // | 'textPlaceholder'
-  'onSurface' | 'surface' | 'primary' | 'secondary' | 'outline' | 'semantic';
+  | 'onSurface'
+  | 'surface'
+  | 'primary'
+  | 'secondary'
+  | 'outline'
+  | 'semantic'
+  | 'error'
+  | 'success'
+  | 'warning'
+  | 'onSurface'
+  | 'onSurfaceVariant'
+  | 'inverseSurface'
+  | 'inverseOnSurface';
 export type Typographies =
   | 'displayLarge'
   | 'displaySmall'
@@ -83,7 +80,7 @@ export interface Theme {
   dark: boolean;
   radii: Record<Radii, string>;
   space: Record<Space, string>;
-  colors: Record<Colors, MaybeNestedObject>;
+  colors: Record<Colors, string | MaybeNestedObject>;
   breakpoints: ReadonlyArray<string>;
   fontSizes: Record<FontSizes, string>;
   boxes: Record<Boxes, MaybeNestedObject>;
