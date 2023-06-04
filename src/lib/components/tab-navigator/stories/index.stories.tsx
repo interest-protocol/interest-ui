@@ -2,7 +2,8 @@ import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 
 import { Box } from '../../../elements';
-import TabsNavigator from '../index';
+import { TabsNavigator } from '..';
+import { TabNavigator } from '../tabs-navigator.types';
 
 const meta: Meta<typeof TabsNavigator> = {
   title: 'TabsNavigator',
@@ -11,7 +12,7 @@ const meta: Meta<typeof TabsNavigator> = {
 
 export default meta;
 
-const tabs = [
+const tabs: [TabNavigator, TabNavigator] = [
   {
     label: 'Borrow',
     content: (
@@ -33,11 +34,9 @@ const tabs = [
 type Story = StoryObj<typeof TabsNavigator>;
 
 export const Normal: Story = {
-  render: ({ ...args }) => {
-    return (
-      <Box {...args} bg="background" p="3xl">
-        <TabsNavigator tabs={tabs} />
-      </Box>
-    );
-  },
+  render: ({ onChange, ...args }) => (
+    <Box {...args} bg="background" p="3xl">
+      <TabsNavigator tabs={tabs} onChange={onChange} />
+    </Box>
+  ),
 };

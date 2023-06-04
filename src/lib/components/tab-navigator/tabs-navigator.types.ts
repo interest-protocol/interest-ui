@@ -1,8 +1,11 @@
-interface TabNavigator {
+import type { ReactNode } from 'react';
+
+export interface TabNavigator {
   label: string;
-  content: React.ReactNode;
+  content: ReactNode;
 }
 
 export interface TabsNavigatorProps {
-  tabs: TabNavigator[];
+  tabs: [TabNavigator, TabNavigator];
+  onChange?: (index: number) => void;
 }

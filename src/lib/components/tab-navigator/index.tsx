@@ -2,21 +2,21 @@ import React, { FC, useState } from 'react';
 
 import { Box, Motion, Typography } from '../../elements';
 import { Theme, useTheme } from '../../theme';
-import { TabsNavigatorProps } from './tabs-navigator.types';
+import type { TabsNavigatorProps } from './tabs-navigator.types';
 
-export const TabsNavigator: FC<TabsNavigatorProps> = ({ tabs }) => {
+export const TabsNavigator: FC<TabsNavigatorProps> = ({ tabs, onChange }) => {
+  const theme = useTheme() as Theme;
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const handleTabClick = (index: number) => {
     setActiveIndex(index);
+    onChange?.(index);
   };
-
-  const theme = useTheme() as Theme;
 
   return (
     <Box margin="0 auto" width="100%" display="flex" flexDirection="column">
       <Box gap=".25rem" display="flex" justifyContent="center">
-        {tabs.slice(0, 2).map((tab, index) => (
+        {tabs.map((tab, index) => (
           <Motion
             key={tab.label}
             cursor="pointer"
