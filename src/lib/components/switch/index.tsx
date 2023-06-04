@@ -23,25 +23,46 @@ import { getBackground, getLabel } from './switch.utils';
 const CheckedButtonElement = stylin<CheckedButtonElementProps>('input')();
 const LabelElement = stylin<LabelElementProps>('label')();
 
+const WIDTH = {
+  small: '2.3rem',
+  medium: '2.6rem',
+};
+
+const HEIGHT = {
+  small: '1.25rem',
+  medium: '1.7rem',
+};
+
+const SIZES = {
+  small: '1rem',
+  medium: '1.2rem',
+};
+
+const TRANSLATE_X = {
+  small: ['0.1rem', '1.2rem'],
+  medium: ['0.3rem', '1.15rem'],
+};
+
 export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
   labels,
   onChange,
   disabled,
   defaultValue,
+  size = 'small',
   ...props
 }) => {
   const { dark } = useTheme() as Theme;
   const [switcher, setSwitcher] = useState(defaultValue || false);
-  const ative = useMotionValue(switcher ? '1rem' : '0rem');
+  const ative = useMotionValue(TRANSLATE_X[size][Number(switcher)]);
   const translateX = useSpring(ative, { stiffness: 1000, damping: 100 });
 
   useEffect(() => {
-    translateX.set(switcher ? '1rem' : '0rem');
+    translateX.set(TRANSLATE_X[size][Number(switcher)]);
   }, [switcher]);
 
   const selectedColor: Colors = useMemo(() => {
     if (dark) {
-      if (switcher) return 'secondary';
+      if (switcher) return 'textBackground';
 
       return 'textSoft';
     }
@@ -66,7 +87,7 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
       alignItems="center"
       textTransform="capitalize"
     >
-      {!isEmpty(labels) && getLabel(labels, switcher)}
+      {labels && !isEmpty(labels) && getLabel(labels, switcher)}
       <LabelElement ml="0.375rem" display="flex" position="relative">
         <CheckedButtonElement
           display="none"
@@ -77,19 +98,19 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
           {...props}
         />
         <Box
-          p="3xs"
-          width="2rem"
           display="flex"
           cursor="pointer"
           alignItems="center"
+          width={WIDTH[size]}
+          height={HEIGHT[size]}
           borderRadius="full"
-          transition="background 300ms ease-in-out"
           bg={getBackground(switcher, dark)}
+          transition="background 300ms ease-in-out"
         >
           <Motion
-            width="1rem"
-            height="1rem"
             borderRadius="50%"
+            width={SIZES[size]}
+            height={SIZES[size]}
             style={{ translateX }}
             background={selectedColor}
             opacity={disabled ? 0.7 : 1}

@@ -1,10 +1,11 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 
 import { PlusIcon, SwapIcon } from '../../../../storybook/icons';
+import { Button } from '../../button';
 import { TextField } from '..';
 
-export default {
+const meta: Meta<typeof TextField> = {
   title: 'TextField',
   component: TextField,
   argTypes: {
@@ -13,74 +14,110 @@ export default {
       control: { type: 'boolean' },
     },
   },
-} as ComponentMeta<typeof TextField>;
-
-const Template: ComponentStory<typeof TextField> = (args) => (
-  <TextField {...args} />
-);
-
-export const Default = Template.bind({});
-
-Default.args = {
-  placeholder: '0.123',
 };
 
-export const WithPrefix = Template.bind({});
+export default meta;
 
-WithPrefix.args = {
-  placeholder: '0.123',
-  PrefixIcon: <SwapIcon />,
+type Story = StoryObj<typeof TextField>;
+
+export const Default: Story = {
+  args: {
+    placeholder: '0.123',
+  },
 };
 
-export const WithSuffix = Template.bind({});
-
-WithSuffix.args = {
-  placeholder: '0.123',
-  SuffixIcon: <PlusIcon />,
+export const WithPrefix: Story = {
+  args: {
+    placeholder: '0.123',
+    textAlign: 'right',
+    Prefix: (
+      <Button size="small" variant="filled">
+        Prefix
+      </Button>
+    ),
+  },
 };
 
-export const Error = Template.bind({});
-
-Error.args = {
-  error: 'Supporting text',
-  placeholder: '0.123',
+export const WithPrefixAndBottomText: Story = {
+  args: {
+    placeholder: '0.123',
+    textAlign: 'right',
+    Prefix: (
+      <Button size="small" variant="filled">
+        Prefix
+      </Button>
+    ),
+    bottomText: '$0.123 USD',
+  },
 };
 
-export const ErrorWithPrefix = Template.bind({});
-
-ErrorWithPrefix.args = {
-  error: 'Supporting text',
-  placeholder: '0.123',
-  PrefixIcon: <SwapIcon />,
+export const WithSuffix: Story = {
+  args: {
+    placeholder: '0.123',
+    Suffix: (
+      <Button size="small" variant="filled">
+        Prefix
+      </Button>
+    ),
+  },
 };
 
-export const ErrorWithSuffix = Template.bind({});
-
-ErrorWithSuffix.args = {
-  error: 'Supporting text',
-  placeholder: '0.123',
-  SuffixIcon: <PlusIcon />,
+export const WithPrefixIcon: Story = {
+  args: {
+    placeholder: '0.123',
+    PrefixIcon: <SwapIcon />,
+  },
 };
 
-export const Success = Template.bind({});
-
-Success.args = {
-  valid: 'Supporting text',
-  placeholder: '0.123',
+export const WithSuffixIcon: Story = {
+  args: {
+    placeholder: '0.123',
+    SuffixIcon: <PlusIcon />,
+  },
 };
 
-export const SuccessWithPrefix = Template.bind({});
-
-SuccessWithPrefix.args = {
-  valid: 'Supporting text',
-  placeholder: '0.123',
-  PrefixIcon: <SwapIcon />,
+export const Error: Story = {
+  args: {
+    error: 'Supporting text',
+    placeholder: '0.123',
+  },
 };
 
-export const SuccessWithSuffix = Template.bind({});
+export const ErrorWithPrefixIcon: Story = {
+  args: {
+    error: 'Supporting text',
+    placeholder: '0.123',
+    PrefixIcon: <SwapIcon />,
+  },
+};
 
-SuccessWithSuffix.args = {
-  valid: 'Supporting text',
-  placeholder: '0.123',
-  SuffixIcon: <PlusIcon />,
+export const ErrorWithSuffixIcon: Story = {
+  args: {
+    error: 'Supporting text',
+    placeholder: '0.123',
+    SuffixIcon: <PlusIcon />,
+  },
+};
+
+export const Success: Story = {
+  args: {
+    valid: 'Supporting text',
+    placeholder: '0.123',
+  },
+};
+
+export const SuccessWithPrefixIcon: Story = {
+  args: {
+    valid: 'Supporting text',
+    placeholder: '0.123',
+    PrefixIcon: <SwapIcon />,
+  },
+};
+
+export const SuccessWithSuffixIcon: Story = {
+  args: {
+    valid: 'Supporting text',
+    placeholder: '0.123',
+    SuffixIcon: <PlusIcon />,
+  },
 };

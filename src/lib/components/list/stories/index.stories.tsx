@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { v4 } from 'uuid';
 
@@ -7,37 +7,41 @@ import { ListItem } from '../../list-item';
 import { SwitchButton } from '../../switch';
 import { List } from '..';
 
-export default {
+const meta: Meta<typeof List> = {
   title: 'List',
   component: List,
   argTypes: {
-    disabled: {
-      defaultValue: false,
-      control: { type: 'boolean' },
+    title: {
+      control: { type: 'text' },
+    },
+    items: {
+      control: { type: 'object' },
     },
   },
-} as ComponentMeta<typeof List>;
+};
 
-const Template: ComponentStory<typeof List> = (args) => <List {...args} />;
+export default meta;
 
-export const Normal = Template.bind({});
+type Story = StoryObj<typeof List>;
 
-Normal.args = {
-  title: 'List Title',
-  items: [
-    <ListItem title="List Option A" metadata="100+" key={v4()} />,
-    <ListItem
-      title="List Option B"
-      description="Supporting Text"
-      SuffixIcon={
-        <SwitchButton name={'switch'} defaultValue={false} labels="" />
-      }
-      key={v4()}
-    />,
-    <ListItem
-      title="List Option C"
-      SuffixIcon={<ArrowRightIcon />}
-      key={v4()}
-    />,
-  ],
+export const Normal: Story = {
+  args: {
+    title: 'List Title',
+    items: [
+      <ListItem title="List Option A" metadata="100+" key={v4()} />,
+      <ListItem
+        title="List Option B"
+        description="Supporting Text"
+        SuffixIcon={
+          <SwitchButton name={'switch'} defaultValue={false} labels="" />
+        }
+        key={v4()}
+      />,
+      <ListItem
+        title="List Option C"
+        SuffixIcon={<ArrowRightIcon />}
+        key={v4()}
+      />,
+    ],
+  },
 };

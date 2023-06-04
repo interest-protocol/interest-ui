@@ -18,9 +18,14 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
   children,
   PrefixIcon,
   SuffixIcon,
+  size = 'medium',
   ...props
 }) => (
   <MotionButton
+    {...(props.variant !== 'icon' && {
+      py: size === 'medium' ? ['m', 'xl'] : 'm',
+      px: size === 'medium' ? ['2xl', '3xl'] : 'xl',
+    })}
     whileTap={{
       scale: props.disabled ? 1 : 0.97,
       transition: { duration: 0.005, ease: easeInOut },

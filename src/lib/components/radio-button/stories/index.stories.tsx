@@ -1,9 +1,8 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
-import React from 'react';
+import { Meta, StoryObj } from '@storybook/react';
 
 import { RadioButton } from '..';
 
-export default {
+const meta: Meta<typeof RadioButton> = {
   title: 'Radio',
   component: RadioButton,
   argTypes: {
@@ -12,36 +11,36 @@ export default {
       control: { type: 'boolean' },
     },
   },
-} as ComponentMeta<typeof RadioButton>;
-
-const Template: ComponentStory<typeof RadioButton> = (args) => (
-  <RadioButton {...args} />
-);
-
-export const Normal = Template.bind({});
-
-Normal.args = {
-  name: 'radio',
 };
 
-export const NormalDisabled = Template.bind({});
+export default meta;
 
-NormalDisabled.args = {
-  name: 'radio',
-  disabled: true,
+type Story = StoryObj<typeof RadioButton>;
+
+export const Normal: Story = {
+  args: {
+    name: 'radio',
+  },
 };
 
-export const Checked = Template.bind({});
-
-Checked.args = {
-  name: 'radio',
-  checked: true,
+export const NormalDisabled: Story = {
+  args: {
+    name: 'radio',
+    disabled: true,
+  },
 };
 
-export const CheckedDisabled = Template.bind({});
+export const Checked: Story = {
+  args: {
+    name: 'radio',
+    checked: true,
+  },
+};
 
-CheckedDisabled.args = {
-  name: 'radio',
-  checked: true,
-  disabled: true,
+export const CheckedDisabled: Story = {
+  args: {
+    name: 'radio',
+    checked: true,
+    disabled: true,
+  },
 };

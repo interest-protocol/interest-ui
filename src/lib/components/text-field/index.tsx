@@ -25,7 +25,19 @@ const TextFieldElement = stylin<TextFieldElementProps & RefAttributes<unknown>>(
 
 export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
   (
-    { onFocus, onBlur, PrefixIcon, SuffixIcon, error, valid, ...props },
+    {
+      error,
+      valid,
+      Prefix,
+      Suffix,
+      onBlur,
+      onFocus,
+      Bottom,
+      PrefixIcon,
+      SuffixIcon,
+      fieldProps,
+      ...props
+    },
     ref
   ) => {
     const theme = useTheme() as Theme;
@@ -107,7 +119,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
     return (
       <Box color={statusColor || 'text'}>
         <Motion
-          p="l"
+          p="xs"
           display="flex"
           borderRadius="m"
           animate={variant}
@@ -116,31 +128,51 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
           initial={lastVariant}
           variants={wrapperVariants}
           transition={{ duration: 0.3 }}
+          {...fieldProps}
         >
+          {Prefix}
           {PrefixIcon && (
             <Button variant="icon" mr="s">
               {PrefixIcon}
             </Button>
           )}
-          <TextFieldElement
-            all="unset"
-            my="xs"
+          <Box
+            m="xs"
             flex="1"
-            ref={ref}
-            type="text"
-            fontSize="xl"
-            lineHeight="xl"
-            autoFocus={focus}
-            onBlur={handleBlur}
-            onFocus={handleFocus}
-            onChange={handleChange}
-            color={statusColor || 'text'}
-            defaultValue={value || props.defaultValue}
-            nPlaceholder={{
-              color: 'textPlaceholder',
-            }}
-            {...props}
-          />
+            width="100%"
+            display="flex"
+            alignItems="stretch"
+            flexDirection="column"
+            justifyContent="center"
+          >
+            <TextFieldElement
+              ref={ref}
+              all="unset"
+              type="text"
+              width="100%"
+              fontSize="xl"
+              lineHeight="xl"
+              autoFocus={focus}
+              onBlur={handleBlur}
+              onFocus={handleFocus}
+              onChange={handleChange}
+              color={statusColor || 'text'}
+              defaultValue={value || props.defaultValue}
+              nPlaceholder={{
+                color: 'textPlaceholder',
+              }}
+              {...props}
+            />
+            {Bottom && (
+              <Typography
+                color="text"
+                variant="small"
+                textAlign={props.textAlign}
+              >
+                {Bottom}
+              </Typography>
+            )}
+          </Box>
           {(variant == 'error' && (
             <ErrorSVG
               maxWidth="1.25rem"
@@ -158,6 +190,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
               />
             )) ||
             SuffixIcon}
+          {Suffix}
         </Motion>
         {statusColor && (
           <Typography variant="small" mt="2xs">
