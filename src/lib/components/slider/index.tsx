@@ -101,10 +101,10 @@ const SliderElement: FC<SliderProps> = ({
   );
 };
 
-const Slider: FC<SliderProps> = (props) => (
+export const Slider: FC<SliderProps> = (props) => (
   <Box position="relative">
     <SliderElement {...props} />
   </Box>
 );
 
-export default Slider;
+export * from './slider.types';
