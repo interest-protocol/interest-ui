@@ -23,6 +23,7 @@ export const TabsNavigator: FC<TabsNavigatorProps> = ({ tabs, onChange }) => {
             textAlign="center"
             borderRadius=".25rem .25rem 0 0"
             padding="1.5rem .75rem 1.5rem .75rem"
+            backgroundColor={theme.colors.surface.container}
             onClick={() => handleTabClick(index)}
             width={['100%', '100%', '30%', '30%']}
             color={
@@ -41,7 +42,8 @@ export const TabsNavigator: FC<TabsNavigatorProps> = ({ tabs, onChange }) => {
       </Box>
 
       <Motion
-        color={`${theme.colors.primary.onPrimary}`}
+        color={`${theme.colors.onSurface}`}
+        backgroundColor={theme.colors.surface.container}
         overflow="hidden"
         borderRadius={
           activeIndex === 0

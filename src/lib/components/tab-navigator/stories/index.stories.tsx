@@ -27,7 +27,7 @@ type Story = StoryObj<typeof TabsNavigator>;
 
 export const Normal: Story = {
   render: ({ onChange, ...args }) => (
-    <Box {...args} bg="surface.container" p="3xl">
+    <Box {...args} p="3xl">
       <TabsNavigator tabs={tabs} onChange={onChange} />
     </Box>
   ),
