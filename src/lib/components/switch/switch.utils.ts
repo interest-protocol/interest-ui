@@ -6,8 +6,9 @@ export const getLabel = (labels: string | [string, string], value: boolean) => {
   return labels;
 };
 
-export const getBackground = (switcher: boolean, dark: boolean): string => {
-  const colors: Theme['colors'];
+export const getBackground = (switcher: boolean, theme: Theme): string => {
+  const { colors, dark } = theme;
+
   if (switcher) return colors.onSurface;
 
   if (dark) return colors.surface.container;

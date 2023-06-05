@@ -40,7 +40,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
     },
     ref
   ) => {
-    const theme = useTheme() as Theme;
+    const { colors } = useTheme() as Theme;
     const [lastVariant, setLastVariant] = useState('normal');
     const [variant, setVariant] = useState('normal');
     const [focus, setFocus] = useState(false);
@@ -86,27 +86,24 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
       setVariant('normal');
     }, [focus, value]);
 
-    const wrapperVariants = useMemo(
-      () => ({
-        normal: {
-          borderWidth: '1px',
-          borderColor: theme.colors.outline.outline,
-        },
-        focus: {
-          borderWidth: '1px',
-          borderColor: theme.colors.primary,
-        },
-        valid: {
-          borderWidth: valid ? '1px' : '2px',
-          borderColor: valid ? theme.colors.success : theme.colors.primary,
-        },
-        error: {
-          borderWidth: '1px',
-          borderColor: theme.colors.error,
-        },
-      }),
-      [theme, valid]
-    );
+    const wrapperVariants = {
+      focus: {
+        borderWidth: '1px',
+        borderColor: colors.primary.primary,
+      },
+      normal: {
+        borderWidth: '1px',
+        borderColor: colors.outline.outline as string,
+      },
+      valid: {
+        borderWidth: valid ? '1px' : '2px',
+        borderColor: valid ? colors.success : colors.primary.primary,
+      },
+      error: {
+        borderWidth: '1px',
+        borderColor: colors.error,
+      },
+    };
 
     const statusColor = useMemo(() => {
       if (variant === 'error') return 'error';
@@ -156,16 +153,16 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
               onBlur={handleBlur}
               onFocus={handleFocus}
               onChange={handleChange}
-              color={statusColor || theme.colors.onSurface}
+              color={statusColor || 'onSurface'}
               defaultValue={value || props.defaultValue}
               nPlaceholder={{
-                color: theme.colors.onSurface,
+                color: 'onSurface',
               }}
               {...props}
             />
             {Bottom && (
               <Typography
-                color={theme.colors.onSurface}
+                color="onSurface"
                 variant="small"
                 textAlign={props.textAlign}
               >

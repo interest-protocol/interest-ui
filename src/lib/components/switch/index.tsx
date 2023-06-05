@@ -12,7 +12,7 @@ import React, {
 } from 'react';
 
 import { Box, Motion } from '../../elements';
-import { Colors, Theme } from '../../theme';
+import { Theme } from '../../theme';
 import {
   CheckedButtonElementProps,
   CheckedButtonProps,
@@ -51,7 +51,7 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
   size = 'small',
   ...props
 }) => {
-  const { dark } = useTheme() as Theme;
+  const theme = useTheme() as Theme;
   const { colors } = useTheme() as Theme;
   const [switcher, setSwitcher] = useState(defaultValue || false);
   const ative = useMotionValue(TRANSLATE_X[size][Number(switcher)]);
@@ -61,11 +61,11 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
     translateX.set(TRANSLATE_X[size][Number(switcher)]);
   }, [switcher]);
 
-  const selectedColor: Colors = useMemo(() => {
-    if (switcher) return selectedColor.onSurface;
+  const selectedColor: string = useMemo(() => {
+    if (switcher) return colors.onSurface;
 
-    return selectedColor.surface.container;
-  }, [switcher, dark]);
+    return colors.surface.container;
+  }, [switcher, theme.dark]);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     onChange?.(event);
@@ -99,7 +99,7 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
           width={WIDTH[size]}
           height={HEIGHT[size]}
           borderRadius="full"
-          bg={getBackground(switcher, dark)}
+          bg={getBackground(switcher, theme)}
           transition="background 300ms ease-in-out"
         >
           <Motion
