@@ -28,36 +28,41 @@ export type LineHeights =
   | '5xl'
   | '6xl'
   | '7xl';
-export type Colors =
-  // | 'text'
-  // | 'error'
-  // | 'border'
-  // | 'warning'
-  // | 'primary'
-  // | 'outline'
-  // | 'success'
-  // | 'disabled'
-  // | 'textSoft'
-  // | 'secondary'
-  // | 'background'
-  // | 'textAccent'
-  // | 'foreground'
-  // | 'textDisabled'
-  // | 'textBackground'
-  // | 'textPlaceholder'
-  | 'onSurface'
-  | 'surface'
-  | 'primary'
-  | 'secondary'
-  | 'outline'
-  | 'semantic'
-  | 'error'
-  | 'success'
-  | 'warning'
-  | 'onSurface'
-  | 'onSurfaceVariant'
-  | 'inverseSurface'
-  | 'inverseOnSurface';
+export type Colors = {
+  error: string;
+  success: string;
+  warning: string;
+  onSurface: string;
+  onSurfaceVariant: string;
+  inverseOnSurface: string;
+  inverseSurface: string;
+  primary: {
+    primary: string;
+    onPrimary: string;
+    primaryContainer: string;
+    onPrimaryContainer: string;
+  };
+  secondary: {
+    secondary: string;
+    onSecondary: string;
+    secondaryContainer: string;
+    onSecondaryContainer: string;
+  };
+  outline: {
+    outline: string;
+    outlineVariant: string;
+  };
+  surface: {
+    surfaceVariant: string;
+    surface: string;
+    containerHighest: string;
+    containerHigh: string;
+    container: string;
+    containerLow: string;
+    containerLowest: string;
+    dim: string;
+  };
+};
 export type Typographies =
   | 'displayLarge'
   | 'displaySmall'
@@ -80,7 +85,7 @@ export interface Theme {
   dark: boolean;
   radii: Record<Radii, string>;
   space: Record<Space, string>;
-  colors: Record<Colors, string | MaybeNestedObject>;
+  colors: Colors;
   breakpoints: ReadonlyArray<string>;
   fontSizes: Record<FontSizes, string>;
   boxes: Record<Boxes, MaybeNestedObject>;

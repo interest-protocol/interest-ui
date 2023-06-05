@@ -30,7 +30,7 @@ export const List: FC<PropsWithChildren<ListProps>> = ({ title, items }) => {
             height={'0.626rem'}
             as="div"
             display="flex"
-            color={theme.dark ? '#F2F0F4' : '#001133'}
+            color={theme.colors.onSurface}
           >
             <ArrowRightSVG
               maxWidth={'0.313rem'}

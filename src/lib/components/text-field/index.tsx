@@ -90,7 +90,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
       () => ({
         normal: {
           borderWidth: '1px',
-          borderColor: theme.colors.textPlaceholder,
+          borderColor: theme.colors.outline.outline,
         },
         focus: {
           borderWidth: '1px',
@@ -156,16 +156,16 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
               onBlur={handleBlur}
               onFocus={handleFocus}
               onChange={handleChange}
-              color={statusColor || 'text'}
+              color={statusColor || theme.colors.onSurface}
               defaultValue={value || props.defaultValue}
               nPlaceholder={{
-                color: 'textPlaceholder',
+                color: theme.colors.onSurface,
               }}
               {...props}
             />
             {Bottom && (
               <Typography
-                color="text"
+                color={theme.colors.onSurface}
                 variant="small"
                 textAlign={props.textAlign}
               >

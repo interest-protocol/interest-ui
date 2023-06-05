@@ -48,9 +48,7 @@ export const RadioButton: FC<PropsWithChildren<RadioButtonProps>> = ({
       <Motion
         width="1.25rem"
         height="1.25rem"
-        color={
-          disabled ? `${theme.colors.onSurface.onSurface}` : RadioCircleColor
-        }
+        color={disabled ? `${theme.colors.onSurface}` : RadioCircleColor}
         display="flex"
         alignItems="center"
         justifyContent="center"

@@ -1,4 +1,4 @@
-import { Theme, useTheme } from '../../theme';
+import { Theme } from '../../theme';
 
 export const getLabel = (labels: string | [string, string], value: boolean) => {
   if (Array.isArray(labels)) return labels[Number(value)];
@@ -7,11 +7,10 @@ export const getLabel = (labels: string | [string, string], value: boolean) => {
 };
 
 export const getBackground = (switcher: boolean, dark: boolean): string => {
-  const theme = useTheme() as Theme;
+  const colors: Theme['colors'];
+  if (switcher) return colors.onSurface;
 
-  if (switcher) return 'primary';
+  if (dark) return colors.surface.container;
 
-  if (dark) return 'background';
-
-  return 'textSoft';
+  return colors.onSurface;
 };

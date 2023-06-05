@@ -8,7 +8,7 @@ const defaultButton = mergeDeepRight(button, {
   ':disabled': {
     background: colors.surface.container,
     cursor: 'not-allowed',
-    color: colors.onSurface.onSurface,
+    color: colors.onSurface,
   },
 });
 
@@ -64,7 +64,7 @@ export const variants = {
   }),
   icon: mergeDeepRight(button, {
     padding: space.s,
-    color: colors.onSurface.onSurface,
+    color: colors.onSurface,
     '@media (min-width: 36rem)': {
       padding: space.s,
     },

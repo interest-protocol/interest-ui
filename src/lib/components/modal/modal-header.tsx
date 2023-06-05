@@ -3,6 +3,7 @@ import { FC } from 'react';
 
 import { Box, Typography } from '../../elements';
 import { TimesSVG } from '../../icons';
+import { Theme, useTheme } from '../../theme';
 import { Button } from '../button';
 import { Standardized, StandardizedWithCloseButton } from './modal.types';
 import { hasCloseButton } from './modal.utils';
@@ -15,7 +16,7 @@ export const ModalHeader: FC<StandardizedWithCloseButton | Standardized> = ({
   ...props
 }) => {
   const hasButton = hasCloseButton(props);
-
+  const theme = useTheme() as Theme;
   return (
     <Box
       px="l"
@@ -38,7 +39,11 @@ export const ModalHeader: FC<StandardizedWithCloseButton | Standardized> = ({
       )}
       {hasButton && (
         <Box ml="auto" gridColumn="3/4">
-          <Button variant="icon" color="text" onClick={props.onClose}>
+          <Button
+            variant="icon"
+            color={theme.colors.onSurface}
+            onClick={props.onClose}
+          >
             <TimesSVG maxWidth="1rem" maxHeight="1rem" width="100%" />
           </Button>
         </Box>

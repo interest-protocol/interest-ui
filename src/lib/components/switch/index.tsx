@@ -52,6 +52,7 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
   ...props
 }) => {
   const { dark } = useTheme() as Theme;
+  const { colors } = useTheme() as Theme;
   const [switcher, setSwitcher] = useState(defaultValue || false);
   const ative = useMotionValue(TRANSLATE_X[size][Number(switcher)]);
   const translateX = useSpring(ative, { stiffness: 1000, damping: 100 });
@@ -61,15 +62,9 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
   }, [switcher]);
 
   const selectedColor: Colors = useMemo(() => {
-    if (dark) {
-      if (switcher) return 'textBackground';
+    if (switcher) return selectedColor.onSurface;
 
-      return 'textSoft';
-    }
-
-    if (switcher) return 'textAccent';
-
-    return 'background';
+    return selectedColor.surface.container;
   }, [switcher, dark]);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -82,7 +77,7 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
       fontSize="s"
       display="flex"
       flexWrap="wrap"
-      color="textSoft"
+      color={colors.onSurface}
       fontWeight="300"
       alignItems="center"
       textTransform="capitalize"

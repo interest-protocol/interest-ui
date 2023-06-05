@@ -15,10 +15,8 @@ export const ListItem: FC<PropsWithChildren<ListItemProps>> = ({
   ...props
 }) => {
   const { dark } = useTheme() as Theme;
+  const theme = useTheme() as Theme;
 
-  const BG_COLOR = dark
-    ? 'linear-gradient(0deg, #b6c4ff0a, #b6c4ff0a), #1B1B1F'
-    : 'linear-gradient(0deg, #0055ff0a, #0055ff0a), #F2F0F4';
   return (
     <Box
       py="l"
@@ -28,16 +26,20 @@ export const ListItem: FC<PropsWithChildren<ListItemProps>> = ({
       alignItems="center"
       width={['100%', '100%', '22.5rem', '22.5rem']}
       maxHeight={description ? '4.75rem' : '3.5rem'}
-      background={BG_COLOR}
+      background={theme.colors.surface.container}
       {...props}
       onClick={onClick}
       nHover={{
         cursor: onClick ? 'pointer' : 'unset',
-        background: onClick ? (dark ? '#1B1B1F' : '#F2F0F4') : BG_COLOR,
+        background: onClick
+          ? dark
+            ? theme.colors.onSurface
+            : theme.colors.surface.container
+          : 'unset',
       }}
     >
       {PrefixIcon && (
-        <Box mr="2xl" color={dark ? 'textDisabled' : 'secondary'}>
+        <Box mr="2xl" color={theme.colors.onSurface}>
           {PrefixIcon}
         </Box>
       )}
@@ -47,7 +49,7 @@ export const ListItem: FC<PropsWithChildren<ListItemProps>> = ({
           as="span"
           variant="medium"
           fontWeight="400"
-          color={dark ? 'textDisabled' : 'secondary'}
+          color={theme.colors.onSurface}
         >
           {title}
         </Typography>
@@ -55,7 +57,7 @@ export const ListItem: FC<PropsWithChildren<ListItemProps>> = ({
           <Typography
             as="span"
             variant="small"
-            color={dark ? 'textSoft' : 'foreground'}
+            color={theme.colors.onSurfaceVariant}
           >
             {description}
           </Typography>
@@ -67,7 +69,7 @@ export const ListItem: FC<PropsWithChildren<ListItemProps>> = ({
           as="span"
           variant="extraSmall"
           mr={SuffixIcon ? '2xl' : 'unset'}
-          color={dark ? 'textSoft' : 'foreground'}
+          color={theme.colors.onSurfaceVariant}
         >
           {metadata}
         </Typography>
