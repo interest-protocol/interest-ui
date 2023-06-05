@@ -97,7 +97,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
       },
       valid: {
         borderWidth: valid ? '1px' : '2px',
-        borderColor: valid ? colors.success : colors.primary.primary,
+        borderColor: valid ? colors.success : colors.warning,
       },
       error: {
         borderWidth: '1px',
@@ -114,7 +114,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
     }, [valid, error, variant]);
 
     return (
-      <Box color={statusColor || 'text'}>
+      <Box color={statusColor || 'onSurface'}>
         <Motion
           p="xs"
           display="flex"

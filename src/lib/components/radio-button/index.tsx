@@ -23,9 +23,7 @@ export const RadioButton: FC<PropsWithChildren<RadioButtonProps>> = ({
   const RadioButtonElement = stylin<RadioButtonElementProps>('input')();
 
   const RadioCircleColor = useMemo(() => {
-    return selector
-      ? theme.colors.primary.primary
-      : theme.colors.outline.outline;
+    return selector ? theme.colors.primary.primary : theme.colors.onSurface;
   }, [selector, theme]);
 
   const variants = {

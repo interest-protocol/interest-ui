@@ -62,9 +62,9 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
   }, [switcher]);
 
   const selectedColor: string = useMemo(() => {
-    if (switcher) return colors.onSurface;
+    if (switcher) return colors.primary.onPrimary;
 
-    return colors.surface.container;
+    return colors.outline.outline;
   }, [switcher, theme.dark]);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {

@@ -14,7 +14,6 @@ export const ListItem: FC<PropsWithChildren<ListItemProps>> = ({
   PrefixIcon,
   ...props
 }) => {
-  const { dark } = useTheme() as Theme;
   const theme = useTheme() as Theme;
 
   return (
@@ -29,14 +28,6 @@ export const ListItem: FC<PropsWithChildren<ListItemProps>> = ({
       background={theme.colors.surface.container}
       {...props}
       onClick={onClick}
-      nHover={{
-        cursor: onClick ? 'pointer' : 'unset',
-        background: onClick
-          ? dark
-            ? theme.colors.onSurface
-            : theme.colors.surface.container
-          : 'unset',
-      }}
     >
       {PrefixIcon && (
         <Box mr="2xl" color={theme.colors.onSurface}>

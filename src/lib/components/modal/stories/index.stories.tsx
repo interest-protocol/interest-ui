@@ -37,7 +37,12 @@ export const Normal: Story = {
     onClose: toggleModal,
     ariaHideApp: false, // JUST FOR THE STORY - because we are not setting the app
     children: ['Modal', 'Content'].map((text) => (
-      <Box p="4xl" borderTop="1px solid" borderColor="blue" key={v4()}>
+      <Box
+        p="4xl"
+        borderTop="1px solid"
+        borderColor="outline.outline"
+        key={v4()}
+      >
         {text}
       </Box>
     )),

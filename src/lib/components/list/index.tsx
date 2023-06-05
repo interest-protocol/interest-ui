@@ -43,7 +43,6 @@ export const List: FC<PropsWithChildren<ListProps>> = ({ title, items }) => {
       />
       <Motion
         as="div"
-        bg="red"
         width="100%"
         transition={{ duration: 0.05 }}
         animate={{ display: openList ? 'block' : 'none' }}

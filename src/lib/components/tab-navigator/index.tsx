@@ -26,7 +26,9 @@ export const TabsNavigator: FC<TabsNavigatorProps> = ({ tabs, onChange }) => {
             onClick={() => handleTabClick(index)}
             width={['100%', '100%', '30%', '30%']}
             color={
-              activeIndex === index ? `${theme.colors.primary.primary}` : 'text'
+              activeIndex === index
+                ? theme.colors.primary.primary
+                : theme.colors.onSurface
             }
             whileHover={{
               color: theme.colors.primary.primary,

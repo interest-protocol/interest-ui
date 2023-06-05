@@ -9,9 +9,9 @@ export const getLabel = (labels: string | [string, string], value: boolean) => {
 export const getBackground = (switcher: boolean, theme: Theme): string => {
   const { colors, dark } = theme;
 
-  if (switcher) return colors.onSurface;
+  if (switcher) return colors.primary.onPrimary;
 
-  if (dark) return colors.surface.container;
+  if (dark) return colors.surface.containerHigh;
 
   return colors.onSurface;
 };
