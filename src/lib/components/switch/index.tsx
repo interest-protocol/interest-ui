@@ -7,7 +7,6 @@ import React, {
   FC,
   PropsWithChildren,
   useEffect,
-  useMemo,
   useState,
 } from 'react';
 
@@ -52,7 +51,6 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
   ...props
 }) => {
   const theme = useTheme() as Theme;
-  const { colors } = useTheme() as Theme;
   const [switcher, setSwitcher] = useState(defaultValue || false);
   const ative = useMotionValue(TRANSLATE_X[size][Number(switcher)]);
   const translateX = useSpring(ative, { stiffness: 1000, damping: 100 });
@@ -61,11 +59,7 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
     translateX.set(TRANSLATE_X[size][Number(switcher)]);
   }, [switcher]);
 
-  const selectedColor: string = useMemo(() => {
-    if (switcher) return colors.primary.onPrimary;
-
-    return colors.outline.outline;
-  }, [switcher, theme.dark]);
+  const selectedColor = switcher ? 'primary.onPrimary' : 'outline';
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     onChange?.(event);
@@ -77,8 +71,8 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
       fontSize="s"
       display="flex"
       flexWrap="wrap"
-      color={colors.onSurface}
       fontWeight="300"
+      color="onSurface"
       alignItems="center"
       textTransform="capitalize"
     >
@@ -96,18 +90,18 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
           display="flex"
           cursor="pointer"
           alignItems="center"
+          borderRadius="full"
           width={WIDTH[size]}
           height={HEIGHT[size]}
-          borderRadius="full"
           bg={getBackground(switcher, theme)}
           transition="background 300ms ease-in-out"
         >
           <Motion
+            bg={selectedColor}
             borderRadius="50%"
             width={SIZES[size]}
             height={SIZES[size]}
             style={{ translateX }}
-            background={selectedColor}
             opacity={disabled ? 0.7 : 1}
           />
         </Box>

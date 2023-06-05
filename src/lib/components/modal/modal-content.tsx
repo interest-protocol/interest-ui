@@ -31,40 +31,37 @@ const ModalContentWrapper: FC<PropsWithChildren<ModalContentWrapperProps>> = ({
   button,
   isOpen,
   children,
-}) => {
-  const theme = useTheme() as Theme;
-  return (
-    <AnimatePresence>
-      {isOpen && (
-        <Motion
+}) => (
+  <AnimatePresence>
+    {isOpen && (
+      <Motion
+        display="flex"
+        flexDirection="column"
+        exit={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        initial={{ opacity: 0, scale: 0.5 }}
+        transition={{
+          delay: 0.2,
+          duration: 0.8,
+          ease: [0, 0.71, 0.2, 1.01],
+        }}
+      >
+        <Box
+          mb="m"
           display="flex"
+          minWidth="21rem"
+          borderRadius="m"
+          color="onSurface"
+          bg="surface.container"
           flexDirection="column"
-          exit={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          initial={{ opacity: 0, scale: 0.5 }}
-          transition={{
-            delay: 0.2,
-            duration: 0.8,
-            ease: [0, 0.71, 0.2, 1.01],
-          }}
         >
-          <Box
-            mb="m"
-            color={theme.colors?.onSurface}
-            display="flex"
-            minWidth="21rem"
-            borderRadius="m"
-            bg={theme.colors?.surface.container}
-            flexDirection="column"
-          >
-            {children}
-          </Box>
-          {button}
-        </Motion>
-      )}
-    </AnimatePresence>
-  );
-};
+          {children}
+        </Box>
+        {button}
+      </Motion>
+    )}
+  </AnimatePresence>
+);
 
 const ModalContent: FC<PropsWithChildren<ModalContentProps>> = ({
   isOpen,

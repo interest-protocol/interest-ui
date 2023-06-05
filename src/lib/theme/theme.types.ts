@@ -37,32 +37,24 @@ export type Colors = {
   onSurfaceVariant: string;
   inverseOnSurface: string;
   inverseSurface: string;
-  primary: {
-    primary: string;
-    onPrimary: string;
-    primaryContainer: string;
-    onPrimaryContainer: string;
-  };
-  secondary: {
-    secondary: string;
-    onSecondary: string;
-    secondaryContainer: string;
-    onSecondaryContainer: string;
-  };
-  outline: {
-    outline: string;
-    outlineVariant: string;
-  };
-  surface: {
-    surfaceVariant: string;
-    surface: string;
-    containerHighest: string;
-    containerHigh: string;
-    container: string;
-    containerLow: string;
-    containerLowest: string;
-    dim: string;
-  };
+  primary: string;
+  'primary.onPrimary': string;
+  'primary.primaryContainer': string;
+  'primary.onPrimaryContainer': string;
+  secondary: string;
+  'secondary.onSecondary': string;
+  'secondary.secondaryContainer': string;
+  'secondary.onSecondaryContainer': string;
+  outline: string;
+  'outline.outlineVariant': string;
+  surface: string;
+  'surface.surfaceVariant': string;
+  'surface.containerHighest': string;
+  'surface.containerHigh': string;
+  'surface.container': string;
+  'surface.containerLow': string;
+  'surface.containerLowest': string;
+  'surface.dim': string;
 };
 export type Typographies =
   | 'displayLarge'
@@ -84,13 +76,13 @@ export interface MaybeNestedObject {
 
 export interface Theme {
   dark: boolean;
+  colors: Colors;
   radii: Record<Radii, string>;
   space: Record<Space, string>;
-  colors: Colors;
   breakpoints: ReadonlyArray<string>;
   fontSizes: Record<FontSizes, string>;
   boxes: Record<Boxes, MaybeNestedObject>;
   lineHeights: Record<LineHeights, string>;
-  typography: Record<Typographies, MaybeNestedObject>;
   buttons: Record<ButtonVariants, MaybeNestedObject>;
+  typography: Record<Typographies, MaybeNestedObject>;
 }

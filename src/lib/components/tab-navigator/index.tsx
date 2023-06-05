@@ -5,7 +5,7 @@ import { Theme, useTheme } from '../../theme';
 import type { TabsNavigatorProps } from './tabs-navigator.types';
 
 export const TabsNavigator: FC<TabsNavigatorProps> = ({ tabs, onChange }) => {
-  const theme = useTheme() as Theme;
+  const { colors } = useTheme() as Theme;
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const handleTabClick = (index: number) => {
@@ -22,17 +22,13 @@ export const TabsNavigator: FC<TabsNavigatorProps> = ({ tabs, onChange }) => {
             cursor="pointer"
             textAlign="center"
             borderRadius=".25rem .25rem 0 0"
+            backgroundColor="surface.container"
             padding="1.5rem .75rem 1.5rem .75rem"
-            backgroundColor={theme.colors.surface.container}
             onClick={() => handleTabClick(index)}
             width={['100%', '100%', '30%', '30%']}
-            color={
-              activeIndex === index
-                ? theme.colors.primary.primary
-                : theme.colors.onSurface
-            }
+            color={activeIndex === index ? 'primary' : 'onSurface'}
             whileHover={{
-              color: theme.colors.primary.primary,
+              color: colors.primary,
               transition: { duration: 0.2 },
             }}
           >
@@ -42,9 +38,9 @@ export const TabsNavigator: FC<TabsNavigatorProps> = ({ tabs, onChange }) => {
       </Box>
 
       <Motion
-        color={`${theme.colors.onSurface}`}
-        backgroundColor={theme.colors.surface.container}
+        color="onSurface"
         overflow="hidden"
+        backgroundColor="surface.container"
         borderRadius={
           activeIndex === 0
             ? '.25rem 0 .25rem .25rem'
