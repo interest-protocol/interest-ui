@@ -1,7 +1,7 @@
 export type Boxes = 'container';
 export type Radii = 's' | 'm' | 'full';
 export type Space = 's' | 'm' | 'l' | 'xl' | '2xl' | '3xl' | '4xl';
-export type ButtonVariants = 'filled' | 'outline' | 'text' | 'icon';
+export type ButtonVariants = 'filled' | 'outline' | 'text' | 'tonal' | 'icon';
 export type ButtonSizes = 'small' | 'medium';
 export type FontSizes =
   | 'xs'
@@ -29,31 +29,33 @@ export type LineHeights =
   | '5xl'
   | '6xl'
   | '7xl';
-export type Surface =
-  | 'surface'
-  | 'surface1'
-  | 'surface2'
-  | 'surface3'
-  | 'surface4'
-  | 'surface5';
-export type Colors =
-  | 'text'
-  | 'error'
-  | 'border'
-  | 'warning'
-  | 'primary'
-  | 'outline'
-  | 'success'
-  | 'disabled'
-  | 'textSoft'
-  | 'secondary'
-  | 'background'
-  | 'textAccent'
-  | 'foreground'
-  | 'textDisabled'
-  | 'textBackground'
-  | 'textHighlighter'
-  | 'textPlaceholder';
+export type Colors = {
+  error: string;
+  success: string;
+  warning: string;
+  onSurface: string;
+  onSurfaceVariant: string;
+  inverseOnSurface: string;
+  inverseSurface: string;
+  primary: string;
+  'primary.onPrimary': string;
+  'primary.primaryContainer': string;
+  'primary.onPrimaryContainer': string;
+  secondary: string;
+  'secondary.onSecondary': string;
+  'secondary.secondaryContainer': string;
+  'secondary.onSecondaryContainer': string;
+  outline: string;
+  'outline.outlineVariant': string;
+  surface: string;
+  'surface.surfaceVariant': string;
+  'surface.containerHighest': string;
+  'surface.containerHigh': string;
+  'surface.container': string;
+  'surface.containerLow': string;
+  'surface.containerLowest': string;
+  'surface.dim': string;
+};
 export type Typographies =
   | 'displayLarge'
   | 'displaySmall'
@@ -74,14 +76,13 @@ export interface MaybeNestedObject {
 
 export interface Theme {
   dark: boolean;
+  colors: Colors;
   radii: Record<Radii, string>;
   space: Record<Space, string>;
-  colors: Record<Colors, string>;
   breakpoints: ReadonlyArray<string>;
   fontSizes: Record<FontSizes, string>;
   boxes: Record<Boxes, MaybeNestedObject>;
   lineHeights: Record<LineHeights, string>;
-  typography: Record<Typographies, MaybeNestedObject>;
   buttons: Record<ButtonVariants, MaybeNestedObject>;
-  surface: Record<Surface, MaybeNestedObject>;
+  typography: Record<Typographies, MaybeNestedObject>;
 }

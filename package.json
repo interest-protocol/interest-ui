@@ -90,6 +90,7 @@
     "publish:latest": "yarn build && npm publish",
     "storybook": "sb dev -p 6006",
     "build-storybook": "sb build",
-    "lint": "eslint . --fix --ext ts --ext tsx --ext js"
+    "lint": "eslint . --fix --ext ts --ext tsx --ext js",
+    "format": "prettier --write **/*.{js,ts,tsx}"
   }
 }

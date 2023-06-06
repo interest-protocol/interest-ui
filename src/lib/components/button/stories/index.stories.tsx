@@ -9,7 +9,7 @@ const meta: Meta<typeof Button> = {
   component: Button,
   argTypes: {
     variant: {
-      options: ['filled', 'outline', 'text', 'icon'],
+      options: ['filled', 'outline', 'text', 'icon', 'tonal'],
       control: { type: 'select' },
     },
     disabled: {
@@ -149,6 +149,14 @@ export const Icon: Story = {
   args: {
     variant: 'icon',
     children: <SwapIcon />,
+    disabled: false,
+  },
+};
+
+export const Tonal: Story = {
+  args: {
+    variant: 'tonal',
+    children: 'Enabled',
     disabled: false,
   },
 };

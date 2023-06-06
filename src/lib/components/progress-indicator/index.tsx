@@ -11,8 +11,8 @@ export const ProgressIndicator: FC<
 
   return (
     <ProgressCircle
-      value={variant === 'loading' ? -1 : value ?? 0}
       size={size}
+      value={variant === 'loading' ? -1 : value ?? 0}
       {...props}
     />
   );

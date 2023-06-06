@@ -17,7 +17,7 @@ export const Modal: FC<PropsWithChildren<ModalProps>> = ({
   ...props
 }) => {
   const { colors } = useTheme() as Theme;
-  const background = `${colors?.background}${opaque ? '' : '88'}`;
+  const background = `${colors?.['surface.container']}${opaque ? '' : '88'}`;
 
   return (
     <ReactModal

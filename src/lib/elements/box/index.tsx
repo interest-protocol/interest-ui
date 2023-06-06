@@ -17,10 +17,6 @@ export const Box: FC<PropsWithRef<PropsWithChildren<BoxProps>>> = forwardRef(
       variant({
         scale: 'boxes',
         property: 'variant',
-      }),
-      variant({
-        scale: 'surface',
-        property: 'surface',
       })
     );
 

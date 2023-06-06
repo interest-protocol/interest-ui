@@ -20,11 +20,11 @@ export const ProgressBar: FC<PropsWithChildren<ProgressItemProps>> = ({
     <ProgressBarElement
       max="100"
       width="100%"
-      height=".25rem"
-      appearance="none"
       value={value}
+      height="0.25rem"
+      appearance="none"
       nWebkitProgressBar={{
-        backgroundColor: `${colors.primary}1F`,
+        backgroundColor: 'surface.surfaceVariant',
       }}
       nWebkitProgressValue={{
         background: getProgressBarColor(value, colors),

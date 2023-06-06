@@ -48,11 +48,11 @@ const ModalContentWrapper: FC<PropsWithChildren<ModalContentWrapperProps>> = ({
       >
         <Box
           mb="m"
-          color="text"
           display="flex"
           minWidth="21rem"
           borderRadius="m"
-          surface="surface3"
+          color="onSurface"
+          bg="surface.container"
           flexDirection="column"
         >
           {children}

@@ -40,12 +40,12 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
     },
     ref
   ) => {
-    const theme = useTheme() as Theme;
-    const [lastVariant, setLastVariant] = useState('normal');
-    const [variant, setVariant] = useState('normal');
+    const { colors } = useTheme() as Theme;
     const [focus, setFocus] = useState(false);
     const [, startTransition] = useTransition();
     const [value, setValue] = useState<string>();
+    const [variant, setVariant] = useState('normal');
+    const [lastVariant, setLastVariant] = useState('normal');
 
     const handleFocus = (e: FocusEvent<HTMLInputElement, Element>) => {
       if (!focus) startTransition(() => setFocus(true));
@@ -86,27 +86,24 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
       setVariant('normal');
     }, [focus, value]);
 
-    const wrapperVariants = useMemo(
-      () => ({
-        normal: {
-          borderWidth: '1px',
-          borderColor: theme.colors.textPlaceholder,
-        },
-        focus: {
-          borderWidth: '1px',
-          borderColor: theme.colors.primary,
-        },
-        valid: {
-          borderWidth: valid ? '1px' : '2px',
-          borderColor: valid ? theme.colors.success : theme.colors.primary,
-        },
-        error: {
-          borderWidth: '1px',
-          borderColor: theme.colors.error,
-        },
-      }),
-      [theme, valid]
-    );
+    const wrapperVariants = {
+      focus: {
+        borderWidth: '1px',
+        borderColor: colors.primary,
+      },
+      normal: {
+        borderWidth: '1px',
+        borderColor: colors.outline,
+      },
+      valid: {
+        borderWidth: valid ? '1px' : '2px',
+        borderColor: valid ? colors.success : colors.warning,
+      },
+      error: {
+        borderWidth: '1px',
+        borderColor: colors.error,
+      },
+    };
 
     const statusColor = useMemo(() => {
       if (variant === 'error') return 'error';
@@ -117,14 +114,14 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
     }, [valid, error, variant]);
 
     return (
-      <Box color={statusColor || 'text'}>
+      <Box color={statusColor || 'onSurface'}>
         <Motion
           p="xs"
           display="flex"
           borderRadius="m"
           animate={variant}
-          borderStyle="solid"
           alignItems="center"
+          borderStyle="solid"
           initial={lastVariant}
           variants={wrapperVariants}
           transition={{ duration: 0.3 }}
@@ -156,17 +153,17 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
               onBlur={handleBlur}
               onFocus={handleFocus}
               onChange={handleChange}
-              color={statusColor || 'text'}
+              color={statusColor || 'onSurface'}
               defaultValue={value || props.defaultValue}
               nPlaceholder={{
-                color: 'textPlaceholder',
+                color: 'onSurface',
               }}
               {...props}
             />
             {Bottom && (
               <Typography
-                color="text"
                 variant="small"
+                color="onSurface"
                 textAlign={props.textAlign}
               >
                 {Bottom}
@@ -175,18 +172,18 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
           </Box>
           {(variant == 'error' && (
             <ErrorSVG
-              maxWidth="1.25rem"
-              maxHeight="1.25rem"
               width="100%"
               height="100%"
+              maxWidth="1.25rem"
+              maxHeight="1.25rem"
             />
           )) ||
             (valid && variant == 'valid' && (
               <TickSVG
-                maxWidth="1.25rem"
-                maxHeight="1.25rem"
                 width="100%"
                 height="100%"
+                maxWidth="1.25rem"
+                maxHeight="1.25rem"
               />
             )) ||
             SuffixIcon}

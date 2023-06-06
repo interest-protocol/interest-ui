@@ -1,4 +1,3 @@
-import { useTheme } from '@emotion/react';
 import stylin from '@stylin.js/react';
 import { useMotionValue, useSpring } from 'framer-motion';
 import { isEmpty, not } from 'ramda';
@@ -7,18 +6,16 @@ import React, {
   FC,
   PropsWithChildren,
   useEffect,
-  useMemo,
   useState,
 } from 'react';
 
 import { Box, Motion } from '../../elements';
-import { Colors, Theme } from '../../theme';
 import {
   CheckedButtonElementProps,
   CheckedButtonProps,
   LabelElementProps,
 } from './switch.types';
-import { getBackground, getLabel } from './switch.utils';
+import { getLabel } from './switch.utils';
 
 const CheckedButtonElement = stylin<CheckedButtonElementProps>('input')();
 const LabelElement = stylin<LabelElementProps>('label')();
@@ -51,7 +48,6 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
   size = 'small',
   ...props
 }) => {
-  const { dark } = useTheme() as Theme;
   const [switcher, setSwitcher] = useState(defaultValue || false);
   const ative = useMotionValue(TRANSLATE_X[size][Number(switcher)]);
   const translateX = useSpring(ative, { stiffness: 1000, damping: 100 });
@@ -59,18 +55,6 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
   useEffect(() => {
     translateX.set(TRANSLATE_X[size][Number(switcher)]);
   }, [switcher]);
-
-  const selectedColor: Colors = useMemo(() => {
-    if (dark) {
-      if (switcher) return 'textBackground';
-
-      return 'textSoft';
-    }
-
-    if (switcher) return 'textAccent';
-
-    return 'background';
-  }, [switcher, dark]);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     onChange?.(event);
@@ -82,8 +66,8 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
       fontSize="s"
       display="flex"
       flexWrap="wrap"
-      color="textSoft"
       fontWeight="300"
+      color="onSurface"
       alignItems="center"
       textTransform="capitalize"
     >
@@ -101,10 +85,10 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
           display="flex"
           cursor="pointer"
           alignItems="center"
+          borderRadius="full"
           width={WIDTH[size]}
           height={HEIGHT[size]}
-          borderRadius="full"
-          bg={getBackground(switcher, dark)}
+          bg={disabled ? 'onSurface' : 'primary'}
           transition="background 300ms ease-in-out"
         >
           <Motion
@@ -112,8 +96,8 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
             width={SIZES[size]}
             height={SIZES[size]}
             style={{ translateX }}
-            background={selectedColor}
             opacity={disabled ? 0.7 : 1}
+            bg={disabled ? 'surface' : 'primary.onPrimary'}
           />
         </Box>
       </LabelElement>

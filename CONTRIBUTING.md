@@ -14,34 +14,34 @@ Feel free to contribute in any way you like, and if you feel comfortable doing s
 
 ## NVM Procedures
 
-You must use the project's node version to run ```npm``` or ```yarn``` commands. To switch your node version **we recommend to use the NVM** because of it's flexibility to manage node versions. To install the **NVM**, for windows or linux and mac, you can follow the steps by clicking on this link:
+You must use the project's node version to run `npm` or `yarn` commands. To switch your node version **we recommend to use the NVM** because of it's flexibility to manage node versions. To install the **NVM**, for windows or linux and mac, you can follow the steps by clicking on this link:
 [NVM installation guide](https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/)
 
 When you done downloading and installing **NVM** in your machine, you can confirm that nvm is installed correctly by running in cmd the following command:
 
-  ```bash
-    nvm -v
-  ```
+```bash
+  nvm -v
+```
 
 This should show the version of nvm installed.
 
 When you're able to see the **NVM** version installend in your machine, you must install the same node version as the node version in the project, by entering this cmd command:
 
-  ```bash
-    nvm install 18
-  ```
+```bash
+  nvm install 18
+```
 
-_You can also check in the ```package.json``` file, or in ```.nvmrc``` file in the root of the project_
+_You can also check in the `package.json` file, or in `.nvmrc` file in the root of the project_
 
 After that, you can finally run the following command to use the proposed version and apply the changes with **NVM**:
 
-  ```bash
-    nvm use
-  ```
+```bash
+  nvm use
+```
 
-  This will change your previous node version, to the project's node version.
+This will change your previous node version, to the project's node version.
 
- Then you'll be able to run the ```yarn``` command or ```npm install``` to install all the dependencies and run the project!
+Then you'll be able to run the `yarn` command or `npm install` to install all the dependencies and run the project!
 
 ## Increase the productivity with VSCode Interest Snippets
 
@@ -50,15 +50,15 @@ There's available three base snippets.
 
 ### Snippet prefixes
 
-- For **components** you should just use our snippet prefix: ```ipc```, that stands for _Interest Protocol Component_ as bellow:
+- For **components** you should just use our snippet prefix: `ipc`, that stands for _Interest Protocol Component_ as bellow:
 
 <img alt="gif" src="https://i.imgur.com/yipg4xC.gif" />
 
-- For **component's props** you should just use our snippet prefix: ```ipcp```, that stands for _Interest Protocol Component Props_ as bellow:
+- For **component's props** you should just use our snippet prefix: `ipcp`, that stands for _Interest Protocol Component Props_ as bellow:
 
 <img alt="gif" src="https://i.imgur.com/ARPtTgY.gif" />
 
-- For **components story** you should just use our snippet prefix: ```ipsc```, that stands for _Interest Protocol Story Component_ as bellow:
+- For **components story** you should just use our snippet prefix: `ipsc`, that stands for _Interest Protocol Story Component_ as bellow:
 
 <img alt="gif" src="https://i.imgur.com/1zyBDeg.gif" />
 
@@ -77,9 +77,11 @@ Below are instructions on how to optimally report a bug:
 _A good bug report shouldn't leave others needing to chase you up for more._
 
 ## Branch
+
 When creating the new branch follow the naming rule:
-- for new feature: ```feature/<task-name>```
-- for bug: ```bugfix/<task-name>```
+
+- for new feature: `feature/<task-name>`
+- for bug: `bugfix/<task-name>`
 
 ## Commit
 

@@ -15,19 +15,11 @@ export default meta;
 const tabs: [TabNavigator, TabNavigator] = [
   {
     label: 'Borrow',
-    content: (
-      <Box p="3xl" surface="surface5">
-        First Tab Content: Borrow
-      </Box>
-    ),
+    content: <Box p="3xl">First Tab Content: Borrow</Box>,
   },
   {
     label: 'Repay',
-    content: (
-      <Box p="3xl" surface="surface1">
-        Second Tab Content: Repay
-      </Box>
-    ),
+    content: <Box p="3xl">Second Tab Content: Repay</Box>,
   },
 ];
 
@@ -35,7 +27,7 @@ type Story = StoryObj<typeof TabsNavigator>;
 
 export const Normal: Story = {
   render: ({ onChange, ...args }) => (
-    <Box {...args} bg="background" p="3xl">
+    <Box {...args} p="3xl">
       <TabsNavigator tabs={tabs} onChange={onChange} />
     </Box>
   ),
