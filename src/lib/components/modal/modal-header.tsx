@@ -39,11 +39,7 @@ export const ModalHeader: FC<StandardizedWithCloseButton | Standardized> = ({
       )}
       {hasButton && (
         <Box ml="auto" gridColumn="3/4">
-          <Button
-            variant="icon"
-            color={theme.colors.onSurface}
-            onClick={props.onClose}
-          >
+          <Button variant="icon" color="onSurface" onClick={props.onClose}>
             <TimesSVG maxWidth="1rem" maxHeight="1rem" width="100%" />
           </Button>
         </Box>

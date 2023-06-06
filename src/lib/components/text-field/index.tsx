@@ -41,11 +41,11 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
     ref
   ) => {
     const { colors } = useTheme() as Theme;
-    const [lastVariant, setLastVariant] = useState('normal');
-    const [variant, setVariant] = useState('normal');
     const [focus, setFocus] = useState(false);
     const [, startTransition] = useTransition();
     const [value, setValue] = useState<string>();
+    const [variant, setVariant] = useState('normal');
+    const [lastVariant, setLastVariant] = useState('normal');
 
     const handleFocus = (e: FocusEvent<HTMLInputElement, Element>) => {
       if (!focus) startTransition(() => setFocus(true));
@@ -89,11 +89,11 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
     const wrapperVariants = {
       focus: {
         borderWidth: '1px',
-        borderColor: colors.primary.primary,
+        borderColor: colors.primary,
       },
       normal: {
         borderWidth: '1px',
-        borderColor: colors.outline.outline as string,
+        borderColor: colors.outline,
       },
       valid: {
         borderWidth: valid ? '1px' : '2px',
@@ -120,8 +120,8 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
           display="flex"
           borderRadius="m"
           animate={variant}
-          borderStyle="solid"
           alignItems="center"
+          borderStyle="solid"
           initial={lastVariant}
           variants={wrapperVariants}
           transition={{ duration: 0.3 }}
@@ -162,8 +162,8 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
             />
             {Bottom && (
               <Typography
-                color="onSurface"
                 variant="small"
+                color="onSurface"
                 textAlign={props.textAlign}
               >
                 {Bottom}
@@ -172,18 +172,18 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
           </Box>
           {(variant == 'error' && (
             <ErrorSVG
-              maxWidth="1.25rem"
-              maxHeight="1.25rem"
               width="100%"
               height="100%"
+              maxWidth="1.25rem"
+              maxHeight="1.25rem"
             />
           )) ||
             (valid && variant == 'valid' && (
               <TickSVG
-                maxWidth="1.25rem"
-                maxHeight="1.25rem"
                 width="100%"
                 height="100%"
+                maxWidth="1.25rem"
+                maxHeight="1.25rem"
               />
             )) ||
             SuffixIcon}

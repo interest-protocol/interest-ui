@@ -22,9 +22,10 @@ export const RadioButton: FC<PropsWithChildren<RadioButtonProps>> = ({
 
   const RadioButtonElement = stylin<RadioButtonElementProps>('input')();
 
-  const RadioCircleColor = useMemo(() => {
-    return selector ? theme.colors.primary.primary : theme.colors.onSurface;
-  }, [selector, theme]);
+  const RadioCircleColor = useMemo(
+    () => (selector ? theme.colors.primary : theme.colors.onSurface),
+    [selector, theme]
+  );
 
   const variants = {
     hover: {
@@ -44,25 +45,25 @@ export const RadioButton: FC<PropsWithChildren<RadioButtonProps>> = ({
         checked={selector}
       />
       <Motion
+        display="flex"
         width="1.25rem"
         height="1.25rem"
-        color={disabled ? `${theme.colors.onSurface}` : RadioCircleColor}
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        borderRadius="50%"
-        transition={{ duration: 0.5 }}
         animate={variant}
+        borderRadius="50%"
+        alignItems="center"
         variants={variants}
+        justifyContent="center"
+        transition={{ duration: 0.5 }}
         onMouseEnter={() => setVariant('hover')}
         onMouseLeave={() => setVariant('withoutHover')}
+        color={disabled ? 'onSurface' : RadioCircleColor}
       >
         <RadioCircleSVG
-          maxWidth="1.25rem"
-          maxHeight="1.25rem"
           width="100%"
           height="100%"
           cursor="pointer"
+          maxWidth="1.25rem"
+          maxHeight="1.25rem"
           isChecked={selector}
           onClick={() => !disabled && setSelector(!selector)}
         />
