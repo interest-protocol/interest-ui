@@ -1,7 +1,7 @@
 export type Boxes = 'container';
 export type Radii = 's' | 'm' | 'full';
 export type Space = 's' | 'm' | 'l' | 'xl' | '2xl' | '3xl' | '4xl';
-export type ButtonVariants = 'filled' | 'outline' | 'text' | 'tonal' | 'icon';
+export type ButtonVariants = 'filled' | 'outline' | 'text' | 'icon';
 export type ButtonSizes = 'small' | 'medium';
 export type FontSizes =
   | 'xs'
@@ -29,6 +29,24 @@ export type LineHeights =
   | '5xl'
   | '6xl'
   | '7xl';
+export type IntitutionalColors =
+  | 'text'
+  | 'error'
+  | 'border'
+  | 'warning'
+  | 'primary'
+  | 'outline'
+  | 'success'
+  | 'disabled'
+  | 'textSoft'
+  | 'secondary'
+  | 'background'
+  | 'textAccent'
+  | 'foreground'
+  | 'textDisabled'
+  | 'textBackground'
+  | 'textHighlighter'
+  | 'textPlaceholder';
 export type Colors = {
   error: string;
   success: string;
@@ -87,6 +105,7 @@ export interface Theme {
   radii: Record<Radii, string>;
   space: Record<Space, string>;
   colors: Colors;
+  institutionalColors: Record<IntitutionalColors, string>;
   breakpoints: ReadonlyArray<string>;
   fontSizes: Record<FontSizes, string>;
   boxes: Record<Boxes, MaybeNestedObject>;

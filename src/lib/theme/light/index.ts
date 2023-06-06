@@ -5,6 +5,7 @@ import {
   radii,
   space,
 } from '../design-system';
+import { institutionalColors } from '../institutional/institutional-colors';
 import { Theme } from '../theme.types';
 import { boxes, typography } from '../variants';
 import { colors } from './colors';
@@ -18,6 +19,7 @@ const theme: Theme = {
   breakpoints,
   radii,
   space,
+  institutionalColors,
   colors,
   boxes,
   buttons,
