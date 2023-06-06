@@ -2,33 +2,33 @@ import React, { FC, useState } from 'react';
 
 import { Box, Motion, Typography } from '../../elements';
 import { Theme, useTheme } from '../../theme';
-import { TabsNavigatorProps } from './tabs-navigator.types';
+import type { TabsNavigatorProps } from './tabs-navigator.types';
 
-export const TabsNavigator: FC<TabsNavigatorProps> = ({ tabs }) => {
+export const TabsNavigator: FC<TabsNavigatorProps> = ({ tabs, onChange }) => {
+  const { colors } = useTheme() as Theme;
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const handleTabClick = (index: number) => {
     setActiveIndex(index);
+    onChange?.(index);
   };
-
-  const theme = useTheme() as Theme;
 
   return (
     <Box margin="0 auto" width="100%" display="flex" flexDirection="column">
       <Box gap=".25rem" display="flex" justifyContent="center">
-        {tabs.slice(0, 2).map((tab, index) => (
+        {tabs.map((tab, index) => (
           <Motion
             key={tab.label}
             cursor="pointer"
             textAlign="center"
-            surface="surface1"
             borderRadius=".25rem .25rem 0 0"
+            backgroundColor="surface.container"
             padding="1.5rem .75rem 1.5rem .75rem"
             onClick={() => handleTabClick(index)}
             width={['100%', '100%', '30%', '30%']}
-            color={activeIndex === index ? 'primary' : 'text'}
+            color={activeIndex === index ? 'primary' : 'onSurface'}
             whileHover={{
-              color: theme.colors.primary,
+              color: colors.primary,
               transition: { duration: 0.2 },
             }}
           >
@@ -38,8 +38,9 @@ export const TabsNavigator: FC<TabsNavigatorProps> = ({ tabs }) => {
       </Box>
 
       <Motion
-        color="text"
+        color="onSurface"
         overflow="hidden"
+        backgroundColor="surface.container"
         borderRadius={
           activeIndex === 0
             ? '.25rem 0 .25rem .25rem'

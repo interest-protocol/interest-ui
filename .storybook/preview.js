@@ -34,11 +34,11 @@ export const parameters = {
     values: [
       {
         name: 'light',
-        value: lightTheme.colors.background,
+        value: lightTheme.colors.surface,
       },
       {
         name: 'dark',
-        value: darkTheme.colors.background,
+        value: darkTheme.colors.surface,
       },
     ],
   },

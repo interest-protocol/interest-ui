@@ -6,53 +6,73 @@ import { colors } from '../colors';
 
 const defaultButton = mergeDeepRight(button, {
   ':disabled': {
-    opacity: '26%',
+    background: colors['surface.container'],
     cursor: 'not-allowed',
-    color: colors.textDisabled,
-    ':hover': {
-      color: colors.textDisabled,
-    },
+    color: colors.onSurface,
   },
 });
 
 export const variants = {
   filled: mergeDeepRight(defaultButton, {
-    color: colors.textAccent,
+    color: colors['primary.onPrimary'],
     background: colors.primary,
     ':disabled': {
-      background: colors.disabled,
+      background: colors['surface.container'],
     },
   }),
   outline: mergeDeepRight(defaultButton, {
     border: '1px solid',
     color: colors.primary,
-    borderColor: colors.outline,
+    borderColor: colors['outline.outlineVariant'],
     ':hover': {
+      borderColor: colors['outline.outlineVariant'],
+      background: `${colors.primary}14`,
+    },
+    ':focus': {
+      background: `${colors.primary}1F`,
       borderColor: colors.primary,
-      background: `${colors.primary}08`,
+    },
+    ':active': {
+      borderColor: colors['outline.outlineVariant'],
     },
     ':disabled': {
-      borderColor: colors.disabled,
-      ':hover': { borderColor: colors.disabled },
+      borderColor: colors['outline.outlineVariant'],
+      ':hover': { borderColor: colors['outline.outlineVariant'] },
     },
   }),
   text: mergeDeepRight(defaultButton, {
     color: colors.primary,
     ':hover': {
-      background: `${colors.primary}08`,
+      background: `${colors.primary}14`,
+    },
+    ':focus': {
+      background: `${colors.primary}14`,
+    },
+  }),
+  tonal: mergeDeepRight(defaultButton, {
+    color: colors['secondary.onSecondaryContainer'],
+    background: colors['secondary.secondaryContainer'],
+    ':hover': {
+      background: `${colors.primary}14`,
+    },
+    ':focus': {
+      background: `${colors.primary}1F`,
+    },
+    ':active': {
+      background: `${colors.primary}1F`,
     },
   }),
   icon: mergeDeepRight(button, {
     padding: space.s,
-    color: colors.text,
+    color: colors.onSurface,
     '@media (min-width: 36rem)': {
       padding: space.s,
     },
     ':hover': {
-      background: `${colors.text}08`,
+      background: `${colors.primary}14`,
     },
     ':active': {
-      background: `${colors.text}0B`,
+      background: `${colors.primary}1F`,
     },
   }),
 };
