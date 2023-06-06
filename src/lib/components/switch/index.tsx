@@ -1,4 +1,3 @@
-import { useTheme } from '@emotion/react';
 import stylin from '@stylin.js/react';
 import { useMotionValue, useSpring } from 'framer-motion';
 import { isEmpty, not } from 'ramda';
@@ -11,13 +10,12 @@ import React, {
 } from 'react';
 
 import { Box, Motion } from '../../elements';
-import { Theme } from '../../theme';
 import {
   CheckedButtonElementProps,
   CheckedButtonProps,
   LabelElementProps,
 } from './switch.types';
-import { getBackground, getLabel } from './switch.utils';
+import { getLabel } from './switch.utils';
 
 const CheckedButtonElement = stylin<CheckedButtonElementProps>('input')();
 const LabelElement = stylin<LabelElementProps>('label')();
@@ -50,7 +48,6 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
   size = 'small',
   ...props
 }) => {
-  const theme = useTheme() as Theme;
   const [switcher, setSwitcher] = useState(defaultValue || false);
   const ative = useMotionValue(TRANSLATE_X[size][Number(switcher)]);
   const translateX = useSpring(ative, { stiffness: 1000, damping: 100 });
@@ -58,8 +55,6 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
   useEffect(() => {
     translateX.set(TRANSLATE_X[size][Number(switcher)]);
   }, [switcher]);
-
-  const selectedColor = switcher ? 'primary.onPrimary' : 'outline';
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     onChange?.(event);
@@ -93,16 +88,16 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
           borderRadius="full"
           width={WIDTH[size]}
           height={HEIGHT[size]}
-          bg={getBackground(switcher, theme)}
+          bg={disabled ? 'onSurface' : 'primary'}
           transition="background 300ms ease-in-out"
         >
           <Motion
-            bg={selectedColor}
             borderRadius="50%"
             width={SIZES[size]}
             height={SIZES[size]}
             style={{ translateX }}
             opacity={disabled ? 0.7 : 1}
+            bg={disabled ? 'surface' : 'primary.onPrimary'}
           />
         </Box>
       </LabelElement>
