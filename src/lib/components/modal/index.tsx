@@ -14,7 +14,7 @@ export const Modal: FC<PropsWithChildren<ModalProps>> = ({
   allowClose,
   ...props
 }) => {
-  const background = `rgba(0,0,0,${opaque ? 0 : 0.5})`;
+  const background = `rgba(0,0,0,${opaque ? 1 : 0.5})`;
 
   return (
     <ReactModal
