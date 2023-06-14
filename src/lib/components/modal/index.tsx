@@ -1,9 +1,7 @@
-import { useTheme } from '@emotion/react';
 import React, { PropsWithChildren } from 'react';
 import { FC } from 'react';
 import ReactModal from 'react-modal';
 
-import { Theme } from '../../theme';
 import { ModalProps } from './modal.types';
 import ModalContent from './modal-content';
 
@@ -16,8 +14,7 @@ export const Modal: FC<PropsWithChildren<ModalProps>> = ({
   allowClose,
   ...props
 }) => {
-  const { colors } = useTheme() as Theme;
-  const background = `${colors?.['surface.container']}${opaque ? '' : '88'}`;
+  const background = `rgba(0,0,0,${opaque ? 1 : 0.5})`;
 
   return (
     <ReactModal
