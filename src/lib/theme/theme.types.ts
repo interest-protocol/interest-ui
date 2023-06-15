@@ -55,6 +55,7 @@ export type Colors = {
   'surface.containerLow': string;
   'surface.containerLowest': string;
   'surface.dim': string;
+  'surface.opacity': string;
 };
 export type Typographies =
   | 'displayLarge'

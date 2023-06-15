@@ -26,4 +26,5 @@ export const colors: Theme['colors'] = {
   'surface.containerLowest': '#0D0E11',
   'surface.dim': '#131316',
   'surface.surfaceVariant': '#45464F',
+  'surface.opacity': '#E6E0E9',
 };

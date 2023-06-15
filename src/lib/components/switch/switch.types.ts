@@ -14,4 +14,6 @@ export interface CheckedButtonProps extends CheckedButtonElementProps {
   defaultValue: boolean;
   size?: 'small' | 'medium';
   labels?: string | [string, string];
+  special?: boolean;
+  hasIcon?: boolean;
 }

@@ -22,6 +22,8 @@ export const Normal: Story = {
     name: 'switch',
     labels: 'Switch',
     defaultValue: false,
+    special: false,
+    hasIcon: false,
   },
 };
 

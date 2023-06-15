@@ -10,6 +10,8 @@ import React, {
 } from 'react';
 
 import { Box, Motion } from '../../elements';
+import { CheckSVG, TimesSVG } from '../../icons';
+import { Theme, useTheme } from '../../theme';
 import {
   CheckedButtonElementProps,
   CheckedButtonProps,
@@ -21,22 +23,17 @@ const CheckedButtonElement = stylin<CheckedButtonElementProps>('input')();
 const LabelElement = stylin<LabelElementProps>('label')();
 
 const WIDTH = {
-  small: '2.3rem',
+  small: '3.25rem',
   medium: '2.6rem',
 };
 
 const HEIGHT = {
-  small: '1.25rem',
+  small: '2rem',
   medium: '1.7rem',
 };
 
-const SIZES = {
-  small: '1rem',
-  medium: '1.2rem',
-};
-
 const TRANSLATE_X = {
-  small: ['0.1rem', '1.2rem'],
+  small: ['0.3rem', '1.4rem'],
   medium: ['0.3rem', '1.15rem'],
 };
 
@@ -46,8 +43,11 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
   disabled,
   defaultValue,
   size = 'small',
+  special,
+  hasIcon,
   ...props
 }) => {
+  const theme = useTheme() as Theme;
   const [switcher, setSwitcher] = useState(defaultValue || false);
   const ative = useMotionValue(TRANSLATE_X[size][Number(switcher)]);
   const translateX = useSpring(ative, { stiffness: 1000, damping: 100 });
@@ -83,22 +83,82 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
         />
         <Box
           display="flex"
-          cursor="pointer"
           alignItems="center"
+          border={special ? 'none' : switcher ? 'none' : '2px solid'}
+          borderColor="outline"
           borderRadius="full"
           width={WIDTH[size]}
           height={HEIGHT[size]}
-          bg={disabled ? 'onSurface' : 'primary'}
+          bg={
+            disabled
+              ? `${theme.colors['surface.opacity']}1F`
+              : special
+              ? 'primary'
+              : switcher
+              ? 'primary'
+              : 'surface.containerHighest'
+          }
           transition="background 300ms ease-in-out"
+          cursor={disabled ? 'not-allowed' : 'pointer'}
         >
           <Motion
             borderRadius="50%"
-            width={SIZES[size]}
-            height={SIZES[size]}
+            width={switcher ? '1.5rem' : '1rem'}
+            height={switcher ? '1.5rem' : '1rem'}
             style={{ translateX }}
-            opacity={disabled ? 0.7 : 1}
-            bg={disabled ? 'surface' : 'primary.onPrimary'}
-          />
+            bg={
+              disabled
+                ? 'onSurface'
+                : special
+                ? 'primary.onPrimary'
+                : switcher
+                ? 'primary.onPrimary'
+                : 'outline'
+            }
+            nHover={{
+              bg: disabled
+                ? 'onSurface'
+                : special
+                ? 'primary.onPrimary'
+                : switcher
+                ? 'primary.primaryContainer'
+                : 'outline',
+            }}
+            nActive={
+              disabled
+                ? {}
+                : {
+                    width: '1.75rem',
+                    height: '1.75rem',
+                    bg: special
+                      ? 'primary.onPrimary'
+                      : switcher
+                      ? 'primary.primaryContainer'
+                      : 'surface.surfaceVariant',
+                  }
+            }
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            color={
+              disabled
+                ? theme.dark
+                  ? 'surface.surfaceVariant'
+                  : 'onSurface'
+                : switcher
+                ? 'primary.onPrimaryContainer'
+                : theme.dark
+                ? 'surface.containerHigh'
+                : 'primary.onPrimary'
+            }
+          >
+            {hasIcon &&
+              (switcher ? (
+                <CheckSVG maxWidth="0.733rem" maxHeight="0.559rem" />
+              ) : (
+                <TimesSVG maxWidth="0.733rem" maxHeight="0.559rem" />
+              ))}
+          </Motion>
         </Box>
       </LabelElement>
     </Box>
