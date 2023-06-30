@@ -1,4 +1,5 @@
 export * from './button';
+export * from './info-card';
 export * from './list';
 export * from './list-item';
 export * from './modal';
@@ -7,4 +8,5 @@ export * from './radio-button';
 export * from './slider';
 export * from './switch';
 export * from './tab-navigator';
+export * from './tabs';
 export * from './text-field';
