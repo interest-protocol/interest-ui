@@ -25,6 +25,15 @@ export const Normal: Story = {
   },
 };
 
+export const Activation: Story = {
+  args: {
+    name: 'switch',
+    labels: 'Switch',
+    activation: true,
+    defaultValue: false,
+  },
+};
+
 export const Medium: Story = {
   args: {
     size: 'medium',
