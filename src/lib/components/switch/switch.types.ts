@@ -11,6 +11,7 @@ export type LabelElementProps = Omit<
 >;
 export interface CheckedButtonProps extends CheckedButtonElementProps {
   name: string;
+  activation?: boolean;
   defaultValue: boolean;
   size?: 'small' | 'medium';
   labels?: string | [string, string];
