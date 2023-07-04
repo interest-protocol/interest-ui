@@ -1,7 +1,11 @@
 import { ReactNode } from 'react';
 
 export interface InfoCardProps {
-  info: ReactNode;
-  title: ReactNode;
+  info: string;
+  title: string;
+  IconInfo: ReactNode;
+  IconTitle: ReactNode;
+  iconInfoColor: 'success' | 'error';
+  infoColor: 'success' | 'error' | 'normal';
   onClick?: () => void;
 }
