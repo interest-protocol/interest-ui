@@ -10,3 +10,4 @@ export * from './switch';
 export * from './tab-navigator';
 export * from './tabs';
 export * from './text-field';
+export * from './tooltip';
