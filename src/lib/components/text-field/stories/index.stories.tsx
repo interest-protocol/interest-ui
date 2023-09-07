@@ -47,7 +47,20 @@ export const WithPrefixAndBottomText: Story = {
         Prefix
       </Button>
     ),
-    bottomText: '$0.123 USD',
+    Bottom: '$0.123 USD',
+  },
+};
+
+export const WithPrefixAndTopText: Story = {
+  args: {
+    placeholder: '0.123',
+    textAlign: 'right',
+    Prefix: (
+      <Button size="small" variant="filled">
+        Prefix
+      </Button>
+    ),
+    Top: '$0.123 USD',
   },
 };
 

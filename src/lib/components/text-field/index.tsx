@@ -33,6 +33,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
       onBlur,
       onFocus,
       Bottom,
+      Top,
       PrefixIcon,
       SuffixIcon,
       fieldProps,
@@ -142,6 +143,15 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
             flexDirection="column"
             justifyContent="center"
           >
+            {Top && (
+              <Typography
+                variant="small"
+                color="onSurface"
+                textAlign={props.textAlign}
+              >
+                {Top}
+              </Typography>
+            )}
             <TextFieldElement
               ref={ref}
               all="unset"
