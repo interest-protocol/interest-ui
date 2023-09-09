@@ -1,6 +1,6 @@
 import { useTheme } from '@emotion/react';
 import { not } from 'ramda';
-import React, { FC, useMemo, useState } from 'react';
+import React, { FC, useState } from 'react';
 
 import { Box, Motion } from '../../elements';
 import { RadioCircleSVG } from '../../icons';
@@ -14,20 +14,12 @@ export const RadioButton: FC<RadioButtonProps> = ({
 }) => {
   const { colors } = useTheme() as Theme;
   const [selected, setSelected] = useState(defaultValue ?? false);
-  const [variant, setVariant] = useState<'hover' | 'withoutHover'>(
-    'withoutHover'
-  );
 
-  const RadioCircleColor = useMemo(
-    () => colors[selected ? 'primary' : 'onSurface'],
-    [selected]
-  );
+  const color = colors[selected ? 'primary' : 'onSurface'];
 
   const variants = {
     hover: {
-      boxShadow: `${
-        disabled ? 'disabled' : `${RadioCircleColor}14`
-      } 0px 0px 0px 0.625rem`,
+      boxShadow: `${disabled ? 'disabled' : `${color}14`} 0px 0px 0px 0.625rem`,
     },
     withoutHover: { boxShadow: 'unset' },
   };
@@ -50,15 +42,14 @@ export const RadioButton: FC<RadioButtonProps> = ({
         display="flex"
         width="1.25rem"
         height="1.25rem"
-        animate={variant}
+        whileHover="hover"
         borderRadius="50%"
         alignItems="center"
         variants={variants}
+        initial="withoutHover"
         justifyContent="center"
         transition={{ duration: 0.5 }}
-        onMouseEnter={() => setVariant('hover')}
-        onMouseLeave={() => setVariant('withoutHover')}
-        color={disabled ? 'onSurface' : RadioCircleColor}
+        color={disabled ? 'onSurface' : color}
       >
         <RadioCircleSVG
           width="100%"
