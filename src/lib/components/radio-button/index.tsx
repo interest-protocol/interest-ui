@@ -27,7 +27,7 @@ export const RadioButton: FC<RadioButtonProps> = ({
   const handleChange = () => {
     if (disabled) return;
     setSelected(not);
-    onClick?.();
+    onClick?.(not(selected));
   };
 
   return (
