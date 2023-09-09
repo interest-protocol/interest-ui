@@ -1,71 +1,62 @@
 import { useTheme } from '@emotion/react';
-import stylin from '@stylin.js/react';
-import React, { FC, PropsWithChildren, useMemo, useState } from 'react';
+import { not } from 'ramda';
+import React, { FC, useState } from 'react';
 
 import { Box, Motion } from '../../elements';
 import { RadioCircleSVG } from '../../icons';
 import { Theme } from '../../theme';
-import {
-  RadioButtonElementProps,
-  RadioButtonProps,
-} from './radio-button.types';
+import { RadioButtonProps } from './radio-button.types';
 
-export const RadioButton: FC<PropsWithChildren<RadioButtonProps>> = ({
+export const RadioButton: FC<RadioButtonProps> = ({
+  onClick,
   disabled,
-  ...props
+  defaultValue,
 }) => {
-  const theme = useTheme() as Theme;
-  const [selector, setSelector] = useState(props.checked || false);
-  const [variant, setVariant] = useState<'hover' | 'withoutHover'>(
-    'withoutHover'
-  );
+  const { colors } = useTheme() as Theme;
+  const [selected, setSelected] = useState(defaultValue ?? false);
 
-  const RadioButtonElement = stylin<RadioButtonElementProps>('input')();
-
-  const RadioCircleColor = useMemo(
-    () => (selector ? theme.colors.primary : theme.colors.onSurface),
-    [selector, theme]
-  );
+  const color = colors[selected ? 'primary' : 'onSurface'];
 
   const variants = {
     hover: {
-      boxShadow: `${
-        disabled ? 'disabled' : `${RadioCircleColor}14`
-      } 0px 0px 0px 0.625rem`,
+      boxShadow: `${disabled ? 'disabled' : `${color}14`} 0px 0px 0px 0.625rem`,
     },
     withoutHover: { boxShadow: 'unset' },
   };
 
+  const handleChange = () => {
+    if (disabled) return;
+    setSelected(not);
+    onClick?.();
+  };
+
   return (
-    <Box display="flex" gap="1rem" flexWrap="wrap">
-      <RadioButtonElement
-        {...props}
-        type="radio"
-        display="none"
-        checked={selector}
-      />
+    <Box
+      gap="1rem"
+      display="flex"
+      flexWrap="wrap"
+      onClick={handleChange}
+      cursor={disabled ? 'not-allowed' : 'pointer'}
+    >
       <Motion
         display="flex"
         width="1.25rem"
         height="1.25rem"
-        animate={variant}
+        whileHover="hover"
         borderRadius="50%"
         alignItems="center"
         variants={variants}
+        initial="withoutHover"
         justifyContent="center"
         transition={{ duration: 0.5 }}
-        onMouseEnter={() => setVariant('hover')}
-        onMouseLeave={() => setVariant('withoutHover')}
-        color={disabled ? 'onSurface' : RadioCircleColor}
+        color={disabled ? 'onSurface' : color}
       >
         <RadioCircleSVG
           width="100%"
           height="100%"
-          cursor="pointer"
           maxWidth="1.25rem"
           maxHeight="1.25rem"
-          isChecked={selector}
-          onClick={() => !disabled && setSelector(!selector)}
+          isChecked={selected}
         />
       </Motion>
     </Box>
