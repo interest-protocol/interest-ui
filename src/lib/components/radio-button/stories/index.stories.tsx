@@ -18,29 +18,24 @@ export default meta;
 type Story = StoryObj<typeof RadioButton>;
 
 export const Normal: Story = {
-  args: {
-    name: 'radio',
-  },
+  args: {},
 };
 
 export const NormalDisabled: Story = {
   args: {
-    name: 'radio',
     disabled: true,
   },
 };
 
 export const Checked: Story = {
   args: {
-    name: 'radio',
-    checked: true,
+    defaultValue: true,
   },
 };
 
 export const CheckedDisabled: Story = {
   args: {
-    name: 'radio',
-    checked: true,
+    defaultValue: true,
     disabled: true,
   },
 };
