@@ -76,7 +76,9 @@ export const Checkbox: FC<CheckboxProps> = ({
           </Motion>
         </LabelElement>
       </Box>
-      <LabelElement htmlFor={label}>{label}</LabelElement>
+      <LabelElement htmlFor={label} color="onSurface">
+        {label}
+      </LabelElement>
     </Box>
   );
 };
