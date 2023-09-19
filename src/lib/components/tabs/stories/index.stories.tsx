@@ -24,3 +24,10 @@ export const Normal: Story = {
     items: ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
   },
 };
+
+export const CustomPx: Story = {
+  args: {
+    items: ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
+    px: '0.5rem',
+  },
+};

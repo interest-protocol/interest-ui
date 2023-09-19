@@ -7,6 +7,7 @@ import { TabsProps } from './tabs.types';
 
 export const Tabs: FC<TabsProps> = ({
   items,
+  px,
   onChangeTab,
   defaultTabIndex = 0,
 }) => {
@@ -23,6 +24,7 @@ export const Tabs: FC<TabsProps> = ({
         <TabItem
           key={v4()}
           item={item}
+          px={px}
           isSelected={index === tabIndex}
           onChange={handleChangeTab(index)}
         />
