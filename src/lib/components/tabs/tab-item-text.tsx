@@ -6,8 +6,9 @@ import { TabItemPropsItemTextProps } from './tabs.types';
 const NavItemText: FC<PropsWithChildren<TabItemPropsItemTextProps>> = ({
   children,
   isSelected,
+  px,
 }) => (
-  <Box fontFamily="'Roboto'" px={['2xl', '2xl', '2.75rem']}>
+  <Box fontFamily="'Roboto'" px={px ?? ['2xl', '2xl', '2.75rem']}>
     <Typography variant="small" py="m">
       {children}
     </Typography>
