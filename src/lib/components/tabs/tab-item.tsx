@@ -4,7 +4,7 @@ import { Box } from '../../elements';
 import NavItemText from './tab-item-text';
 import { TabItemProps } from './tabs.types';
 
-const TabItem: FC<TabItemProps> = ({ isSelected, onChange, item }) => (
+const TabItem: FC<TabItemProps> = ({ isSelected, onChange, item, px }) => (
   <Box
     display="flex"
     cursor="pointer"
@@ -12,7 +12,9 @@ const TabItem: FC<TabItemProps> = ({ isSelected, onChange, item }) => (
     alignItems="center"
     color={isSelected ? 'primary' : 'onSurface'}
   >
-    <NavItemText isSelected={isSelected}>{item}</NavItemText>
+    <NavItemText isSelected={isSelected} px={px}>
+      {item}
+    </NavItemText>
   </Box>
 );
 

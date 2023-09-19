@@ -27,3 +27,13 @@ export const Normal: Story = {
     onClick: () => alert('clicked'),
   },
 };
+
+export const NormalSized: Story = {
+  args: {
+    info: '53%',
+    width: '10rem',
+    title: 'List item',
+    children: 'USD 6,786.99',
+    onClick: () => alert('clicked'),
+  },
+};
