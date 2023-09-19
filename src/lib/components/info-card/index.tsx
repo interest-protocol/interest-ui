@@ -9,6 +9,7 @@ export const InfoCard: FC<PropsWithChildren<InfoCardProps>> = ({
   info,
   title,
   onClick,
+  width,
   children,
 }) => {
   const { dark } = useTheme() as Theme;
@@ -16,7 +17,7 @@ export const InfoCard: FC<PropsWithChildren<InfoCardProps>> = ({
   return (
     <Box
       p="m"
-      width="15rem"
+      width={width ?? '15rem'}
       height="7.5rem"
       borderRadius="m"
       overflow="hidden"
