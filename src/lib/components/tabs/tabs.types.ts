@@ -3,7 +3,7 @@ import { CSSProperties, ReactNode } from 'react';
 type MaybeArray<T> = ReadonlyArray<T> | T;
 
 export interface customMarginXProps {
-  px: MaybeArray<CSSProperties['padding']>;
+  px?: MaybeArray<CSSProperties['padding']>;
 }
 export interface TabItemProps extends customMarginXProps {
   item: ReactNode;
