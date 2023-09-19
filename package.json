@@ -1,6 +1,6 @@
 {
   "name": "@interest-protocol/ui-kit",
-  "version": "0.1.33-beta",
+  "version": "0.1.34-beta",
   "description": "Interest Protocol interface UI Kit",
   "main": "dist/index.cjs.js",
   "src": "src/lib/index.ts",
