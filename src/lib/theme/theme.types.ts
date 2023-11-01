@@ -1,6 +1,6 @@
 export type Boxes = 'container';
 export type Radii = 's' | 'm' | 'full';
-export type Space = 's' | 'm' | 'l' | 'xl' | '2xl' | '3xl' | '4xl';
+export type Space = '2xs' | 'xm' | 's' | 'm' | 'l' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl' | '7xl' | '8xl' | '9xl' | '10xl' | '11xl' | '12xl' | '13xl' | '14xl' | '15xl' | '16xl';;
 export type ButtonVariants = 'filled' | 'outline' | 'text' | 'tonal' | 'icon';
 export type ButtonSizes = 'small' | 'medium';
 export type FontSizes =
