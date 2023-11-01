@@ -1,7 +1,9 @@
 import { Radii } from '../theme.types';
 
 export const radii: Record<Radii, string> = {
-  s: '0.125rem',
-  m: '0.25rem',
+  xs: '0.5rem',
+  s: '1rem',
+  m: '1.5rem',
+  l: '3rem',
   full: '9999rem',
 };
