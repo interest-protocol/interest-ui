@@ -1,5 +1,5 @@
 export type Boxes = 'container';
-export type Radii = 's' | 'm' | 'full';
+export type Radii = 'xs' | 's' | 'm' | 'l' | 'full';
 export type Space = 's' | 'm' | 'l' | 'xl' | '2xl' | '3xl' | '4xl';
 export type ButtonVariants = 'filled' | 'outline' | 'text' | 'tonal' | 'icon';
 export type ButtonSizes = 'small' | 'medium';
