@@ -17,18 +17,7 @@ export type FontSizes =
   | '7xl'
   | '8xl'
   | '9xl';
-export type LineHeights =
-  | 'xs'
-  | 's'
-  | 'm'
-  | 'l'
-  | 'xl'
-  | '2xl'
-  | '3xl'
-  | '4xl'
-  | '5xl'
-  | '6xl'
-  | '7xl';
+export type LineHeights = 'xs' | 's' | 'm';
 export type Colors = {
   error: string;
   success: string;
