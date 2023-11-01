@@ -8,7 +8,7 @@ const displayLarge = {
   fontFamily: "'Share Tech Mono', monospace",
   '@media (min-width: 36em)': {
     fontSize: fontSizes['9xl'],
-    lineHeight: lineHeights['7xl'],
+    lineHeight: lineHeights['6xl'],
   },
 };
 
