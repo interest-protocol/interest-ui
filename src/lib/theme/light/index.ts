@@ -3,6 +3,7 @@ import {
   fontSizes,
   lineHeights,
   radii,
+  shadows,
   space,
 } from '../design-system';
 import { Theme } from '../theme.types';
@@ -19,6 +20,7 @@ const theme: Theme = {
   radii,
   space,
   colors,
+  shadows,
   boxes,
   buttons,
 };

@@ -55,6 +55,19 @@ export type Colors = {
   'surface.containerLowest': string;
   'surface.dim': string;
 };
+export type Shadows =
+  | 'primary.xs'
+  | 'primary.s'
+  | 'primary.m'
+  | 'primary.l'
+  | 'primary.xl'
+  | 'primary.2xl'
+  | 'dropShadow.xs'
+  | 'dropShadow.s'
+  | 'dropShadow.m'
+  | 'dropShadow.l'
+  | 'dropShadow.xl'
+  | 'dropShadow.2xl';
 export type Typographies =
   | 'displayLarge'
   | 'displaySmall'
@@ -78,6 +91,7 @@ export interface Theme {
   colors: Colors;
   radii: Record<Radii, string>;
   space: Record<Space, string>;
+  shadows: Record<Shadows, string>;
   breakpoints: ReadonlyArray<string>;
   fontSizes: Record<FontSizes, string>;
   boxes: Record<Boxes, MaybeNestedObject>;
