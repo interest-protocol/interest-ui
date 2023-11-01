@@ -57,18 +57,18 @@ export type Colors = {
   'surface.dim': string;
 };
 export type Shadows =
-  | 'shadow.primary.xs'
-  | 'shadow.primary.s'
-  | 'shadow.primary.m'
-  | 'shadow.primary.l'
-  | 'shadow.primary.xl'
-  | 'shadow.primary.2xl'
-  | 'shadow.dropShadow.xs'
-  | 'shadow.dropShadow.s'
-  | 'shadow.dropShadow.m'
-  | 'shadow.dropShadow.l'
-  | 'shadow.dropShadow.xl'
-  | 'shadow.dropShadow.2xl';
+  | 'primary.xs'
+  | 'primary.s'
+  | 'primary.m'
+  | 'primary.l'
+  | 'primary.xl'
+  | 'primary.2xl'
+  | 'dropShadow.xs'
+  | 'dropShadow.s'
+  | 'dropShadow.m'
+  | 'dropShadow.l'
+  | 'dropShadow.xl'
+  | 'dropShadow.2xl';
 export type Typographies =
   | 'displayLarge'
   | 'displaySmall'
