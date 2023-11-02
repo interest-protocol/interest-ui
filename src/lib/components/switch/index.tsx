@@ -109,7 +109,7 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
                 ? 'surface'
                 : activation && !switcher
                 ? 'inverseSurface'
-                : onPrimary
+                : 'onPrimary'
             }
           />
         </Box>
