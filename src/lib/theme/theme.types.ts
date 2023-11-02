@@ -29,31 +29,31 @@ export type LineHeights =
   | '5xl'
   | '6xl';
 export type Colors = {
-  error: string;
-  success: string;
-  warning: string;
-  onSurface: string;
-  onSurfaceVariant: string;
-  inverseOnSurface: string;
-  inverseSurface: string;
   primary: string;
   'primary.onPrimary': string;
   'primary.primaryContainer': string;
   'primary.onPrimaryContainer': string;
-  secondary: string;
-  'secondary.onSecondary': string;
-  'secondary.secondaryContainer': string;
-  'secondary.onSecondaryContainer': string;
-  outline: string;
-  'outline.outlineVariant': string;
+  warning: string;
+  'warning.onWarning': string;
+  'warning.warningContainer': string;
+  'warning.onWarningContainer': string;
+  error: string;
+  'error.onError': string;
+  'error.errorContainer': string;
+  'error.onErrorContainer': string;
+  success: string;
+  'success.onSuccess': string;
+  'success.successContainer': string;
+  'success.onSuccessContainer': string;
   surface: string;
-  'surface.surfaceVariant': string;
-  'surface.containerHighest': string;
-  'surface.containerHigh': string;
-  'surface.container': string;
-  'surface.containerLow': string;
   'surface.containerLowest': string;
-  'surface.dim': string;
+  'surface.containerLow': string;
+  'surface.container': string;
+  'surface.containerHigh': string;
+  'surface.containerHighest': string;
+  onSurface: string;
+  outlile: string;
+  'outline.varient': string;
 };
 export type Shadows =
   | 'primary.xs'
