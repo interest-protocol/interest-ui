@@ -4,6 +4,7 @@ export type Space = '2xs' | 's' | 'm' | 'l' | 'xl' | '2xl' | '3xl' | '4xl' | '5x
 export type ButtonVariants = 'filled' | 'outline' | 'text' | 'tonal' | 'icon';
 export type ButtonSizes = 'small' | 'medium';
 export type FontSizes =
+  | '2xs'
   | 'xs'
   | 's'
   | 'm'
