@@ -11,7 +11,7 @@ export const getBackground = (switcher: boolean, theme: Theme): string => {
 
   if (switcher) return colors.primary;
 
-  if (dark) return colors['surface.containerHigh'];
+  if (dark) return colors['highContainer'];
 
   return colors.onSurface;
 };

@@ -30,30 +30,30 @@ export type LineHeights =
   | '6xl';
 export type Colors = {
   primary: string;
-  'primary.onPrimary': string;
-  'primary.primaryContainer': string;
-  'primary.onPrimaryContainer': string;
+  onPrimary: string;
+  primaryContainer: string;
+  onPrimaryContainer: string;
   warning: string;
-  'warning.onWarning': string;
-  'warning.warningContainer': string;
-  'warning.onWarningContainer': string;
+  onWarning: string;
+  warningContainer: string;
+  onWarningContainer: string;
   error: string;
-  'error.onError': string;
-  'error.errorContainer': string;
-  'error.onErrorContainer': string;
+  onError: string;
+  errorContainer: string;
+  onErrorContainer: string;
   success: string;
-  'success.onSuccess': string;
-  'success.successContainer': string;
-  'success.onSuccessContainer': string;
+  onSuccess: string;
+  successContainer: string;
+  onSuccessContainer: string;
   surface: string;
-  'surface.containerLowest': string;
-  'surface.containerLow': string;
-  'surface.container': string;
-  'surface.containerHigh': string;
-  'surface.containerHighest': string;
+  lowestContainer: string;
+  lowContainer: string;
+  container: string;
+  highContainer: string;
+  highestContainer: string;
   onSurface: string;
   outlile: string;
-  'outline.varient': string;
+  varientOutline: string;
 };
 export type Shadows =
   | 'primary.xs'

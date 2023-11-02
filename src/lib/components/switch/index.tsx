@@ -93,7 +93,7 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
             disabled
               ? 'onSurface'
               : activation && !switcher
-              ? 'surface.containerLow'
+              ? 'lowContainer'
               : 'primary'
           }
           transition="background 300ms ease-in-out"
@@ -109,7 +109,7 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
                 ? 'surface'
                 : activation && !switcher
                 ? 'inverseSurface'
-                : 'primary.onPrimary'
+                : onPrimary
             }
           />
         </Box>
