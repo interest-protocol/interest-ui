@@ -6,7 +6,7 @@ import { colors } from '../colors';
 
 const defaultButton = mergeDeepRight(button, {
   ':disabled': {
-    background: colors['surface.container'],
+    background: colors['container'],
     cursor: 'not-allowed',
     color: colors.onSurface,
   },
@@ -14,10 +14,10 @@ const defaultButton = mergeDeepRight(button, {
 
 export const variants = {
   filled: mergeDeepRight(defaultButton, {
-    color: colors['primary.onPrimary'],
+    color: colors['onPrimary'],
     background: colors.primary,
     ':disabled': {
-      background: colors['surface.container'],
+      background: colors['container'],
     },
   }),
   outline: mergeDeepRight(defaultButton, {

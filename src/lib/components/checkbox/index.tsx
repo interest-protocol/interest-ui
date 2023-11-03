@@ -51,8 +51,7 @@ export const Checkbox: FC<CheckboxProps> = ({
           appearance="none"
           border="1px solid"
           nHover={{
-            boxShadow:
-              '0 0 .1875rem .3125rem' + colors['primary.onPrimary'] + '1F',
+            boxShadow: '0 0 .1875rem .3125rem' + colors['onPrimary'] + '1F',
             transition: 'all 300ms ease-in-out',
           }}
           onClick={handleClick}
@@ -65,7 +64,7 @@ export const Checkbox: FC<CheckboxProps> = ({
           htmlFor={label}
           position="absolute"
           transform="translate(-50%, -43%)"
-          color={colors['primary.onPrimary']}
+          color={colors['onPrimary']}
         >
           <Motion
             initial="hidden"
