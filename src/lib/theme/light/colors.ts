@@ -25,6 +25,6 @@ export const colors: Colors = {
   highContainer: pallete.NEUTRAL_92,
   highestContainer: pallete.NEUTRAL_90,
   onSurface: pallete.NEUTRAL_10,
-  outlile: pallete.NEUTRAL_50,
-  varientOutline: pallete.NEUTRAL_80,
+  outline: pallete.NEUTRAL_50,
+  outlineVariant: pallete.NEUTRAL_80,
 };

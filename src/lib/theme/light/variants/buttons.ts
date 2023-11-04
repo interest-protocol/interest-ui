@@ -23,9 +23,9 @@ export const variants = {
   outline: mergeDeepRight(defaultButton, {
     border: '1px solid',
     color: colors.primary,
-    borderColor: colors['outline.outlineVariant'],
+    borderColor: colors.outlineVariant,
     ':hover': {
-      borderColor: colors['outline.outlineVariant'],
+      borderColor: colors.outlineVariant,
       background: `${colors.primary}14`,
     },
     ':focus': {
@@ -33,11 +33,11 @@ export const variants = {
       borderColor: colors.primary,
     },
     ':active': {
-      borderColor: colors['outline.outlineVariant'],
+      borderColor: colors.outlineVariant,
     },
     ':disabled': {
-      borderColor: colors['outline.outlineVariant'],
-      ':hover': { borderColor: colors['outline.outlineVariant'] },
+      borderColor: colors.outlineVariant,
+      ':hover': { borderColor: colors.outlineVariant },
     },
   }),
   text: mergeDeepRight(defaultButton, {
@@ -50,8 +50,8 @@ export const variants = {
     },
   }),
   tonal: mergeDeepRight(defaultButton, {
-    color: colors['secondary.onSecondaryContainer'],
-    background: colors['secondary.secondaryContainer'],
+    color: colors.onPrimaryContainer,
+    background: colors.primaryContainer,
     ':hover': {
       background: `${colors.primary}14`,
     },

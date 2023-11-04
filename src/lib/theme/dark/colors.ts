@@ -25,6 +25,6 @@ export const colors: Theme['colors'] = {
   highContainer: pallete.NEUTRAL_17,
   highestContainer: pallete.NEUTRAL_22,
   onSurface: pallete.NEUTRAL_90,
-  outlile: pallete.NEUTRAL_60,
-  varientOutline: pallete.NEUTRAL_30,
+  outline: pallete.NEUTRAL_60,
+  outlineVariant: pallete.NEUTRAL_30,
 };
