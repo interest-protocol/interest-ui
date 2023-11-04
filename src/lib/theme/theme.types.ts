@@ -83,6 +83,14 @@ export type Typographies =
   | 'title5'
   | 'title6';
 
+  export type Gradient =
+  | 'linearGradientBlack.0deg'
+  | 'linearGradientBlack.74deg'
+  | 'linearGradientBlack.90deg'
+  | 'linearGradientBlue.0deg'
+  | 'linearGradientBlue.74deg'
+  | 'linearGradientBlue.90deg'
+
 export interface MaybeNestedObject {
   [key: string]: string | number | Partial<MaybeNestedObject>;
 }
@@ -90,6 +98,7 @@ export interface MaybeNestedObject {
 export interface Theme {
   dark: boolean;
   colors: Colors;
+  gradient: Record<Gradient, MaybeNestedObject>;
   radii: Record<Radii, string>;
   space: Record<Space, string>;
   shadows: Record<Shadows, string>;
