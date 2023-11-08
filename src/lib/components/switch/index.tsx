@@ -93,7 +93,7 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
             disabled
               ? 'onSurface'
               : activation && !switcher
-              ? 'lowContainer'
+              ? 'highestContainer'
               : 'primary'
           }
           transition="background 300ms ease-in-out"
