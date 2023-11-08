@@ -7,7 +7,7 @@ export const fontSizes: Record<FontSizes, string> = {
   m: '1rem',
   l: '1.125rem',
   xl: '1.25rem',
-  '2xl': '1.375rem', 
+  '2xl': '1.375rem',
   '3xl': '1.5rem',
   '4xl': '1.75rem',
   '5xl': '2rem',
