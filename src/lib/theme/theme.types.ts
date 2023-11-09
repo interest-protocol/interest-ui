@@ -1,6 +1,28 @@
 export type Boxes = 'container';
 export type Radii = 'xs' | 's' | 'm' | 'l' | 'full';
-export type Space = '2xs' | 's' | 'm' | 'l' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl'| '6xl' | '7xl' | '8xl' | '9xl'| '10xl' | '11xl' | '12xl' | '13xl'| '14xl' | '15xl' | '16xl' | '17xl' | '18xl' ;
+export type Space =
+  | '2xs'
+  | 's'
+  | 'm'
+  | 'l'
+  | 'xl'
+  | '2xl'
+  | '3xl'
+  | '4xl'
+  | '5xl'
+  | '6xl'
+  | '7xl'
+  | '8xl'
+  | '9xl'
+  | '10xl'
+  | '11xl'
+  | '12xl'
+  | '13xl'
+  | '14xl'
+  | '15xl'
+  | '16xl'
+  | '17xl'
+  | '18xl';
 export type ButtonVariants = 'filled' | 'outline' | 'text' | 'tonal' | 'icon';
 export type ButtonSizes = 'small' | 'medium';
 export type FontSizes =
@@ -83,13 +105,13 @@ export type Typographies =
   | 'title5'
   | 'title6';
 
-  export type Gradient =
+export type Gradient =
   | 'linearGradientBlack.0deg'
   | 'linearGradientBlack.74deg'
   | 'linearGradientBlack.90deg'
   | 'linearGradientBlue.0deg'
   | 'linearGradientBlue.74deg'
-  | 'linearGradientBlue.90deg'
+  | 'linearGradientBlue.90deg';
 
 export interface MaybeNestedObject {
   [key: string]: string | number | Partial<MaybeNestedObject>;
