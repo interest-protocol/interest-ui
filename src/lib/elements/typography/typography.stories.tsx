@@ -19,108 +19,135 @@ type Story = StoryObj<typeof Typography>;
 
 export const DisplayLarge: Story = {
   args: {
-    as: 'h1',
-    color: 'text',
+    as: 'p',
+    color: 'onSurface',
     variant: 'displayLarge',
     children: 'Display large',
   },
 };
 
+export const DisplayMedium: Story = {
+  args: {
+    as: 'p',
+    color: 'onSurface',
+    variant: 'displayMedium',
+    children: 'Display small',
+  },
+};
+
 export const DisplaySmall: Story = {
   args: {
-    as: 'h1',
-    color: 'text',
+    as: 'p',
+    color: 'onSurface',
     variant: 'displaySmall',
     children: 'Display small',
   },
 };
 
-export const Title1: Story = {
-  args: {
-    as: 'h1',
-    color: 'text',
-    variant: 'title1',
-    children: 'Heading 1',
-  },
-};
-
-export const Title2: Story = {
-  args: {
-    as: 'h2',
-    color: 'text',
-    variant: 'title2',
-    children: 'Heading 2',
-  },
-};
-
-export const Title3: Story = {
-  args: {
-    as: 'h3',
-    color: 'text',
-    variant: 'title3',
-    children: 'Heading 3',
-  },
-};
-
-export const Title4: Story = {
-  args: {
-    as: 'h4',
-    color: 'text',
-    variant: 'title4',
-    children: 'Heading 4',
-  },
-};
-
-export const Title5: Story = {
-  args: {
-    as: 'h5',
-    color: 'text',
-    variant: 'title5',
-    children: 'Heading 5',
-  },
-};
-
-export const Title6: Story = {
-  args: {
-    as: 'h6',
-    color: 'text',
-    variant: 'title6',
-    children: 'Heading 6',
-  },
-};
-
-export const Large: Story = {
+export const headlineLarge: Story = {
   args: {
     as: 'p',
-    color: 'text',
-    variant: 'large',
-    children: 'Text L',
+    color: 'onSurface',
+    variant: 'headlineLarge',
+    children: 'Headline Large',
   },
 };
 
-export const Medium: Story = {
+export const headlineMedium: Story = {
   args: {
     as: 'p',
-    color: 'text',
-    variant: 'medium',
-    children: 'Text M',
+    color: 'onSurface',
+    variant: 'headlineMedium',
+    children: 'Headline Medium',
   },
 };
 
-export const Small: Story = {
+export const headlineSmall: Story = {
   args: {
     as: 'p',
-    color: 'text',
-    variant: 'small',
-    children: 'Text S',
+    color: 'onSurface',
+    variant: 'headlineSmall',
+    children: 'Headline Small',
   },
 };
 
-export const ExtraSmall: Story = {
+export const titleLarge: Story = {
   args: {
     as: 'p',
-    color: 'text',
-    variant: 'extraSmall',
-    children: 'Text XS',
+    color: 'onSurface',
+    variant: 'titleLarge',
+    children: 'Title Large',
+  },
+};
+
+export const titleMedium: Story = {
+  args: {
+    as: 'p',
+    color: 'onSurface',
+    variant: 'titleMedium',
+    children: 'Title Medium',
+  },
+};
+
+export const titleSmall: Story = {
+  args: {
+    as: 'p',
+    color: 'onSurface',
+    variant: 'titleSmall',
+    children: 'Title Small',
+  },
+};
+
+export const bodyLarge: Story = {
+  args: {
+    as: 'p',
+    color: 'onSurface',
+    variant: 'bodyLarge',
+    children: 'Body Large',
+  },
+};
+
+export const bodyMedium: Story = {
+  args: {
+    as: 'p',
+    color: 'onSurface',
+    variant: 'bodyMedium',
+    children: 'Body Medium',
+  },
+};
+
+export const bodySmall: Story = {
+  args: {
+    as: 'p',
+    color: 'onSurface',
+    variant: 'bodySmall',
+    children: 'Body Small',
+  },
+};
+
+export const labelLarge: Story = {
+  args: {
+    as: 'label',
+    color: 'onSurface',
+    variant: 'labelLarge',
+    children: 'Label Large',
+  },
+};
+
+export const labelMedium: Story = {
+  args: {
+    as: 'label',
+    color: 'onSurface',
+    variant: 'labelMedium',
+    children: 'Label Medium',
+  },
+};
+
+export const labelSmall: Story = {
+  args: {
+    as: 'label',
+    color: 'onSurface',
+    variant: 'labelSmall',
+    children: 'Label Small',
   },
 };
