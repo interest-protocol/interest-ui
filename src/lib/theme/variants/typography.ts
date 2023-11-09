@@ -5,7 +5,7 @@ const displayLarge = {
   fontSize: fontSizes['8xl'],
   fontStyle: 'normal',
   fontWeight: '400',
-  fontFamily: 'Proto Mono',
+  fontFamily: 'Proto',
   '@media (min-width: 36em)': {
     fontSize: fontSizes['9xl'],
     lineHeight: lineHeights['6xl'],
