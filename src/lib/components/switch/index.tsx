@@ -93,7 +93,7 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
             disabled
               ? 'onSurface'
               : activation && !switcher
-              ? 'surface.containerLow'
+              ? 'highestContainer'
               : 'primary'
           }
           transition="background 300ms ease-in-out"
@@ -104,13 +104,7 @@ export const SwitchButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
             height={SIZES[size]}
             style={{ translateX }}
             opacity={disabled ? 0.7 : 1}
-            bg={
-              disabled
-                ? 'surface'
-                : activation && !switcher
-                ? 'inverseSurface'
-                : 'primary.onPrimary'
-            }
+            bg={disabled ? 'surface' : 'onPrimary'}
           />
         </Box>
       </LabelElement>

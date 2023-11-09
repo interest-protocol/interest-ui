@@ -21,9 +21,9 @@ const theme: Theme = {
   space,
   radii,
   colors,
-  gradient,
   shadows,
   boxes,
+  gradient,
   buttons,
 };
 
