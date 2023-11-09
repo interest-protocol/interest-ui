@@ -92,18 +92,21 @@ export type Shadows =
   | 'dropShadow.xl'
   | 'dropShadow.2xl';
 export type Typographies =
+  | 'bodyLarge'
+  | 'bodyMedium'
+  | 'bodySmall'
   | 'displayLarge'
+  | 'displayMedium'
   | 'displaySmall'
-  | 'extraSmall'
-  | 'large'
-  | 'medium'
-  | 'small'
-  | 'title1'
-  | 'title2'
-  | 'title3'
-  | 'title4'
-  | 'title5'
-  | 'title6';
+  | 'headlineLarge'
+  | 'headlineMedium'
+  | 'headlineSmall'
+  | 'labelLarge'
+  | 'labelMedium'
+  | 'labelSmall'
+  | 'titleLarge'
+  | 'titleMedium'
+  | 'titleSmall';
 
 export type Gradient =
   | 'linearGradientBlack.0deg'

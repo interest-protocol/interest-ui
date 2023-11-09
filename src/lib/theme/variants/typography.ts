@@ -1,114 +1,199 @@
 import { fontSizes, lineHeights } from '../design-system';
 
 const displayLarge = {
-  letterSpacing: '-2%',
-  textTransform: 'uppercase',
+  lineHeight: lineHeights['6xl'],
   fontSize: fontSizes['8xl'],
-  lineHeight: lineHeights['5xl'],
-  fontFamily: "'Share Tech Mono', monospace",
+  fontStyle: 'normal',
+  fontWeight: '400',
+  fontFamily: 'Proto Mono',
   '@media (min-width: 36em)': {
     fontSize: fontSizes['9xl'],
     lineHeight: lineHeights['6xl'],
   },
 };
 
-const displaySmall = {
-  letterSpacing: '-2%',
-  textTransform: 'uppercase',
-  fontSize: fontSizes['7xl'],
+const displayMedium = {
   lineHeight: lineHeights['5xl'],
-  fontFamily: "'Share Tech Mono', monospace",
+  fontSize: fontSizes['7xl'],
+  fontStyle: 'normal',
+  fontWeight: '500',
+  fontFamily: 'Proto',
   '@media (min-width: 36em)': {
     fontSize: fontSizes['8xl'],
     lineHeight: lineHeights['6xl'],
   },
 };
 
-const title1 = {
-  fontSize: fontSizes['5xl'],
-  lineHeight: lineHeights['5xl'],
+const displaySmall = {
+  lineHeight: lineHeights['4xl'],
+  fontSize: fontSizes['6xl'],
+  fontStyle: 'normal',
+  fontWeight: '500',
+  fontFamily: 'Proto',
   '@media (min-width: 36em)': {
-    fontSize: fontSizes['6xl'],
+    fontSize: fontSizes['7xl'],
     lineHeight: lineHeights['6xl'],
   },
 };
 
-const title2 = {
-  fontSize: fontSizes['4xl'],
-  lineHeight: lineHeights['4xl'],
+const headlineLarge = {
+  fontFamily: 'Proto',
+  fontSize: fontSizes['5xl'],
+  lineHeight: lineHeights['3xl'],
+  fontWeight: '500',
+  fontStyle: 'normal',
   '@media (min-width: 36em)': {
-    fontSize: fontSizes['5xl'],
+    fontSize: fontSizes['6xl'],
     lineHeight: lineHeights['5xl'],
   },
 };
 
-const title3 = {
-  fontSize: fontSizes['3xl'],
-  lineHeight: lineHeights['3xl'],
+const headlineMedium = {
+  fontFamily: 'Proto',
+  fontSize: fontSizes['4xl'],
+  lineHeight: lineHeights['2xl'],
+  fontWeight: '500',
+  fontStyle: 'normal',
   '@media (min-width: 36em)': {
-    fontSize: fontSizes['4xl'],
+    fontSize: fontSizes['5xl'],
     lineHeight: lineHeights['4xl'],
   },
 };
 
-const title4 = {
-  fontSize: fontSizes['2xl'],
-  lineHeight: lineHeights['2xl'],
+const headlineSmall = {
+  fontFamily: 'Proto',
+  fontSize: fontSizes['3xl'],
+  lineHeight: lineHeights['xl'],
+  fontWeight: '500',
+  fontStyle: 'normal',
   '@media (min-width: 36em)': {
-    fontSize: fontSizes['3xl'],
+    fontSize: fontSizes['4xl'],
     lineHeight: lineHeights['3xl'],
   },
 };
 
-const title5 = {
-  fontSize: fontSizes['xl'],
-  lineHeight: lineHeights['xl'],
+const titleLarge = {
+  fontFamily: 'Satoshi',
+  fontSize: fontSizes['2xl'],
+  lineHeight: lineHeights['l'],
+  fontWeight: '500',
+  fontStyle: 'normal',
   '@media (min-width: 36em)': {
-    fontSize: fontSizes['2xl'],
+    fontSize: fontSizes['4xl'],
     lineHeight: lineHeights['2xl'],
   },
 };
 
-const title6 = {
-  fontSize: fontSizes['l'],
-  lineHeight: lineHeights['l'],
+const titleMedium = {
+  fontFamily: 'Satoshi',
+  fontSize: fontSizes['m'],
+  lineHeight: lineHeights['m'],
+  fontWeight: '700',
+  fontStyle: 'normal',
   '@media (min-width: 36em)': {
     fontSize: fontSizes['xl'],
     lineHeight: lineHeights['xl'],
   },
 };
 
-const large = {
-  fontSize: fontSizes['l'],
-  lineHeight: lineHeights['l'],
-};
-
-const medium = {
-  fontSize: fontSizes['m'],
-  lineHeight: lineHeights['m'],
-};
-
-const small = {
+const titleSmall = {
+  fontFamily: 'Satoshi',
   fontSize: fontSizes['s'],
   lineHeight: lineHeights['s'],
+  fontWeight: '500',
+  fontStyle: 'normal',
+  '@media (min-width: 36em)': {
+    fontSize: fontSizes['l'],
+    lineHeight: lineHeights['l'],
+  },
 };
 
-const extraSmall = {
+const bodyLarge = {
+  fontFamily: 'Satoshi',
+  fontSize: fontSizes['m'],
+  lineHeight: lineHeights['m'],
+  fontWeight: '500',
+  fontStyle: 'normal',
+  '@media (min-width: 36em)': {
+    fontSize: fontSizes['xl'],
+    lineHeight: lineHeights['xl'],
+  },
+};
+
+const bodyMedium = {
+  fontFamily: 'Satoshi',
+  fontSize: fontSizes['s'],
+  lineHeight: lineHeights['s'],
+  fontWeight: '500',
+  fontStyle: 'normal',
+  '@media (min-width: 36em)': {
+    fontSize: fontSizes['l'],
+    lineHeight: lineHeights['l'],
+  },
+};
+
+const bodySmall = {
+  fontFamily: 'Satoshi',
   fontSize: fontSizes['xs'],
   lineHeight: lineHeights['xs'],
+  fontWeight: '500',
+  fontStyle: 'normal',
+  '@media (min-width: 36em)': {
+    fontSize: fontSizes['m'],
+    lineHeight: lineHeights['m'],
+  },
+};
+
+const labelLarge = {
+  fontFamily: 'Proto',
+  fontSize: fontSizes['s'],
+  lineHeight: lineHeights['s'],
+  fontWeight: '500',
+  fontStyle: 'normal',
+  '@media (min-width: 36em)': {
+    fontSize: fontSizes['l'],
+    lineHeight: lineHeights['l'],
+  },
+};
+
+const labelMedium = {
+  fontFamily: 'Proto',
+  fontSize: fontSizes['xs'],
+  lineHeight: lineHeights['xs'],
+  fontWeight: '500',
+  fontStyle: 'normal',
+  '@media (min-width: 36em)': {
+    fontSize: fontSizes['m'],
+    lineHeight: lineHeights['m'],
+  },
+};
+
+const labelSmall = {
+  fontFamily: 'Proto',
+  fontSize: fontSizes['2xs'],
+  lineHeight: lineHeights['xs'],
+  fontWeight: '500',
+  fontStyle: 'normal',
+  '@media (min-width: 36em)': {
+    fontSize: fontSizes['m'],
+    lineHeight: lineHeights['m'],
+  },
 };
 
 export {
+  bodyLarge,
+  bodyMedium,
+  bodySmall,
   displayLarge,
+  displayMedium,
   displaySmall,
-  extraSmall,
-  large,
-  medium,
-  small,
-  title1,
-  title2,
-  title3,
-  title4,
-  title5,
-  title6,
+  headlineLarge,
+  headlineMedium,
+  headlineSmall,
+  labelLarge,
+  labelMedium,
+  labelSmall,
+  titleLarge,
+  titleMedium,
+  titleSmall,
 };
