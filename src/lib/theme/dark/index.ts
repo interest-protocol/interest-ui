@@ -1,6 +1,7 @@
 import {
   breakpoints,
   fontSizes,
+  gradient,
   lineHeights,
   radii,
   shadows,
@@ -20,6 +21,7 @@ const theme: Theme = {
   space,
   radii,
   colors,
+  gradient,
   shadows,
   boxes,
   buttons,
