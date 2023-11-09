@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 
-export const GlobalStyles = css`
+const GlobalStyles = css`
   * {
     margin: 0;
     padding: 0;
@@ -8,3 +8,5 @@ export const GlobalStyles = css`
     font-family: 'Satoshi';
   }
 `;
+
+export default GlobalStyles;
