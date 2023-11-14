@@ -23,7 +23,7 @@ export type Space =
   | '16xl'
   | '17xl'
   | '18xl';
-export type ButtonVariants = 'filled' | 'outline' | 'text' | 'tonal' | 'icon';
+export type ButtonVariants = 'filled' | 'outline' | 'text' | 'tonal';
 export type ButtonSizes = 'small' | 'medium';
 export type FontSizes =
   | '2xs'

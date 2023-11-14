@@ -1,12 +1,11 @@
 import { mergeDeepRight } from 'ramda';
 
-import { space } from '../../design-system/space';
 import { button } from '../../variants';
 import { colors } from '../colors';
 
 const defaultButton = mergeDeepRight(button, {
   ':disabled': {
-    background: colors['container'],
+    background: '#00000029',
     cursor: 'not-allowed',
     color: colors.onSurface,
   },
@@ -14,65 +13,131 @@ const defaultButton = mergeDeepRight(button, {
 
 export const variants = {
   filled: mergeDeepRight(defaultButton, {
-    color: colors['onPrimary'],
+    color: colors.onPrimary,
     background: colors.primary,
+    ':hover': {
+      background: `linear-gradient(0deg, #FFF2, #FFF2), ${colors.primary}`,
+    },
+    ':focus': {
+      background: `linear-gradient(0deg, #FFF2, #FFF2), ${colors.primary}`,
+      border: '0.25rem solid',
+      borderColor: `${colors.primaryContainer}`,
+    },
+    ':active': {
+      background: `${colors.primary}`,
+      border: '0.25rem solid',
+      borderColor: `${colors.primaryContainer}`,
+    },
     ':disabled': {
-      background: colors['container'],
+      opacity: '0.32',
+      color: colors.onSurface,
+      ':hover': {
+        background: '#00000029',
+      },
+      ':focus': {
+        background: '#00000029',
+        border: 'unset',
+        borderColor: 'unset',
+      },
+      ':active': {
+        background: '#00000029',
+        border: 'unset',
+        borderColor: 'unset',
+      },
     },
   }),
   outline: mergeDeepRight(defaultButton, {
     border: '1px solid',
-    color: colors.primary,
-    borderColor: colors.outlineVariant,
+    color: colors.onSurface,
+    borderColor: colors.outline,
     ':hover': {
-      borderColor: colors.outlineVariant,
+      border: '1px solid',
+      borderColor: colors.primary,
+      color: colors.primary,
       background: `${colors.primary}14`,
     },
     ':focus': {
-      background: `${colors.primary}1F`,
-      borderColor: colors.primary,
+      border: '0.25rem solid',
+      color: colors.primary,
+      borderColor: `${colors.primary}16`,
+      background: `transparent`,
     },
     ':active': {
-      borderColor: colors.outlineVariant,
+      color: colors.primary,
+      border: '0.25rem solid',
+      borderColor: `${colors.primary}16`,
+      background: `transparent`,
     },
     ':disabled': {
-      borderColor: colors.outlineVariant,
-      ':hover': { borderColor: colors.outlineVariant },
+      opacity: '0.32',
+      border: 'unset',
+      color: colors.onSurface,
+      ':hover': {
+        background: '#00000029',
+        border: 'unset',
+        color: colors.onSurface,
+      },
+      ':focus': {
+        background: '#00000029',
+        border: 'unset',
+        borderColor: 'unset',
+      },
+      ':active': {
+        background: '#00000029',
+        border: 'unset',
+        borderColor: 'unset',
+      },
     },
   }),
   text: mergeDeepRight(defaultButton, {
-    color: colors.primary,
+    color: colors.onSurface,
     ':hover': {
-      background: `${colors.primary}14`,
+      background: `#00000029`,
     },
-    ':focus': {
-      background: `${colors.primary}14`,
+    ':active': {
+      color: colors.primary,
+      border: '0.25rem solid',
+      borderColor: `${colors.primary}16`,
+      background: `transparent`,
+    },
+    ':disabled': {
+      background: 'transparent',
+      ':hover': { background: 'transparent' },
+      ':active': {
+        background: 'transparent',
+        border: 'none',
+        color: colors.onSurface,
+        borderColor: 'unset',
+      },
     },
   }),
   tonal: mergeDeepRight(defaultButton, {
     color: colors.onPrimaryContainer,
-    background: colors.primaryContainer,
+    background: `${colors.primary}14`,
     ':hover': {
-      background: `${colors.primary}14`,
+      background: `${colors.primary}29`,
     },
     ':focus': {
-      background: `${colors.primary}1F`,
+      color: colors.primary,
+      border: '0.25rem solid',
+      borderColor: `${colors.primary}16`,
+      background: `transparent`,
     },
     ':active': {
-      background: `${colors.primary}1F`,
-    },
-  }),
-  icon: mergeDeepRight(button, {
-    padding: space.s,
-    color: colors.onSurface,
-    '@media (min-width: 36rem)': {
-      padding: space.s,
-    },
-    ':hover': {
+      color: colors.onSurface,
+      border: '0.25rem solid',
+      borderColor: `${colors.primary}16`,
       background: `${colors.primary}14`,
     },
-    ':active': {
-      background: `${colors.primary}1F`,
+    ':disabled': {
+      background: '#00000029',
+      ':hover': { background: '#00000029' },
+      ':active': {
+        background: '#00000029',
+        border: 'none',
+        color: colors.onSurface,
+        borderColor: 'unset',
+      },
     },
   }),
 };

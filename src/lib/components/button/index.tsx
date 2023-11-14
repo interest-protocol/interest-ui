@@ -15,17 +15,20 @@ const ButtonElement = stylin<ButtonElementProps>('button')(
 const MotionButton = motion(ButtonElement) as CustomDomComponent<ButtonProps>;
 
 export const Button: FC<PropsWithChildren<ButtonProps>> = ({
+  isIcon,
   children,
   PrefixIcon,
   SuffixIcon,
-  size = 'medium',
   ...props
 }) => (
   <MotionButton
-    {...(props.variant !== 'icon' && {
-      py: size === 'medium' ? ['m', 'xl'] : 'm',
-      px: size === 'medium' ? ['2xl', '3xl'] : 'xl',
-    })}
+    {...(isIcon
+      ? { p: 'xs' }
+      : {
+          py: 'xs',
+          pr: SuffixIcon ? 'm' : 'xl',
+          pl: PrefixIcon ? 'm' : 'xl',
+        })}
     whileTap={{
       scale: props.disabled ? 1 : 0.97,
       transition: { duration: 0.005, ease: easeInOut },
@@ -35,8 +38,11 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
       transition: { duration: 0.005, ease: easeInOut },
     }}
     {...props}
+    height="max-content"
+    display="flex"
+    gap="sm"
   >
-    {props.variant == 'icon' ? (
+    {isIcon ? (
       <Box
         as="span"
         width="1.5rem"
