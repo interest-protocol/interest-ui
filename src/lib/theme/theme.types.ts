@@ -92,21 +92,19 @@ export type Shadows =
   | 'dropShadow.xl'
   | 'dropShadow.2xl';
 export type Typographies =
-  | 'bodyLarge'
-  | 'bodyMedium'
-  | 'bodySmall'
-  | 'displayLarge'
-  | 'displayMedium'
-  | 'displaySmall'
-  | 'headlineLarge'
-  | 'headlineMedium'
-  | 'headlineSmall'
-  | 'labelLarge'
-  | 'labelMedium'
-  | 'labelSmall'
-  | 'titleLarge'
-  | 'titleMedium'
-  | 'titleSmall';
+  | 'PROTO_TITLE_1'
+  | 'PROTO_TITLE_2'
+  | 'PROTO_TITLE_3'
+  | 'PROTO_TITLE_4'
+  | 'PROTO_TITLE_5'
+  | 'PROTO_TITLE_6'
+  | 'PROTO_TITLE_7'
+  | 'PROTO_TITLE_8'
+  | 'PROTO_TITLE_9'
+  | 'PROTO_TITLE_10'
+  | 'SATOSHI_TITLE_1'
+  | 'SATOSHI_TITLE_2'
+  | 'SATOSHI_TITLE_3';
 
 export type Gradient =
   | 'linearGradientBlack.0deg'

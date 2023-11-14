@@ -17,137 +17,119 @@ export default meta;
 
 type Story = StoryObj<typeof Typography>;
 
-export const DisplayLarge: Story = {
+export const PROTO_TITLE_1: Story = {
   args: {
     as: 'p',
     color: 'onSurface',
-    variant: 'displayLarge',
-    children: 'Display large',
+    variant: 'PROTO_TITLE_1',
+    children: 'Proto title 1',
   },
 };
 
-export const DisplayMedium: Story = {
+export const PROTO_TITLE_2: Story = {
   args: {
     as: 'p',
     color: 'onSurface',
-    variant: 'displayMedium',
-    children: 'Display small',
+    variant: 'PROTO_TITLE_2',
+    children: 'Proto title 2',
   },
 };
 
-export const DisplaySmall: Story = {
+export const PROTO_TITLE_3: Story = {
   args: {
     as: 'p',
     color: 'onSurface',
-    variant: 'displaySmall',
-    children: 'Display small',
+    variant: 'PROTO_TITLE_3',
+    children: 'Proto title 3',
   },
 };
 
-export const headlineLarge: Story = {
+export const PROTO_TITLE_4: Story = {
   args: {
     as: 'p',
     color: 'onSurface',
-    variant: 'headlineLarge',
-    children: 'Headline Large',
+    variant: 'PROTO_TITLE_4',
+    children: 'Proto title 4',
   },
 };
 
-export const headlineMedium: Story = {
+export const PROTO_TITLE_5: Story = {
   args: {
     as: 'p',
     color: 'onSurface',
-    variant: 'headlineMedium',
-    children: 'Headline Medium',
+    variant: 'PROTO_TITLE_5',
+    children: 'Proto title 5',
   },
 };
 
-export const headlineSmall: Story = {
+export const PROTO_TITLE_6: Story = {
   args: {
     as: 'p',
     color: 'onSurface',
-    variant: 'headlineSmall',
-    children: 'Headline Small',
+    variant: 'PROTO_TITLE_6',
+    children: 'Proto title 6',
   },
 };
 
-export const titleLarge: Story = {
+export const PROTO_TITLE_7: Story = {
   args: {
     as: 'p',
     color: 'onSurface',
-    variant: 'titleLarge',
-    children: 'Title Large',
+    variant: 'PROTO_TITLE_7',
+    children: 'Proto title 7',
   },
 };
 
-export const titleMedium: Story = {
+export const PROTO_TITLE_8: Story = {
   args: {
     as: 'p',
     color: 'onSurface',
-    variant: 'titleMedium',
-    children: 'Title Medium',
+    variant: 'PROTO_TITLE_8',
+    children: 'Proto title 8',
   },
 };
 
-export const titleSmall: Story = {
+export const PROTO_TITLE_9: Story = {
   args: {
     as: 'p',
     color: 'onSurface',
-    variant: 'titleSmall',
-    children: 'Title Small',
+    variant: 'PROTO_TITLE_9',
+    children: 'Proto title 9',
   },
 };
 
-export const bodyLarge: Story = {
+export const PROTO_TITLE_10: Story = {
   args: {
     as: 'p',
     color: 'onSurface',
-    variant: 'bodyLarge',
-    children: 'Body Large',
+    variant: 'PROTO_TITLE_10',
+    children: 'Proto title 10',
   },
 };
 
-export const bodyMedium: Story = {
+export const SATOSHI_TITLE_1: Story = {
   args: {
     as: 'p',
     color: 'onSurface',
-    variant: 'bodyMedium',
-    children: 'Body Medium',
+    variant: 'SATOSHI_TITLE_1',
+    children: 'Satoshi title 1',
   },
 };
 
-export const bodySmall: Story = {
+export const SATOSHI_TITLE_2: Story = {
   args: {
     as: 'p',
     color: 'onSurface',
-    variant: 'bodySmall',
-    children: 'Body Small',
+    variant: 'SATOSHI_TITLE_2',
+    children: 'Satoshi title 2',
   },
 };
 
-export const labelLarge: Story = {
+export const SATOSHI_TITLE_3: Story = {
   args: {
     as: 'label',
     color: 'onSurface',
-    variant: 'labelLarge',
-    children: 'Label Large',
-  },
-};
-
-export const labelMedium: Story = {
-  args: {
-    as: 'label',
-    color: 'onSurface',
-    variant: 'labelMedium',
-    children: 'Label Medium',
-  },
-};
-
-export const labelSmall: Story = {
-  args: {
-    as: 'label',
-    color: 'onSurface',
-    variant: 'labelSmall',
-    children: 'Label Small',
+    variant: 'SATOSHI_TITLE_3',
+    children: 'Satoshi title 3',
   },
 };
