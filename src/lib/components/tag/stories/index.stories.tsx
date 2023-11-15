@@ -29,8 +29,8 @@ type Story = StoryObj<typeof Tag>;
 export const FilledWithCombined: Story = {
   args: {
     size: 'large',
-    dismiss: true,
-    label: 'Label',
+    hasCloseIcon: true,
+    children: 'Label',
     variant: 'filled',
     PrefixIcon: ErrorSVG,
     onClose: () => {
@@ -42,7 +42,7 @@ export const FilledWithCombined: Story = {
 export const FilledWithPrefix: Story = {
   args: {
     size: 'large',
-    label: 'Label',
+    children: 'Label',
     variant: 'filled',
     PrefixIcon: ErrorSVG,
   },
@@ -50,8 +50,8 @@ export const FilledWithPrefix: Story = {
 export const FilledWithDismiss: Story = {
   args: {
     size: 'large',
-    dismiss: true,
-    label: 'Label',
+    hasCloseIcon: true,
+    children: 'Label',
     variant: 'filled',
     onClose: () => {
       alert('close button licked');
@@ -61,7 +61,7 @@ export const FilledWithDismiss: Story = {
 export const Filled: Story = {
   args: {
     size: 'large',
-    label: 'Label',
+    children: 'Label',
     variant: 'filled',
   },
 };
@@ -69,8 +69,8 @@ export const Filled: Story = {
 export const OutlinedWithCombined: Story = {
   args: {
     size: 'large',
-    dismiss: true,
-    label: 'Label',
+    hasCloseIcon: true,
+    children: 'Label',
     variant: 'outline',
     PrefixIcon: ErrorSVG,
     onClose: () => {
@@ -82,7 +82,7 @@ export const OutlinedWithCombined: Story = {
 export const OutlinedWithPrefix: Story = {
   args: {
     size: 'large',
-    label: 'Label',
+    children: 'Label',
     variant: 'outline',
     PrefixIcon: ErrorSVG,
   },
@@ -90,8 +90,8 @@ export const OutlinedWithPrefix: Story = {
 export const OutlinedWithDismiss: Story = {
   args: {
     size: 'large',
-    dismiss: true,
-    label: 'Label',
+    hasCloseIcon: true,
+    children: 'Label',
     variant: 'outline',
     onClose: () => {
       alert('close button licked');
@@ -101,7 +101,7 @@ export const OutlinedWithDismiss: Story = {
 export const Outlined: Story = {
   args: {
     size: 'large',
-    label: 'Label',
+    children: 'Label',
     variant: 'outline',
   },
 };
