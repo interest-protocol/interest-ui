@@ -14,11 +14,18 @@ export type ButtonElementProps = Omit<
   | 'onDrag'
 >;
 
-export interface ButtonProps
-  extends Omit<StylinComponentProps, 'transition'>,
-    ButtonElementProps {
-  isIcon?: boolean;
+export type CombinedButtonProps = Omit<StylinComponentProps, 'transition'> &
+  ButtonElementProps & {
+    variant: ButtonVariants;
+  };
+
+export interface IconButton extends CombinedButtonProps {
+  isIcon: boolean;
+}
+
+export interface NoIconButton extends CombinedButtonProps {
   SuffixIcon?: ReactNode;
   PrefixIcon?: ReactNode;
-  variant: ButtonVariants;
 }
+
+export type ButtonProps = IconButton | NoIconButton;
