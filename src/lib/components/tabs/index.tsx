@@ -8,6 +8,8 @@ import { TabsProps } from './tabs.types';
 export const Tabs: FC<TabsProps> = ({
   items,
   px,
+  type,
+  width,
   onChangeTab,
   defaultTabIndex = 0,
 }) => {
@@ -19,12 +21,23 @@ export const Tabs: FC<TabsProps> = ({
   };
 
   return (
-    <Box as="nav" display="flex" flexDirection="row" position="relative">
+    <Box
+      as="nav"
+      display="flex"
+      flexDirection="row"
+      position="relative"
+      bg="rgba(0, 0, 0, 0.08)"
+      p="0.125rem"
+      width={width || 'max-content'}
+      minWidth="max-content"
+      borderRadius={type == 'circle' ? 'full' : '0.625rem'}
+    >
       {items.map((item, index) => (
         <TabItem
           key={v4()}
-          item={item}
           px={px}
+          item={item}
+          type={type}
           isSelected={index === tabIndex}
           onChange={handleChangeTab(index)}
         />

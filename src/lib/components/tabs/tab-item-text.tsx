@@ -1,28 +1,16 @@
 import React, { FC, PropsWithChildren } from 'react';
 
-import { Box, Motion, Typography } from '../../elements';
-import { TabItemPropsItemTextProps } from './tabs.types';
+import { Box, Typography } from '../../elements';
+import { TabItemProps } from './tabs.types';
 
-const NavItemText: FC<PropsWithChildren<TabItemPropsItemTextProps>> = ({
+const NavItemText: FC<PropsWithChildren<Pick<TabItemProps, 'px'>>> = ({
   children,
-  isSelected,
   px,
 }) => (
-  <Box fontFamily="'Roboto'" px={px ?? ['2xl', '2xl', '2.75rem']}>
-    <Typography variant="body" size="small" py="m">
+  <Box fontFamily="Proto" px={px ?? ['2xl', '2xl', 'xl']} py="0.635rem">
+    <Typography variant="label" size="large">
       {children}
     </Typography>
-    {isSelected && (
-      <Motion
-        p="3xs"
-        mx="auto"
-        bg="primary"
-        width="1.875rem"
-        layoutId="underline"
-        borderTopLeftRadius="s"
-        borderTopRightRadius="s"
-      />
-    )}
   </Box>
 );
 
