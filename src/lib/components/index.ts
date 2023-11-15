@@ -8,7 +8,6 @@ export * from './progress-indicator';
 export * from './radio-button';
 export * from './slider';
 export * from './switch';
-export * from './tab-navigator';
 export * from './tabs';
 export * from './text-field';
 export * from './tooltip';

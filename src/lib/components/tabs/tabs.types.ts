@@ -17,6 +17,11 @@ export interface TabItemProps extends customMarginXProps {
   type: 'circle' | 'square';
 }
 
+export interface TabItemPropsItemTextProps extends customMarginXProps {
+  isSelected?: boolean;
+  type: 'circle' | 'square';
+}
+
 export interface TabsProps extends customMarginXProps, customWidthProps {
   defaultTabIndex?: number;
   items: ReadonlyArray<ReactNode>;

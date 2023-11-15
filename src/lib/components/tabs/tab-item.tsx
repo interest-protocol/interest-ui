@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 
 import { Box } from '../../elements';
+import { Theme, useTheme } from '../../theme';
 import NavItemText from './tab-item-text';
 import { TabItemProps } from './tabs.types';
 
@@ -10,25 +11,24 @@ const TabItem: FC<TabItemProps> = ({
   item,
   type,
   px,
-}) => (
-  <Box
-    display="flex"
-    cursor="pointer"
-    onClick={onChange}
-    alignItems="center"
-    bg={isSelected ? '#fff' : 'transparent'}
-    borderRadius={type == 'circle' ? 'full' : 'xs'}
-    boxShadow={
-      isSelected
-        ? '0px 2px 4px -2px rgba(13, 16, 23, 0.04), 0px 4px 8px -2px rgba(13, 16, 23, 0.12)'
-        : 'unset'
-    }
-    nHover={{
-      bg: isSelected ? '#fff' : 'rgba(0, 83, 219, 0.08)',
-    }}
-  >
-    <NavItemText px={px}>{item}</NavItemText>
-  </Box>
-);
+}) => {
+  const { colors } = useTheme() as Theme;
 
+  return (
+    <Box
+      display="flex"
+      cursor="pointer"
+      onClick={onChange}
+      alignItems="center"
+      borderRadius={type == 'circle' ? 'full' : 'xs'}
+      nHover={{
+        bg: isSelected ? 'unset' : `${colors.primary}14`,
+      }}
+    >
+      <NavItemText type={type} isSelected={isSelected} px={px}>
+        {item}
+      </NavItemText>
+    </Box>
+  );
+};
 export default TabItem;

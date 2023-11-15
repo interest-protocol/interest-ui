@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react';
 import { v4 } from 'uuid';
 
 import { Box } from '../../elements';
+import { Theme, useTheme } from '../../theme';
 import TabItem from './tab-item';
 import { TabsProps } from './tabs.types';
 
@@ -13,6 +14,7 @@ export const Tabs: FC<TabsProps> = ({
   onChangeTab,
   defaultTabIndex = 0,
 }) => {
+  const { dark } = useTheme() as Theme;
   const [tabIndex, setTabIndex] = useState(defaultTabIndex);
 
   const handleChangeTab = (index: number) => () => {
@@ -23,13 +25,13 @@ export const Tabs: FC<TabsProps> = ({
   return (
     <Box
       as="nav"
+      p="0.125rem"
       display="flex"
       flexDirection="row"
       position="relative"
-      bg="rgba(0, 0, 0, 0.08)"
-      p="0.125rem"
-      width={width || 'max-content'}
       minWidth="max-content"
+      width={width || 'max-content'}
+      bg={dark ? '#ffffff14' : '#00000014'}
       borderRadius={type == 'circle' ? 'full' : '0.625rem'}
     >
       {items.map((item, index) => (
