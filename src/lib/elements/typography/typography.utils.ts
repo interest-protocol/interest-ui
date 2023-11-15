@@ -22,7 +22,11 @@ export const getSizeStyle = (
     },
     title: {
       large: { fontSize: '2xl', lineHeight: lineHeights['l'] },
-      medium: { fontSize: 'm', lineHeight: lineHeights['m'] },
+      medium: {
+        fontSize: 'm',
+        fontWeight: '700',
+        lineHeight: lineHeights['m'],
+      },
       small: { fontSize: 's', lineHeight: lineHeights['s'] },
     },
     body: {

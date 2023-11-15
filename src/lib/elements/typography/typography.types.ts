@@ -22,5 +22,5 @@ export interface TypographyProps
 export interface ISizeStyle {
   fontSize: string;
   lineHeight: string;
-  letterSpacing?: string;
+  fontWeight?: string;
 }
