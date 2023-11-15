@@ -38,9 +38,6 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
       transition: { duration: 0.005, ease: easeInOut },
     }}
     {...props}
-    height="max-content"
-    display="flex"
-    gap="sm"
   >
     {isIcon ? (
       <Box
