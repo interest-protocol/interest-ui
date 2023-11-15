@@ -27,7 +27,8 @@ export const ModalHeader: FC<StandardizedWithCloseButton | Standardized> = ({
       {Icon && <Box gridColumn="1/2">{Icon}</Box>}
       {title && (
         <Typography
-          variant="title6"
+          size="medium"
+          variant="display"
           gridColumn="2/3"
           fontWeight="400"
           textAlign="center"

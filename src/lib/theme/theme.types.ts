@@ -91,19 +91,7 @@ export type Shadows =
   | 'dropShadow.l'
   | 'dropShadow.xl'
   | 'dropShadow.2xl';
-export type Typographies =
-  | 'displayLarge'
-  | 'displaySmall'
-  | 'extraSmall'
-  | 'large'
-  | 'medium'
-  | 'small'
-  | 'title1'
-  | 'title2'
-  | 'title3'
-  | 'title4'
-  | 'title5'
-  | 'title6';
+export type Typographies = 'body' | 'display' | 'headline' | 'label' | 'title';
 
 export type Gradient =
   | 'linearGradientBlack.0deg'
@@ -120,7 +108,6 @@ export interface MaybeNestedObject {
 export interface Theme {
   dark: boolean;
   colors: Colors;
-  gradient: Record<Gradient, MaybeNestedObject>;
   radii: Record<Radii, string>;
   space: Record<Space, string>;
   shadows: Record<Shadows, string>;
@@ -128,6 +115,7 @@ export interface Theme {
   fontSizes: Record<FontSizes, string>;
   boxes: Record<Boxes, MaybeNestedObject>;
   lineHeights: Record<LineHeights, string>;
+  gradient: Record<Gradient, MaybeNestedObject>;
   buttons: Record<ButtonVariants, MaybeNestedObject>;
   typography: Record<Typographies, MaybeNestedObject>;
 }

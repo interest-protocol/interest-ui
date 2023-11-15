@@ -9,7 +9,7 @@ const NavItemText: FC<PropsWithChildren<TabItemPropsItemTextProps>> = ({
   px,
 }) => (
   <Box fontFamily="'Roboto'" px={px ?? ['2xl', '2xl', '2.75rem']}>
-    <Typography variant="small" py="m">
+    <Typography variant="body" size="small" py="m">
       {children}
     </Typography>
     {isSelected && (
