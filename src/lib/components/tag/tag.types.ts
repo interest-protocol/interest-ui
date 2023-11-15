@@ -1,18 +1,3 @@
-// import { FC } from 'react';
-
-// type TagVariants = 'filled' | 'outline';
-// type TagSizes = 'small' | 'medium' | 'large';
-
-// export interface TagProps {
-//   size: TagSizes;
-//   label: string;
-//   dismiss?: boolean;
-//   disabled?: boolean;
-//   variant: TagVariants;
-//   onClose?: () => void;
-//   PrefixIcon?: FC<SVGProps>;
-// }
-
 import { StylinComponentProps } from '@stylin.js/react';
 import { ButtonHTMLAttributes, FC } from 'react';
 
