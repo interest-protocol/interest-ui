@@ -20,7 +20,7 @@ export type CombinedButtonProps = Omit<StylinComponentProps, 'transition'> &
   };
 
 export interface IconButton extends CombinedButtonProps {
-  isIcon: boolean;
+  isIcon: true;
 }
 
 export interface NoIconButton extends CombinedButtonProps {
