@@ -30,10 +30,14 @@ export const InfoCard: FC<PropsWithChildren<InfoCardProps>> = ({
       {...(onClick && { onClick, cursor: 'pointer' })}
     >
       <Box display="flex" justifyContent="space-between">
-        <Typography variant="bodySmall">{title}</Typography>
-        <Typography variant="bodySmall">{info}</Typography>
+        <Typography variant="body" size="small">
+          {title}
+        </Typography>
+        <Typography variant="body" size="small">
+          {info}
+        </Typography>
       </Box>
-      <Typography variant="bodyLarge" mt="2xl">
+      <Typography variant="body" size="small" mt="2xl">
         {children}
       </Typography>
     </Box>
