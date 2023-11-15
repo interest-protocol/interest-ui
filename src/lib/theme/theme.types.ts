@@ -25,6 +25,8 @@ export type Space =
   | '18xl';
 export type ButtonVariants = 'filled' | 'outline' | 'text' | 'tonal' | 'icon';
 export type ButtonSizes = 'small' | 'medium';
+export type TagVariants = 'filled' | 'outline';
+export type TagSizes = 'small' | 'medium' | 'large';
 export type FontSizes =
   | '2xs'
   | 'xs'
@@ -115,6 +117,7 @@ export interface Theme {
   fontSizes: Record<FontSizes, string>;
   boxes: Record<Boxes, MaybeNestedObject>;
   lineHeights: Record<LineHeights, string>;
+  tags: Record<TagVariants, MaybeNestedObject>;
   gradient: Record<Gradient, MaybeNestedObject>;
   buttons: Record<ButtonVariants, MaybeNestedObject>;
   typography: Record<Typographies, MaybeNestedObject>;

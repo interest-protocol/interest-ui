@@ -10,7 +10,7 @@ import {
 import { Theme } from '../theme.types';
 import { boxes, typography } from '../variants';
 import { colors } from './colors';
-import { buttons } from './variants';
+import { buttons, tags } from './variants';
 
 const theme: Theme = {
   dark: false,
@@ -22,6 +22,7 @@ const theme: Theme = {
   space,
   colors,
   shadows,
+  tags,
   boxes,
   gradient,
   buttons,
