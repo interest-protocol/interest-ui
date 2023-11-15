@@ -9,4 +9,5 @@ export const button = {
   alignItems: 'center',
   borderRadius: radii.full,
   transition: 'all 300ms ease-in-out',
+  fontFamily: 'Proto',
 };
