@@ -4,7 +4,6 @@ import React, { FC, PropsWithChildren } from 'react';
 
 import { Box, Typography } from '../../elements';
 import { TimesSVG } from '../../icons';
-import { colors } from '../../theme/dark/colors';
 import { TagElementProps, TagProps } from './tag.types';
 
 const TagElement = stylin<TagElementProps>('button')(
@@ -20,7 +19,6 @@ export const Tag: FC<PropsWithChildren<TagProps>> = ({
   onClose,
   children,
   PrefixIcon,
-  hasCloseIcon,
   size = 'large',
   ...props
 }) => {
@@ -32,16 +30,6 @@ export const Tag: FC<PropsWithChildren<TagProps>> = ({
               size === 'large' ? '2xs' : size === 'medium' ? '2xs' : '.125rem',
             px:
               size === 'large' ? '2xs' : size === 'medium' ? '2xs' : '.125rem',
-          }
-        : props.variant === 'outline'
-        ? {
-            nHover: {
-              bg:
-                size === 'large' && (PrefixIcon || hasCloseIcon)
-                  ? `${colors['primaryContainer']} !important`
-                  : 'transparent',
-              color: 'surface',
-            },
           }
         : {})}
       whileTap={{
@@ -77,13 +65,13 @@ export const Tag: FC<PropsWithChildren<TagProps>> = ({
         as="p"
         variant="body"
         size={size}
+        pr={!onClose ? '.625rem' : 'unset'}
         pl={!PrefixIcon ? '.625rem' : 'unset'}
-        pr={!hasCloseIcon ? '.625rem' : 'unset'}
-        px={!PrefixIcon && !hasCloseIcon ? '.625rem' : 'untset'}
+        px={!PrefixIcon && !onClose ? '.625rem' : 'untset'}
       >
         {children}
       </Typography>
-      {hasCloseIcon && (
+      {onClose && (
         <Box
           px="xs"
           py="2xs"

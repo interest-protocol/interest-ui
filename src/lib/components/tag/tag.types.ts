@@ -35,7 +35,6 @@ export interface TagProps
     TagElementProps {
   size?: TagSizes;
   onClose?: () => void;
-  hasCloseIcon?: boolean;
   PrefixIcon?: FC<SVGProps>;
   variant: TagVariants;
 }

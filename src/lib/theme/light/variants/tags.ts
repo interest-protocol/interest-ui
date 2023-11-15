@@ -8,7 +8,7 @@ const defaultTag = mergeDeepRight(tag, {
     opacity: 0.32,
     cursor: 'not-allowed',
     color: colors.onSurface,
-    background: colors['outlineVariant'],
+    background: colors.outlineVariant,
   },
 });
 
@@ -28,7 +28,7 @@ export const variants = {
       color: 'white',
     },
     ':disabled': {
-      background: colors['outlineVariant'],
+      background: colors.outlineVariant,
     },
   }),
   outline: mergeDeepRight(defaultTag, {
@@ -47,10 +47,10 @@ export const variants = {
       background: colors.primary,
     },
     ':disabled': {
-      background: colors['outlineVariant'],
+      background: colors.outlineVariant,
       borderColor: colors.outlineVariant,
       ':hover': {
-        background: colors['outlineVariant'],
+        background: colors.outlineVariant,
         borderColor: colors.outlineVariant,
       },
     },

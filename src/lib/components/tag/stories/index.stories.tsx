@@ -29,7 +29,6 @@ type Story = StoryObj<typeof Tag>;
 export const FilledWithCombined: Story = {
   args: {
     size: 'large',
-    hasCloseIcon: true,
     children: 'Label',
     variant: 'filled',
     PrefixIcon: ErrorSVG,
@@ -50,7 +49,6 @@ export const FilledWithPrefix: Story = {
 export const FilledWithDismiss: Story = {
   args: {
     size: 'large',
-    hasCloseIcon: true,
     children: 'Label',
     variant: 'filled',
     onClose: () => {
@@ -69,7 +67,6 @@ export const Filled: Story = {
 export const OutlinedWithCombined: Story = {
   args: {
     size: 'large',
-    hasCloseIcon: true,
     children: 'Label',
     variant: 'outline',
     PrefixIcon: ErrorSVG,
@@ -90,7 +87,6 @@ export const OutlinedWithPrefix: Story = {
 export const OutlinedWithDismiss: Story = {
   args: {
     size: 'large',
-    hasCloseIcon: true,
     children: 'Label',
     variant: 'outline',
     onClose: () => {
