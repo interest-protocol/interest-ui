@@ -1,4 +1,4 @@
-import stylin, { variant } from '@stylin.js/react';
+import stylin, { variant as stylinVariant } from '@stylin.js/react';
 import React, {
   FC,
   forwardRef,
@@ -11,11 +11,11 @@ import { TypographyElementProps, TypographyProps } from './typography.types';
 import { getSizeStyle } from './typography.utils';
 
 export const Typography: FC<PropsWithRef<PropsWithChildren<TypographyProps>>> =
-  forwardRef(({ as, variant: externalVariant, size, ...props }, ref) => {
+  forwardRef(({ as, variant, size, ...props }, ref) => {
     const TypographyElement = stylin<
       TypographyElementProps & RefAttributes<unknown>
     >(as || 'p')(
-      variant({
+      stylinVariant({
         scale: 'typography',
         property: 'variant',
       })
@@ -23,8 +23,8 @@ export const Typography: FC<PropsWithRef<PropsWithChildren<TypographyProps>>> =
 
     return (
       <TypographyElement
-        variant={externalVariant}
-        {...getSizeStyle(externalVariant, size)}
+        variant={variant}
+        {...getSizeStyle(variant, size)}
         {...props}
         ref={ref}
       />
