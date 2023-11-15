@@ -8,9 +8,10 @@ import React, {
 } from 'react';
 
 import { TypographyElementProps, TypographyProps } from './typography.types';
+import { getSizeStyle } from './typography.utils';
 
 export const Typography: FC<PropsWithRef<PropsWithChildren<TypographyProps>>> =
-  forwardRef(({ as, ...props }, ref) => {
+  forwardRef(({ as, variant: externalVariant, size, ...props }, ref) => {
     const TypographyElement = stylin<
       TypographyElementProps & RefAttributes<unknown>
     >(as || 'p')(
@@ -20,7 +21,14 @@ export const Typography: FC<PropsWithRef<PropsWithChildren<TypographyProps>>> =
       })
     );
 
-    return <TypographyElement {...props} ref={ref} />;
+    return (
+      <TypographyElement
+        variant={externalVariant}
+        {...getSizeStyle(externalVariant, size)}
+        {...props}
+        ref={ref}
+      />
+    );
   });
 
 Typography.displayName = 'Typography';

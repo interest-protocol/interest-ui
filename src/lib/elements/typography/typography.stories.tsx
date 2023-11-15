@@ -19,18 +19,20 @@ type Story = StoryObj<typeof Typography>;
 
 export const DisplayLarge: Story = {
   args: {
-    as: 'p',
+    as: 'h1',
+    size: 'large',
     color: 'onSurface',
-    variant: 'displayLarge',
+    variant: 'display',
     children: 'Display large',
   },
 };
 
 export const DisplayMedium: Story = {
   args: {
-    as: 'p',
+    as: 'h2',
+    size: 'medium',
     color: 'onSurface',
-    variant: 'displayMedium',
+    variant: 'display',
     children: 'Display small',
   },
 };
@@ -38,8 +40,9 @@ export const DisplayMedium: Story = {
 export const DisplaySmall: Story = {
   args: {
     as: 'p',
+    size: 'small',
     color: 'onSurface',
-    variant: 'displaySmall',
+    variant: 'display',
     children: 'Display small',
   },
 };
@@ -47,8 +50,9 @@ export const DisplaySmall: Story = {
 export const headlineLarge: Story = {
   args: {
     as: 'p',
+    size: 'large',
     color: 'onSurface',
-    variant: 'headlineLarge',
+    variant: 'headline',
     children: 'Headline Large',
   },
 };
@@ -56,8 +60,9 @@ export const headlineLarge: Story = {
 export const headlineMedium: Story = {
   args: {
     as: 'p',
+    size: 'medium',
     color: 'onSurface',
-    variant: 'headlineMedium',
+    variant: 'headline',
     children: 'Headline Medium',
   },
 };
@@ -65,8 +70,9 @@ export const headlineMedium: Story = {
 export const headlineSmall: Story = {
   args: {
     as: 'p',
+    size: 'small',
     color: 'onSurface',
-    variant: 'headlineSmall',
+    variant: 'headline',
     children: 'Headline Small',
   },
 };
@@ -74,8 +80,9 @@ export const headlineSmall: Story = {
 export const titleLarge: Story = {
   args: {
     as: 'p',
+    size: 'large',
     color: 'onSurface',
-    variant: 'titleLarge',
+    variant: 'title',
     children: 'Title Large',
   },
 };
@@ -83,8 +90,9 @@ export const titleLarge: Story = {
 export const titleMedium: Story = {
   args: {
     as: 'p',
+    size: 'medium',
     color: 'onSurface',
-    variant: 'titleMedium',
+    variant: 'title',
     children: 'Title Medium',
   },
 };
@@ -92,8 +100,9 @@ export const titleMedium: Story = {
 export const titleSmall: Story = {
   args: {
     as: 'p',
+    size: 'small',
     color: 'onSurface',
-    variant: 'titleSmall',
+    variant: 'title',
     children: 'Title Small',
   },
 };
@@ -101,8 +110,9 @@ export const titleSmall: Story = {
 export const bodyLarge: Story = {
   args: {
     as: 'p',
+    size: 'large',
     color: 'onSurface',
-    variant: 'bodyLarge',
+    variant: 'body',
     children: 'Body Large',
   },
 };
@@ -110,8 +120,9 @@ export const bodyLarge: Story = {
 export const bodyMedium: Story = {
   args: {
     as: 'p',
+    size: 'medium',
     color: 'onSurface',
-    variant: 'bodyMedium',
+    variant: 'body',
     children: 'Body Medium',
   },
 };
@@ -119,8 +130,9 @@ export const bodyMedium: Story = {
 export const bodySmall: Story = {
   args: {
     as: 'p',
+    size: 'small',
     color: 'onSurface',
-    variant: 'bodySmall',
+    variant: 'body',
     children: 'Body Small',
   },
 };
@@ -128,8 +140,9 @@ export const bodySmall: Story = {
 export const labelLarge: Story = {
   args: {
     as: 'label',
+    size: 'large',
     color: 'onSurface',
-    variant: 'labelLarge',
+    variant: 'label',
     children: 'Label Large',
   },
 };
@@ -137,8 +150,9 @@ export const labelLarge: Story = {
 export const labelMedium: Story = {
   args: {
     as: 'label',
+    size: 'medium',
     color: 'onSurface',
-    variant: 'labelMedium',
+    variant: 'label',
     children: 'Label Medium',
   },
 };
@@ -146,8 +160,9 @@ export const labelMedium: Story = {
 export const labelSmall: Story = {
   args: {
     as: 'label',
+    size: 'small',
     color: 'onSurface',
-    variant: 'labelSmall',
+    variant: 'label',
     children: 'Label Small',
   },
 };
