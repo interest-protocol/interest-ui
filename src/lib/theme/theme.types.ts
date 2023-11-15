@@ -93,19 +93,7 @@ export type Shadows =
   | 'dropShadow.l'
   | 'dropShadow.xl'
   | 'dropShadow.2xl';
-export type Typographies =
-  | 'displayLarge'
-  | 'displaySmall'
-  | 'extraSmall'
-  | 'large'
-  | 'medium'
-  | 'small'
-  | 'title1'
-  | 'title2'
-  | 'title3'
-  | 'title4'
-  | 'title5'
-  | 'title6';
+export type Typographies = 'body' | 'display' | 'headline' | 'label' | 'title';
 
 export type Gradient =
   | 'linearGradientBlack.0deg'

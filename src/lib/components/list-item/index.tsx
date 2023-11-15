@@ -31,11 +31,22 @@ export const ListItem: FC<PropsWithChildren<ListItemProps>> = ({
     )}
 
     <Box display="flex" flexDirection="column" width="100%">
-      <Typography as="span" variant="medium" fontWeight="400" color="onSurface">
+      <Typography
+        as="span"
+        size="medium"
+        variant="body"
+        fontWeight="400"
+        color="onSurface"
+      >
         {title}
       </Typography>
       {description && (
-        <Typography as="span" variant="small" color="onSurfaceVariant">
+        <Typography
+          as="span"
+          variant="body"
+          size="small"
+          color="onSurfaceVariant"
+        >
           {description}
         </Typography>
       )}
@@ -44,7 +55,8 @@ export const ListItem: FC<PropsWithChildren<ListItemProps>> = ({
       <Typography
         ml="l"
         as="span"
-        variant="extraSmall"
+        size="small"
+        variant="body"
         color="onSurfaceVariant"
         mr={SuffixIcon ? '2xl' : 'unset'}
       >

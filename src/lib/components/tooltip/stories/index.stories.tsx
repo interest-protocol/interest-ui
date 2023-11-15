@@ -30,9 +30,9 @@ type Story = StoryObj<typeof Tooltip>;
 export const Top: Story = {
   args: {
     tooltipPosition: 'top',
-    tooltipContent: <Typography variant="medium">Tooltip</Typography>,
+    tooltipContent: <Typography variant="bodyMedium">Tooltip</Typography>,
     children: (
-      <Typography variant="medium" color="onSurface">
+      <Typography variant="bodyMedium" color="onSurface">
         Hover Me
       </Typography>
     ),
@@ -42,9 +42,9 @@ export const Top: Story = {
 export const Left: Story = {
   args: {
     tooltipPosition: 'left',
-    tooltipContent: <Typography variant="medium">Tooltip</Typography>,
+    tooltipContent: <Typography variant="bodyMedium">Tooltip</Typography>,
     children: (
-      <Typography variant="medium" color="onSurface">
+      <Typography variant="bodyMedium" color="onSurface">
         Hover Me
       </Typography>
     ),
@@ -54,9 +54,9 @@ export const Left: Story = {
 export const Right: Story = {
   args: {
     tooltipPosition: 'right',
-    tooltipContent: <Typography variant="medium">Tooltip</Typography>,
+    tooltipContent: <Typography variant="bodyMedium">Tooltip</Typography>,
     children: (
-      <Typography variant="medium" color="onSurface">
+      <Typography variant="bodyMedium" color="onSurface">
         Hover Me
       </Typography>
     ),
@@ -66,9 +66,9 @@ export const Right: Story = {
 export const Bottom: Story = {
   args: {
     tooltipPosition: 'bottom',
-    tooltipContent: <Typography variant="medium">Tooltip</Typography>,
+    tooltipContent: <Typography variant="bodyMedium">Tooltip</Typography>,
     children: (
-      <Typography variant="medium" color="onSurface">
+      <Typography variant="bodyMedium" color="onSurface">
         Hover Me
       </Typography>
     ),

@@ -32,7 +32,9 @@ export const TabsNavigator: FC<TabsNavigatorProps> = ({ tabs, onChange }) => {
               transition: { duration: 0.2 },
             }}
           >
-            <Typography variant="title6">{tab.label}</Typography>
+            <Typography variant="display" size="small">
+              {tab.label}
+            </Typography>
           </Motion>
         ))}
       </Box>

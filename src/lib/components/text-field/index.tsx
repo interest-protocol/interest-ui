@@ -145,7 +145,8 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
           >
             {Top && (
               <Typography
-                variant="small"
+                size="large"
+                variant="body"
                 color="onSurface"
                 textAlign={props.textAlign}
               >
@@ -172,7 +173,8 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
             />
             {Bottom && (
               <Typography
-                variant="small"
+                size="small"
+                variant="body"
                 color="onSurface"
                 textAlign={props.textAlign}
               >
@@ -200,7 +202,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
           {Suffix}
         </Motion>
         {statusColor && (
-          <Typography variant="small" mt="2xs">
+          <Typography variant="body" mt="2xs" size="small">
             {error || valid}
           </Typography>
         )}
