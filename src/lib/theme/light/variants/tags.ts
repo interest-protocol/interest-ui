@@ -5,9 +5,10 @@ import { colors } from '../colors';
 
 const defaultTag = mergeDeepRight(tag, {
   ':disabled': {
-    background: 'white',
+    opacity: 0.32,
     cursor: 'not-allowed',
     color: colors.onSurface,
+    background: colors['outlineVariant'],
   },
 });
 
@@ -27,27 +28,31 @@ export const variants = {
       color: 'white',
     },
     ':disabled': {
-      background: colors['primary'],
+      background: colors['outlineVariant'],
     },
   }),
   outline: mergeDeepRight(defaultTag, {
     border: '1px solid',
-    color: colors.primary,
+    color: colors.onSurface,
     borderColor: colors.outlineVariant,
     ':hover': {
-      borderColor: colors.outlineVariant,
+      borderColor: colors.primary,
       background: `${colors.primary}14`,
     },
     ':focus': {
-      background: `${colors.primary}1F`,
-      borderColor: colors.primary,
+      background: colors.primary,
     },
     ':active': {
-      borderColor: colors.outlineVariant,
+      color: 'white',
+      background: colors.primary,
     },
     ':disabled': {
+      background: colors['outlineVariant'],
       borderColor: colors.outlineVariant,
-      ':hover': { borderColor: colors.outlineVariant },
+      ':hover': {
+        background: colors['outlineVariant'],
+        borderColor: colors.outlineVariant,
+      },
     },
   }),
 };

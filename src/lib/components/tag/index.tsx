@@ -2,8 +2,9 @@ import stylin, { variant } from '@stylin.js/react';
 import { CustomDomComponent, easeInOut, motion } from 'framer-motion';
 import React, { FC, PropsWithChildren } from 'react';
 
-import { Box } from '../../elements';
+import { Box, Typography } from '../../elements';
 import { TimesSVG } from '../../icons';
+import { colors } from '../../theme/dark/colors';
 import { TagElementProps, TagProps } from './tag.types';
 
 const TagElement = stylin<TagElementProps>('button')(
@@ -27,8 +28,20 @@ export const Tag: FC<PropsWithChildren<TagProps>> = ({
     <MotionTag
       {...(props.variant === 'filled' || props.variant === 'outline'
         ? {
-            py: size === 'large' ? '2xs' : size === 'medium' ? 'm' : 's',
-            px: size === 'large' ? '2xs' : size === 'medium' ? 'm' : 's',
+            py:
+              size === 'large' ? '2xs' : size === 'medium' ? '2xs' : '.125rem',
+            px:
+              size === 'large' ? '2xs' : size === 'medium' ? '2xs' : '.125rem',
+          }
+        : props.variant === 'outline'
+        ? {
+            nHover: {
+              bg:
+                size === 'large' && (PrefixIcon || hasCloseIcon)
+                  ? `${colors['primaryContainer']} !important`
+                  : 'transparent',
+              color: 'surface',
+            },
           }
         : {})}
       whileTap={{
@@ -44,8 +57,12 @@ export const Tag: FC<PropsWithChildren<TagProps>> = ({
       {PrefixIcon && (
         <Box
           p=".1875rem"
-          width="2rem"
-          height="2rem"
+          width={
+            size === 'large' ? '2rem' : size === 'medium' ? '1.8rem' : '1.3rem'
+          }
+          height={
+            size === 'large' ? '2rem' : size === 'medium' ? '1.8rem' : '1.3rem'
+          }
           display="flex"
           color="white"
           bg="onSurface"
@@ -56,18 +73,23 @@ export const Tag: FC<PropsWithChildren<TagProps>> = ({
           <PrefixIcon maxWidth="1.125rem" maxHeight="1.125rem" width="100%" />
         </Box>
       )}
-      <Box
+      <Typography
+        as="p"
+        variant="body"
+        size={size}
         pl={!PrefixIcon ? '.625rem' : 'unset'}
         pr={!hasCloseIcon ? '.625rem' : 'unset'}
         px={!PrefixIcon && !hasCloseIcon ? '.625rem' : 'untset'}
       >
         {children}
-      </Box>
+      </Typography>
       {hasCloseIcon && (
         <Box
           px="xs"
           py="2xs"
           display="flex"
+          width="1.9rem"
+          height="1.9rem"
           onClick={onClose}
           alignItems="center"
           justifyContent="center"
