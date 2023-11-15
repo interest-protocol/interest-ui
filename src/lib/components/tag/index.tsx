@@ -1,102 +1,81 @@
-import { useTheme } from '@emotion/react';
-import { easeInOut } from 'framer-motion';
-import React, { FC } from 'react';
+import stylin, { variant } from '@stylin.js/react';
+import { CustomDomComponent, easeInOut, motion } from 'framer-motion';
+import React, { FC, PropsWithChildren } from 'react';
 
-import { Box, Motion, Typography } from '../../elements';
+import { Box } from '../../elements';
 import { TimesSVG } from '../../icons';
-import { Theme } from '../../theme';
-import { TagProps } from './tag.types';
+import { TagElementProps, TagProps } from './tag.types';
 
-export const Tag: FC<TagProps> = ({
-  size,
-  label,
+const TagElement = stylin<TagElementProps>('button')(
+  variant({
+    scale: 'tags',
+    property: 'variant',
+  })
+);
+
+const MotionTag = motion(TagElement) as CustomDomComponent<TagProps>;
+
+export const Tag: FC<PropsWithChildren<TagProps>> = ({
   onClose,
-  variant,
-  dismiss,
-  disabled,
+  children,
   PrefixIcon,
+  hasCloseIcon,
+  size = 'large',
+  ...props
 }) => {
-  const { colors } = useTheme() as Theme;
   return (
-    <Motion
-      as="span"
-      bg="white"
-      display="flex"
-      width="fit-content"
-      borderRadius="full"
-      alignItems="center"
-      justifyContent="center"
-      opacity={disabled ? 0.32 : 1}
-      pr={dismiss ? '2xs' : '.625rem'}
-      pl={PrefixIcon ? '2xs' : '.625rem'}
-      py={size === 'small' ? '.125rem' : '2xs'}
-      cursor={disabled ? 'not-allowed' : 'pointer'}
-      columnGap={size === 'small' ? '2xs' : '.375rem'}
-      border={
-        variant === 'outline' ? '1px solid ' + colors['outlineVariant'] : 'none'
-      }
-      whileFocus={{
-        color: variant !== 'outline' && size !== 'large' ? 'white' : 'inherit',
-        backgroundColor:
-          variant === 'outline' && size === 'large'
-            ? 'white'
-            : colors['onPrimary'],
+    <MotionTag
+      {...(props.variant === 'filled' || props.variant === 'outline'
+        ? {
+            py: size === 'large' ? '2xs' : size === 'medium' ? 'm' : 's',
+            px: size === 'large' ? '2xs' : size === 'medium' ? 'm' : 's',
+          }
+        : {})}
+      whileTap={{
+        scale: props.disabled ? 1 : 0.97,
         transition: { duration: 0.005, ease: easeInOut },
       }}
       whileHover={{
-        borderColor:
-          variant === 'outline' && size === 'large' && dismiss
-            ? colors['outline']
-            : colors['primary'],
-        backgroundColor:
-          variant === 'filled' ? '#00000014' : colors['primary'] + '14',
+        scale: props.disabled ? 1 : 1.05,
         transition: { duration: 0.005, ease: easeInOut },
       }}
+      {...props}
     >
       {PrefixIcon && (
         <Box
-          p="2xs"
-          bg="black"
+          p=".1875rem"
+          width="2rem"
+          height="2rem"
           display="flex"
           color="white"
-          borderRadius="full"
+          bg="onSurface"
           alignItems="center"
+          borderRadius="full"
           justifyContent="center"
-          width={size === 'large' ? '1.5rem' : 'm'}
-          height={size === 'large' ? '1.5rem' : 'm'}
         >
-          <PrefixIcon
-            maxWidth={size === 'large' ? '.875rem' : '.75rem'}
-            maxHeight={size === 'large' ? '.875rem' : '.75rem'}
-            width="100%"
-          />
+          <PrefixIcon maxWidth="1.125rem" maxHeight="1.125rem" width="100%" />
         </Box>
       )}
-      <Typography
-        variant={
-          size === 'large'
-            ? 'large'
-            : size === 'medium'
-            ? 'small'
-            : size === 'small'
-            ? 'extraSmall'
-            : 'large'
-        }
+      <Box
+        pl={!PrefixIcon ? '.625rem' : 'unset'}
+        pr={!hasCloseIcon ? '.625rem' : 'unset'}
+        px={!PrefixIcon && !hasCloseIcon ? '.625rem' : 'untset'}
       >
-        {label}
-      </Typography>
-      {dismiss && (
+        {children}
+      </Box>
+      {hasCloseIcon && (
         <Box
-          p="2xs"
+          px="xs"
+          py="2xs"
           display="flex"
           onClick={onClose}
           alignItems="center"
           justifyContent="center"
         >
-          <TimesSVG maxWidth="1rem" maxHeight="1rem" width="100%" />
+          <TimesSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />
         </Box>
       )}
-    </Motion>
+    </MotionTag>
   );
 };
 
