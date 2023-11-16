@@ -1,7 +1,7 @@
 import { StylinComponentProps } from '@stylin.js/react';
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 
-import { ButtonSizes, ButtonVariants } from '../../theme/theme.types';
+import { ButtonVariants } from '../../theme/theme.types';
 
 export type ButtonElementProps = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
@@ -14,11 +14,18 @@ export type ButtonElementProps = Omit<
   | 'onDrag'
 >;
 
-export interface ButtonProps
-  extends Omit<StylinComponentProps, 'transition'>,
-    ButtonElementProps {
-  size?: ButtonSizes;
+export type CombinedButtonProps = Omit<StylinComponentProps, 'transition'> &
+  ButtonElementProps & {
+    variant: ButtonVariants;
+  };
+
+export interface IconButton extends CombinedButtonProps {
+  isIcon: true;
+}
+
+export interface NoIconButton extends CombinedButtonProps {
   SuffixIcon?: ReactNode;
   PrefixIcon?: ReactNode;
-  variant: ButtonVariants;
 }
+
+export type ButtonProps = IconButton | NoIconButton;
