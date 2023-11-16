@@ -95,8 +95,8 @@ export const ToggleButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
           }
           nHover={{
             backgroundImage: toggler
-              ? 'linear-gradient(to bottom, rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.16))'
-              : 'linear-gradient(to bottom, rgba(0, 0, 0, 0.32), rgba(0, 0, 0, 0.32))',
+              ? 'linear-gradient(to bottom, #00000029, #00000029)'
+              : 'linear-gradient(to bottom, #00000052, #00000052)',
           }}
           transition="background 300ms ease-in-out"
         >
@@ -123,7 +123,7 @@ export const ToggleButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
           {labels?.label}
         </Typography>
         <Typography
-          as="p"
+          as="label"
           size="small"
           variant="body"
           color={`${colors['onSurface']}B8`}

@@ -25,6 +25,16 @@ export const Normal: Story = {
   },
 };
 
+export const NormalWithOnChangeDemo: Story = {
+  args: {
+    name: 'toggle',
+    defaultValue: false,
+    onChange: () => {
+      alert('changed');
+    },
+  },
+};
+
 export const WithActiveIcon: Story = {
   args: {
     name: 'toggle',
