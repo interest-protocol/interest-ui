@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+import React from 'react';
 
 import { TickSVG, TimesSVG } from '../../../icons';
 import { ToggleButton } from '..';
@@ -39,7 +40,7 @@ export const WithActiveIcon: Story = {
   args: {
     name: 'toggle',
     defaultValue: true,
-    activeIcon: TickSVG,
+    activeIcon: <TickSVG maxWidth=".875rem" maxHeight=".875rem" width="100%" />,
   },
 };
 
@@ -47,7 +48,9 @@ export const WithInactiveIcon: Story = {
   args: {
     name: 'toggle',
     defaultValue: false,
-    inactiveIcon: TimesSVG,
+    inactiveIcon: (
+      <TimesSVG maxWidth=".875rem" maxHeight=".875rem" width="100%" />
+    ),
   },
 };
 
@@ -55,8 +58,10 @@ export const WithActiveAndInactiveIcon: Story = {
   args: {
     name: 'toggle',
     defaultValue: false,
-    activeIcon: TickSVG,
-    inactiveIcon: TimesSVG,
+    activeIcon: <TickSVG maxWidth=".875rem" maxHeight=".875rem" width="100%" />,
+    inactiveIcon: (
+      <TimesSVG maxWidth=".875rem" maxHeight=".875rem" width="100%" />
+    ),
   },
 };
 

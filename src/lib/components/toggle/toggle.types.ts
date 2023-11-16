@@ -1,6 +1,4 @@
-import { FC, InputHTMLAttributes, LabelHTMLAttributes } from 'react';
-
-import { SVGProps } from '../../icons/icons.types';
+import { InputHTMLAttributes, LabelHTMLAttributes, ReactNode } from 'react';
 
 export type CheckedButtonElementProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,
@@ -17,6 +15,6 @@ export interface CheckedButtonProps extends CheckedButtonElementProps {
   name: string;
   defaultValue: boolean;
   labels?: MultipleLabels;
-  activeIcon?: FC<SVGProps>;
-  inactiveIcon?: FC<SVGProps>;
+  activeIcon?: ReactNode;
+  inactiveIcon?: ReactNode;
 }
