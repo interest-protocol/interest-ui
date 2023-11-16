@@ -5,15 +5,7 @@ import { Tabs } from '..';
 const meta: Meta<typeof Tabs> = {
   title: 'Tabs',
   component: Tabs,
-  argTypes: {
-    /*items: {
-      control: { type: 'array' },
-    },
-    type: {
-      options: ['circle', 'square'],
-      control: { type: 'select' },
-    },*/
-  },
+  argTypes: {},
 };
 
 export default meta;
