@@ -1,29 +1,51 @@
 import React, { FC, PropsWithChildren } from 'react';
 
 import { Box, Motion, Typography } from '../../elements';
+import { Theme, useTheme } from '../../theme';
 import { TabItemPropsItemTextProps } from './tabs.types';
 
 const NavItemText: FC<PropsWithChildren<TabItemPropsItemTextProps>> = ({
-  children,
   isSelected,
+  children,
+  type,
   px,
-}) => (
-  <Box fontFamily="'Roboto'" px={px ?? ['2xl', '2xl', '2.75rem']}>
-    <Typography variant="body" size="small" py="m">
-      {children}
-    </Typography>
-    {isSelected && (
-      <Motion
-        p="3xs"
-        mx="auto"
-        bg="primary"
-        width="1.875rem"
-        layoutId="underline"
-        borderTopLeftRadius="s"
-        borderTopRightRadius="s"
-      />
-    )}
-  </Box>
-);
+}) => {
+  const { dark } = useTheme() as Theme;
 
+  return (
+    <Box
+      py="0.635rem"
+      fontFamily="Proto"
+      position="relative"
+      px={px ?? ['2xl', '2xl', 'xl']}
+    >
+      <Typography
+        zIndex={2}
+        size="large"
+        variant="label"
+        position="relative"
+        color={dark ? (isSelected ? '#000' : '#fff') : 'onSurface'}
+      >
+        {children}
+      </Typography>
+      {isSelected && (
+        <Motion
+          zIndex={1}
+          top="0"
+          left="0"
+          bg="#fff"
+          width="100%"
+          height="100%"
+          position="absolute"
+          layoutId="underline"
+          borderRadius={type == 'circle' ? 'full' : 'xs'}
+          boxShadow="0px 2px 4px -2px #0d10170a, 0px 4px 8px -2px #0d10171f"
+          nHover={{
+            bg: '#fff',
+          }}
+        />
+      )}
+    </Box>
+  );
+};
 export default NavItemText;
