@@ -9,8 +9,8 @@ const RadioCircle: FC<SVGProps & { isChecked: boolean }> = ({
   ...props
 }) => {
   return isChecked ? (
-    <svg style={{ maxWidth, maxHeight }} viewBox="0 0 24 27" {...props}>
-      <circle cx="12" cy="12" r="10" fill="currentColor" />
+    <svg style={{ maxWidth, maxHeight }} viewBox="0 0 24 24" {...props}>
+      <circle cx="12" cy="12" r="12" fill="currentColor" />
       <g filter="url(#filter0_dd_298_22252)">
         <circle cx="12" cy="12" r="5" fill="white" />
       </g>
@@ -19,8 +19,7 @@ const RadioCircle: FC<SVGProps & { isChecked: boolean }> = ({
           id="filter0_dd_298_22252"
           x="1"
           y="5"
-          width="22"
-          height="22"
+          style={{ maxWidth, maxHeight }}
           filterUnits="userSpaceOnUse"
           colorInterpolationFilters="sRGB"
         >
