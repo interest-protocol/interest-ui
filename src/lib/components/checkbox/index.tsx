@@ -6,7 +6,7 @@ import { Theme, useTheme } from '../../theme';
 import {
   CheckedButtonElementProps,
   LabelElementProps,
-} from '../switch/switch.types';
+} from '../toggle/toggle.types';
 import { CheckboxProps } from './checkbox.types';
 import Checkmark from './checkmark';
 
