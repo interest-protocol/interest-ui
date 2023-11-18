@@ -112,7 +112,7 @@ export const ToggleButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
             bg={disabled ? 'surface' : 'onPrimary'}
             color={toggler ? 'primary' : 'onSurface'}
           >
-            {Icon && Icon}
+            {Icon ?? null}
           </Motion>
         </Box>
       </LabelElement>
