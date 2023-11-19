@@ -13,11 +13,10 @@ export interface TextFieldProps
     TextFieldElementProps {
   error?: string;
   valid?: string;
+  topLabel?: string;
   Prefix?: ReactNode;
   Suffix?: ReactNode;
-  Bottom?: ReactNode;
-  Top?: ReactNode;
-  SuffixIcon?: ReactNode;
-  PrefixIcon?: ReactNode;
+  disabled?: boolean;
+  supportingText?: string;
   fieldProps?: MotionProps;
 }

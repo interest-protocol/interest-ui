@@ -14,9 +14,7 @@ import React, {
 } from 'react';
 
 import { Box, Motion, Typography } from '../../elements';
-import { ErrorSVG, TickSVG } from '../../icons';
 import { Theme } from '../../theme';
-import { Button } from '../button';
 import { TextFieldElementProps, TextFieldProps } from './text-field.types';
 
 const TextFieldElement = stylin<TextFieldElementProps & RefAttributes<unknown>>(
@@ -32,11 +30,10 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
       Suffix,
       onBlur,
       onFocus,
-      Bottom,
-      Top,
-      PrefixIcon,
-      SuffixIcon,
+      disabled,
+      topLabel,
       fieldProps,
+      supportingText,
       ...props
     },
     ref
@@ -89,12 +86,12 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
 
     const wrapperVariants = {
       focus: {
-        borderWidth: '1px',
+        borderWidth: '3px',
         borderColor: colors.primary,
       },
       normal: {
         borderWidth: '1px',
-        borderColor: colors.outline,
+        borderColor: colors.outlineVariant,
       },
       valid: {
         borderWidth: valid ? '1px' : '2px',
@@ -106,6 +103,12 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
       },
     };
 
+    const nHover = {
+      borderWidth: '2px',
+      borderStyle: 'solid',
+      borderColor: colors.primary,
+    };
+
     const statusColor = useMemo(() => {
       if (variant === 'error') return 'error';
 
@@ -115,25 +118,36 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
     }, [valid, error, variant]);
 
     return (
-      <Box color={statusColor || 'onSurface'}>
+      <Box
+        opacity={disabled ? 0.32 : 1}
+        color={statusColor || 'onSurface'}
+        cursor={disabled ? 'not-allowed' : 'normal'}
+      >
+        <Typography variant="body" size="small" mb="2xs" color="onSurface">
+          {topLabel}
+        </Typography>
         <Motion
           p="xs"
           display="flex"
-          borderRadius="m"
           animate={variant}
+          borderRadius="full"
           alignItems="center"
           borderStyle="solid"
           initial={lastVariant}
           variants={wrapperVariants}
           transition={{ duration: 0.3 }}
+          whileHover={disabled ? '' : nHover}
           {...fieldProps}
         >
-          {Prefix}
-          {PrefixIcon && (
-            <Button variant="filled" isIcon mr="s">
-              {PrefixIcon}
-            </Button>
-          )}
+          <Box
+            px="xs"
+            display="flex"
+            color="onSurface"
+            alignItems="center"
+            justifyContent="center"
+          >
+            {Prefix}
+          </Box>
           <Box
             m="xs"
             flex="1"
@@ -143,25 +157,16 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
             flexDirection="column"
             justifyContent="center"
           >
-            {Top && (
-              <Typography
-                size="large"
-                variant="body"
-                color="onSurface"
-                textAlign={props.textAlign}
-              >
-                {Top}
-              </Typography>
-            )}
             <TextFieldElement
               ref={ref}
               all="unset"
               type="text"
               width="100%"
-              fontSize="xl"
-              lineHeight="xl"
+              fontSize="l"
+              lineHeight="m"
               autoFocus={focus}
               onBlur={handleBlur}
+              disabled={disabled}
               onFocus={handleFocus}
               onChange={handleChange}
               color={statusColor || 'onSurface'}
@@ -171,39 +176,24 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
               }}
               {...props}
             />
-            {Bottom && (
-              <Typography
-                size="small"
-                variant="body"
-                color="onSurface"
-                textAlign={props.textAlign}
-              >
-                {Bottom}
-              </Typography>
-            )}
           </Box>
-          {(variant == 'error' && (
-            <ErrorSVG
-              width="100%"
-              height="100%"
-              maxWidth="1.25rem"
-              maxHeight="1.25rem"
-            />
-          )) ||
-            (valid && variant == 'valid' && (
-              <TickSVG
-                width="100%"
-                height="100%"
-                maxWidth="1.25rem"
-                maxHeight="1.25rem"
-              />
-            )) ||
-            SuffixIcon}
-          {Suffix}
+          <Box
+            p="xs"
+            px=".625rem"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            {Suffix}
+          </Box>
         </Motion>
-        {statusColor && (
+        {statusColor ? (
           <Typography variant="body" mt="2xs" size="small">
             {error || valid}
+          </Typography>
+        ) : (
+          <Typography variant="body" mt="2xs" size="small">
+            {supportingText}
           </Typography>
         )}
       </Box>
@@ -211,5 +201,4 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
   }
 );
 
-TextField.displayName = 'TextField';
 export * from './text-field.types';

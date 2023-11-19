@@ -2,7 +2,6 @@ import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 
 import { PlusIcon, SwapIcon } from '../../../../storybook/icons';
-import { Button } from '../../button';
 import { TextField } from '..';
 
 const meta: Meta<typeof TextField> = {
@@ -29,63 +28,30 @@ export const Default: Story = {
 export const WithPrefix: Story = {
   args: {
     placeholder: '0.123',
-    textAlign: 'right',
-    Prefix: (
-      <Button size="small" variant="filled">
-        Prefix
-      </Button>
-    ),
-  },
-};
-
-export const WithPrefixAndBottomText: Story = {
-  args: {
-    placeholder: '0.123',
-    textAlign: 'right',
-    Prefix: (
-      <Button size="small" variant="filled">
-        Prefix
-      </Button>
-    ),
-    Bottom: '$0.123 USD',
-  },
-};
-
-export const WithPrefixAndTopText: Story = {
-  args: {
-    placeholder: '0.123',
-    textAlign: 'right',
-    Prefix: (
-      <Button size="small" variant="filled">
-        Prefix
-      </Button>
-    ),
-    Top: '$0.123 USD',
+    Prefix: <PlusIcon />,
   },
 };
 
 export const WithSuffix: Story = {
   args: {
     placeholder: '0.123',
-    Suffix: (
-      <Button size="small" variant="filled">
-        Prefix
-      </Button>
-    ),
+    Suffix: <PlusIcon />,
   },
 };
 
-export const WithPrefixIcon: Story = {
+export const WithPrefixAndTopLabel: Story = {
   args: {
     placeholder: '0.123',
-    PrefixIcon: <SwapIcon />,
+    topLabel: 'Label',
+    Prefix: <PlusIcon />,
   },
 };
-
-export const WithSuffixIcon: Story = {
+export const WithPrefixTopLabelAndSupportingText: Story = {
   args: {
     placeholder: '0.123',
-    SuffixIcon: <PlusIcon />,
+    topLabel: 'Label',
+    Prefix: <PlusIcon />,
+    supportingText: 'Supporting text',
   },
 };
 
@@ -96,41 +62,33 @@ export const Error: Story = {
   },
 };
 
-export const ErrorWithPrefixIcon: Story = {
+export const ErrorWithTopLabel: Story = {
+  args: {
+    error: 'Supporting text',
+    topLabel: 'Label',
+    placeholder: '0.123',
+  },
+};
+
+export const ErrorWithPrefix: Story = {
   args: {
     error: 'Supporting text',
     placeholder: '0.123',
-    PrefixIcon: <SwapIcon />,
+    Prefix: <SwapIcon />,
   },
 };
 
-export const ErrorWithSuffixIcon: Story = {
+export const ErrorWithSuffix: Story = {
   args: {
     error: 'Supporting text',
     placeholder: '0.123',
-    SuffixIcon: <PlusIcon />,
+    Suffix: <PlusIcon />,
   },
 };
 
-export const Success: Story = {
+export const Disabled: Story = {
   args: {
-    valid: 'Supporting text',
+    disabled: true,
     placeholder: '0.123',
-  },
-};
-
-export const SuccessWithPrefixIcon: Story = {
-  args: {
-    valid: 'Supporting text',
-    placeholder: '0.123',
-    PrefixIcon: <SwapIcon />,
-  },
-};
-
-export const SuccessWithSuffixIcon: Story = {
-  args: {
-    valid: 'Supporting text',
-    placeholder: '0.123',
-    SuffixIcon: <PlusIcon />,
   },
 };
