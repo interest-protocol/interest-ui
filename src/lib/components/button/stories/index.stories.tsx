@@ -9,10 +9,14 @@ const meta: Meta<typeof Button> = {
   component: Button,
   argTypes: {
     variant: {
-      options: ['filled', 'outline', 'text', 'icon', 'tonal'],
+      options: ['filled', 'outline', 'text', 'tonal'],
       control: { type: 'select' },
     },
     disabled: {
+      defaultValue: false,
+      control: { type: 'boolean' },
+    },
+    isIcon: {
       defaultValue: false,
       control: { type: 'boolean' },
     },
@@ -26,7 +30,16 @@ type Story = StoryObj<typeof Button>;
 export const Filled: Story = {
   args: {
     variant: 'filled',
-    children: 'Enabled',
+    children: 'Label',
+    disabled: false,
+  },
+};
+
+export const FilledWithPrefix: Story = {
+  args: {
+    variant: 'filled',
+    children: 'Label',
+    PrefixIcon: <PlusIcon />,
     disabled: false,
   },
 };
@@ -34,8 +47,8 @@ export const Filled: Story = {
 export const FilledWithSuffix: Story = {
   args: {
     variant: 'filled',
-    children: 'Enabled',
-    PrefixIcon: <PlusIcon />,
+    children: 'Label',
+    SuffixIcon: <PlusIcon />,
     disabled: false,
   },
 };
@@ -43,18 +56,7 @@ export const FilledWithSuffix: Story = {
 export const FilledWithCombined: Story = {
   args: {
     variant: 'filled',
-    children: 'Enabled',
-    PrefixIcon: <PlusIcon />,
-    SuffixIcon: <PlusIcon />,
-    disabled: false,
-  },
-};
-
-export const SmallFilledWithCombined: Story = {
-  args: {
-    size: 'small',
-    variant: 'filled',
-    children: 'Enabled',
+    children: 'Label',
     PrefixIcon: <PlusIcon />,
     SuffixIcon: <PlusIcon />,
     disabled: false,
@@ -64,7 +66,7 @@ export const SmallFilledWithCombined: Story = {
 export const Outline: Story = {
   args: {
     variant: 'outline',
-    children: 'Enabled',
+    children: 'Label',
     disabled: false,
   },
 };
@@ -72,7 +74,7 @@ export const Outline: Story = {
 export const OutlineWithPrefix: Story = {
   args: {
     variant: 'outline',
-    children: 'Enabled',
+    children: 'Label',
     PrefixIcon: <PlusIcon />,
     disabled: false,
   },
@@ -81,17 +83,16 @@ export const OutlineWithPrefix: Story = {
 export const OutlineWithSuffix: Story = {
   args: {
     variant: 'outline',
-    children: 'Enabled',
+    children: 'Label',
     SuffixIcon: <PlusIcon />,
     disabled: false,
   },
 };
 
-export const SmallOutlineWithCombined: Story = {
+export const OutlineWithCombined: Story = {
   args: {
-    size: 'small',
     variant: 'outline',
-    children: 'Enabled',
+    children: 'Label',
     PrefixIcon: <PlusIcon />,
     SuffixIcon: <PlusIcon />,
     disabled: false,
@@ -101,7 +102,7 @@ export const SmallOutlineWithCombined: Story = {
 export const Text: Story = {
   args: {
     variant: 'text',
-    children: 'Enabled',
+    children: 'Label',
     disabled: false,
   },
 };
@@ -109,7 +110,7 @@ export const Text: Story = {
 export const TextWithPrefix: Story = {
   args: {
     variant: 'text',
-    children: 'Enabled',
+    children: 'Label',
     PrefixIcon: <PlusIcon />,
     disabled: false,
   },
@@ -118,7 +119,7 @@ export const TextWithPrefix: Story = {
 export const TextWithSuffix: Story = {
   args: {
     variant: 'text',
-    children: 'Enabled',
+    children: 'Label',
     SuffixIcon: <PlusIcon />,
     disabled: false,
   },
@@ -127,7 +128,7 @@ export const TextWithSuffix: Story = {
 export const TextWithCombined: Story = {
   args: {
     variant: 'text',
-    children: 'Enabled',
+    children: 'Label',
     PrefixIcon: <PlusIcon />,
     SuffixIcon: <PlusIcon />,
     disabled: false,
@@ -136,9 +137,35 @@ export const TextWithCombined: Story = {
 
 export const SmallTextWithCombined: Story = {
   args: {
-    size: 'small',
     variant: 'text',
-    children: 'Enabled',
+    children: 'Label',
+    PrefixIcon: <PlusIcon />,
+    SuffixIcon: <PlusIcon />,
+    disabled: false,
+  },
+};
+
+export const Tonal: Story = {
+  args: {
+    variant: 'tonal',
+    children: 'Label',
+    disabled: false,
+  },
+};
+
+export const TonalWithSuffix: Story = {
+  args: {
+    variant: 'tonal',
+    children: 'Label',
+    PrefixIcon: <PlusIcon />,
+    disabled: false,
+  },
+};
+
+export const TonalWithCombined: Story = {
+  args: {
+    variant: 'tonal',
+    children: 'Label',
     PrefixIcon: <PlusIcon />,
     SuffixIcon: <PlusIcon />,
     disabled: false,
@@ -147,16 +174,9 @@ export const SmallTextWithCombined: Story = {
 
 export const Icon: Story = {
   args: {
-    variant: 'icon',
+    variant: 'filled',
     children: <SwapIcon />,
     disabled: false,
-  },
-};
-
-export const Tonal: Story = {
-  args: {
-    variant: 'tonal',
-    children: 'Enabled',
-    disabled: false,
+    isIcon: true,
   },
 };

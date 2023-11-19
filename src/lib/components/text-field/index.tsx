@@ -130,7 +130,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
         >
           {Prefix}
           {PrefixIcon && (
-            <Button variant="icon" mr="s">
+            <Button variant="filled" isIcon mr="s">
               {PrefixIcon}
             </Button>
           )}

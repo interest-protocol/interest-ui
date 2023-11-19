@@ -1,13 +1,11 @@
 import { radii, space } from '../design-system';
 
-export const button = {
+export const tag = {
   all: 'unset',
-  gap: space.xs,
+  gap: space.s,
   display: 'flex',
   cursor: 'pointer',
-  justifyContent: 'space-between',
   alignItems: 'center',
   borderRadius: radii.full,
   transition: 'all 300ms ease-in-out',
-  fontFamily: 'Proto',
 };
