@@ -17,7 +17,7 @@ export interface TokenFieldProps
   topLabel?: string;
   TokenName: string;
   Suffix?: ReactNode;
-  outline?: boolean;
+  outlined?: boolean;
   disabled?: boolean;
   supportingText?: string;
   fieldProps?: MotionProps;

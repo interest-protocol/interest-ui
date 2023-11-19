@@ -103,7 +103,7 @@ export const FilledWithoutTokenIconDisabled: Story = {
 
 export const OutlineWithToken: Story = {
   args: {
-    outline: true,
+    outlined: true,
     placeholder: 'Input',
     textAlign: 'right',
     TokenIcon: TokenSVG,
@@ -116,7 +116,7 @@ export const OutlineWithToken: Story = {
 
 export const OutlineWithLabelToTheLeft: Story = {
   args: {
-    outline: true,
+    outlined: true,
     placeholder: 'Input',
     textAlign: 'right',
     TokenIcon: TokenSVG,
@@ -129,7 +129,7 @@ export const OutlineWithLabelToTheLeft: Story = {
 
 export const OutlineWithTokenError: Story = {
   args: {
-    outline: true,
+    outlined: true,
     placeholder: 'Input',
     textAlign: 'right',
     TokenIcon: TokenSVG,
@@ -142,7 +142,7 @@ export const OutlineWithTokenError: Story = {
 
 export const OutlineWithTokenDisabled: Story = {
   args: {
-    outline: true,
+    outlined: true,
     disabled: true,
     placeholder: 'Input',
     textAlign: 'right',
@@ -156,7 +156,7 @@ export const OutlineWithTokenDisabled: Story = {
 
 export const OutlineWithoutTokenIcon: Story = {
   args: {
-    outline: true,
+    outlined: true,
     supportingText: 'Supporting text',
     placeholder: 'Input',
     textAlign: 'right',
@@ -168,7 +168,7 @@ export const OutlineWithoutTokenIcon: Story = {
 
 export const OutlineWithoutTokenIconError: Story = {
   args: {
-    outline: true,
+    outlined: true,
     placeholder: 'Input',
     textAlign: 'right',
     TokenName: 'Token Name',
@@ -180,7 +180,7 @@ export const OutlineWithoutTokenIconError: Story = {
 
 export const OutlineWithoutTokenIconDisabled: Story = {
   args: {
-    outline: true,
+    outlined: true,
     disabled: true,
     placeholder: 'Input',
     textAlign: 'right',

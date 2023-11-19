@@ -31,7 +31,7 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
       onFocus,
       disabled,
       topLabel,
-      outline,
+      outlined,
       fieldProps,
       TokenIcon,
       TokenName,
@@ -93,9 +93,9 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
         borderColor: colors.primary,
       },
       normal: {
-        borderWidth: outline ? '1px' : '0px',
-        borderColor: outline ? colors.outlineVariant : 'transparent',
-        backgroundColor: outline ? 'transparent' : colors.container,
+        borderWidth: outlined ? '1px' : '0px',
+        borderColor: outlined ? colors.outlineVariant : 'transparent',
+        backgroundColor: outlined ? 'transparent' : colors.container,
       },
       valid: {
         borderWidth: valid ? '1px' : '2px',
