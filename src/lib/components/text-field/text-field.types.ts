@@ -14,7 +14,7 @@ export interface TextFieldProps
   error?: string;
   valid?: string;
   label?: string;
-  prefix?: ReactNode;
+  Prefix?: ReactNode;
   suffix?: ReactNode;
   disabled?: boolean;
   supportingText?: string;

@@ -28,7 +28,7 @@ export const Default: Story = {
 export const WithPrefix: Story = {
   args: {
     placeholder: '0.123',
-    prefix: <PlusIcon />,
+    Prefix: <PlusIcon />,
   },
 };
 
@@ -43,14 +43,14 @@ export const WithPrefixAndTopLabel: Story = {
   args: {
     placeholder: '0.123',
     label: 'Label',
-    prefix: <PlusIcon />,
+    Prefix: <PlusIcon />,
   },
 };
 export const WithPrefixTopLabelAndSupportingText: Story = {
   args: {
     placeholder: '0.123',
     label: 'Label',
-    prefix: <PlusIcon />,
+    Prefix: <PlusIcon />,
     supportingText: 'Supporting text',
   },
 };
@@ -74,7 +74,7 @@ export const ErrorWithPrefix: Story = {
   args: {
     error: 'Supporting text',
     placeholder: '0.123',
-    prefix: <SwapIcon />,
+    Prefix: <SwapIcon />,
   },
 };
 

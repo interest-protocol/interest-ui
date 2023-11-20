@@ -26,7 +26,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
     {
       error,
       valid,
-      prefix,
+      Prefix,
       suffix,
       label,
       onBlur,
@@ -146,7 +146,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
             alignItems="center"
             justifyContent="center"
           >
-            {prefix}
+            {Prefix}
           </Box>
           <Box
             m="xs"
