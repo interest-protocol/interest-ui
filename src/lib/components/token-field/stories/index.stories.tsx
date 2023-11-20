@@ -23,10 +23,10 @@ export const FilledWithToken: Story = {
     placeholder: 'Input',
     textAlign: 'right',
     TokenIcon: TokenSVG,
-    TokenName: 'Token Name',
+    tokenName: 'Token Name',
     supportingText: 'Supporting text',
-    topLabel: 'Label',
-    topLabelAlignment: 'right',
+    label: 'Label',
+    labelPosition: 'right',
   },
 };
 
@@ -35,10 +35,10 @@ export const FilledWithLabelToTheLeft: Story = {
     placeholder: 'Input',
     textAlign: 'right',
     TokenIcon: TokenSVG,
-    TokenName: 'Token Name',
+    tokenName: 'Token Name',
     supportingText: 'Supporting text',
-    topLabel: 'Label',
-    topLabelAlignment: 'left',
+    label: 'Label',
+    labelPosition: 'left',
   },
 };
 
@@ -47,10 +47,10 @@ export const FilledWithTokenError: Story = {
     placeholder: 'Input',
     textAlign: 'right',
     TokenIcon: TokenSVG,
-    TokenName: 'Token Name',
+    tokenName: 'Token Name',
     error: 'Supporting text',
-    topLabel: 'Label',
-    topLabelAlignment: 'right',
+    label: 'Label',
+    labelPosition: 'right',
   },
 };
 
@@ -60,10 +60,10 @@ export const FilledWithTokenDisabled: Story = {
     placeholder: 'Input',
     textAlign: 'right',
     TokenIcon: TokenSVG,
-    TokenName: 'Token Name',
+    tokenName: 'Token Name',
     supportingText: 'Supporting text',
-    topLabel: 'Label',
-    topLabelAlignment: 'right',
+    label: 'Label',
+    labelPosition: 'right',
   },
 };
 
@@ -72,9 +72,9 @@ export const FilledWithoutTokenIcon: Story = {
     supportingText: 'Supporting text',
     placeholder: 'Input',
     textAlign: 'right',
-    TokenName: 'Token Name',
-    topLabel: 'Label',
-    topLabelAlignment: 'right',
+    tokenName: 'Token Name',
+    label: 'Label',
+    labelPosition: 'right',
   },
 };
 
@@ -82,10 +82,10 @@ export const FilledWithoutTokenIconError: Story = {
   args: {
     placeholder: 'Input',
     textAlign: 'right',
-    TokenName: 'Token Name',
+    tokenName: 'Token Name',
     error: 'Supporting text',
-    topLabel: 'Label',
-    topLabelAlignment: 'right',
+    label: 'Label',
+    labelPosition: 'right',
   },
 };
 
@@ -94,10 +94,10 @@ export const FilledWithoutTokenIconDisabled: Story = {
     disabled: true,
     placeholder: 'Input',
     textAlign: 'right',
-    TokenName: 'Token Name',
-    topLabel: 'Label',
+    tokenName: 'Token Name',
+    label: 'Label',
     supportingText: 'Supporting text',
-    topLabelAlignment: 'right',
+    labelPosition: 'right',
   },
 };
 
@@ -107,10 +107,10 @@ export const OutlineWithToken: Story = {
     placeholder: 'Input',
     textAlign: 'right',
     TokenIcon: TokenSVG,
-    TokenName: 'Token Name',
+    tokenName: 'Token Name',
     supportingText: 'Supporting text',
-    topLabel: 'Label',
-    topLabelAlignment: 'right',
+    label: 'Label',
+    labelPosition: 'right',
   },
 };
 
@@ -120,10 +120,10 @@ export const OutlineWithLabelToTheLeft: Story = {
     placeholder: 'Input',
     textAlign: 'right',
     TokenIcon: TokenSVG,
-    TokenName: 'Token Name',
+    tokenName: 'Token Name',
     supportingText: 'Supporting text',
-    topLabel: 'Label',
-    topLabelAlignment: 'left',
+    label: 'Label',
+    labelPosition: 'left',
   },
 };
 
@@ -133,10 +133,10 @@ export const OutlineWithTokenError: Story = {
     placeholder: 'Input',
     textAlign: 'right',
     TokenIcon: TokenSVG,
-    TokenName: 'Token Name',
+    tokenName: 'Token Name',
     error: 'Supporting text',
-    topLabel: 'Label',
-    topLabelAlignment: 'right',
+    label: 'Label',
+    labelPosition: 'right',
   },
 };
 
@@ -147,10 +147,10 @@ export const OutlineWithTokenDisabled: Story = {
     placeholder: 'Input',
     textAlign: 'right',
     TokenIcon: TokenSVG,
-    TokenName: 'Token Name',
+    tokenName: 'Token Name',
     supportingText: 'Supporting text',
-    topLabel: 'Label',
-    topLabelAlignment: 'right',
+    label: 'Label',
+    labelPosition: 'right',
   },
 };
 
@@ -160,9 +160,9 @@ export const OutlineWithoutTokenIcon: Story = {
     supportingText: 'Supporting text',
     placeholder: 'Input',
     textAlign: 'right',
-    TokenName: 'Token Name',
-    topLabel: 'Label',
-    topLabelAlignment: 'right',
+    tokenName: 'Token Name',
+    label: 'Label',
+    labelPosition: 'right',
   },
 };
 
@@ -171,10 +171,10 @@ export const OutlineWithoutTokenIconError: Story = {
     outlined: true,
     placeholder: 'Input',
     textAlign: 'right',
-    TokenName: 'Token Name',
+    tokenName: 'Token Name',
     error: 'Supporting text',
-    topLabel: 'Label',
-    topLabelAlignment: 'right',
+    label: 'Label',
+    labelPosition: 'right',
   },
 };
 
@@ -184,9 +184,9 @@ export const OutlineWithoutTokenIconDisabled: Story = {
     disabled: true,
     placeholder: 'Input',
     textAlign: 'right',
-    TokenName: 'Token Name',
-    topLabel: 'Label',
+    tokenName: 'Token Name',
+    label: 'Label',
     supportingText: 'Supporting text',
-    topLabelAlignment: 'right',
+    labelPosition: 'right',
   },
 };

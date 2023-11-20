@@ -14,13 +14,14 @@ export interface TokenFieldProps
     TokenFieldElementProps {
   error?: string;
   valid?: string;
-  topLabel?: string;
-  TokenName: string;
-  Suffix?: ReactNode;
   outlined?: boolean;
+  label?: string;
+  tokenName: string;
+  suffix?: ReactNode;
   disabled?: boolean;
   supportingText?: string;
   fieldProps?: MotionProps;
   TokenIcon?: FC<SVGProps>;
-  topLabelAlignment?: 'left' | 'right';
+  variant?: 'filled' | 'outline';
+  labelPosition?: 'left' | 'right';
 }

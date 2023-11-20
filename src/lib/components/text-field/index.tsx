@@ -26,12 +26,12 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
     {
       error,
       valid,
-      Prefix,
-      Suffix,
+      prefix,
+      suffix,
+      label,
       onBlur,
       onFocus,
       disabled,
-      topLabel,
       fieldProps,
       supportingText,
       ...props
@@ -124,7 +124,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
         cursor={disabled ? 'not-allowed' : 'normal'}
       >
         <Typography variant="body" size="small" mb="2xs" color="onSurface">
-          {topLabel}
+          {label}
         </Typography>
         <Motion
           p="xs"
@@ -146,7 +146,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
             alignItems="center"
             justifyContent="center"
           >
-            {Prefix}
+            {prefix}
           </Box>
           <Box
             m="xs"
@@ -184,7 +184,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
             alignItems="center"
             justifyContent="center"
           >
-            {Suffix}
+            {suffix}
           </Box>
         </Motion>
         {statusColor ? (

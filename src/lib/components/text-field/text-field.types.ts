@@ -13,9 +13,9 @@ export interface TextFieldProps
     TextFieldElementProps {
   error?: string;
   valid?: string;
-  topLabel?: string;
-  Prefix?: ReactNode;
-  Suffix?: ReactNode;
+  label?: string;
+  prefix?: ReactNode;
+  suffix?: ReactNode;
   disabled?: boolean;
   supportingText?: string;
   fieldProps?: MotionProps;

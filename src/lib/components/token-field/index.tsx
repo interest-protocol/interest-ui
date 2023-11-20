@@ -27,16 +27,16 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
     {
       error,
       valid,
+      outlined,
       onBlur,
       onFocus,
       disabled,
-      topLabel,
-      outlined,
+      label,
       fieldProps,
       TokenIcon,
-      TokenName,
+      tokenName,
       supportingText,
-      topLabelAlignment,
+      labelPosition,
       ...props
     },
     ref
@@ -84,6 +84,11 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
         return;
       }
 
+      if (outlined) {
+        setVariant('outlined');
+        return;
+      }
+
       setVariant('normal');
     }, [focus, value]);
 
@@ -93,9 +98,14 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
         borderColor: colors.primary,
       },
       normal: {
-        borderWidth: outlined ? '1px' : '0px',
-        borderColor: outlined ? colors.outlineVariant : 'transparent',
-        backgroundColor: outlined ? 'transparent' : colors.container,
+        borderWidth: '0px',
+        borderColor: 'transparent',
+        backgroundColor: colors.container,
+      },
+      outlined: {
+        borderWidth: '1px',
+        borderColor: colors.outlineVariant,
+        backgroundColor: 'transparent',
       },
       valid: {
         borderWidth: valid ? '1px' : '2px',
@@ -131,13 +141,11 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
           mb="xs"
           variant="body"
           color="onSurface"
-          textAlign={topLabelAlignment}
-          size={topLabelAlignment === 'right' ? 'medium' : 'small'}
-          textTransform={
-            topLabelAlignment === 'right' ? 'uppercase' : 'capitalize'
-          }
+          textAlign={labelPosition}
+          size={labelPosition === 'right' ? 'medium' : 'small'}
+          textTransform={labelPosition === 'right' ? 'uppercase' : 'capitalize'}
         >
-          {topLabel}
+          {label}
         </Typography>
         <Motion
           p="xs"
@@ -164,7 +172,7 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
                 <TokenIcon maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />
               )}
               <Typography variant="body" size="large">
-                {TokenName}
+                {tokenName}
               </Typography>
             </Box>
           </Box>

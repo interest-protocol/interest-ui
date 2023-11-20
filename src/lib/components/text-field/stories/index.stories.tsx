@@ -28,29 +28,29 @@ export const Default: Story = {
 export const WithPrefix: Story = {
   args: {
     placeholder: '0.123',
-    Prefix: <PlusIcon />,
+    prefix: <PlusIcon />,
   },
 };
 
 export const WithSuffix: Story = {
   args: {
     placeholder: '0.123',
-    Suffix: <PlusIcon />,
+    suffix: <PlusIcon />,
   },
 };
 
 export const WithPrefixAndTopLabel: Story = {
   args: {
     placeholder: '0.123',
-    topLabel: 'Label',
-    Prefix: <PlusIcon />,
+    label: 'Label',
+    prefix: <PlusIcon />,
   },
 };
 export const WithPrefixTopLabelAndSupportingText: Story = {
   args: {
     placeholder: '0.123',
-    topLabel: 'Label',
-    Prefix: <PlusIcon />,
+    label: 'Label',
+    prefix: <PlusIcon />,
     supportingText: 'Supporting text',
   },
 };
@@ -65,7 +65,7 @@ export const Error: Story = {
 export const ErrorWithTopLabel: Story = {
   args: {
     error: 'Supporting text',
-    topLabel: 'Label',
+    label: 'Label',
     placeholder: '0.123',
   },
 };
@@ -74,7 +74,7 @@ export const ErrorWithPrefix: Story = {
   args: {
     error: 'Supporting text',
     placeholder: '0.123',
-    Prefix: <SwapIcon />,
+    prefix: <SwapIcon />,
   },
 };
 
@@ -82,7 +82,7 @@ export const ErrorWithSuffix: Story = {
   args: {
     error: 'Supporting text',
     placeholder: '0.123',
-    Suffix: <PlusIcon />,
+    suffix: <PlusIcon />,
   },
 };
 
