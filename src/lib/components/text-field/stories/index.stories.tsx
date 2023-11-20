@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 
-import { PlusIcon, SwapIcon } from '../../../../storybook/icons';
+import { PlusIcon } from '../../../../storybook/icons';
 import { TextField } from '..';
 
 const meta: Meta<typeof TextField> = {
@@ -27,63 +27,67 @@ export const Default: Story = {
 
 export const WithPrefix: Story = {
   args: {
-    placeholder: '0.123',
+    label: 'Label',
     Prefix: <PlusIcon />,
+    placeholder: '0.123',
+    supportingText: 'Supporting text',
+  },
+};
+
+export const WithPrefixSucess: Story = {
+  args: {
+    label: 'Label',
+    status: 'success',
+    Prefix: <PlusIcon />,
+    placeholder: '0.123',
+    supportingText: 'Supporting text',
   },
 };
 
 export const WithSuffix: Story = {
   args: {
+    label: 'Label',
     placeholder: '0.123',
     suffix: <PlusIcon />,
+    supportingText: 'Supporting text',
   },
 };
 
-export const WithPrefixAndTopLabel: Story = {
+export const WithTopLabel: Story = {
   args: {
     placeholder: '0.123',
     label: 'Label',
-    Prefix: <PlusIcon />,
+    supportingText: 'Supporting text',
   },
 };
-export const WithPrefixTopLabelAndSupportingText: Story = {
+
+export const Combined: Story = {
   args: {
     placeholder: '0.123',
     label: 'Label',
     Prefix: <PlusIcon />,
+    suffix: <PlusIcon />,
     supportingText: 'Supporting text',
   },
 };
 
 export const Error: Story = {
   args: {
-    error: 'Error supporting text',
-    supportingText: 'Normal supporting text',
-    placeholder: '0.123',
-  },
-};
-
-export const ErrorWithTopLabel: Story = {
-  args: {
-    error: 'Supporting text',
-    label: 'Label',
-    placeholder: '0.123',
-  },
-};
-
-export const ErrorWithPrefix: Story = {
-  args: {
-    error: 'Supporting text',
-    placeholder: '0.123',
-    Prefix: <SwapIcon />,
-  },
-};
-
-export const ErrorWithSuffix: Story = {
-  args: {
-    error: 'Supporting text',
-    placeholder: '0.123',
+    status: 'error',
     suffix: <PlusIcon />,
+    placeholder: '0.123',
+    supportingText: 'Enter a valid amount',
+  },
+};
+
+export const ErrorCombined: Story = {
+  args: {
+    status: 'error',
+    placeholder: '0.123',
+    label: 'Label',
+    Prefix: <PlusIcon />,
+    suffix: <PlusIcon />,
+    supportingText: 'Supporting text',
   },
 };
 
