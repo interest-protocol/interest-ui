@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, LabelHTMLAttributes } from 'react';
+import { InputHTMLAttributes, LabelHTMLAttributes, ReactNode } from 'react';
 
 export type CheckedButtonElementProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,
@@ -9,10 +9,12 @@ export type LabelElementProps = Omit<
   LabelHTMLAttributes<HTMLInputElement>,
   'color'
 >;
+
+type MultipleLabels = { label?: string; supportingLabel?: string };
 export interface CheckedButtonProps extends CheckedButtonElementProps {
   name: string;
-  activation?: boolean;
   defaultValue: boolean;
-  size?: 'small' | 'medium';
-  labels?: string | [string, string];
+  labels?: MultipleLabels;
+  activeIcon?: ReactNode;
+  inactiveIcon?: ReactNode;
 }

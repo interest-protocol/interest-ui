@@ -50,6 +50,7 @@ export const RadioButton: FC<RadioButtonProps> = ({
         justifyContent="center"
         transition={{ duration: 0.5 }}
         color={disabled ? 'onSurface' : color}
+        opacity={disabled ? '0.32' : '1'}
       >
         <RadioCircleSVG
           width="100%"
