@@ -57,7 +57,8 @@ export const WithPrefixTopLabelAndSupportingText: Story = {
 
 export const Error: Story = {
   args: {
-    error: 'Supporting text',
+    error: 'Error supporting text',
+    supportingText: 'Normal supporting text',
     placeholder: '0.123',
   },
 };
