@@ -20,173 +20,175 @@ type Story = StoryObj<typeof TokenField>;
 
 export const FilledWithToken: Story = {
   args: {
-    placeholder: 'Input',
+    label: 'Label',
     textAlign: 'right',
     TokenIcon: TokenSVG,
+    placeholder: 'Input',
+    labelPosition: 'right',
     tokenName: 'Token Name',
     supportingText: 'Supporting text',
-    label: 'Label',
-    labelPosition: 'right',
   },
 };
 
 export const FilledWithLabelToTheLeft: Story = {
   args: {
-    placeholder: 'Input',
+    label: 'Label',
     textAlign: 'right',
     TokenIcon: TokenSVG,
+    placeholder: 'Input',
+    labelPosition: 'left',
     tokenName: 'Token Name',
     supportingText: 'Supporting text',
-    label: 'Label',
-    labelPosition: 'left',
   },
 };
 
 export const FilledWithTokenError: Story = {
   args: {
-    placeholder: 'Input',
+    label: 'Label',
+    status: 'error',
     textAlign: 'right',
     TokenIcon: TokenSVG,
-    tokenName: 'Token Name',
-    error: 'Supporting text',
-    label: 'Label',
+    placeholder: 'Input',
     labelPosition: 'right',
+    tokenName: 'Token Name',
   },
 };
 
 export const FilledWithTokenDisabled: Story = {
   args: {
+    label: 'Label',
     disabled: true,
-    placeholder: 'Input',
     textAlign: 'right',
     TokenIcon: TokenSVG,
+    placeholder: 'Input',
+    labelPosition: 'right',
     tokenName: 'Token Name',
     supportingText: 'Supporting text',
-    label: 'Label',
-    labelPosition: 'right',
   },
 };
 
 export const FilledWithoutTokenIcon: Story = {
   args: {
-    supportingText: 'Supporting text',
-    placeholder: 'Input',
-    textAlign: 'right',
-    tokenName: 'Token Name',
     label: 'Label',
+    textAlign: 'right',
+    placeholder: 'Input',
     labelPosition: 'right',
+    tokenName: 'Token Name',
+    supportingText: 'Supporting text',
   },
 };
 
 export const FilledWithoutTokenIconError: Story = {
   args: {
-    placeholder: 'Input',
-    textAlign: 'right',
-    tokenName: 'Token Name',
-    error: 'Supporting text',
     label: 'Label',
+    status: 'error',
+    textAlign: 'right',
+    placeholder: 'Input',
     labelPosition: 'right',
+    tokenName: 'Token Name',
   },
 };
 
 export const FilledWithoutTokenIconDisabled: Story = {
   args: {
     disabled: true,
-    placeholder: 'Input',
-    textAlign: 'right',
-    tokenName: 'Token Name',
     label: 'Label',
-    supportingText: 'Supporting text',
+    textAlign: 'right',
+    placeholder: 'Input',
     labelPosition: 'right',
+    tokenName: 'Token Name',
+    supportingText: 'Supporting text',
   },
 };
 
 export const OutlineWithToken: Story = {
   args: {
-    outlined: true,
-    placeholder: 'Input',
+    label: 'Label',
+    variant: 'outline',
     textAlign: 'right',
     TokenIcon: TokenSVG,
+    placeholder: 'Input',
+    labelPosition: 'right',
     tokenName: 'Token Name',
     supportingText: 'Supporting text',
-    label: 'Label',
-    labelPosition: 'right',
   },
 };
 
 export const OutlineWithLabelToTheLeft: Story = {
   args: {
-    outlined: true,
-    placeholder: 'Input',
+    label: 'Label',
+    variant: 'outline',
     textAlign: 'right',
     TokenIcon: TokenSVG,
+    placeholder: 'Input',
+    labelPosition: 'left',
     tokenName: 'Token Name',
     supportingText: 'Supporting text',
-    label: 'Label',
-    labelPosition: 'left',
   },
 };
 
 export const OutlineWithTokenError: Story = {
   args: {
-    outlined: true,
-    placeholder: 'Input',
+    label: 'Label',
+    status: 'error',
+    variant: 'outline',
     textAlign: 'right',
     TokenIcon: TokenSVG,
-    tokenName: 'Token Name',
-    error: 'Supporting text',
-    label: 'Label',
+    placeholder: 'Input',
     labelPosition: 'right',
+    tokenName: 'Token Name',
+    supportingText: 'Supporting text',
   },
 };
 
 export const OutlineWithTokenDisabled: Story = {
   args: {
-    outlined: true,
+    label: 'Label',
     disabled: true,
-    placeholder: 'Input',
+    variant: 'outline',
     textAlign: 'right',
     TokenIcon: TokenSVG,
+    placeholder: 'Input',
+    labelPosition: 'right',
     tokenName: 'Token Name',
     supportingText: 'Supporting text',
-    label: 'Label',
-    labelPosition: 'right',
   },
 };
 
 export const OutlineWithoutTokenIcon: Story = {
   args: {
-    outlined: true,
-    supportingText: 'Supporting text',
-    placeholder: 'Input',
-    textAlign: 'right',
-    tokenName: 'Token Name',
     label: 'Label',
+    variant: 'outline',
+    textAlign: 'right',
+    placeholder: 'Input',
     labelPosition: 'right',
+    tokenName: 'Token Name',
+    supportingText: 'Supporting text',
   },
 };
 
 export const OutlineWithoutTokenIconError: Story = {
   args: {
-    outlined: true,
-    placeholder: 'Input',
-    textAlign: 'right',
-    tokenName: 'Token Name',
-    error: 'Supporting text',
     label: 'Label',
+    status: 'error',
+    variant: 'outline',
+    textAlign: 'right',
+    placeholder: 'Input',
     labelPosition: 'right',
+    tokenName: 'Token Name',
+    supportingText: 'Supporting text',
   },
 };
 
 export const OutlineWithoutTokenIconDisabled: Story = {
   args: {
-    outlined: true,
-    disabled: true,
-    placeholder: 'Input',
-    textAlign: 'right',
-    tokenName: 'Token Name',
     label: 'Label',
-    supportingText: 'Supporting text',
+    disabled: true,
+    variant: 'outline',
+    textAlign: 'right',
+    placeholder: 'Input',
     labelPosition: 'right',
+    tokenName: 'Token Name',
+    supportingText: 'Supporting text',
   },
 };

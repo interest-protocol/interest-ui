@@ -1,203 +1,155 @@
-import { useTheme } from '@emotion/react';
 import stylin from '@stylin.js/react';
-import React, {
+import {
   ChangeEvent,
   FC,
   FocusEvent,
   forwardRef,
   PropsWithRef,
   RefAttributes,
-  useEffect,
-  useMemo,
   useState,
-  useTransition,
 } from 'react';
+import React from 'react';
 
-import { Box, Motion, Typography } from '../../elements';
-import { Theme } from '../../theme';
-import { Button } from '../button';
+import { Button, LabelElementProps, Theme, useTheme } from '../..';
+import { Box, Typography } from '../../elements';
 import { TokenFieldElementProps, TokenFieldProps } from './token-field.types';
 
 const TokenFieldElement = stylin<
   TokenFieldElementProps & RefAttributes<unknown>
 >('input')();
+const LabelElement = stylin<LabelElementProps>('label')();
 
 export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
   (
     {
-      error,
-      valid,
-      outlined,
-      onBlur,
-      onFocus,
-      disabled,
       label,
-      fieldProps,
-      TokenIcon,
       tokenName,
+      onBlur,
+      status,
+      onFocus,
+      TokenIcon,
+      fieldProps,
+      disabled,
       supportingText,
       labelPosition,
+      variant,
       ...props
     },
     ref
   ) => {
     const { colors } = useTheme() as Theme;
     const [focus, setFocus] = useState(false);
-    const [, startTransition] = useTransition();
     const [value, setValue] = useState<string>();
-    const [variant, setVariant] = useState('normal');
-    const [lastVariant, setLastVariant] = useState('normal');
 
+    const statusColor = focus
+      ? 'onSurface'
+      : status === 'none'
+      ? 'onSurface'
+      : status;
     const handleFocus = (e: FocusEvent<HTMLInputElement, Element>) => {
-      if (!focus) startTransition(() => setFocus(true));
+      if (!focus) setFocus(true);
 
       onFocus?.(e);
     };
 
     const handleBlur = (e: FocusEvent<HTMLInputElement, Element>) => {
-      if (focus) startTransition(() => setFocus(false));
+      if (focus) setFocus(false);
 
       onBlur?.(e);
     };
 
-    const changeValue = (input: string) =>
-      startTransition(() => setValue(input));
+    const changeValue = (input: string) => setValue(input);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
       changeValue(e.target.value);
 
-    useEffect(() => {
-      if (variant !== lastVariant) setLastVariant(variant ?? 'normal');
-
-      if (focus) {
-        setVariant('focus');
-        return;
-      }
-
-      if (error) {
-        setVariant('error');
-        return;
-      }
-
-      if (value || valid) {
-        setVariant('valid');
-        return;
-      }
-
-      if (outlined) {
-        setVariant('outlined');
-        return;
-      }
-
-      setVariant('normal');
-    }, [focus, value]);
-
-    const wrapperVariants = {
-      focus: {
-        borderWidth: '3px',
-        borderColor: colors.primary,
-      },
-      normal: {
-        borderWidth: '0px',
-        borderColor: 'transparent',
-        backgroundColor: colors.container,
-      },
-      outlined: {
-        borderWidth: '1px',
-        borderColor: colors.outlineVariant,
-        backgroundColor: 'transparent',
-      },
-      valid: {
-        borderWidth: valid ? '1px' : '2px',
-        borderColor: valid ? colors.success : colors.warning,
-      },
-      error: {
-        borderWidth: '1px',
-        borderColor: colors.error,
-      },
-    };
-
-    const nHover = {
-      borderWidth: '2px',
-      borderStyle: 'solid',
-      borderColor: colors.primary,
-    };
-
-    const statusColor = useMemo(() => {
-      if (variant === 'error') return 'error';
-
-      if (valid && variant === 'valid') return 'success';
-
-      return '';
-    }, [valid, error, variant]);
-
     return (
       <Box
         opacity={disabled ? 0.32 : 1}
-        color={statusColor || 'onSurface'}
         cursor={disabled ? 'not-allowed' : 'normal'}
       >
-        <Typography
-          mb="xs"
-          variant="body"
-          color="onSurface"
-          textAlign={labelPosition}
-          size={labelPosition === 'right' ? 'medium' : 'small'}
-          textTransform={labelPosition === 'right' ? 'uppercase' : 'capitalize'}
-        >
-          {label}
-        </Typography>
-        <Motion
-          p="xs"
+        <LabelElement htmlFor={label}>
+          <Typography
+            mb="xs"
+            variant="body"
+            color="onSurface"
+            textAlign={labelPosition}
+            size={labelPosition === 'right' ? 'medium' : 'small'}
+            textTransform={
+              labelPosition === 'right' ? 'uppercase' : 'capitalize'
+            }
+          >
+            {label}
+          </Typography>
+        </LabelElement>
+        <Box
           display="flex"
-          animate={variant}
           borderRadius="xs"
           alignItems="center"
-          borderStyle="solid"
-          initial={lastVariant}
-          variants={wrapperVariants}
-          transition={{ duration: 0.3 }}
-          whileHover={disabled ? '' : nHover}
+          py={TokenIcon ? '0' : 'xs'}
+          bg={variant === 'outline' ? 'transparent' : 'container'}
+          border={
+            variant !== 'outline'
+              ? 'none'
+              : focus
+              ? '3px solid ' + colors.primary
+              : status === 'error'
+              ? '1px solid ' + colors.error
+              : status === 'success'
+              ? '1px solid ' + colors.success
+              : '1px solid ' + colors.outlineVariant
+          }
+          nHover={{
+            borderWidth: focus ? '3px' : disabled ? '1px' : '2px',
+            borderStyle: 'solid',
+            borderColor: !disabled ? colors.primary : colors.outlineVariant,
+          }}
+          transition="all 300ms ease-in-out"
           {...fieldProps}
         >
           <Box
-            px="xs"
+            p="xs"
             display="flex"
             color="onSurface"
             alignItems="center"
             justifyContent="center"
           >
-            <Box display="flex" gap="l" alignItems="center">
+            <Box display="flex" alignItems="center">
               {TokenIcon && (
                 <TokenIcon maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />
               )}
-              <Typography variant="body" size="large">
+              <Typography variant="body" ml="l" size="large">
                 {tokenName}
               </Typography>
             </Box>
           </Box>
           <Box
-            m="xs"
             flex="1"
             width="100%"
+            height="2.5rem"
             display="flex"
             alignItems="stretch"
             flexDirection="column"
             justifyContent="center"
+            p={TokenIcon ? 'xs' : 'm'}
+            mr={status ? '0.5rem' : 'unset'}
           >
             <TokenFieldElement
               ref={ref}
+              id={label}
               all="unset"
               type="text"
               width="100%"
               fontSize="2xl"
               lineHeight="l"
+              fontWeight="500"
+              disabled={disabled}
+              // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus={focus}
               onBlur={handleBlur}
-              disabled={disabled}
               onFocus={handleFocus}
               onChange={handleChange}
-              color={statusColor || 'onSurface'}
+              color={statusColor}
               defaultValue={value || props.defaultValue}
               nPlaceholder={{
                 color: '#6F6F73',
@@ -210,19 +162,16 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
               MAX
             </Button>
           </Box>
-        </Motion>
-        {statusColor ? (
-          <Typography variant="body" mt="xs" size="small">
-            {error || valid}
-          </Typography>
-        ) : (
-          <Typography variant="body" mt="xs" size="small">
+        </Box>
+        {supportingText && (
+          <Box pt="2xs" fontSize="0.75rem" color={statusColor}>
             {supportingText}
-          </Typography>
+          </Box>
         )}
       </Box>
     );
   }
 );
 
+TokenField.displayName = 'TokenField';
 export * from './token-field.types';

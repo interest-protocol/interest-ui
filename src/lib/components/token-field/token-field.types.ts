@@ -1,7 +1,7 @@
 import { StylinComponentProps } from '@stylin.js/react';
-import { FC, InputHTMLAttributes, ReactNode } from 'react';
+import { FC, InputHTMLAttributes } from 'react';
 
-import { MotionProps } from '../../elements/motion/motion.types';
+import { BoxProps } from '../../elements';
 import { SVGProps } from '../../icons/icons.types';
 
 export type TokenFieldElementProps = Omit<
@@ -12,16 +12,13 @@ export type TokenFieldElementProps = Omit<
 export interface TokenFieldProps
   extends StylinComponentProps,
     TokenFieldElementProps {
-  error?: string;
-  valid?: string;
-  outlined?: boolean;
   label?: string;
   tokenName: string;
-  suffix?: ReactNode;
   disabled?: boolean;
+  fieldProps?: BoxProps;
   supportingText?: string;
-  fieldProps?: MotionProps;
   TokenIcon?: FC<SVGProps>;
   variant?: 'filled' | 'outline';
   labelPosition?: 'left' | 'right';
+  status?: 'error' | 'success' | 'none';
 }

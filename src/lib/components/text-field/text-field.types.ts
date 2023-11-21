@@ -14,7 +14,7 @@ export interface TextFieldProps
   label: string;
   suffix?: ReactNode;
   Prefix?: ReactNode;
+  fieldProps?: BoxProps;
   supportingText?: string;
   status?: 'error' | 'success' | 'none';
-  fieldProps?: BoxProps;
 }
