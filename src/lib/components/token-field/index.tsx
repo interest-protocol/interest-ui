@@ -11,7 +11,7 @@ import {
 import React from 'react';
 
 import { Button, LabelElementProps, Theme, useTheme } from '../..';
-import { Box, Motion, Typography } from '../../elements';
+import { Box, Typography } from '../../elements';
 import { TokenFieldElementProps, TokenFieldProps } from './token-field.types';
 
 const TokenFieldElement = stylin<
@@ -30,6 +30,7 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
       variant,
       disabled,
       TokenIcon,
+      fieldProps,
       tokenName,
       labelPosition,
       supportingText,
@@ -47,23 +48,23 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
       ? 'onSurface'
       : status;
 
-    const wrapperVariants = {
-      default: {
-        borderWidth: '1px',
-        borderStyle: 'solid',
-        borderColor:
-          variant === 'outline'
-            ? status || colors.outlineVariant
-            : colors.container,
-        transition: { duration: 0.2 },
-      },
-      focus: {
-        borderStyle: 'solid',
-        borderWidth: ['2px', '3px'],
-        borderColor: colors.primary,
-        transition: { duration: 0.065 },
-      },
-    };
+    // const wrapperVariants = {
+    //   default: {
+    //     borderWidth: '1px',
+    //     borderStyle: 'solid',
+    //     borderColor:
+    //       variant === 'outline'
+    //         ? status || colors.outlineVariant
+    //         : colors.container,
+    //     transition: { duration: 0.2 },
+    //   },
+    //   focus: {
+    //     borderStyle: 'solid',
+    //     borderWidth: ['2px', '3px'],
+    //     borderColor: colors.primary,
+    //     transition: { duration: 0.065 },
+    //   },
+    // };
 
     const handleFocus = (e: FocusEvent<HTMLInputElement, Element>) => {
       if (!focus) setFocus(true);
@@ -102,94 +103,83 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
           </Typography>
         </LabelElement>
         <Box
+          display="flex"
           borderRadius="xs"
-          overflow="hidden"
+          alignItems="center"
+          py={TokenIcon ? '0' : 'xs'}
+          bg={variant === 'outline' ? 'transparent' : 'container'}
+          border={
+            focus
+              ? '3px solid ' + colors.primary
+              : status === 'error'
+              ? '1px solid ' + colors.error
+              : status === 'success'
+              ? '1px solid ' + colors.success
+              : '1px solid ' + colors.container
+          }
           nHover={{
+            borderWidth: focus ? '3px' : disabled ? '1px' : '2px',
             borderStyle: 'solid',
-            transition: 'all 0.3s ease-in-out',
-            borderWidth: disabled ? '1px' : focus ? '0px' : '2px',
-            borderColor: disabled ? colors.outlineVariant : colors.primary,
+            borderColor: !disabled ? colors.primary : colors.outlineVariant,
           }}
+          transition="all 300ms ease-in-out"
+          {...fieldProps}
         >
-          <Motion
+          <Box
+            p="xs"
             display="flex"
-            borderRadius="xs"
+            color="onSurface"
             alignItems="center"
-            py={TokenIcon ? '0' : 'xs'}
-            bg={variant === 'outline' ? 'transparent' : 'container'}
-            border={
-              variant !== 'outline'
-                ? 'none'
-                : status === 'error'
-                ? '1px solid ' + colors.error
-                : status === 'success'
-                ? '1px solid ' + colors.success
-                : '1px solid ' + colors.outlineVariant
-            }
-            initial="default"
-            animate={focus && 'focus'}
-            variants={wrapperVariants}
+            justifyContent="center"
           >
-            <Box
-              p="xs"
-              display="flex"
-              color="onSurface"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Box display="flex" alignItems="center">
-                {TokenIcon && (
-                  <TokenIcon
-                    maxWidth="2.5rem"
-                    maxHeight="2.5rem"
-                    width="100%"
-                  />
-                )}
-                <Typography variant="body" ml="l" size="large">
-                  {tokenName}
-                </Typography>
-              </Box>
+            <Box display="flex" alignItems="center">
+              {TokenIcon && (
+                <TokenIcon maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />
+              )}
+              <Typography variant="body" ml="l" size="large">
+                {tokenName}
+              </Typography>
             </Box>
-            <Box
-              flex="1"
+          </Box>
+          <Box
+            flex="1"
+            width="100%"
+            height="2.5rem"
+            display="flex"
+            alignItems="stretch"
+            flexDirection="column"
+            justifyContent="center"
+            p={TokenIcon ? 'xs' : 'm'}
+            mr={status ? '0.5rem' : 'unset'}
+          >
+            <TokenFieldElement
+              ref={ref}
+              id={label}
+              all="unset"
+              type="text"
               width="100%"
-              height="2.5rem"
-              display="flex"
-              alignItems="stretch"
-              flexDirection="column"
-              justifyContent="center"
-              p={TokenIcon ? 'xs' : 'm'}
-              mr={status ? '0.5rem' : 'unset'}
-            >
-              <TokenFieldElement
-                ref={ref}
-                id={label}
-                all="unset"
-                type="text"
-                width="100%"
-                fontSize="2xl"
-                lineHeight="l"
-                fontWeight="500"
-                disabled={disabled}
-                // eslint-disable-next-line jsx-a11y/no-autofocus
-                autoFocus={focus}
-                onBlur={handleBlur}
-                onFocus={handleFocus}
-                onChange={handleChange}
-                color={statusColor}
-                defaultValue={value || props.defaultValue}
-                nPlaceholder={{
-                  color: '#6F6F73',
-                }}
-                {...props}
-              />
-            </Box>
-            <Box display="flex" alignItems="center" justifyContent="center">
-              <Button variant="text" onClick={onClick} color="primary">
-                MAX
-              </Button>
-            </Box>
-          </Motion>
+              fontSize="2xl"
+              lineHeight="l"
+              fontWeight="500"
+              disabled={disabled}
+              // eslint-disable-next-line jsx-a11y/no-autofocus
+              autoFocus={focus}
+              onBlur={handleBlur}
+              onFocus={handleFocus}
+              onChange={handleChange}
+              color={statusColor}
+              defaultValue={value || props.defaultValue}
+              nPlaceholder={{
+                color: '#6F6F73',
+              }}
+              {...props}
+            />
+          </Box>
+          <Box display="flex" alignItems="center" justifyContent="center">
+            <Button variant="text" onClick={onClick} color="primary">
+              MAX
+            </Button>
+          </Box>
         </Box>
         {supportingText && (
           <Box pt="2xs" fontSize="0.75rem" color={statusColor}>

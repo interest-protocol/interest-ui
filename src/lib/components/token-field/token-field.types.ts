@@ -1,6 +1,7 @@
 import { StylinComponentProps } from '@stylin.js/react';
 import { FC, InputHTMLAttributes } from 'react';
 
+import { BoxProps } from '../../elements';
 import { SVGProps } from '../../icons/icons.types';
 
 export type TokenFieldElementProps = Omit<
@@ -15,6 +16,7 @@ export interface TokenFieldProps
   tokenName: string;
   disabled?: boolean;
   onClick?: () => void;
+  fieldProps?: BoxProps;
   supportingText?: string;
   TokenIcon?: FC<SVGProps>;
   variant?: 'filled' | 'outline';
