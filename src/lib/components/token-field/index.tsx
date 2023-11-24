@@ -91,7 +91,9 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
           py={TokenIcon ? '0' : 'xs'}
           bg={variant === 'outline' ? 'transparent' : 'container'}
           border={
-            focus
+            disabled
+              ? '1px solid ' + colors.outlineVariant
+              : focus && !disabled
               ? '3px solid ' + colors.primary
               : status === 'error'
               ? '1px solid ' + colors.error
@@ -158,13 +160,22 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
             />
           </Box>
           <Box display="flex" alignItems="center" justifyContent="center">
-            <Button variant="text" onClick={onClick} color="primary">
+            <Button
+              variant="text"
+              color="primary"
+              onClick={onClick}
+              disabled={disabled}
+            >
               MAX
             </Button>
           </Box>
         </Box>
         {supportingText && (
-          <Box pt="2xs" fontSize="0.75rem" color={statusColor}>
+          <Box
+            pt="2xs"
+            fontSize="0.75rem"
+            color={disabled ? 'onSurface' : statusColor}
+          >
             {supportingText}
           </Box>
         )}

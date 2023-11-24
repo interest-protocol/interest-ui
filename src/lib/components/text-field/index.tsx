@@ -77,7 +77,9 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
           height="2.5rem"
           alignItems="center"
           border={
-            focus
+            disabled
+              ? '1px solid ' + colors.outlineVariant
+              : focus && !disabled
               ? '3px solid ' + colors.primary
               : status === 'error'
               ? '1px solid ' + colors.error
@@ -150,7 +152,11 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
           )}
         </Box>
         {supportingText && (
-          <Box pt="2xs" fontSize="0.75rem" color={statusColor}>
+          <Box
+            pt="2xs"
+            fontSize="0.75rem"
+            color={disabled ? 'onSurface' : statusColor}
+          >
             {supportingText}
           </Box>
         )}
