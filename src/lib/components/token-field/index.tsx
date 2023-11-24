@@ -48,24 +48,6 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
       ? 'onSurface'
       : status;
 
-    // const wrapperVariants = {
-    //   default: {
-    //     borderWidth: '1px',
-    //     borderStyle: 'solid',
-    //     borderColor:
-    //       variant === 'outline'
-    //         ? status || colors.outlineVariant
-    //         : colors.container,
-    //     transition: { duration: 0.2 },
-    //   },
-    //   focus: {
-    //     borderStyle: 'solid',
-    //     borderWidth: ['2px', '3px'],
-    //     borderColor: colors.primary,
-    //     transition: { duration: 0.065 },
-    //   },
-    // };
-
     const handleFocus = (e: FocusEvent<HTMLInputElement, Element>) => {
       if (!focus) setFocus(true);
 

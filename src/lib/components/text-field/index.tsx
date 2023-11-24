@@ -74,6 +74,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
         <Box
           display="flex"
           borderRadius="full"
+          height="2.5rem"
           alignItems="center"
           border={
             focus
