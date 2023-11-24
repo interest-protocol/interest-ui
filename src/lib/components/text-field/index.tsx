@@ -1,14 +1,15 @@
 import stylin from '@stylin.js/react';
-import {
+import React, {
   ChangeEvent,
   FC,
   FocusEvent,
   forwardRef,
   PropsWithRef,
   RefAttributes,
+  startTransition,
+  useId,
   useState,
 } from 'react';
-import React from 'react';
 
 import { LabelElementProps, Theme, useTheme } from '../..';
 import { Box, Typography } from '../../elements';
@@ -22,7 +23,7 @@ const LabelElement = stylin<LabelElementProps>('label')();
 export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
   (
     {
-      suffix,
+      Suffix,
       Prefix,
       label,
       onBlur,
@@ -38,20 +39,29 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
     const { colors } = useTheme() as Theme;
     const [focus, setFocus] = useState(false);
     const [value, setValue] = useState<string>();
+    const id = useId();
 
-    const statusColor = focus
-      ? 'onSurface'
-      : status === 'none'
-      ? 'onSurface'
-      : status;
+    const statusColor = focus || status === 'none' ? 'onSurface' : status;
+
+    const handleBorderStatus = () => {
+      const isFocused = focus && !disabled;
+      const isError = status === 'error';
+      const isSuccess = status === 'success';
+      const hasStatus = isError || isSuccess;
+      if (disabled) return '1px solid ' + colors.outlineVariant;
+      if (isFocused) return '3px solid ' + colors.primary;
+      if (hasStatus)
+        return '1px solid ' + colors[status as 'error' | 'success'];
+    };
+
     const handleFocus = (e: FocusEvent<HTMLInputElement, Element>) => {
-      if (!focus) setFocus(true);
+      if (!focus) startTransition(() => setFocus(true));
 
       onFocus?.(e);
     };
 
     const handleBlur = (e: FocusEvent<HTMLInputElement, Element>) => {
-      if (focus) setFocus(false);
+      if (focus) startTransition(() => setFocus(false));
 
       onBlur?.(e);
     };
@@ -66,27 +76,19 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
         opacity={disabled ? 0.32 : 1}
         cursor={disabled ? 'not-allowed' : 'normal'}
       >
-        <LabelElement htmlFor={label}>
-          <Typography variant="body" size="small" mb="2xs" color="onSurface">
-            {label}
-          </Typography>
-        </LabelElement>
+        {label && (
+          <LabelElement htmlFor={id}>
+            <Typography variant="body" size="small" mb="2xs" color="onSurface">
+              {label}
+            </Typography>
+          </LabelElement>
+        )}
         <Box
           display="flex"
           borderRadius="full"
           height="2.5rem"
           alignItems="center"
-          border={
-            disabled
-              ? '1px solid ' + colors.outlineVariant
-              : focus && !disabled
-              ? '3px solid ' + colors.primary
-              : status === 'error'
-              ? '1px solid ' + colors.error
-              : status === 'success'
-              ? '1px solid ' + colors.success
-              : '1px solid ' + colors.outlineVariant
-          }
+          border={handleBorderStatus() || '1px solid ' + colors.outlineVariant}
           nHover={{
             borderWidth: focus ? '3px' : disabled ? '1px' : '2px',
             borderStyle: 'solid',
@@ -119,7 +121,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
           >
             <TextFieldElement
               ref={ref}
-              id={label}
+              id={id}
               all="unset"
               type="text"
               width="100%"
@@ -140,14 +142,14 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
               {...props}
             />
           </Box>
-          {suffix && (
+          {Suffix && (
             <Box
               p="m"
               display="flex"
               alignItems="center"
               justifyContent="center"
             >
-              {suffix}
+              {Suffix}
             </Box>
           )}
         </Box>

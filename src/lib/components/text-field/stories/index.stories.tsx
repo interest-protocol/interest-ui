@@ -48,7 +48,7 @@ export const WithSuffix: Story = {
   args: {
     label: 'Label',
     placeholder: '0.123',
-    suffix: <PlusIcon />,
+    Suffix: <PlusIcon />,
     supportingText: 'Supporting text',
   },
 };
@@ -66,7 +66,7 @@ export const Combined: Story = {
     placeholder: '0.123',
     label: 'Label',
     Prefix: <PlusIcon />,
-    suffix: <PlusIcon />,
+    Suffix: <PlusIcon />,
     supportingText: 'Supporting text',
   },
 };
@@ -74,7 +74,7 @@ export const Combined: Story = {
 export const Error: Story = {
   args: {
     status: 'error',
-    suffix: <PlusIcon />,
+    Suffix: <PlusIcon />,
     placeholder: '0.123',
     supportingText: 'Enter a valid amount',
   },
@@ -86,7 +86,7 @@ export const ErrorCombined: Story = {
     placeholder: '0.123',
     label: 'Label',
     Prefix: <PlusIcon />,
-    suffix: <PlusIcon />,
+    Suffix: <PlusIcon />,
     supportingText: 'Supporting text',
   },
 };

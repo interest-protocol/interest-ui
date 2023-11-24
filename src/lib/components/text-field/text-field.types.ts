@@ -11,8 +11,8 @@ export type TextFieldElementProps = Omit<
 export interface TextFieldProps
   extends StylinComponentProps,
     TextFieldElementProps {
-  label: string;
-  suffix?: ReactNode;
+  label?: string;
+  Suffix?: ReactNode;
   Prefix?: ReactNode;
   fieldProps?: BoxProps;
   supportingText?: string;

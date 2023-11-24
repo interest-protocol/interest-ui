@@ -1,14 +1,15 @@
 import stylin from '@stylin.js/react';
-import {
+import React, {
   ChangeEvent,
   FC,
   FocusEvent,
   forwardRef,
   PropsWithRef,
   RefAttributes,
+  startTransition,
+  useId,
   useState,
 } from 'react';
-import React from 'react';
 
 import { Button, LabelElementProps, Theme, useTheme } from '../..';
 import { Box, Typography } from '../../elements';
@@ -41,21 +42,29 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
     const { colors } = useTheme() as Theme;
     const [focus, setFocus] = useState(false);
     const [value, setValue] = useState<string>();
+    const id = useId();
 
-    const statusColor = focus
-      ? 'onSurface'
-      : status === 'none'
-      ? 'onSurface'
-      : status;
+    const statusColor = focus || status === 'none' ? 'onSurface' : status;
+
+    const handleBorderStatus = () => {
+      const isFocused = focus && !disabled;
+      const isError = status === 'error';
+      const isSuccess = status === 'success';
+      const hasStatus = isError || isSuccess;
+      if (disabled) return '1px solid ' + colors.outlineVariant;
+      if (isFocused) return '3px solid ' + colors.primary;
+      if (hasStatus)
+        return '1px solid ' + colors[status as 'error' | 'success'];
+    };
 
     const handleFocus = (e: FocusEvent<HTMLInputElement, Element>) => {
-      if (!focus) setFocus(true);
+      if (!focus) startTransition(() => setFocus(true));
 
       onFocus?.(e);
     };
 
     const handleBlur = (e: FocusEvent<HTMLInputElement, Element>) => {
-      if (focus) setFocus(false);
+      if (focus) startTransition(() => setFocus(false));
 
       onBlur?.(e);
     };
@@ -70,7 +79,7 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
         opacity={disabled ? 0.32 : 1}
         cursor={disabled ? 'not-allowed' : 'normal'}
       >
-        <LabelElement htmlFor={label}>
+        <LabelElement htmlFor={id}>
           <Typography
             mb="xs"
             variant="body"
@@ -91,15 +100,9 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
           py={TokenIcon ? '0' : 'xs'}
           bg={variant === 'outline' ? 'transparent' : 'container'}
           border={
-            disabled
-              ? '1px solid ' + colors.outlineVariant
-              : focus && !disabled
-              ? '3px solid ' + colors.primary
-              : status === 'error'
-              ? '1px solid ' + colors.error
-              : status === 'success'
-              ? '1px solid ' + colors.success
-              : '1px solid ' + colors.container
+            handleBorderStatus() ||
+            '1px solid ' +
+              colors[variant === 'outline' ? 'outlineVariant' : 'container']
           }
           nHover={{
             borderWidth: focus ? '3px' : disabled ? '1px' : '2px',
@@ -138,7 +141,7 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
           >
             <TokenFieldElement
               ref={ref}
-              id={label}
+              id={id}
               all="unset"
               type="text"
               width="100%"
