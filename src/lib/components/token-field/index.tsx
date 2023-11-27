@@ -11,26 +11,29 @@ import React, {
   useState,
 } from 'react';
 
-import { LabelElementProps, Theme, useTheme } from '../..';
+import { Button, LabelElementProps, Theme, useTheme } from '../..';
 import { Box, Typography } from '../../elements';
-import { TextFieldElementProps, TextFieldProps } from './text-field.types';
+import { TokenFieldElementProps, TokenFieldProps } from './token-field.types';
 
-const TextFieldElement = stylin<TextFieldElementProps & RefAttributes<unknown>>(
-  'input'
-)();
+const TokenFieldElement = stylin<
+  TokenFieldElementProps & RefAttributes<unknown>
+>('input')();
 const LabelElement = stylin<LabelElementProps>('label')();
 
-export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
+export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
   (
     {
-      Suffix,
-      Prefix,
       label,
       onBlur,
       status,
       onFocus,
+      onClick,
+      variant,
       disabled,
+      TokenIcon,
       fieldProps,
+      tokenName,
+      labelPosition,
       supportingText,
       ...props
     },
@@ -76,19 +79,31 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
         opacity={disabled ? 0.32 : 1}
         cursor={disabled ? 'not-allowed' : 'normal'}
       >
-        {label && (
-          <LabelElement htmlFor={id}>
-            <Typography variant="body" size="small" mb="2xs" color="onSurface">
-              {label}
-            </Typography>
-          </LabelElement>
-        )}
+        <LabelElement htmlFor={id}>
+          <Typography
+            mb="xs"
+            variant="body"
+            color="onSurface"
+            textAlign={labelPosition}
+            size={labelPosition === 'right' ? 'medium' : 'small'}
+            textTransform={
+              labelPosition === 'right' ? 'uppercase' : 'capitalize'
+            }
+          >
+            {label}
+          </Typography>
+        </LabelElement>
         <Box
           display="flex"
-          borderRadius="full"
-          height="2.5rem"
+          borderRadius="xs"
           alignItems="center"
-          border={handleBorderStatus() || '1px solid ' + colors.outlineVariant}
+          py={TokenIcon ? '0' : 'xs'}
+          bg={variant === 'outline' ? 'transparent' : 'container'}
+          border={
+            handleBorderStatus() ||
+            '1px solid ' +
+              colors[variant === 'outline' ? 'outlineVariant' : 'container']
+          }
           nHover={{
             borderWidth: focus ? '3px' : disabled ? '1px' : '2px',
             borderStyle: 'solid',
@@ -97,19 +112,23 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
           transition="all 300ms ease-in-out"
           {...fieldProps}
         >
-          {Prefix && (
-            <Box
-              p="m"
-              display="flex"
-              color="onSurface"
-              alignItems="center"
-              justifyContent="center"
-            >
-              {Prefix}
-            </Box>
-          )}
           <Box
-            p={Prefix ? 'xs' : 'm'}
+            p="xs"
+            display="flex"
+            color="onSurface"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Box display="flex" alignItems="center">
+              {TokenIcon && (
+                <TokenIcon maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />
+              )}
+              <Typography variant="body" ml="l" size="large">
+                {tokenName}
+              </Typography>
+            </Box>
+          </Box>
+          <Box
             flex="1"
             width="100%"
             height="2.5rem"
@@ -117,16 +136,17 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
             alignItems="stretch"
             flexDirection="column"
             justifyContent="center"
+            p={TokenIcon ? 'xs' : 'm'}
             mr={status ? '0.5rem' : 'unset'}
           >
-            <TextFieldElement
+            <TokenFieldElement
               ref={ref}
               id={id}
               all="unset"
               type="text"
               width="100%"
-              fontSize="m"
-              lineHeight="m"
+              fontSize="2xl"
+              lineHeight="l"
               fontWeight="500"
               disabled={disabled}
               // eslint-disable-next-line jsx-a11y/no-autofocus
@@ -137,21 +157,21 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
               color={statusColor}
               defaultValue={value || props.defaultValue}
               nPlaceholder={{
-                color: 'onSurface',
+                color: '#6F6F73',
               }}
               {...props}
             />
           </Box>
-          {Suffix && (
-            <Box
-              p="m"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
+          <Box display="flex" alignItems="center" justifyContent="center">
+            <Button
+              variant="text"
+              color="primary"
+              onClick={onClick}
+              disabled={disabled}
             >
-              {Suffix}
-            </Box>
-          )}
+              MAX
+            </Button>
+          </Box>
         </Box>
         {supportingText && (
           <Box
@@ -167,5 +187,5 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
   }
 );
 
-TextField.displayName = 'TextField';
-export * from './text-field.types';
+TokenField.displayName = 'TokenField';
+export * from './token-field.types';

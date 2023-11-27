@@ -1,8 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 
-import { PlusIcon, SwapIcon } from '../../../../storybook/icons';
-import { Button } from '../../button';
+import { PlusIcon } from '../../../../storybook/icons';
 import { TextField } from '..';
 
 const meta: Meta<typeof TextField> = {
@@ -28,109 +27,73 @@ export const Default: Story = {
 
 export const WithPrefix: Story = {
   args: {
+    label: 'Label',
+    Prefix: <PlusIcon />,
     placeholder: '0.123',
-    textAlign: 'right',
-    Prefix: (
-      <Button size="small" variant="filled">
-        Prefix
-      </Button>
-    ),
+    supportingText: 'Supporting text',
   },
 };
 
-export const WithPrefixAndBottomText: Story = {
+export const WithPrefixSucess: Story = {
   args: {
+    label: 'Label',
+    status: 'success',
+    Prefix: <PlusIcon />,
     placeholder: '0.123',
-    textAlign: 'right',
-    Prefix: (
-      <Button size="small" variant="filled">
-        Prefix
-      </Button>
-    ),
-    Bottom: '$0.123 USD',
-  },
-};
-
-export const WithPrefixAndTopText: Story = {
-  args: {
-    placeholder: '0.123',
-    textAlign: 'right',
-    Prefix: (
-      <Button size="small" variant="filled">
-        Prefix
-      </Button>
-    ),
-    Top: '$0.123 USD',
+    supportingText: 'Supporting text',
   },
 };
 
 export const WithSuffix: Story = {
   args: {
+    label: 'Label',
     placeholder: '0.123',
-    Suffix: (
-      <Button size="small" variant="filled">
-        Prefix
-      </Button>
-    ),
+    Suffix: <PlusIcon />,
+    supportingText: 'Supporting text',
   },
 };
 
-export const WithPrefixIcon: Story = {
+export const WithTopLabel: Story = {
   args: {
     placeholder: '0.123',
-    PrefixIcon: <SwapIcon />,
+    label: 'Label',
+    supportingText: 'Supporting text',
   },
 };
 
-export const WithSuffixIcon: Story = {
+export const Combined: Story = {
   args: {
     placeholder: '0.123',
-    SuffixIcon: <PlusIcon />,
+    label: 'Label',
+    Prefix: <PlusIcon />,
+    Suffix: <PlusIcon />,
+    supportingText: 'Supporting text',
   },
 };
 
 export const Error: Story = {
   args: {
-    error: 'Supporting text',
+    status: 'error',
+    Suffix: <PlusIcon />,
     placeholder: '0.123',
+    supportingText: 'Enter a valid amount',
   },
 };
 
-export const ErrorWithPrefixIcon: Story = {
+export const ErrorCombined: Story = {
   args: {
-    error: 'Supporting text',
+    status: 'error',
     placeholder: '0.123',
-    PrefixIcon: <SwapIcon />,
+    label: 'Label',
+    Prefix: <PlusIcon />,
+    Suffix: <PlusIcon />,
+    supportingText: 'Supporting text',
   },
 };
 
-export const ErrorWithSuffixIcon: Story = {
+export const Disabled: Story = {
   args: {
-    error: 'Supporting text',
+    disabled: true,
     placeholder: '0.123',
-    SuffixIcon: <PlusIcon />,
-  },
-};
-
-export const Success: Story = {
-  args: {
-    valid: 'Supporting text',
-    placeholder: '0.123',
-  },
-};
-
-export const SuccessWithPrefixIcon: Story = {
-  args: {
-    valid: 'Supporting text',
-    placeholder: '0.123',
-    PrefixIcon: <SwapIcon />,
-  },
-};
-
-export const SuccessWithSuffixIcon: Story = {
-  args: {
-    valid: 'Supporting text',
-    placeholder: '0.123',
-    SuffixIcon: <PlusIcon />,
   },
 };
