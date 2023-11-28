@@ -21,6 +21,7 @@ export const ListItem: FC<PropsWithChildren<ListItemProps>> = ({
       px="xs"
       gap="xs"
       display="flex"
+      onClick={onClick}
       position="relative"
       alignItems="center"
       background="surface.container"
@@ -30,7 +31,6 @@ export const ListItem: FC<PropsWithChildren<ListItemProps>> = ({
       width={['100%', '100%', '14.9375rem', '14.9375rem']}
       nHover={{ bg: disabled ? 'transparent' : colors.primary + '14' }}
       {...props}
-      onClick={onClick}
     >
       {PrefixIcon && (
         <Box

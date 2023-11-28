@@ -3,15 +3,15 @@ import React, {
   FC,
   FocusEvent,
   forwardRef,
-  PropsWithChildren,
   PropsWithRef,
   RefAttributes,
   useId,
   useState,
   useTransition,
 } from 'react';
+import { v4 } from 'uuid';
 
-import { Box, Motion, Theme, Typography, useTheme } from '../..';
+import { Box, ListItem, Motion, Theme, Typography, useTheme } from '../..';
 import { wrapperVariants } from '../../constants/wrapper-variants';
 import useClickOutsideListenerRef from '../../hooks/use-click-outside-listener-ref';
 import { ArrowBottomSecondarySVG } from '../../icons';
@@ -24,13 +24,11 @@ const DropdownButtonElement = stylin<
   DropdownButtonElementProps & RefAttributes<unknown>
 >('button')();
 
-export const DropdownButton: FC<
-  PropsWithChildren<PropsWithRef<DropdownButtonProps>>
-> = forwardRef(
-  ({ label, title, children, PrefixIcon, onBlur, onFocus, ...props }, ref) => {
+export const DropdownButton: FC<PropsWithRef<DropdownButtonProps>> = forwardRef(
+  ({ label, title, PrefixIcon, ListItems, onBlur, onFocus, ...props }, ref) => {
     const { colors } = useTheme() as Theme;
     const [focus, setFocus] = useState(false);
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     const [, startTransition] = useTransition();
     const BOX_ID = useId();
 
@@ -133,12 +131,22 @@ export const DropdownButton: FC<
             pointerEvents={isOpen ? 'auto' : 'none'}
             boxShadow="0px 2px 4px -2px rgba(13, 16, 23, 0.04), 0px 4px 8px -2px rgba(13, 16, 23, 0.12)"
           >
-            <Box p="m" borderBottom="1px solid" borderColor="outlineVariant">
-              <Typography variant="label" size="large" color="onSurface">
-                {title}
-              </Typography>
-            </Box>
-            {children}
+            {title && (
+              <Box p="m" borderBottom="1px solid" borderColor="outlineVariant">
+                <Typography variant="label" size="large" color="onSurface">
+                  {title}
+                </Typography>
+              </Box>
+            )}
+            {ListItems.map((item) => (
+              <ListItem
+                key={v4()}
+                title={item.title}
+                disabled={item.disabled}
+                SuffixIcon={item.SuffixIcon}
+                PrefixIcon={<Box width="1.5rem">{item.PrefixIcon}</Box>}
+              />
+            ))}
           </Motion>
         )}
       </Box>
