@@ -1,13 +1,13 @@
 import stylin from '@stylin.js/react';
 import React, {
   FC,
-  FocusEvent,
   forwardRef,
+  MouseEventHandler,
   PropsWithRef,
   RefAttributes,
+  useEffect,
   useId,
   useState,
-  useTransition,
 } from 'react';
 import { v4 } from 'uuid';
 
@@ -25,12 +25,15 @@ const DropdownButtonElement = stylin<
 >('button')();
 
 export const DropdownButton: FC<PropsWithRef<DropdownButtonProps>> = forwardRef(
-  ({ label, title, Icon, items, onBlur, onFocus, ...props }, ref) => {
+  ({ label, title, Icon, items, selected, ...props }, ref) => {
     const { colors } = useTheme() as Theme;
-    const [focus, setFocus] = useState(false);
+    const [isFocused, setIsFocused] = useState(selected || false);
     const [isOpen, setIsOpen] = useState(false);
-    const [, startTransition] = useTransition();
     const BOX_ID = useId();
+
+    useEffect(() => {
+      setIsFocused(Boolean(selected));
+    }, [selected]);
 
     const closeDropdown = (event: any) => {
       if (
@@ -44,20 +47,10 @@ export const DropdownButton: FC<PropsWithRef<DropdownButtonProps>> = forwardRef(
 
     const BoxRef = useClickOutsideListenerRef<HTMLDivElement>(closeDropdown);
 
-    const handleFocus = (e: FocusEvent<HTMLButtonElement, Element>) => {
-      if (!focus) startTransition(() => setFocus(true));
-
-      onFocus?.(e);
-    };
-
-    const handleBlur = (e: FocusEvent<HTMLButtonElement, Element>) => {
-      if (focus) startTransition(() => setFocus(false));
-
-      onBlur?.(e);
-    };
-
-    const handleDropdown = () => {
+    const handleDropdown: MouseEventHandler<HTMLInputElement> = () => {
       setIsOpen(!isOpen);
+      !selected && setIsFocused(true);
+      props.onClick?.();
     };
 
     return (
@@ -75,20 +68,19 @@ export const DropdownButton: FC<PropsWithRef<DropdownButtonProps>> = forwardRef(
           height="2.5rem"
           cursor="pointer"
           alignItems="center"
-          onBlur={handleBlur}
-          onFocus={handleFocus}
+          bg="lowestContainer"
           p={label ? 'xs' : '0'}
           pr={label ? 'm' : '0'}
           onClick={handleDropdown}
-          border={focus ? '4px solid' : '0'}
+          border={isFocused ? '4px solid' : '0'}
           borderRadius={label ? 'full' : 'xs'}
           width={label ? 'fit-content' : '2.5rem'}
           justifyContent={label ? 'unset' : 'center'}
+          onBlur={() => setIsFocused(selected || false)}
           transition="background-color 300ms ease-in-out"
-          bg={focus ? colors.primary + '14' : colors.lowestContainer}
-          borderColor={focus ? colors.primary + '14' : 'transparent'}
-          nHover={{ bg: !focus ? colors.primary + '14' : 'transparent' }}
+          borderColor={isFocused ? colors.primary + '14' : 'transparent'}
           nActive={{ bg: colors.primary + '14', color: colors.onSurface }}
+          nHover={{ bg: !isFocused ? colors.primary + '14' : 'transparent' }}
           {...props}
         >
           <Box
