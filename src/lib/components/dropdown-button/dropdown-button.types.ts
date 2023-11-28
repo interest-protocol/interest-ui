@@ -14,6 +14,6 @@ export interface DropdownButtonProps
   label?: string;
   title?: string;
   disabled?: boolean;
-  PrefixIcon: ReactNode;
-  ListItems: ReadonlyArray<ListItemProps>;
+  icon: ReactNode;
+  items: ReadonlyArray<ListItemProps>;
 }

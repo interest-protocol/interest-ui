@@ -29,8 +29,8 @@ export const WithLabel: Story = {
     label: 'Label',
     disabled: false,
     title: 'Title',
-    PrefixIcon: <CircleSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />,
-    ListItems: [
+    icon: <CircleSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />,
+    items: [
       {
         PrefixIcon: (
           <CircleSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />
@@ -61,8 +61,8 @@ export const WithLabelAndDisableds: Story = {
     label: 'Label',
     disabled: false,
     title: 'Title',
-    PrefixIcon: <CircleSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />,
-    ListItems: [
+    icon: <CircleSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />,
+    items: [
       {
         disabled: true,
         PrefixIcon: (
@@ -93,8 +93,8 @@ export const WithLabelAndDisableds: Story = {
 
 export const WithoutLabelAndDisableds: Story = {
   args: {
-    PrefixIcon: <CircleSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />,
-    ListItems: [
+    icon: <CircleSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />,
+    items: [
       {
         disabled: true,
         PrefixIcon: (
