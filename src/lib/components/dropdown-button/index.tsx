@@ -66,6 +66,7 @@ export const DropdownButton: FC<PropsWithRef<DropdownButtonProps>> = forwardRef(
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         ref={BoxRef}
+        position="relative"
       >
         <DropdownButtonElement
           gap="xs"
@@ -115,8 +116,7 @@ export const DropdownButton: FC<PropsWithRef<DropdownButtonProps>> = forwardRef(
         </DropdownButtonElement>
         {isOpen && (
           <Motion
-            mt="1rem"
-            top="3rem"
+            top="3.5rem"
             zIndex={4}
             overflow="hidden"
             initial="closed"
