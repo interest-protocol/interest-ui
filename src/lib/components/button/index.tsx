@@ -1,6 +1,6 @@
 import stylin, { variant } from '@stylin.js/react';
 import { CustomDomComponent, motion } from 'framer-motion';
-import React, { FC, PropsWithChildren, useState } from 'react';
+import React, { FC, PropsWithChildren, useEffect, useState } from 'react';
 
 import { Box } from '../../elements';
 import { Theme, useTheme } from '../../theme';
@@ -18,10 +18,15 @@ const MotionButton = motion(ButtonElement) as CustomDomComponent<ButtonProps>;
 
 export const Button: FC<PropsWithChildren<ButtonProps>> = ({
   children,
+  selected,
   ...props
 }) => {
-  const [isFocused, setIsFocused] = useState(false);
+  const [isFocused, setIsFocused] = useState(selected || false);
   const { colors } = useTheme() as Theme;
+
+  useEffect(() => {
+    setIsFocused(Boolean(selected));
+  }, [selected]);
 
   if (isIconButton(props))
     return (
@@ -32,12 +37,22 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
         alignItems="center"
         position="relative"
         display="inline-flex"
+        borderColor={
+          props.variant == 'outline' && isFocused ? 'primary' : 'unset'
+        }
+        color={
+          (props.variant == 'outline' || props.variant == 'tonal') && isFocused
+            ? 'primary'
+            : props.variant == 'filled'
+            ? 'onPrimary'
+            : 'unset'
+        }
         justifyContent="center"
-        onBlur={() => setIsFocused(false)}
+        onBlur={() => setIsFocused(selected || false)}
         {...props}
         onClick={(e) => {
-          setIsFocused(true);
-          props.onClick && props.onClick(e);
+          !selected && setIsFocused(true);
+          props.onClick?.(e);
         }}
       >
         {children}
@@ -54,11 +69,11 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
           position="absolute"
           borderRadius="full"
           transition="all 300ms ease-in-out"
-          border={isFocused ? '0.25rem solid' : 'unset'}
+          border={!isFocused ? 'unset' : '0.25rem solid'}
           left={props.variant == 'outline' ? '-11%' : '-10%'}
           width={props.variant == 'outline' ? '122%' : '120%'}
           height={props.variant == 'outline' ? '128%' : '120%'}
-          borderColor={isFocused ? `${colors.primary}29` : 'transparent'}
+          borderColor={!isFocused ? 'transparent' : `${colors.primary}29`}
         />
       </MotionButton>
     );
@@ -71,11 +86,21 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
       position="relative"
       pr={SuffixIcon ? 'm' : 'xl'}
       pl={PrefixIcon ? 'm' : 'xl'}
-      onBlur={() => setIsFocused(false)}
+      borderColor={
+        props.variant == 'outline' && isFocused ? 'primary' : 'unset'
+      }
+      color={
+        (props.variant == 'outline' || props.variant == 'tonal') && isFocused
+          ? 'primary'
+          : props.variant == 'filled'
+          ? 'onPrimary'
+          : 'unset'
+      }
+      onBlur={() => setIsFocused(selected || false)}
       {...props}
       onClick={(e) => {
-        setIsFocused(true);
-        props.onClick && props.onClick(e);
+        !selected && setIsFocused(true);
+        props.onClick?.(e);
       }}
     >
       {PrefixIcon}
@@ -94,11 +119,11 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
         position="absolute"
         borderRadius="full"
         transition="all 300ms ease-in-out"
-        border={isFocused ? '0.25rem solid' : 'unset'}
+        border={!isFocused ? 'unset' : '0.25rem solid'}
         left={props.variant == 'outline' ? '-4%' : '-3%'}
         height={props.variant == 'outline' ? '128%' : '120%'}
-        width={props.variant == 'outline' ? '107.7%' : '106%'}
-        borderColor={isFocused ? `${colors.primary}29` : 'transparent'}
+        width={props.variant == 'outline' ? '107.3%' : '106%'}
+        borderColor={!isFocused ? 'transparent' : `${colors.primary}29`}
       />
     </MotionButton>
   );
