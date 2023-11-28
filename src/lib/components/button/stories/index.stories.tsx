@@ -180,3 +180,12 @@ export const Icon: Story = {
     isIcon: true,
   },
 };
+
+export const ButtonWithAction: Story = {
+  args: {
+    variant: 'outline',
+    children: 'Press here',
+    disabled: false,
+    selected: false,
+  },
+};
