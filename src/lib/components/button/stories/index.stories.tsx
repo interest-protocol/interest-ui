@@ -32,6 +32,7 @@ export const Filled: Story = {
     variant: 'filled',
     children: 'Label',
     disabled: false,
+    onClick: () => console.log('>>>tudo ok'),
   },
 };
 
