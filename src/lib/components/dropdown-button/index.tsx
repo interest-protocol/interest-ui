@@ -25,7 +25,7 @@ const DropdownButtonElement = stylin<
 >('button')();
 
 export const DropdownButton: FC<PropsWithRef<DropdownButtonProps>> = forwardRef(
-  ({ label, title, icon, items, onBlur, onFocus, ...props }, ref) => {
+  ({ label, title, Icon, items, onBlur, onFocus, ...props }, ref) => {
     const { colors } = useTheme() as Theme;
     const [focus, setFocus] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
@@ -96,7 +96,7 @@ export const DropdownButton: FC<PropsWithRef<DropdownButtonProps>> = forwardRef(
             alignItems="center"
             display="flex"
           >
-            {icon}
+            {Icon}
           </Box>
           {label && (
             <>
