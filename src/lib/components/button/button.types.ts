@@ -17,6 +17,7 @@ export type ButtonElementProps = Omit<
 export type CombinedButtonProps = Omit<StylinComponentProps, 'transition'> &
   ButtonElementProps & {
     variant: ButtonVariants;
+    selected?: boolean;
   };
 
 export interface IconButton extends CombinedButtonProps {
