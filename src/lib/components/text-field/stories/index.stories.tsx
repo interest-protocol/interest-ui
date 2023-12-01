@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 
 import { PlusIcon } from '../../../../storybook/icons';
+import { Box } from '../../../elements';
 import { TextField } from '..';
 
 const meta: Meta<typeof TextField> = {
@@ -89,6 +90,22 @@ export const ErrorCombined: Story = {
     Suffix: <PlusIcon />,
     supportingText: 'Supporting text',
   },
+};
+
+export const ErrorCombinedWithWrapper: Story = {
+  args: {
+    status: 'error',
+    placeholder: '0.123',
+    label: 'Label',
+    Prefix: <PlusIcon />,
+    Suffix: <PlusIcon />,
+    supportingText: 'Supporting text',
+  },
+  render: (args) => (
+    <Box display="flex" flexDirection="column" alignItems="flex-end">
+      <TextField {...args} />
+    </Box>
+  ),
 };
 
 export const Disabled: Story = {

@@ -73,6 +73,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
 
     return (
       <Box
+        all="inherit"
         opacity={disabled ? 0.32 : 1}
         cursor={disabled ? 'not-allowed' : 'normal'}
       >
