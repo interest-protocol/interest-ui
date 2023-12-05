@@ -12,4 +12,5 @@ export * from './tabs';
 export * from './tag';
 export * from './text-field';
 export * from './toggle';
+export * from './token-field';
 export * from './tooltip';

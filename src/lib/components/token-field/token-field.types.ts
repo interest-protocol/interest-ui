@@ -1,5 +1,5 @@
 import { StylinComponentProps } from '@stylin.js/react';
-import { FC, InputHTMLAttributes } from 'react';
+import { FC, InputHTMLAttributes, ReactNode } from 'react';
 
 import { BoxProps } from '../../elements';
 import { SVGProps } from '../../icons/icons.types';
@@ -12,7 +12,8 @@ export type TokenFieldElementProps = Omit<
 export interface TokenFieldProps
   extends StylinComponentProps,
     TokenFieldElementProps {
-  label?: string;
+  Label?: ReactNode;
+  isNotDefaultLabel?: boolean;
   tokenName: string;
   disabled?: boolean;
   onClick?: () => void;

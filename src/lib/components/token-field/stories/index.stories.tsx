@@ -30,7 +30,20 @@ type Story = StoryObj<typeof TokenField>;
 
 export const FilledWithToken: Story = {
   args: {
-    label: 'Label',
+    Label: 'Label',
+    textAlign: 'right',
+    TokenIcon: TokenSVG,
+    placeholder: 'Input',
+    labelPosition: 'right',
+    tokenName: 'Token Name',
+    supportingText: 'Supporting text',
+  },
+};
+
+export const FilledWithTokenWithoutLabel: Story = {
+  args: {
+    Label: 'Label',
+    isNotDefaultLabel: true,
     textAlign: 'right',
     TokenIcon: TokenSVG,
     placeholder: 'Input',
@@ -42,7 +55,7 @@ export const FilledWithToken: Story = {
 
 export const FilledWithLabelToTheLeft: Story = {
   args: {
-    label: 'Label',
+    Label: 'Label',
     textAlign: 'right',
     TokenIcon: TokenSVG,
     placeholder: 'Input',
@@ -54,7 +67,7 @@ export const FilledWithLabelToTheLeft: Story = {
 
 export const FilledWithTokenError: Story = {
   args: {
-    label: 'Label',
+    Label: 'Label',
     status: 'error',
     textAlign: 'right',
     TokenIcon: TokenSVG,
@@ -66,7 +79,7 @@ export const FilledWithTokenError: Story = {
 
 export const FilledWithTokenDisabled: Story = {
   args: {
-    label: 'Label',
+    Label: 'Label',
     disabled: true,
     textAlign: 'right',
     TokenIcon: TokenSVG,
@@ -79,7 +92,7 @@ export const FilledWithTokenDisabled: Story = {
 
 export const FilledWithoutTokenIcon: Story = {
   args: {
-    label: 'Label',
+    Label: 'Label',
     textAlign: 'right',
     placeholder: 'Input',
     labelPosition: 'right',
@@ -90,7 +103,7 @@ export const FilledWithoutTokenIcon: Story = {
 
 export const FilledWithoutTokenIconError: Story = {
   args: {
-    label: 'Label',
+    Label: 'Label',
     status: 'error',
     textAlign: 'right',
     placeholder: 'Input',
@@ -102,7 +115,7 @@ export const FilledWithoutTokenIconError: Story = {
 export const FilledWithoutTokenIconDisabled: Story = {
   args: {
     disabled: true,
-    label: 'Label',
+    Label: 'Label',
     textAlign: 'right',
     placeholder: 'Input',
     labelPosition: 'right',
@@ -113,7 +126,7 @@ export const FilledWithoutTokenIconDisabled: Story = {
 
 export const OutlineWithToken: Story = {
   args: {
-    label: 'Label',
+    Label: 'Label',
     variant: 'outline',
     textAlign: 'right',
     TokenIcon: TokenSVG,
@@ -126,7 +139,7 @@ export const OutlineWithToken: Story = {
 
 export const OutlineWithLabelToTheLeft: Story = {
   args: {
-    label: 'Label',
+    Label: 'Label',
     variant: 'outline',
     textAlign: 'right',
     TokenIcon: TokenSVG,
@@ -139,7 +152,7 @@ export const OutlineWithLabelToTheLeft: Story = {
 
 export const OutlineWithTokenError: Story = {
   args: {
-    label: 'Label',
+    Label: 'Label',
     status: 'error',
     variant: 'outline',
     textAlign: 'right',
@@ -153,7 +166,7 @@ export const OutlineWithTokenError: Story = {
 
 export const OutlineWithTokenDisabled: Story = {
   args: {
-    label: 'Label',
+    Label: 'Label',
     disabled: true,
     variant: 'outline',
     textAlign: 'right',
@@ -167,7 +180,7 @@ export const OutlineWithTokenDisabled: Story = {
 
 export const OutlineWithoutTokenIcon: Story = {
   args: {
-    label: 'Label',
+    Label: 'Label',
     variant: 'outline',
     textAlign: 'right',
     placeholder: 'Input',
@@ -179,7 +192,7 @@ export const OutlineWithoutTokenIcon: Story = {
 
 export const OutlineWithoutTokenIconError: Story = {
   args: {
-    label: 'Label',
+    Label: 'Label',
     status: 'error',
     variant: 'outline',
     textAlign: 'right',
@@ -192,7 +205,7 @@ export const OutlineWithoutTokenIconError: Story = {
 
 export const OutlineWithoutTokenIconDisabled: Story = {
   args: {
-    label: 'Label',
+    Label: 'Label',
     disabled: true,
     variant: 'outline',
     textAlign: 'right',
