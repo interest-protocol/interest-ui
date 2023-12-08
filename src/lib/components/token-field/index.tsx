@@ -127,9 +127,7 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
             justifyContent="center"
           >
             <Box display="flex" alignItems="center">
-              {TokenIcon && (
-                <TokenIcon maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />
-              )}
+              {TokenIcon}
               <Typography variant="body" ml="l" size="large">
                 {tokenName}
               </Typography>
