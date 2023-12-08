@@ -1,5 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
+import React from 'react';
 
+import { Box } from '../../../elements';
 import { ErrorSVG } from '../../../icons';
 import { Tag } from '..';
 
@@ -31,7 +33,20 @@ export const FilledWithCombined: Story = {
     size: 'large',
     children: 'Label',
     variant: 'filled',
-    PrefixIcon: ErrorSVG,
+    PrefixIcon: (
+      <Box
+        p=".1875rem"
+        width="2rem"
+        height="2rem"
+        display="flex"
+        color="onSurface"
+        alignItems="center"
+        borderRadius="full"
+        justifyContent="center"
+      >
+        <ErrorSVG maxWidth="1.125rem" maxHeight="1.125rem" width="100%" />
+      </Box>
+    ),
     onClose: () => {
       alert('close button licked');
     },
@@ -43,9 +58,23 @@ export const FilledWithPrefix: Story = {
     size: 'large',
     children: 'Label',
     variant: 'filled',
-    PrefixIcon: ErrorSVG,
+    PrefixIcon: (
+      <Box
+        p=".1875rem"
+        width="2rem"
+        height="2rem"
+        display="flex"
+        color="onSurface"
+        alignItems="center"
+        borderRadius="full"
+        justifyContent="center"
+      >
+        <ErrorSVG maxWidth="1.125rem" maxHeight="1.125rem" width="100%" />
+      </Box>
+    ),
   },
 };
+
 export const FilledWithDismiss: Story = {
   args: {
     size: 'large',
@@ -56,6 +85,7 @@ export const FilledWithDismiss: Story = {
     },
   },
 };
+
 export const Filled: Story = {
   args: {
     size: 'large',
@@ -69,7 +99,20 @@ export const OutlinedWithCombined: Story = {
     size: 'large',
     children: 'Label',
     variant: 'outline',
-    PrefixIcon: ErrorSVG,
+    PrefixIcon: (
+      <Box
+        p=".1875rem"
+        width="2rem"
+        height="2rem"
+        display="flex"
+        color="onSurface"
+        alignItems="center"
+        borderRadius="full"
+        justifyContent="center"
+      >
+        <ErrorSVG maxWidth="1.125rem" maxHeight="1.125rem" width="100%" />
+      </Box>
+    ),
     onClose: () => {
       alert('close button licked');
     },
@@ -81,9 +124,23 @@ export const OutlinedWithPrefix: Story = {
     size: 'large',
     children: 'Label',
     variant: 'outline',
-    PrefixIcon: ErrorSVG,
+    PrefixIcon: (
+      <Box
+        p=".1875rem"
+        width="2rem"
+        height="2rem"
+        display="flex"
+        color="onSurface"
+        alignItems="center"
+        borderRadius="full"
+        justifyContent="center"
+      >
+        <ErrorSVG maxWidth="1.125rem" maxHeight="1.125rem" width="100%" />
+      </Box>
+    ),
   },
 };
+
 export const OutlinedWithDismiss: Story = {
   args: {
     size: 'large',
@@ -94,6 +151,7 @@ export const OutlinedWithDismiss: Story = {
     },
   },
 };
+
 export const Outlined: Story = {
   args: {
     size: 'large',

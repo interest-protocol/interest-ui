@@ -42,25 +42,7 @@ export const Tag: FC<PropsWithChildren<TagProps>> = ({
       }}
       {...props}
     >
-      {PrefixIcon && (
-        <Box
-          p=".1875rem"
-          width={
-            size === 'large' ? '2rem' : size === 'medium' ? '1.8rem' : '1.3rem'
-          }
-          height={
-            size === 'large' ? '2rem' : size === 'medium' ? '1.8rem' : '1.3rem'
-          }
-          display="flex"
-          color="white"
-          bg="onSurface"
-          alignItems="center"
-          borderRadius="full"
-          justifyContent="center"
-        >
-          <PrefixIcon maxWidth="1.125rem" maxHeight="1.125rem" width="100%" />
-        </Box>
-      )}
+      {PrefixIcon}
       <Typography
         as="p"
         variant="body"
