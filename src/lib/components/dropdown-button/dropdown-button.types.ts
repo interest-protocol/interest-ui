@@ -5,7 +5,7 @@ import { ListItemProps } from '..';
 
 export type DropdownButtonElementProps = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
-  'color' | 'translate' | 'height' | 'width' | 'content'
+  'color' | 'translate' | 'height' | 'width' | 'content' | 'onClick'
 >;
 
 export interface DropdownButtonProps
@@ -13,7 +13,9 @@ export interface DropdownButtonProps
     DropdownButtonElementProps {
   label?: string;
   title?: string;
-  disabled?: boolean;
   Icon: ReactNode;
+  disabled?: boolean;
+  selected?: boolean;
+  onClick?: () => void;
   items: ReadonlyArray<ListItemProps>;
 }
