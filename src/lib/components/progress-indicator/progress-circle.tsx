@@ -29,18 +29,18 @@ export const ProgressCircle: FC<PropsWithChildren<ProgressItemProps>> = ({
           ? {
               animate: {
                 backgroundImage: [
-                  `conic-gradient(transparent 0%, ${colors.primary} 0%, ${colors.primary} 0%, transparent 0%)`,
-                  `conic-gradient(transparent 0%, ${colors.primary} 0%,  ${colors.primary} 100%, transparent 100%)`,
-                  `conic-gradient(transparent 100%, ${colors.primary} 100%, ${colors.primary} 100%, transparent 100%)`,
+                  `conic-gradient(${colors.container} 0%, ${colors.primary} 0%, ${colors.primary} 0%, ${colors.container} 0%)`,
+                  `conic-gradient(${colors.container} 0%, ${colors.primary} 0%,  ${colors.primary} 100%, ${colors.container} 100%)`,
+                  `conic-gradient(${colors.container} 100%, ${colors.primary} 100%, ${colors.primary} 100%, ${colors.container} 100%)`,
                 ],
               },
             }
           : {
               initial: {
-                backgroundImage: `conic-gradient(${colors.primary} 0%, transparent 0%)`,
+                backgroundImage: `conic-gradient(${colors.primary} 0%, ${colors.container} 0%)`,
               },
               animate: {
-                backgroundImage: `conic-gradient(${colors.primary} ${value}%, transparent ${value}%)`,
+                backgroundImage: `conic-gradient(${colors.primary} ${value}%, ${colors.container} ${value}%)`,
               },
             })}
       />
