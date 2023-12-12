@@ -1,20 +1,12 @@
 import React, { FC } from 'react';
 
 import { Box, Typography } from '../../elements';
-import { CheckSVG, ExclamationSVG, TimesSVG, WarningSVG } from '../../icons';
-import { SVGProps } from '../../icons/icons.types';
+import { TimesSVG } from '../../icons';
 import { Button } from '../button';
 import { Modal } from '../modal';
 import { ProgressIndicator } from '../progress-indicator';
+import { COLOR_MAP, STATUS_ICON } from './dialog.data';
 import { DialogProps } from './dialog.types';
-import { COLOR_MAP } from './dialog.utils';
-
-const STATUS_ICON: Record<string, FC<SVGProps>> = {
-  error: WarningSVG,
-  warning: ExclamationSVG,
-  info: ExclamationSVG,
-  success: CheckSVG,
-};
 
 export const Dialog: FC<DialogProps> = ({
   status,
@@ -26,6 +18,7 @@ export const Dialog: FC<DialogProps> = ({
   primaryButton,
 }) => {
   const Icon = STATUS_ICON[status];
+
   return (
     <Modal custom isOpen={isOpen}>
       <Box
