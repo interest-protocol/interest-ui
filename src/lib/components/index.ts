@@ -1,5 +1,6 @@
 export * from './button';
 export * from './checkbox';
+export * from './dialog';
 export * from './dropdown-button';
 export * from './info-card';
 export * from './list';
