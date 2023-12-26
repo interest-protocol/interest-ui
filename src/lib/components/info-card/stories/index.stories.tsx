@@ -9,9 +9,6 @@ const meta: Meta<typeof InfoCard> = {
     title: {
       control: { type: 'text' },
     },
-    info: {
-      control: { type: 'text' },
-    },
   },
 };
 
@@ -21,19 +18,17 @@ type Story = StoryObj<typeof InfoCard>;
 
 export const Normal: Story = {
   args: {
-    info: '53%',
-    title: 'List item',
-    children: 'USD 6,786.99',
+    title: 'TVL',
+    children: '$52,294.12',
     onClick: () => alert('clicked'),
   },
 };
 
 export const NormalSized: Story = {
   args: {
-    info: '53%',
     width: '10rem',
-    title: 'List item',
-    children: 'USD 6,786.99',
+    title: 'TVL',
+    children: '$52,294.12',
     onClick: () => alert('clicked'),
   },
 };
