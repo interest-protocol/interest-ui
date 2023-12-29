@@ -2,7 +2,6 @@ import { useTheme } from '@emotion/react';
 import React, { FC, PropsWithChildren } from 'react';
 
 import { Box, Typography } from '../../elements';
-import { MoneySignSVG } from '../../icons';
 import { Theme } from '../../theme';
 import { InfoCardProps } from './info-card.types';
 
@@ -11,6 +10,7 @@ export const InfoCard: FC<PropsWithChildren<InfoCardProps>> = ({
   onClick,
   width,
   children,
+  icon,
 }) => {
   const { dark } = useTheme() as Theme;
 
@@ -18,33 +18,39 @@ export const InfoCard: FC<PropsWithChildren<InfoCardProps>> = ({
     <Box
       px="m"
       py="xl"
+      gap="m"
+      width="100%"
       bg="onPrimary"
-      height="8.25rem"
+      minWidth="6rem"
       borderRadius="m"
-      overflow="hidden"
+      overflowX="scroll"
       display="inline-flex"
       flexDirection="column"
-      width={width ?? '26.75rem'}
+      maxWidth={width ?? '26.75rem'}
       justifyContent="space-between"
-      color={dark ? 'white' : 'onSurface'}
+      color={dark ? 'lowestContainer' : 'onSurface'}
       {...(onClick && { onClick, cursor: 'pointer' })}
     >
       <Box display="flex" alignItems="center" justifyContent="space-between">
-        <Typography variant="label" size="large">
+        <Typography marginRight="m" variant="label" size="large">
           {title}
         </Typography>
-        <Box
-          bg="surface"
-          padding="2xs"
-          width="2.5rem"
-          display="flex"
-          height="2.5rem"
-          borderRadius="50%"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <MoneySignSVG maxHeight="1.5rem" maxWidth="1.5rem" width="100%" />
-        </Box>
+        {icon && (
+          <Box
+            bg="surface"
+            padding="2xs"
+            width="2.5rem"
+            display="flex"
+            height="2.5rem"
+            minWidth="2.5rem"
+            minHeight="2.5rem"
+            borderRadius="50%"
+            alignItems="center"
+            justifyContent="center"
+          >
+            {icon}
+          </Box>
+        )}
       </Box>
       <Typography size="large" lineHeight="l" variant="title" color="#000000A3">
         {children}
