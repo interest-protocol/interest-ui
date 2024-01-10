@@ -10,7 +10,7 @@ export const InfoCard: FC<PropsWithChildren<InfoCardProps>> = ({
   onClick,
   width,
   children,
-  icon,
+  Icon,
 }) => {
   const { dark } = useTheme() as Theme;
 
@@ -32,10 +32,10 @@ export const InfoCard: FC<PropsWithChildren<InfoCardProps>> = ({
       {...(onClick && { onClick, cursor: 'pointer' })}
     >
       <Box display="flex" alignItems="center" justifyContent="space-between">
-        <Typography marginRight="m" variant="label" size="large">
+        <Typography mr="m" variant="label" size="large">
           {title}
         </Typography>
-        {icon && (
+        {Icon && (
           <Box
             bg="surface"
             padding="2xs"
@@ -48,7 +48,7 @@ export const InfoCard: FC<PropsWithChildren<InfoCardProps>> = ({
             alignItems="center"
             justifyContent="center"
           >
-            {icon}
+            {Icon}
           </Box>
         )}
       </Box>
