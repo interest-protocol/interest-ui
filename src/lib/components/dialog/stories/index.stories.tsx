@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import React, { FC, useState } from 'react';
 
+import { Button } from '../../button';
 import { DialogProps } from '../dialog.types';
 import { Dialog as IUDialog } from '../index';
 
@@ -44,6 +45,25 @@ const meta: Meta<typeof Dialog> = {
 export default meta;
 
 type Story = StoryObj<typeof Dialog>;
+
+export const Custom: Story = {
+  args: {
+    isOpen: true,
+    title: 'Custom Dialog',
+    message:
+      "This is the error description. It can be anything you want and as long as you want. But please don't make it too long.",
+    status: 'success',
+    primaryButton: (
+      <Button variant="tonal" width="100%">
+        Text
+      </Button>
+    ),
+    secondaryButton: {
+      label: 'CLOSE',
+      onClick: () => console.log('OK button clicked'),
+    },
+  },
+};
 
 export const Success: Story = {
   args: {
