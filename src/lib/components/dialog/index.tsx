@@ -6,7 +6,7 @@ import { Button } from '../button';
 import { Modal } from '../modal';
 import { ProgressIndicator } from '../progress-indicator';
 import { COLOR_MAP, STATUS_ICON } from './dialog.data';
-import { DialogProps } from './dialog.types';
+import { DialogProps, IDialogButton } from './dialog.types';
 
 export const Dialog: FC<DialogProps> = ({
   status,
@@ -103,9 +103,7 @@ export const Dialog: FC<DialogProps> = ({
             {message}
           </Typography>
         </Box>
-
-        {status !== 'loading' &&
-        (secondaryButton?.label || primaryButton?.label) ? (
+        {status !== 'loading' && (secondaryButton || primaryButton) ? (
           <Box
             minWidth="100%"
             display="flex"
@@ -113,29 +111,33 @@ export const Dialog: FC<DialogProps> = ({
             pt="xl"
             flexDirection="row"
           >
-            {!!secondaryButton?.label && (
-              <Button
-                marginRight="s"
-                justifyContent="center"
-                flex="1"
-                variant="outline"
-                onClick={secondaryButton.onClick}
-                borderColor="outlineVariant"
-              >
-                {secondaryButton.label}
-              </Button>
-            )}
-            {!!primaryButton?.label && (
-              <Button
-                onClick={primaryButton.onClick}
-                backgroundColor={status === 'error' ? 'error' : ''}
-                justifyContent="center"
-                flex="2"
-                variant="filled"
-              >
-                {primaryButton.label}
-              </Button>
-            )}
+            {React.isValidElement(secondaryButton)
+              ? secondaryButton
+              : !!(secondaryButton as IDialogButton)?.label && (
+                  <Button
+                    marginRight="s"
+                    justifyContent="center"
+                    flex="1"
+                    variant="outline"
+                    onClick={(secondaryButton as IDialogButton).onClick}
+                    borderColor="outlineVariant"
+                  >
+                    {(secondaryButton as IDialogButton).label}
+                  </Button>
+                )}
+            {React.isValidElement(primaryButton)
+              ? primaryButton
+              : !!(primaryButton as IDialogButton)?.label && (
+                  <Button
+                    onClick={(primaryButton as IDialogButton).onClick}
+                    backgroundColor={status === 'error' ? 'error' : ''}
+                    justifyContent="center"
+                    flex="2"
+                    variant="filled"
+                  >
+                    {(primaryButton as IDialogButton).label}
+                  </Button>
+                )}
           </Box>
         ) : null}
       </Box>
