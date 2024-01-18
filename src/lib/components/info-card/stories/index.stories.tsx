@@ -1,5 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
+import React from 'react';
 
+import { MoneySignSVG } from '../../../icons';
 import { InfoCard } from '..';
 
 const meta: Meta<typeof InfoCard> = {
@@ -7,9 +9,6 @@ const meta: Meta<typeof InfoCard> = {
   component: InfoCard,
   argTypes: {
     title: {
-      control: { type: 'text' },
-    },
-    info: {
       control: { type: 'text' },
     },
   },
@@ -21,19 +20,19 @@ type Story = StoryObj<typeof InfoCard>;
 
 export const Normal: Story = {
   args: {
-    info: '53%',
-    title: 'List item',
-    children: 'USD 6,786.99',
+    title: 'TVL',
+    children: '$52,294.12',
     onClick: () => alert('clicked'),
+    icon: <MoneySignSVG maxHeight="1.5rem" maxWidth="1.5rem" width="100%" />,
   },
 };
 
 export const NormalSized: Story = {
   args: {
-    info: '53%',
     width: '10rem',
-    title: 'List item',
-    children: 'USD 6,786.99',
+    title: 'TVL',
+    children: '$52,294.12',
     onClick: () => alert('clicked'),
+    icon: <MoneySignSVG maxHeight="1.5rem" maxWidth="1.5rem" width="100%" />,
   },
 };

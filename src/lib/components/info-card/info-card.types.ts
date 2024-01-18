@@ -3,7 +3,7 @@ import { CSSProperties, ReactNode } from 'react';
 type MaybeArray<T> = ReadonlyArray<T> | T;
 
 export interface InfoCardProps {
-  info: ReactNode;
+  Icon?: ReactNode;
   title: ReactNode;
   width?: MaybeArray<CSSProperties['width']>;
   onClick?: () => void;

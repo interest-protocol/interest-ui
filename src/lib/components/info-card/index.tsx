@@ -6,38 +6,53 @@ import { Theme } from '../../theme';
 import { InfoCardProps } from './info-card.types';
 
 export const InfoCard: FC<PropsWithChildren<InfoCardProps>> = ({
-  info,
   title,
   onClick,
   width,
   children,
+  Icon,
 }) => {
   const { dark } = useTheme() as Theme;
 
   return (
     <Box
-      p="m"
-      width={width ?? '15rem'}
-      height="7.5rem"
+      px="m"
+      py="xl"
+      gap="m"
+      width="100%"
+      bg="onPrimary"
+      minWidth="6rem"
       borderRadius="m"
-      overflow="hidden"
-      border="1px dashed"
+      overflowX="auto"
       display="inline-flex"
       flexDirection="column"
+      maxWidth={width ?? '26.75rem'}
       justifyContent="space-between"
-      borderColor="outline.outlineVariant"
-      color={dark ? 'white' : 'onSurface'}
+      color={dark ? 'lowestContainer' : 'onSurface'}
       {...(onClick && { onClick, cursor: 'pointer' })}
     >
-      <Box display="flex" justifyContent="space-between">
-        <Typography variant="body" size="small">
+      <Box display="flex" alignItems="center" justifyContent="space-between">
+        <Typography mr="m" variant="label" size="large">
           {title}
         </Typography>
-        <Typography variant="body" size="small">
-          {info}
-        </Typography>
+        {Icon && (
+          <Box
+            bg="surface"
+            padding="2xs"
+            width="2.5rem"
+            display="flex"
+            height="2.5rem"
+            minWidth="2.5rem"
+            minHeight="2.5rem"
+            borderRadius="50%"
+            alignItems="center"
+            justifyContent="center"
+          >
+            {Icon}
+          </Box>
+        )}
       </Box>
-      <Typography variant="body" size="small" mt="2xl">
+      <Typography size="large" lineHeight="l" variant="title" color="#000000A3">
         {children}
       </Typography>
     </Box>
