@@ -19,10 +19,10 @@
     "@types/react-modal": "^3.16.0",
     "framer-motion": "^10.11.2",
     "ramda": "^0.29.0",
+    "rc-slider": "^10.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
-    "react-range": "^1.8.14",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
