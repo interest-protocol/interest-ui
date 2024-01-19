@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export interface IDialogButton {
   label: string;
   onClick?: () => void;
@@ -8,7 +10,7 @@ export interface DialogProps {
   title: string;
   message: string;
   onClose?: () => void;
-  secondaryButton?: IDialogButton;
-  primaryButton?: IDialogButton;
+  secondaryButton?: IDialogButton | ReactNode;
+  primaryButton?: IDialogButton | ReactNode;
   status: 'success' | 'warning' | 'error' | 'info' | 'general' | 'loading';
 }
