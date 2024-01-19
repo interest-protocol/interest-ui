@@ -4,17 +4,24 @@ import { SVGProps } from './icons.types';
 
 const Check: FC<SVGProps> = ({ maxWidth, maxHeight, ...props }) => (
   <svg
-    viewBox="0 0 24 24"
     style={{ maxWidth, maxHeight }}
+    viewBox="0 0 48 48"
     fill="none"
     {...props}
   >
-    <path
-      d="M7.5 12L10.5 15L16.5 9M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
+    <rect width="48" height="48" rx="24" fill="#BAF6CF" />
+    <rect
+      x="2"
+      y="2"
+      style={{ maxWidth, maxHeight }}
+      rx="22"
       stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      strokeOpacity="0.72"
+      strokeWidth="4"
+    />
+    <path
+      d="M33.4141 18.0002L20.9999 30.4144L14.5857 24.0002L15.9999 22.5859L20.9999 27.5859L31.9999 16.5859L33.4141 18.0002Z"
+      fill="#16A24A"
     />
   </svg>
 );

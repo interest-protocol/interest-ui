@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 
 import { Box, Typography } from '../../elements';
-import { TimesSVG } from '../../icons';
 import { Button } from '../button';
 import { Modal } from '../modal';
 import { ProgressIndicator } from '../progress-indicator';
@@ -13,7 +12,6 @@ export const Dialog: FC<DialogProps> = ({
   title,
   isOpen,
   message,
-  onClose,
   secondaryButton,
   primaryButton,
 }) => {
@@ -23,7 +21,7 @@ export const Dialog: FC<DialogProps> = ({
     <Modal custom isOpen={isOpen}>
       <Box
         p="xl"
-        borderRadius="m"
+        borderRadius="xs"
         width="25rem"
         maxWidth="90%"
         alignItems="center"
@@ -49,17 +47,6 @@ export const Dialog: FC<DialogProps> = ({
           >
             {title}
           </Typography>
-          {!!onClose && (
-            <Box top="0" right="0" position="absolute" width="fit-content">
-              <TimesSVG
-                onClick={onClose}
-                cursor="pointer"
-                maxWidth="1.5rem"
-                maxHeight="1.5rem"
-                width="100%"
-              />
-            </Box>
-          )}
         </Box>
         <Box
           display="flex"
@@ -80,7 +67,7 @@ export const Dialog: FC<DialogProps> = ({
               />
             ) : (
               <Box
-                padding="s"
+                p="s"
                 color={COLOR_MAP[status]}
                 display="flex"
                 borderRadius="50%"
@@ -121,6 +108,7 @@ export const Dialog: FC<DialogProps> = ({
                 variant="outline"
                 onClick={secondaryButton.onClick}
                 borderColor="outlineVariant"
+                borderRadius="xs"
               >
                 {secondaryButton.label}
               </Button>
@@ -130,8 +118,9 @@ export const Dialog: FC<DialogProps> = ({
                 onClick={primaryButton.onClick}
                 backgroundColor={status === 'error' ? 'error' : ''}
                 justifyContent="center"
-                flex="2"
+                flex="3"
                 variant="filled"
+                borderRadius="xs"
               >
                 {primaryButton.label}
               </Button>
