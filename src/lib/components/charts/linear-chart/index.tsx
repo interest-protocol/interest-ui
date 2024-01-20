@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis } from 'recharts';
 
 import { Theme, useTheme } from '../../../theme';
-import { BaseChartProps } from '../base-chart.types';
+import { BaseChartProps } from '../charts.types';
 import CustomTooltip from '../tooltip';
 import CustomizedAxisTick from './customized-axis-tick';
 

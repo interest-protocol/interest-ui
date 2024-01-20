@@ -9,7 +9,7 @@ import {
 } from 'recharts';
 
 import { colors } from '../../../theme/dark/colors';
-import { BaseChartProps } from '../base-chart.types';
+import { BaseChartProps } from '../charts.types';
 import CustomTooltip from '../tooltip';
 import CustomCursor from './custom-cursor';
 import CustomXAxisTick from './x-axis-tick';
