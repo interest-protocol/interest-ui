@@ -11,12 +11,17 @@ import {
 
 import { Typography } from '../../../elements';
 import { Theme, useTheme } from '../../../theme';
-import { SEMANTIC_COLORS } from '../charts.contants';
 import CustomTooltip from '../tooltip';
 import { CircleChartProps } from './circle-chart.types';
 import CustomizedLabel from './customized-label';
 
-const CircleChart: FC<CircleChartProps> = ({ data, label, height, width }) => {
+const CircleChart: FC<CircleChartProps> = ({
+  data,
+  label,
+  height,
+  width,
+  semanticColors,
+}) => {
   const { dark } = useTheme() as Theme;
 
   return (
@@ -38,7 +43,7 @@ const CircleChart: FC<CircleChartProps> = ({ data, label, height, width }) => {
             <Cell
               key={`cell-${index}`}
               fill={
-                SEMANTIC_COLORS[index % SEMANTIC_COLORS.length][
+                semanticColors[index % semanticColors.length][
                   dark ? 'dark' : 'light'
                 ]
               }

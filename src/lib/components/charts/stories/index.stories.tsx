@@ -6,8 +6,7 @@ const meta: Meta<typeof Chart> = {
   title: 'Chart',
   component: Chart,
   argTypes: {
-    type: {
-      defaultValue: 'Title',
+    variant: {
       control: { type: 'text' },
     },
     data: {
@@ -22,7 +21,7 @@ type Story = StoryObj<typeof Chart>;
 
 export const BarChart: Story = {
   args: {
-    type: 'bar',
+    variant: 'bar',
     data: [
       {
         amount: 93,
@@ -65,7 +64,7 @@ export const BarChart: Story = {
 
 export const AreaChart: Story = {
   args: {
-    type: 'area',
+    variant: 'area',
     data: [
       {
         amount: 93,
@@ -103,7 +102,7 @@ export const AreaChart: Story = {
 
 export const StepsChart: Story = {
   args: {
-    type: 'steps',
+    variant: 'steps',
     data: [
       {
         amount: 93,
@@ -142,7 +141,16 @@ export const StepsChart: Story = {
 export const PieChart: Story = {
   args: {
     label: 'Pool',
-    type: 'pie',
+    variant: 'pie',
+    semanticColors: [
+      { dark: '#BEF264', light: '#84CC16' },
+      { dark: '#FCA5A5', light: '#EF4444' },
+      { dark: '#FDBA74', light: '#F97316' },
+      { dark: '#67E8F9', light: '#06B6D4' },
+      { dark: '#FDBA74', light: '#F59E0B' },
+      { dark: '#D8B4FE', light: '#A855F7' },
+      { dark: '#F9A8D4', light: '#EC4899' },
+    ],
     data: [
       {
         amount: 93,
