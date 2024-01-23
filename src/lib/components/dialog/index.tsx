@@ -5,7 +5,7 @@ import { Button } from '../button';
 import { Modal } from '../modal';
 import { ProgressIndicator } from '../progress-indicator';
 import { COLOR_MAP, STATUS_ICON } from './dialog.data';
-import { DialogProps, IDialogButton } from './dialog.types';
+import { DialogProps } from './dialog.types';
 
 export const Dialog: FC<DialogProps> = ({
   status,
