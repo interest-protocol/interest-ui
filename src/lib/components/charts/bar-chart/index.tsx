@@ -36,6 +36,9 @@ const BarChartComponent: FC<BaseChartProps> = ({ data, height, width }) => (
       />
       <Tooltip
         cursor={<CustomCursor />}
+        contentStyle={{
+          zIndex: 999,
+        }}
         animationEasing="ease-in-out"
         content={<CustomTooltip />}
       />

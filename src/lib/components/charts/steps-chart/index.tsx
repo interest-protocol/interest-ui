@@ -46,6 +46,9 @@ const StepsChart: FC<BaseChartProps> = ({ data, height, width }) => {
           animationDuration={600}
           animationEasing="ease-in-out"
           content={<CustomTooltip />}
+          contentStyle={{
+            zIndex: 999,
+          }}
           cursor={{
             strokeWidth: 0.5,
             strokeDasharray: '3 3',

@@ -15,7 +15,7 @@ const CustomXAxisTick: FC<CustomXAxisTickProps> = (props) => {
         dy={16}
         textAnchor="middle"
         fontSize="0.75rem"
-        fill="#1B1B1F"
+        fill={dark ? 'white' : 'black'}
       >
         <tspan
           fill={dark ? 'white' : 'black'}

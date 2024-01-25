@@ -1,6 +1,10 @@
 import React, { FC } from 'react';
 
+import { Theme, useTheme } from '../../../../theme';
+
 const CustomizedAxisTick: FC<any> = (props: any) => {
+  const { dark } = useTheme() as Theme;
+
   const { x, y, payload } = props;
 
   return (
@@ -14,7 +18,7 @@ const CustomizedAxisTick: FC<any> = (props: any) => {
         style={{
           fontFamily: 'Proto',
         }}
-        fill="#1B1B1F"
+        fill={dark ? 'white' : 'black'}
       >
         {payload.value}
       </text>

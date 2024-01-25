@@ -10,12 +10,12 @@ const CustomTooltip: FC<CustomTooltipProps> = ({ active, payload }) => {
     <Box
       p="s"
       borderRadius="m"
-      bg="inverseSurface"
+      bg="white"
       boxShadow="0px 4px 4px rgba(0, 0, 0, 0.30)"
     >
       {payload.map(({ value, dataKey }) => (
         <Box key={`tooltip-${dataKey}`}>
-          <Typography variant="body" size="small" color="inverseOnSurface">
+          <Typography variant="body" size="small" color="dark">
             {value}
           </Typography>
         </Box>
