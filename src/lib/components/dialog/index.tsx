@@ -39,7 +39,12 @@ export const Dialog: FC<DialogProps> = ({
           justifyContent="center"
         >
           <Typography
-            color={COLOR_MAP[status]}
+            color={
+              // eslint-disable-next-line no-constant-condition
+              status === 'loading' || 'general'
+                ? 'onSurface'
+                : COLOR_MAP[status]
+            }
             flex="1"
             textAlign="center"
             variant="title"
@@ -90,7 +95,7 @@ export const Dialog: FC<DialogProps> = ({
             {message}
           </Typography>
         </Box>
-        {status !== 'loading' && (secondaryButton || primaryButton) ? (
+        {status !== 'loading' && status !== 'general' ? (
           <Box
             minWidth="100%"
             display="flex"
