@@ -107,6 +107,7 @@ export const Dialog: FC<DialogProps> = ({
                 onClick={secondaryButton.onClick}
                 borderColor="outlineVariant"
                 borderRadius="xs"
+                color={COLOR_MAP.info}
               >
                 {secondaryButton.label}
               </Button>
