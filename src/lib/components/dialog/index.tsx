@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 
 import { Box, Typography } from '../../elements';
-import { TimesSVG } from '../../icons';
 import { Button } from '../button';
 import { Modal } from '../modal';
 import { ProgressIndicator } from '../progress-indicator';
@@ -13,9 +12,9 @@ export const Dialog: FC<DialogProps> = ({
   title,
   isOpen,
   message,
-  onClose,
-  secondaryButton,
+  fontFamily,
   primaryButton,
+  secondaryButton,
 }) => {
   const Icon = STATUS_ICON[status];
 
@@ -23,9 +22,9 @@ export const Dialog: FC<DialogProps> = ({
     <Modal custom isOpen={isOpen}>
       <Box
         p="xl"
-        borderRadius="m"
         width="25rem"
         maxWidth="90%"
+        borderRadius="xs"
         alignItems="center"
         display="inline-flex"
         flexDirection="column"
@@ -41,25 +40,20 @@ export const Dialog: FC<DialogProps> = ({
           justifyContent="center"
         >
           <Typography
-            color={COLOR_MAP[status]}
+            color={
+              // eslint-disable-next-line no-constant-condition
+              status === 'loading' || 'general'
+                ? 'onSurface'
+                : COLOR_MAP[status]
+            }
             flex="1"
             textAlign="center"
             variant="title"
             size="large"
+            {...(fontFamily && { fontFamily })}
           >
             {title}
           </Typography>
-          {!!onClose && (
-            <Box top="0" right="0" position="absolute" width="fit-content">
-              <TimesSVG
-                onClick={onClose}
-                cursor="pointer"
-                maxWidth="1.5rem"
-                maxHeight="1.5rem"
-                width="100%"
-              />
-            </Box>
-          )}
         </Box>
         <Box
           display="flex"
@@ -80,7 +74,7 @@ export const Dialog: FC<DialogProps> = ({
               />
             ) : (
               <Box
-                padding="s"
+                p="s"
                 color={COLOR_MAP[status]}
                 display="flex"
                 borderRadius="50%"
@@ -99,11 +93,14 @@ export const Dialog: FC<DialogProps> = ({
             lineHeight="m"
             variant="body"
             size="medium"
+            {...(fontFamily && { fontFamily })}
           >
             {message}
           </Typography>
         </Box>
-        {status !== 'loading' && (secondaryButton || primaryButton) ? (
+        {status !== 'loading' &&
+        status !== 'general' &&
+        (secondaryButton || primaryButton) ? (
           <Box
             minWidth="100%"
             display="flex"
@@ -113,7 +110,7 @@ export const Dialog: FC<DialogProps> = ({
           >
             {React.isValidElement(secondaryButton)
               ? secondaryButton
-              : !!(secondaryButton as IDialogButton)?.label && (
+              : !!(secondaryButton as IDialogButton).label && (
                   <Button
                     marginRight="s"
                     justifyContent="center"
@@ -121,19 +118,22 @@ export const Dialog: FC<DialogProps> = ({
                     variant="outline"
                     onClick={(secondaryButton as IDialogButton).onClick}
                     borderColor="outlineVariant"
+                    borderRadius="xs"
+                    color={COLOR_MAP.info}
                   >
                     {(secondaryButton as IDialogButton).label}
                   </Button>
                 )}
-            {React.isValidElement(primaryButton)
-              ? primaryButton
+            {React.isValidElement(secondaryButton)
+              ? secondaryButton
               : !!(primaryButton as IDialogButton)?.label && (
                   <Button
                     onClick={(primaryButton as IDialogButton).onClick}
                     backgroundColor={status === 'error' ? 'error' : ''}
                     justifyContent="center"
-                    flex="2"
+                    flex="3"
                     variant="filled"
+                    borderRadius="xs"
                   >
                     {(primaryButton as IDialogButton).label}
                   </Button>

@@ -6,9 +6,10 @@ export interface IDialogButton {
 }
 
 export interface DialogProps {
-  isOpen: boolean;
   title: string;
+  isOpen: boolean;
   message: string;
+  fontFamily?: string;
   onClose?: () => void;
   secondaryButton?: IDialogButton | ReactNode;
   primaryButton?: IDialogButton | ReactNode;
