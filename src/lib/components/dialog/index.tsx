@@ -12,8 +12,9 @@ export const Dialog: FC<DialogProps> = ({
   title,
   isOpen,
   message,
-  secondaryButton,
+  fontFamily,
   primaryButton,
+  secondaryButton,
 }) => {
   const Icon = STATUS_ICON[status];
 
@@ -21,9 +22,9 @@ export const Dialog: FC<DialogProps> = ({
     <Modal custom isOpen={isOpen}>
       <Box
         p="xl"
-        borderRadius="xs"
         width="25rem"
         maxWidth="90%"
+        borderRadius="xs"
         alignItems="center"
         display="inline-flex"
         flexDirection="column"
@@ -49,6 +50,7 @@ export const Dialog: FC<DialogProps> = ({
             textAlign="center"
             variant="title"
             size="large"
+            {...(fontFamily && { fontFamily })}
           >
             {title}
           </Typography>
@@ -91,6 +93,7 @@ export const Dialog: FC<DialogProps> = ({
             lineHeight="m"
             variant="body"
             size="medium"
+            {...(fontFamily && { fontFamily })}
           >
             {message}
           </Typography>
