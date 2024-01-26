@@ -5,7 +5,7 @@ import { Button } from '../button';
 import { Modal } from '../modal';
 import { ProgressIndicator } from '../progress-indicator';
 import { COLOR_MAP, STATUS_ICON } from './dialog.data';
-import { DialogProps } from './dialog.types';
+import { DialogProps, IDialogButton } from './dialog.types';
 
 export const Dialog: FC<DialogProps> = ({
   status,
@@ -98,7 +98,9 @@ export const Dialog: FC<DialogProps> = ({
             {message}
           </Typography>
         </Box>
-        {status !== 'loading' && status !== 'general' ? (
+        {status !== 'loading' &&
+        status !== 'general' &&
+        (secondaryButton || primaryButton) ? (
           <Box
             minWidth="100%"
             display="flex"
@@ -106,30 +108,32 @@ export const Dialog: FC<DialogProps> = ({
             pt="xl"
             flexDirection="row"
           >
-            {!!secondaryButton?.label && (
+            {React.isValidElement(secondaryButton)
+              ? secondaryButton
+              : !!(secondaryButton as IDialogButton).label && (
+                  <Button
+                    marginRight="s"
+                    justifyContent="center"
+                    flex="1"
+                    variant="outline"
+                    onClick={(secondaryButton as IDialogButton).onClick}
+                    borderColor="outlineVariant"
+                    borderRadius="xs"
+                    color={COLOR_MAP.info}
+                  >
+                    {(secondaryButton as IDialogButton).label}
+                  </Button>
+                )}
+            {!!(primaryButton as IDialogButton)?.label && (
               <Button
-                marginRight="s"
-                justifyContent="center"
-                flex="1"
-                variant="outline"
-                onClick={secondaryButton.onClick}
-                borderColor="outlineVariant"
-                borderRadius="xs"
-                color={COLOR_MAP.info}
-              >
-                {secondaryButton.label}
-              </Button>
-            )}
-            {!!primaryButton?.label && (
-              <Button
-                onClick={primaryButton.onClick}
+                onClick={(primaryButton as IDialogButton).onClick}
                 backgroundColor={status === 'error' ? 'error' : ''}
                 justifyContent="center"
                 flex="3"
                 variant="filled"
                 borderRadius="xs"
               >
-                {primaryButton.label}
+                {(primaryButton as IDialogButton).label}
               </Button>
             )}
           </Box>
