@@ -124,18 +124,20 @@ export const Dialog: FC<DialogProps> = ({
                     {(secondaryButton as IDialogButton).label}
                   </Button>
                 )}
-            {!!(primaryButton as IDialogButton)?.label && (
-              <Button
-                onClick={(primaryButton as IDialogButton).onClick}
-                backgroundColor={status === 'error' ? 'error' : ''}
-                justifyContent="center"
-                flex="3"
-                variant="filled"
-                borderRadius="xs"
-              >
-                {(primaryButton as IDialogButton).label}
-              </Button>
-            )}
+            {React.isValidElement(secondaryButton)
+              ? secondaryButton
+              : !!(primaryButton as IDialogButton)?.label && (
+                  <Button
+                    onClick={(primaryButton as IDialogButton).onClick}
+                    backgroundColor={status === 'error' ? 'error' : ''}
+                    justifyContent="center"
+                    flex="3"
+                    variant="filled"
+                    borderRadius="xs"
+                  >
+                    {(primaryButton as IDialogButton).label}
+                  </Button>
+                )}
           </Box>
         ) : null}
       </Box>
