@@ -124,8 +124,8 @@ export const Dialog: FC<DialogProps> = ({
                     {(secondaryButton as IDialogButton).label}
                   </Button>
                 )}
-            {React.isValidElement(secondaryButton)
-              ? secondaryButton
+            {React.isValidElement(primaryButton)
+              ? primaryButton
               : !!(primaryButton as IDialogButton)?.label && (
                   <Button
                     onClick={(primaryButton as IDialogButton).onClick}
