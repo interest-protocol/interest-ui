@@ -28,8 +28,6 @@ const meta: Meta<typeof Dialog> = {
       defaultValue: false,
       control: { type: 'boolean' },
     },
-    primaryButton: {},
-    secondaryButton: {},
     title: {
       defaultValue: 'Title',
       control: { type: 'text' },
@@ -108,10 +106,6 @@ export const Error: Story = {
     message:
       "This is the error description. It can be anything you want and as long as you want. But please don't make it too long.",
     status: 'error',
-    primaryButton: {
-      label: 'GOT IT',
-      onClick: () => console.log('OK button clicked'),
-    },
     secondaryButton: {
       label: 'CLOSE',
       onClick: () => console.log('OK button clicked'),
@@ -162,13 +156,5 @@ export const Loading: Story = {
     message:
       "This is the error description. It can be anything you want and as long as you want. But please don't make it too long.",
     status: 'loading',
-    primaryButton: {
-      label: 'GOT IT',
-      onClick: () => console.log('OK button clicked'),
-    },
-    secondaryButton: {
-      label: 'CLOSE',
-      onClick: () => console.log('OK button clicked'),
-    },
   },
 };

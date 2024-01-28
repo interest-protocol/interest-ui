@@ -98,48 +98,48 @@ export const Dialog: FC<DialogProps> = ({
             {message}
           </Typography>
         </Box>
-        {status !== 'loading' &&
-        status !== 'general' &&
-        (secondaryButton || primaryButton) ? (
+        {(secondaryButton || primaryButton) && (
           <Box
-            minWidth="100%"
-            display="flex"
-            justifyContent="space-between"
             pt="xl"
+            display="flex"
+            minWidth="100%"
+            justifyContent="space-between"
             flexDirection="row"
           >
-            {React.isValidElement(secondaryButton)
-              ? secondaryButton
-              : !!(secondaryButton as IDialogButton).label && (
-                  <Button
-                    marginRight="s"
-                    justifyContent="center"
-                    flex="1"
-                    variant="outline"
-                    onClick={(secondaryButton as IDialogButton).onClick}
-                    borderColor="outlineVariant"
-                    borderRadius="xs"
-                    color={COLOR_MAP.info}
-                  >
-                    {(secondaryButton as IDialogButton).label}
-                  </Button>
-                )}
-            {React.isValidElement(primaryButton)
-              ? primaryButton
-              : !!(primaryButton as IDialogButton)?.label && (
-                  <Button
-                    onClick={(primaryButton as IDialogButton).onClick}
-                    backgroundColor={status === 'error' ? 'error' : ''}
-                    justifyContent="center"
-                    flex="3"
-                    variant="filled"
-                    borderRadius="xs"
-                  >
-                    {(primaryButton as IDialogButton).label}
-                  </Button>
-                )}
+            {!!secondaryButton &&
+              (React.isValidElement(secondaryButton)
+                ? secondaryButton
+                : !!(secondaryButton as IDialogButton).label && (
+                    <Button
+                      marginRight="s"
+                      justifyContent="center"
+                      flex="1"
+                      variant="outline"
+                      onClick={(secondaryButton as IDialogButton).onClick}
+                      borderColor="outlineVariant"
+                      borderRadius="xs"
+                      color={COLOR_MAP.info}
+                    >
+                      {(secondaryButton as IDialogButton).label}
+                    </Button>
+                  ))}
+            {!!primaryButton &&
+              (React.isValidElement(primaryButton)
+                ? primaryButton
+                : !!(primaryButton as IDialogButton)?.label && (
+                    <Button
+                      onClick={(primaryButton as IDialogButton).onClick}
+                      backgroundColor={status === 'error' ? 'error' : ''}
+                      justifyContent="center"
+                      flex="3"
+                      variant="filled"
+                      borderRadius="xs"
+                    >
+                      {(primaryButton as IDialogButton).label}
+                    </Button>
+                  ))}
           </Box>
-        ) : null}
+        )}
       </Box>
     </Modal>
   );

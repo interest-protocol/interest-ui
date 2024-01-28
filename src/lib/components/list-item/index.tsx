@@ -11,10 +11,12 @@ export const ListItem: FC<PropsWithChildren<ListItemProps>> = ({
   metadata,
   SuffixIcon,
   PrefixIcon,
+  fontFamily,
   description,
   ...props
 }) => {
   const { colors } = useTheme() as Theme;
+
   return (
     <Box
       py="l"
@@ -52,14 +54,21 @@ export const ListItem: FC<PropsWithChildren<ListItemProps>> = ({
         flexDirection="column"
         opacity={disabled ? 0.32 : 1}
       >
-        <Typography as="span" size="medium" variant="body" color="onSurface">
+        <Typography
+          as="span"
+          size="medium"
+          variant="body"
+          color="onSurface"
+          fontFamily={fontFamily}
+        >
           {title}
         </Typography>
         {description && (
           <Typography
             as="span"
-            variant="body"
             size="small"
+            variant="body"
+            fontFamily={fontFamily}
             color="onSurfaceVariant"
           >
             {description}
@@ -72,6 +81,7 @@ export const ListItem: FC<PropsWithChildren<ListItemProps>> = ({
           as="span"
           size="small"
           variant="body"
+          fontFamily={fontFamily}
           color="onSurfaceVariant"
           opacity={disabled ? 0.32 : 1}
           mr={SuffixIcon ? '2xl' : 'unset'}
