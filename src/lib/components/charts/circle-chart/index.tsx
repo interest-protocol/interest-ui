@@ -32,7 +32,6 @@ const CircleChart: FC<CircleChartProps> = ({
           cy={85}
           innerRadius={60}
           outerRadius={75}
-          fill="#8884d8"
           dataKey="amount"
           nameKey="date"
           stroke=""
@@ -59,7 +58,6 @@ const CircleChart: FC<CircleChartProps> = ({
           formatter={(value) => (
             <Typography
               as="span"
-              color="#6B7280"
               variant="body"
               size="small"
               fontSize={['xs', 's', 's', 's']}
@@ -68,7 +66,7 @@ const CircleChart: FC<CircleChartProps> = ({
               {value}
             </Typography>
           )}
-          wrapperStyle={{ top: '170px', bottom: 'unset' }}
+          wrapperStyle={{ top: '10.625rem', bottom: 'unset' }}
         />
         <Tooltip content={<CustomTooltip />} />
       </PieChart>
