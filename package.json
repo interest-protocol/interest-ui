@@ -23,6 +23,7 @@
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
     "react-range": "^1.8.14",
+    "recharts": "^2.10.4",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
