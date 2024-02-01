@@ -2,7 +2,6 @@ import stylin, { variant } from '@stylin.js/react';
 import { CustomDomComponent, motion } from 'framer-motion';
 import React, { FC, PropsWithChildren, useEffect, useState } from 'react';
 
-import { Box } from '../../elements';
 import { Theme, useTheme } from '../../theme';
 import { ButtonElementProps, ButtonProps, NoIconButton } from './button.types';
 import { isIconButton } from './button.utils';
@@ -56,25 +55,6 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
         }}
       >
         {children}
-        <Box
-          p="s"
-          nActive={
-            props.disabled
-              ? {}
-              : {
-                  border: '0.25rem solid',
-                  borderColor: `${colors.primary}29`,
-                }
-          }
-          position="absolute"
-          borderRadius="full"
-          transition="all 300ms ease-in-out"
-          border={!isFocused ? 'unset' : '0.25rem solid'}
-          left={props.variant == 'outline' ? '-11%' : '-10%'}
-          width={props.variant == 'outline' ? '122%' : '120%'}
-          height={props.variant == 'outline' ? '128%' : '120%'}
-          borderColor={!isFocused ? 'transparent' : `${colors.primary}29`}
-        />
       </MotionButton>
     );
 
@@ -82,7 +62,7 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
 
   return (
     <MotionButton
-      py="xs"
+      py="s"
       position="relative"
       pr={SuffixIcon ? 'm' : 'xl'}
       pl={PrefixIcon ? 'm' : 'xl'}
@@ -102,29 +82,13 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
         !selected && setIsFocused(true);
         props.onClick?.(e);
       }}
+      {...(isFocused && {
+        boxShadow: `0 0 0 0.25rem ${colors.primary}29`,
+      })}
     >
       {PrefixIcon}
       {children}
       {SuffixIcon}
-      <Box
-        p="s"
-        nActive={
-          props.disabled
-            ? {}
-            : {
-                border: '0.25rem solid',
-                borderColor: `${colors.primary}29`,
-              }
-        }
-        position="absolute"
-        borderRadius="full"
-        transition="all 300ms ease-in-out"
-        border={!isFocused ? 'unset' : '0.25rem solid'}
-        left={props.variant == 'outline' ? '-4%' : '-3%'}
-        height={props.variant == 'outline' ? '128%' : '120%'}
-        width={props.variant == 'outline' ? '107.3%' : '106%'}
-        borderColor={!isFocused ? 'transparent' : `${colors.primary}29`}
-      />
     </MotionButton>
   );
 };

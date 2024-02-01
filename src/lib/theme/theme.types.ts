@@ -1,5 +1,5 @@
 export type Boxes = 'container';
-export type Radii = 'xs' | 's' | 'm' | 'l' | 'full';
+export type Radii = '2xs' | 'xs' | 's' | 'm' | 'l' | 'half' | 'full';
 export type Space =
   | '2xs'
   | 's'

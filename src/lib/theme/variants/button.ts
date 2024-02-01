@@ -1,4 +1,4 @@
-import { radii, space } from '../design-system';
+import { fontSizes, radii, space } from '../design-system';
 
 export const button = {
   all: 'unset',
@@ -7,7 +7,8 @@ export const button = {
   cursor: 'pointer',
   justifyContent: 'space-between',
   alignItems: 'center',
-  borderRadius: radii.full,
+  borderRadius: radii.xs,
   transition: 'all 300ms ease-in-out',
   fontFamily: 'Proto',
+  fontSize: fontSizes.s,
 };
