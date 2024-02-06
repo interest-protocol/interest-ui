@@ -18,7 +18,8 @@ export interface SliderProps {
   initial?: number | [number, number];
 }
 
-export interface ThumbWrapperProps extends IThumbProps {
+export interface ThumbWrapperProps {
+  thumbDetails: IThumbProps;
   disabled?: boolean;
 }
 

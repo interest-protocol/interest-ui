@@ -1,6 +1,7 @@
 import { useTheme } from '@emotion/react';
 import React, { FC, useState } from 'react';
 import { getTrackBackground, Range } from 'react-range';
+import { v4 } from 'uuid';
 
 import { Box } from '../../elements';
 import { Theme } from '../../theme';
@@ -74,7 +75,7 @@ const SliderElement: FC<SliderProps> = ({
         </Box>
       )}
       renderThumb={({ props }) => (
-        <ThumbWrapper disabled={disabled} {...props}>
+        <ThumbWrapper disabled={disabled} thumbDetails={props} key={v4()}>
           <RangeType
             disabled={disabled}
             value={values[props.key]}
