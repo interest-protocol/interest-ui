@@ -86,9 +86,9 @@
   "scripts": {
     "prepare": "husky install",
     "build": "tsc && rollup -c",
-    "publish:alpha": "yarn build && npm publish --tag alpha",
-    "publish:beta": "yarn build && npm publish --tag beta",
-    "publish:latest": "yarn build && npm publish",
+    "publish:alpha": "git fetch -p -P && yarn build && npm publish --tag alpha && git push",
+    "publish:beta": "git fetch -p -P && yarn build && npm publish --tag beta && git push",
+    "publish:latest": "git fetch -p -P && yarn build && npm publish && git push",
     "storybook": "sb dev -p 6006",
     "build-storybook": "sb build",
     "lint": "eslint . --fix --ext ts --ext tsx --ext js",
