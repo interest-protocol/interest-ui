@@ -23,7 +23,7 @@ export const Normal: Story = {
     title: 'TVL',
     children: '$52,294.12',
     onClick: () => alert('clicked'),
-    icon: <MoneySignSVG maxHeight="1.5rem" maxWidth="1.5rem" width="100%" />,
+    Icon: <MoneySignSVG maxHeight="1.5rem" maxWidth="1.5rem" width="100%" />,
   },
 };
 
@@ -33,6 +33,6 @@ export const NormalSized: Story = {
     title: 'TVL',
     children: '$52,294.12',
     onClick: () => alert('clicked'),
-    icon: <MoneySignSVG maxHeight="1.5rem" maxWidth="1.5rem" width="100%" />,
+    Icon: <MoneySignSVG maxHeight="1.5rem" maxWidth="1.5rem" width="100%" />,
   },
 };
