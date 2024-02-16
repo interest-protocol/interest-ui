@@ -3,20 +3,23 @@ import React, { FC } from 'react';
 import { Box, Typography } from '../../../elements';
 import { CustomTooltipProps } from './tooltip.types';
 
-const CustomTooltip: FC<CustomTooltipProps> = ({ active, payload }) => {
-  if (!(active && payload && payload.length)) return null;
+const CustomTooltip: FC<CustomTooltipProps> = ({ payload }) => {
+  if (!(payload && payload.length)) return null;
 
   return (
     <Box
       p="s"
-      borderRadius="m"
       bg="white"
+      borderRadius="xs"
       boxShadow="0px 4px 4px rgba(0, 0, 0, 0.30)"
     >
-      {payload.map(({ value, dataKey }) => (
+      {payload.map(({ value, payload, dataKey }) => (
         <Box key={`tooltip-${dataKey}`}>
-          <Typography variant="body" size="small" color="dark">
-            {value}
+          <Typography variant="body" size="small" color="dark" mb="2xs">
+            $ {value}
+          </Typography>
+          <Typography variant="body" size="small" color="outlineVariant">
+            {payload?.description}
           </Typography>
         </Box>
       ))}

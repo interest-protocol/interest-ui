@@ -29,7 +29,7 @@ const BarChartComponent: FC<BaseChartProps> = ({ data, height, width }) => (
       <CartesianGrid opacity={0.25} vertical={false} stroke="outlineVariant" />
       <XAxis
         type="category"
-        dataKey="date"
+        dataKey="day"
         tickLine={false}
         tick={<CustomXAxisTick />}
         interval="preserveStartEnd"
