@@ -36,7 +36,7 @@ const StepsChart: FC<BaseChartProps> = ({ data, height, width }) => {
           tickMargin={2}
           type="category"
           minTickGap={15}
-          dataKey="date"
+          dataKey="day"
           tickLine={false}
           tick={<CustomXAxisTick />}
           interval="preserveStartEnd"

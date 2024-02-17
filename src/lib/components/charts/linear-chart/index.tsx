@@ -32,7 +32,7 @@ const LinearChart: FC<BaseChartProps> = ({ data, height, width }) => {
         <XAxis
           tickCount={6}
           type="category"
-          dataKey="date"
+          dataKey="day"
           tickLine={false}
           interval="preserveStartEnd"
           tick={<CustomizedAxisTick />}
