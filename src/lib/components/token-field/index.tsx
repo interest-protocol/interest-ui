@@ -28,7 +28,7 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
       onBlur,
       status,
       onFocus,
-      onClick,
+      getMaxValue,
       variant,
       disabled,
       TokenIcon,
@@ -171,7 +171,7 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
             <Button
               variant="text"
               color="primary"
-              onClick={onClick}
+              onClick={getMaxValue}
               disabled={disabled}
             >
               MAX

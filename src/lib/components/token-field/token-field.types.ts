@@ -15,7 +15,7 @@ export interface TokenFieldProps
   isNotDefaultLabel?: boolean;
   tokenName: string;
   disabled?: boolean;
-  onClick?: () => void;
+  getMaxValue?: () => void;
   fieldProps?: BoxProps;
   supportingText?: string;
   TokenIcon?: ReactNode;
