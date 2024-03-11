@@ -52,7 +52,12 @@ export const Custom: Story = {
       "This is the error description. It can be anything you want and as long as you want. But please don't make it too long.",
     status: 'success',
     primaryButton: (
-      <Button variant="tonal" width="100%">
+      <Button
+        variant="tonal"
+        width="100%"
+        display="flex"
+        justifyContent="center"
+      >
         Text
       </Button>
     ),
