@@ -23,12 +23,12 @@ const LabelElement = stylin<LabelElementProps>('label')();
 export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
   (
     {
-      label,
+      Label,
       isNotDefaultLabel,
       onBlur,
       status,
       onFocus,
-      getMaxValue,
+      handleMax,
       variant,
       disabled,
       TokenIcon,
@@ -80,7 +80,7 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
         opacity={disabled ? 0.32 : 1}
         cursor={disabled ? 'not-allowed' : 'normal'}
       >
-        {label && (
+        {Label && (
           <LabelElement htmlFor={id}>
             {!isNotDefaultLabel ? (
               <Typography
@@ -93,10 +93,10 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
                   labelPosition === 'right' ? 'uppercase' : 'capitalize'
                 }
               >
-                {label}
+                {Label}
               </Typography>
             ) : (
-              label
+              Label
             )}
           </LabelElement>
         )}
@@ -171,7 +171,7 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
             <Button
               variant="text"
               color="primary"
-              onClick={getMaxValue}
+              onClick={handleMax}
               disabled={disabled}
             >
               MAX

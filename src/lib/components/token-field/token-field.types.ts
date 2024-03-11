@@ -11,11 +11,11 @@ export type TokenFieldElementProps = Omit<
 export interface TokenFieldProps
   extends StylinComponentProps,
     TokenFieldElementProps {
-  label?: ReactNode;
+  Label?: ReactNode;
   isNotDefaultLabel?: boolean;
   tokenName: string;
   disabled?: boolean;
-  getMaxValue?: () => void;
+  handleMax?: () => void;
   fieldProps?: BoxProps;
   supportingText?: string;
   TokenIcon?: ReactNode;
