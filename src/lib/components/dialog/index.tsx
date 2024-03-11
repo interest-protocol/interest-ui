@@ -144,3 +144,5 @@ export const Dialog: FC<DialogProps> = ({
     </Modal>
   );
 };
+
+export * from './dialog.types';
