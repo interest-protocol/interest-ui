@@ -31,7 +31,7 @@ type Story = StoryObj<typeof TokenField>;
 
 export const FilledWithToken: Story = {
   args: {
-    Label: 'Label',
+    label: 'Label',
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
     placeholder: 'Input',
@@ -43,7 +43,7 @@ export const FilledWithToken: Story = {
 
 export const FilledWithTokenWithoutLabel: Story = {
   args: {
-    Label: 'Label',
+    label: 'Label',
     isNotDefaultLabel: true,
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
@@ -56,7 +56,7 @@ export const FilledWithTokenWithoutLabel: Story = {
 
 export const FilledWithLabelToTheLeft: Story = {
   args: {
-    Label: 'Label',
+    label: 'Label',
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
     placeholder: 'Input',
@@ -68,7 +68,7 @@ export const FilledWithLabelToTheLeft: Story = {
 
 export const FilledWithTokenError: Story = {
   args: {
-    Label: 'Label',
+    label: 'Label',
     status: 'error',
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
@@ -80,7 +80,7 @@ export const FilledWithTokenError: Story = {
 
 export const FilledWithTokenDisabled: Story = {
   args: {
-    Label: 'Label',
+    label: 'Label',
     disabled: true,
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
@@ -93,7 +93,7 @@ export const FilledWithTokenDisabled: Story = {
 
 export const FilledWithoutTokenIcon: Story = {
   args: {
-    Label: 'Label',
+    label: 'Label',
     textAlign: 'right',
     placeholder: 'Input',
     labelPosition: 'right',
@@ -104,7 +104,7 @@ export const FilledWithoutTokenIcon: Story = {
 
 export const FilledWithoutTokenIconError: Story = {
   args: {
-    Label: 'Label',
+    label: 'Label',
     status: 'error',
     textAlign: 'right',
     placeholder: 'Input',
@@ -116,7 +116,7 @@ export const FilledWithoutTokenIconError: Story = {
 export const FilledWithoutTokenIconDisabled: Story = {
   args: {
     disabled: true,
-    Label: 'Label',
+    label: 'Label',
     textAlign: 'right',
     placeholder: 'Input',
     labelPosition: 'right',
@@ -127,7 +127,7 @@ export const FilledWithoutTokenIconDisabled: Story = {
 
 export const OutlineWithToken: Story = {
   args: {
-    Label: 'Label',
+    label: 'Label',
     variant: 'outline',
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
@@ -140,7 +140,7 @@ export const OutlineWithToken: Story = {
 
 export const OutlineWithLabelToTheLeft: Story = {
   args: {
-    Label: 'Label',
+    label: 'Label',
     variant: 'outline',
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
@@ -153,7 +153,7 @@ export const OutlineWithLabelToTheLeft: Story = {
 
 export const OutlineWithTokenError: Story = {
   args: {
-    Label: 'Label',
+    label: 'Label',
     status: 'error',
     variant: 'outline',
     textAlign: 'right',
@@ -167,7 +167,7 @@ export const OutlineWithTokenError: Story = {
 
 export const OutlineWithTokenDisabled: Story = {
   args: {
-    Label: 'Label',
+    label: 'Label',
     disabled: true,
     variant: 'outline',
     textAlign: 'right',
@@ -181,7 +181,7 @@ export const OutlineWithTokenDisabled: Story = {
 
 export const OutlineWithoutTokenIcon: Story = {
   args: {
-    Label: 'Label',
+    label: 'Label',
     variant: 'outline',
     textAlign: 'right',
     placeholder: 'Input',
@@ -193,7 +193,7 @@ export const OutlineWithoutTokenIcon: Story = {
 
 export const OutlineWithoutTokenIconError: Story = {
   args: {
-    Label: 'Label',
+    label: 'Label',
     status: 'error',
     variant: 'outline',
     textAlign: 'right',
@@ -206,7 +206,7 @@ export const OutlineWithoutTokenIconError: Story = {
 
 export const OutlineWithoutTokenIconDisabled: Story = {
   args: {
-    Label: 'Label',
+    label: 'Label',
     disabled: true,
     variant: 'outline',
     textAlign: 'right',
