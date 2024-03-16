@@ -9,6 +9,7 @@ import { ProgressItemProps } from './progress-indicator.types';
 export const ProgressCircle: FC<PropsWithChildren<ProgressItemProps>> = ({
   value,
   size = 50,
+  noAnimation,
 }) => {
   const id = useId();
   const clipPathId = `clipPath-${id}`;
@@ -39,7 +40,9 @@ export const ProgressCircle: FC<PropsWithChildren<ProgressItemProps>> = ({
             }
           : {
               initial: {
-                backgroundImage: `conic-gradient(${colors.primary} 0%, ${colors.container} 0%)`,
+                backgroundImage: noAnimation
+                  ? `conic-gradient(${colors.primary} ${value}%, ${colors.container} ${value}%)`
+                  : `conic-gradient(${colors.primary} 0%, ${colors.container} 0%)`,
               },
               animate: {
                 backgroundImage: `conic-gradient(${colors.primary} ${value}%, ${colors.container} ${value}%)`,

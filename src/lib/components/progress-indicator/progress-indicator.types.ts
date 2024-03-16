@@ -13,6 +13,7 @@ export interface ProgressItemProps
     ProgressElementProps {
   size?: number;
   value: number;
+  noAnimation?: boolean;
 }
 
 export interface ProgressIndicatorProps
