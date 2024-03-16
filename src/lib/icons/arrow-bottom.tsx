@@ -11,7 +11,7 @@ const ArrowBottom: FC<SVGProps> = ({ maxWidth, maxHeight, ...props }) => (
   >
     <path
       d="M0 6.0598e-05L5 5.00006L10 6.10352e-05L0 6.0598e-05Z"
-      fill={props.fill || 'currentColor'}
+      fill="currentColor"
     />
   </svg>
 );

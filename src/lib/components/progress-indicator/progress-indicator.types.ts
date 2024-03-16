@@ -22,5 +22,6 @@ export interface ProgressIndicatorProps
 }
 
 export interface CirclePathProps {
+  id: string;
   size: number;
 }

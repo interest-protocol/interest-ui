@@ -4,8 +4,8 @@ import { SVGProps } from './icons.types';
 
 const MoneySign: FC<SVGProps> = ({ maxWidth, maxHeight, ...props }) => (
   <svg
-    viewBox="0 0 24 24"
     style={{ maxWidth, maxHeight }}
+    viewBox="0 0 24 24"
     fill="none"
     {...props}
   >

@@ -1,5 +1,5 @@
 import { useTheme } from '@emotion/react';
-import React, { FC, PropsWithChildren } from 'react';
+import React, { FC, PropsWithChildren, useId } from 'react';
 
 import { Motion } from '../../elements';
 import { Theme } from '../../theme';
@@ -10,15 +10,17 @@ export const ProgressCircle: FC<PropsWithChildren<ProgressItemProps>> = ({
   value,
   size = 50,
 }) => {
+  const id = useId();
+  const clipPathId = `clipPath-${id}`;
   const { colors } = useTheme() as Theme;
 
   return (
     <>
-      <CirclePath size={size} />
+      <CirclePath size={size} id={clipPathId} />
       <Motion
         width={size}
         height={size}
-        clipPath="url(#clipPath)"
+        clipPath={`url(#${clipPathId})`}
         transition={{
           ease: 'linear',
           ...(value < 0

@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren } from 'react';
+import React, { FC, PropsWithChildren, useId } from 'react';
 
 import { Box, Motion, Typography } from '../../elements';
 import { Theme, useTheme } from '../../theme';
@@ -10,6 +10,7 @@ const NavItemText: FC<PropsWithChildren<TabItemPropsItemTextProps>> = ({
   type,
   px,
 }) => {
+  const id = useId();
   const { dark } = useTheme() as Theme;
 
   return (
@@ -37,7 +38,7 @@ const NavItemText: FC<PropsWithChildren<TabItemPropsItemTextProps>> = ({
           width="100%"
           height="100%"
           position="absolute"
-          layoutId="underline"
+          layoutId={`underline-${id}`}
           borderRadius={type == 'circle' ? 'full' : 'xs'}
           boxShadow="0px 2px 4px -2px #0d10170a, 0px 4px 8px -2px #0d10171f"
           nHover={{
