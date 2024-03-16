@@ -1,5 +1,5 @@
 export { default as ArrowBottomSVG } from './arrow-bottom';
-export { default as ArrowBottomSecondarySVG } from './arrow-bottom2';
+export { default as ArrowBottomSecondarySVG } from './arrow-bottom-secondary';
 export { default as ArrowRightSVG } from './arrow-right';
 export { default as CheckSVG } from './check';
 export { default as CircleSVG } from './circle';

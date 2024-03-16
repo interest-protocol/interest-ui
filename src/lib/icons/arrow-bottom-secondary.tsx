@@ -15,7 +15,7 @@ const ArrowBottomSecondary: FC<SVGProps> = ({
   >
     <path
       d="M12 15.3107L17.5607 9.74999L16.5 8.68933L12 13.1893L7.50001 8.68933L6.43935 9.74999L12 15.3107Z"
-      fill="#1B1B1F"
+      fill="currentColor"
     />
   </svg>
 );

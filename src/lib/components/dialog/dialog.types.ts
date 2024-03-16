@@ -7,11 +7,9 @@ export interface IDialogButton {
 
 export interface DialogProps {
   title: string;
-  isOpen: boolean;
   message: string;
   fontFamily?: string;
-  onClose?: () => void;
-  secondaryButton?: IDialogButton | ReactNode;
   primaryButton?: IDialogButton | ReactNode;
+  secondaryButton?: IDialogButton | ReactNode;
   status: 'success' | 'warning' | 'error' | 'info' | 'general' | 'loading';
 }
