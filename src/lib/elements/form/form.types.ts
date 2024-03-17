@@ -6,6 +6,4 @@ export type FormElementProps = Omit<
   'color' | 'translate' | 'content'
 >;
 
-export interface FormProps extends StylinComponentProps, FormElementProps {
-  as?: keyof JSX.IntrinsicElements;
-}
+export interface FormProps extends StylinComponentProps, FormElementProps {}
