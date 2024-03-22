@@ -20,7 +20,7 @@ export const Dialog: FC<DialogProps> = ({
     <Box
       p="xl"
       width="25rem"
-      maxWidth="90%"
+      maxWidth="100%"
       borderRadius="xs"
       alignItems="center"
       display="inline-flex"
