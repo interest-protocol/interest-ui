@@ -2,9 +2,9 @@ import React, { FC } from 'react';
 
 import { CirclePathProps } from './progress-indicator.types';
 
-const CirclePath: FC<CirclePathProps> = ({ size }) => (
+const CirclePath: FC<CirclePathProps> = ({ size, id }) => (
   <svg width="0" height="0">
-    <clipPath id="clipPath">
+    <clipPath id={id}>
       <path
         fillRule="evenodd"
         clipRule="evenodd"

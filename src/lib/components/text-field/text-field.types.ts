@@ -1,7 +1,7 @@
 import { StylinComponentProps } from '@stylin.js/react';
 import { InputHTMLAttributes, ReactNode } from 'react';
 
-import { MotionProps } from '../../elements/motion/motion.types';
+import { BoxProps } from '../../elements';
 
 export type TextFieldElementProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,
@@ -11,13 +11,10 @@ export type TextFieldElementProps = Omit<
 export interface TextFieldProps
   extends StylinComponentProps,
     TextFieldElementProps {
-  error?: string;
-  valid?: string;
-  Prefix?: ReactNode;
+  label?: string;
   Suffix?: ReactNode;
-  Bottom?: ReactNode;
-  Top?: ReactNode;
-  SuffixIcon?: ReactNode;
-  PrefixIcon?: ReactNode;
-  fieldProps?: MotionProps;
+  Prefix?: ReactNode;
+  fieldProps?: BoxProps;
+  supportingText?: string;
+  status?: 'error' | 'success' | 'none';
 }

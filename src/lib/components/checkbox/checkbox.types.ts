@@ -14,4 +14,6 @@ export interface CheckboxProps extends CheckedButtonElementProps {
   name?: string;
   onClick: () => void;
   defaultValue: boolean;
+  supportingText?: string;
+  allowIndetermatedValue?: boolean;
 }

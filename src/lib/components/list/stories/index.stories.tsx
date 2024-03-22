@@ -4,7 +4,7 @@ import { v4 } from 'uuid';
 
 import { ArrowRightIcon } from '../../../../storybook/icons';
 import { ListItem } from '../../list-item';
-import { SwitchButton } from '../../switch';
+import { ToggleButton } from '../../toggle';
 import { List } from '..';
 
 const meta: Meta<typeof List> = {
@@ -32,9 +32,7 @@ export const Normal: Story = {
       <ListItem
         title="List Option B"
         description="Supporting Text"
-        SuffixIcon={
-          <SwitchButton name={'switch'} defaultValue={false} labels="" />
-        }
+        SuffixIcon={<ToggleButton name={'toggle'} defaultValue={false} />}
         key={v4()}
       />,
       <ListItem

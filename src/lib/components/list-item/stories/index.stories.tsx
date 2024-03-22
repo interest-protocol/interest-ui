@@ -3,7 +3,7 @@ import React from 'react';
 
 import { ArrowRightIcon } from '../../../../storybook/icons';
 import { ArrowRightSVG } from '../../../icons';
-import { RadioButton, SwitchButton } from '../../';
+import { RadioButton, ToggleButton } from '../../';
 import { ListItem } from '..';
 
 const meta: Meta<typeof ListItem> = {
@@ -73,18 +73,18 @@ export const WithSuffixWithoutDescription: Story = {
   },
 };
 
-export const WithSuffixSwitch: Story = {
+export const WithSuffixToggle: Story = {
   args: {
     title: 'List item',
     description: 'Supporting Text',
-    SuffixIcon: <SwitchButton name={'switch'} defaultValue={false} labels="" />,
+    SuffixIcon: <ToggleButton name={'toggle'} defaultValue={false} labels="" />,
   },
 };
 
-export const WithSuffixSwitchWithoutDescription: Story = {
+export const WithSuffixToggleWithoutDescription: Story = {
   args: {
     title: 'List item',
-    SuffixIcon: <SwitchButton name={'switch'} defaultValue={false} labels="" />,
+    SuffixIcon: <ToggleButton name={'toggle'} defaultValue={false} labels="" />,
   },
 };
 
@@ -119,10 +119,10 @@ export const WithPrefixAndSuffixRadioWithoutDescription: Story = {
   },
 };
 
-export const WithPrefixAndSuffixSwitchWithoutDescription: Story = {
+export const WithPrefixAndSuffixToggleWithoutDescription: Story = {
   args: {
     title: 'List item',
     PrefixIcon: <ArrowRightIcon />,
-    SuffixIcon: <SwitchButton name={'switch'} defaultValue={false} labels="" />,
+    SuffixIcon: <ToggleButton name={'toggle'} defaultValue={false} labels="" />,
   },
 };

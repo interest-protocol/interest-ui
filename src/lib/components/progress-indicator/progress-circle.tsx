@@ -1,5 +1,5 @@
 import { useTheme } from '@emotion/react';
-import React, { FC, PropsWithChildren } from 'react';
+import React, { FC, PropsWithChildren, useId } from 'react';
 
 import { Motion } from '../../elements';
 import { Theme } from '../../theme';
@@ -9,16 +9,19 @@ import { ProgressItemProps } from './progress-indicator.types';
 export const ProgressCircle: FC<PropsWithChildren<ProgressItemProps>> = ({
   value,
   size = 50,
+  noAnimation,
 }) => {
+  const id = useId();
+  const clipPathId = `clipPath-${id}`;
   const { colors } = useTheme() as Theme;
 
   return (
     <>
-      <CirclePath size={size} />
+      <CirclePath size={size} id={clipPathId} />
       <Motion
         width={size}
         height={size}
-        clipPath="url(#clipPath)"
+        clipPath={`url(#${clipPathId})`}
         transition={{
           ease: 'linear',
           ...(value < 0
@@ -29,18 +32,20 @@ export const ProgressCircle: FC<PropsWithChildren<ProgressItemProps>> = ({
           ? {
               animate: {
                 backgroundImage: [
-                  `conic-gradient(transparent 0%, ${colors.primary} 0%, ${colors.primary} 0%, transparent 0%)`,
-                  `conic-gradient(transparent 0%, ${colors.primary} 0%,  ${colors.primary} 100%, transparent 100%)`,
-                  `conic-gradient(transparent 100%, ${colors.primary} 100%, ${colors.primary} 100%, transparent 100%)`,
+                  `conic-gradient(${colors.container} 0%, ${colors.primary} 0%, ${colors.primary} 0%, ${colors.container} 0%)`,
+                  `conic-gradient(${colors.container} 0%, ${colors.primary} 0%,  ${colors.primary} 100%, ${colors.container} 100%)`,
+                  `conic-gradient(${colors.container} 100%, ${colors.primary} 100%, ${colors.primary} 100%, ${colors.container} 100%)`,
                 ],
               },
             }
           : {
               initial: {
-                backgroundImage: `conic-gradient(${colors.primary} 0%, transparent 0%)`,
+                backgroundImage: noAnimation
+                  ? `conic-gradient(${colors.primary} ${value}%, ${colors.container} ${value}%)`
+                  : `conic-gradient(${colors.primary} 0%, ${colors.container} 0%)`,
               },
               animate: {
-                backgroundImage: `conic-gradient(${colors.primary} ${value}%, transparent ${value}%)`,
+                backgroundImage: `conic-gradient(${colors.primary} ${value}%, ${colors.container} ${value}%)`,
               },
             })}
       />

@@ -1,6 +1,6 @@
 {
   "name": "@interest-protocol/ui-kit",
-  "version": "0.1.34-beta",
+  "version": "0.2.26-alpha",
   "description": "Interest Protocol interface UI Kit",
   "main": "dist/index.cjs.js",
   "src": "src/lib/index.ts",
@@ -23,6 +23,7 @@
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
     "react-range": "^1.8.14",
+    "recharts": "^2.10.4",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
@@ -85,9 +86,9 @@
   "scripts": {
     "prepare": "husky install",
     "build": "tsc && rollup -c",
-    "publish:alpha": "yarn build && npm publish --tag alpha",
-    "publish:beta": "yarn build && npm publish --tag beta",
-    "publish:latest": "yarn build && npm publish",
+    "publish:alpha": "git fetch -p -P && yarn build && npm publish --tag alpha && git push",
+    "publish:beta": "git fetch -p -P && yarn build && npm publish --tag beta && git push",
+    "publish:latest": "git fetch -p -P && yarn build && npm publish && git push",
     "storybook": "sb dev -p 6006",
     "build-storybook": "sb build",
     "lint": "eslint . --fix --ext ts --ext tsx --ext js",
