@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+import { userEvent, within } from '@storybook/testing-library/dist';
 import React from 'react';
 
 import { PlusIcon, SwapIcon } from '../../../../storybook/icons';
@@ -187,5 +188,18 @@ export const ButtonWithAction: Story = {
     children: 'Press here',
     disabled: false,
     selected: false,
+  },
+};
+
+export const TestButton: Story = {
+  args: {
+    variant: 'filled',
+    children: 'Label',
+    disabled: false,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.click(canvas.getByRole('button'));
   },
 };

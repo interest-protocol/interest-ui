@@ -31,6 +31,7 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
     return (
       <MotionButton
         p="xs"
+        role="button"
         width="1.5rem"
         height="1.5rem"
         alignItems="center"
@@ -63,6 +64,7 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
   return (
     <MotionButton
       py="s"
+      role="button"
       position="relative"
       pr={SuffixIcon ? 'm' : 'xl'}
       pl={PrefixIcon ? 'm' : 'xl'}
