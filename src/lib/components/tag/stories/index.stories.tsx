@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+import { userEvent, within } from '@storybook/testing-library/dist';
 import React from 'react';
 
 import { Box } from '../../../elements';
@@ -48,7 +49,7 @@ export const FilledWithCombined: Story = {
       </Box>
     ),
     onClose: () => {
-      alert('close button licked');
+      alert('close button clicked');
     },
   },
 };
@@ -81,7 +82,7 @@ export const FilledWithDismiss: Story = {
     children: 'Label',
     variant: 'filled',
     onClose: () => {
-      alert('close button licked');
+      alert('close button clicked');
     },
   },
 };
@@ -114,7 +115,7 @@ export const OutlinedWithCombined: Story = {
       </Box>
     ),
     onClose: () => {
-      alert('close button licked');
+      alert('close button clicked');
     },
   },
 };
@@ -147,7 +148,7 @@ export const OutlinedWithDismiss: Story = {
     children: 'Label',
     variant: 'outline',
     onClose: () => {
-      alert('close button licked');
+      alert('close button clicked');
     },
   },
 };
@@ -157,5 +158,37 @@ export const Outlined: Story = {
     size: 'large',
     children: 'Label',
     variant: 'outline',
+  },
+};
+
+export const TestTag: Story = {
+  args: {
+    size: 'large',
+    children: 'Label',
+    variant: 'filled',
+    PrefixIcon: (
+      <Box
+        p=".1875rem"
+        width="2rem"
+        height="2rem"
+        display="flex"
+        color="onSurface"
+        alignItems="center"
+        borderRadius="full"
+        justifyContent="center"
+      >
+        <ErrorSVG maxWidth="1.125rem" maxHeight="1.125rem" width="100%" />
+      </Box>
+    ),
+    onClose: () => {
+      alert('close button clicked');
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.click(canvas.getByTestId('tag'));
+    await userEvent.hover(canvas.getByTestId('tag'));
+    await userEvent.unhover(canvas.getByTestId('tag'));
   },
 };

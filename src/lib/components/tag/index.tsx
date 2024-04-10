@@ -40,6 +40,7 @@ export const Tag: FC<PropsWithChildren<TagProps>> = ({
         scale: props.disabled ? 1 : 1.05,
         transition: { duration: 0.005, ease: easeInOut },
       }}
+      data-testid="tag"
       {...props}
     >
       {PrefixIcon}
