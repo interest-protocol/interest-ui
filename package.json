@@ -46,7 +46,6 @@
     "@storybook/manager-api": "^7.0.6",
     "@storybook/react": "^7.0.6",
     "@storybook/react-webpack5": "^7.0.6",
-    "@storybook/test": "^8.0.8",
     "@storybook/test-runner": "^0.17.0",
     "@storybook/testing-library": "^0.2.2",
     "@storybook/testing-react": "^2.0.1",
