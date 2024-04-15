@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { userEvent, within } from '@storybook/testing-library/dist';
+import { expect, fn, waitFor, within } from '@storybook/test';
 import React from 'react';
 
 import { PlusIcon, SwapIcon } from '../../../../storybook/icons';
@@ -34,6 +34,20 @@ export const Filled: Story = {
     children: 'Label',
     disabled: false,
   },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const button = canvas.getByRole('button');
+    const computedStyle = getComputedStyle(button);
+
+    const background = computedStyle.getPropertyValue('background');
+
+    // check if the label is being render
+    expect(button).toHaveTextContent('Label');
+
+    //check if has a valid background
+    expect(background.trim()).toBeTruthy();
+  },
 };
 
 export const FilledWithPrefix: Story = {
@@ -42,6 +56,23 @@ export const FilledWithPrefix: Story = {
     children: 'Label',
     PrefixIcon: <PlusIcon />,
     disabled: false,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const button = canvas.getByRole('button');
+
+    // check how many svg are in the button. In this case, can only be one in it
+    const svgElements = button.querySelectorAll('svg');
+    expect(svgElements).toHaveLength(1);
+
+    const firstChild = button.firstElementChild;
+    const elementTag = firstChild && firstChild.tagName.toLowerCase();
+
+    // check if the first child in the button is an svg and if it is in the document
+    expect(firstChild).toBeInTheDocument();
+    expect(firstChild).toBeVisible();
+    expect(elementTag).toEqual('svg');
   },
 };
 
@@ -52,6 +83,23 @@ export const FilledWithSuffix: Story = {
     SuffixIcon: <PlusIcon />,
     disabled: false,
   },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const button = canvas.getByRole('button');
+
+    // check how many svg are in the button. In this case, can only be one in it
+    const svgElements = button.querySelectorAll('svg');
+    expect(svgElements).toHaveLength(1);
+
+    const lastChild = button.lastElementChild;
+    const elementTag = lastChild && lastChild.tagName.toLowerCase();
+
+    // check if the last child in the button is an svg and if it is in the document
+    expect(lastChild).toBeInTheDocument();
+    expect(lastChild).toBeVisible();
+    expect(elementTag).toEqual('svg');
+  },
 };
 
 export const FilledWithCombined: Story = {
@@ -61,6 +109,30 @@ export const FilledWithCombined: Story = {
     PrefixIcon: <PlusIcon />,
     SuffixIcon: <PlusIcon />,
     disabled: false,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const button = canvas.getByRole('button');
+
+    // check how many svg are in the button. In this case, can only be one in it
+    const svgElements = button.querySelectorAll('svg');
+    expect(svgElements.length).toBe(2);
+
+    const firstChild = button.firstElementChild as SVGElement;
+    const firstChildTag = firstChild && firstChild.tagName.toLowerCase();
+
+    const lastChild = button.lastElementChild as SVGElement;
+    const lastChildTag = lastChild && lastChild.tagName.toLowerCase();
+
+    // check if the last and the first chiold in the button, are visibles
+    expect(lastChild).toBeInTheDocument();
+    expect(lastChild).toBeVisible();
+    expect(lastChildTag).toEqual('svg');
+
+    expect(firstChild).toBeInTheDocument();
+    expect(firstChild).toBeVisible();
+    expect(firstChildTag).toEqual('svg');
   },
 };
 
@@ -180,6 +252,17 @@ export const Icon: Story = {
     disabled: false,
     isIcon: true,
   },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole('button');
+
+    const parentChildrens = button.childNodes;
+    expect(parentChildrens).toHaveLength(1);
+
+    const parentOnlyChild = button.firstElementChild;
+
+    expect(parentOnlyChild?.tagName.trim()).toBe('svg');
+  },
 };
 
 export const ButtonWithAction: Story = {
@@ -188,18 +271,46 @@ export const ButtonWithAction: Story = {
     children: 'Press here',
     disabled: false,
     selected: false,
+    onClick: fn(),
+  },
+  play: async ({ args, canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole('button');
+
+    //click on button
+    await step('click on button', () => {
+      button.click();
+    });
+
+    //expect the event to be called only once, because the button was click only one time
+    await waitFor(() => expect(args.onClick).toHaveBeenCalledOnce());
   },
 };
 
-export const TestButton: Story = {
+export const DisabledButton: Story = {
   args: {
     variant: 'filled',
     children: 'Label',
-    disabled: false,
+    disabled: true,
+    onClick: fn(),
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
 
-    await userEvent.click(canvas.getByRole('button'));
+    const button = canvas.getByRole('button');
+
+    const computedStyle = getComputedStyle(button);
+
+    const cursor = computedStyle.getPropertyValue('cursor');
+    const opacity = Number(computedStyle.getPropertyValue('opacity'));
+
+    button.click();
+
+    expect(button).toBeDisabled();
+    expect(cursor).toBe('not-allowed');
+    expect(opacity).toBeLessThan(1);
+
+    //expect the event to not be called, because the button is disabled
+    await waitFor(() => expect(args.onClick).toHaveBeenCalledTimes(0));
   },
 };
