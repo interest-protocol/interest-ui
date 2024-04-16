@@ -42,7 +42,7 @@ export const DisplayLarge: Story = {
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Proto');
-    expect(fontSize).toBeTruthy();
+    expect(fontSize).toBe('57.008px');
   },
 };
 
@@ -69,7 +69,7 @@ export const DisplayMedium: Story = {
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Proto');
-    expect(fontSize).toBeTruthy();
+    expect(fontSize).toBe('45.008px');
   },
 };
 
@@ -96,7 +96,7 @@ export const DisplaySmall: Story = {
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Proto');
-    expect(fontSize).toBeTruthy();
+    expect(fontSize).toBe('36px');
   },
 };
 
@@ -123,7 +123,7 @@ export const headlineLarge: Story = {
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Proto');
-    expect(fontSize).toBeTruthy();
+    expect(fontSize).toBe('32px');
   },
 };
 
@@ -150,7 +150,7 @@ export const headlineMedium: Story = {
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Proto');
-    expect(fontSize).toBeTruthy();
+    expect(fontSize).toBe('28px');
   },
 };
 
@@ -177,7 +177,7 @@ export const headlineSmall: Story = {
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Proto');
-    expect(fontSize).toBeTruthy();
+    expect(fontSize).toBe('24px');
   },
 };
 
@@ -204,7 +204,7 @@ export const titleLarge: Story = {
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Satoshi');
-    expect(fontSize).toBeTruthy();
+    expect(fontSize).toBe('22px');
   },
 };
 
@@ -232,7 +232,7 @@ export const titleMedium: Story = {
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Satoshi');
-    expect(fontSize).toBeTruthy();
+    expect(fontSize).toBe('16px');
   },
 };
 
@@ -259,7 +259,7 @@ export const titleSmall: Story = {
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Satoshi');
-    expect(fontSize).toBeTruthy();
+    expect(fontSize).toBe('14px');
   },
 };
 
@@ -286,7 +286,7 @@ export const bodyLarge: Story = {
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Satoshi');
-    expect(fontSize).toBeTruthy();
+    expect(fontSize).toBe('16px');
   },
 };
 
@@ -313,7 +313,7 @@ export const bodyMedium: Story = {
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Satoshi');
-    expect(fontSize).toBeTruthy();
+    expect(fontSize).toBe('14px');
   },
 };
 
@@ -340,7 +340,7 @@ export const bodySmall: Story = {
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Satoshi');
-    expect(fontSize).toBeTruthy();
+    expect(fontSize).toBe('12px');
   },
 };
 
@@ -367,7 +367,7 @@ export const labelLarge: Story = {
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Proto');
-    expect(fontSize).toBeTruthy();
+    expect(fontSize).toBe('14px');
   },
 };
 
@@ -394,7 +394,7 @@ export const labelMedium: Story = {
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Proto');
-    expect(fontSize).toBeTruthy();
+    expect(fontSize).toBe('12px');
   },
 };
 
@@ -423,6 +423,6 @@ export const labelSmall: Story = {
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Proto');
-    expect(remFontSize).toBeTruthy();
+    expect(remFontSize).toBe(0.06875);
   },
 };
