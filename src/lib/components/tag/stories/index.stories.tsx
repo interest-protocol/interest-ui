@@ -192,7 +192,7 @@ export const OutlinedWithCombined: Story = {
       </Box>
     ),
     onClose: () => {
-      alert('close button licked');
+      alert('close button clicked');
     },
   },
   play: async ({ canvasElement }) => {
