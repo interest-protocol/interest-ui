@@ -34,6 +34,7 @@ const SliderElement: FC<SliderProps> = ({
     <Range
       max={max}
       min={min}
+      data-testid="slider"
       step={step}
       values={values}
       disabled={disabled}
@@ -41,6 +42,7 @@ const SliderElement: FC<SliderProps> = ({
       onChange={handleChange}
       renderTrack={({ props, children }) => (
         <Box
+          data-testid="slider"
           width="100%"
           display="flex"
           height="2.25rem"
