@@ -41,6 +41,7 @@ export const Tag: FC<PropsWithChildren<TagProps>> = ({
         transition: { duration: 0.005, ease: easeInOut },
       }}
       {...props}
+      data-testid="testTag"
     >
       {PrefixIcon}
       <Typography
