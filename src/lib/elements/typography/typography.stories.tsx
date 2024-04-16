@@ -41,7 +41,7 @@ export const DisplayLarge: Story = {
     await userEvent.hover(canvas.getByTestId('typography'));
 
     expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBeTruthy();
+    expect(fontFamily).toBe('Proto');
     expect(fontSize).toBeTruthy();
   },
 };
@@ -68,7 +68,7 @@ export const DisplayMedium: Story = {
     await userEvent.hover(canvas.getByTestId('typography'));
 
     expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBeTruthy();
+    expect(fontFamily).toBe('Proto');
     expect(fontSize).toBeTruthy();
   },
 };
@@ -95,7 +95,7 @@ export const DisplaySmall: Story = {
     await userEvent.hover(canvas.getByTestId('typography'));
 
     expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBeTruthy();
+    expect(fontFamily).toBe('Proto');
     expect(fontSize).toBeTruthy();
   },
 };
@@ -122,7 +122,7 @@ export const headlineLarge: Story = {
     await userEvent.hover(canvas.getByTestId('typography'));
 
     expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBeTruthy();
+    expect(fontFamily).toBe('Proto');
     expect(fontSize).toBeTruthy();
   },
 };
@@ -149,7 +149,7 @@ export const headlineMedium: Story = {
     await userEvent.hover(canvas.getByTestId('typography'));
 
     expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBeTruthy();
+    expect(fontFamily).toBe('Proto');
     expect(fontSize).toBeTruthy();
   },
 };
@@ -176,7 +176,7 @@ export const headlineSmall: Story = {
     await userEvent.hover(canvas.getByTestId('typography'));
 
     expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBeTruthy();
+    expect(fontFamily).toBe('Proto');
     expect(fontSize).toBeTruthy();
   },
 };
@@ -203,7 +203,7 @@ export const titleLarge: Story = {
     await userEvent.hover(canvas.getByTestId('typography'));
 
     expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBeTruthy();
+    expect(fontFamily).toBe('Satoshi');
     expect(fontSize).toBeTruthy();
   },
 };
@@ -231,7 +231,7 @@ export const titleMedium: Story = {
     await userEvent.hover(canvas.getByTestId('typography'));
 
     expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBeTruthy();
+    expect(fontFamily).toBe('Satoshi');
     expect(fontSize).toBeTruthy();
   },
 };
@@ -258,7 +258,7 @@ export const titleSmall: Story = {
     await userEvent.hover(canvas.getByTestId('typography'));
 
     expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBeTruthy();
+    expect(fontFamily).toBe('Satoshi');
     expect(fontSize).toBeTruthy();
   },
 };
@@ -285,7 +285,7 @@ export const bodyLarge: Story = {
     await userEvent.hover(canvas.getByTestId('typography'));
 
     expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBeTruthy();
+    expect(fontFamily).toBe('Satoshi');
     expect(fontSize).toBeTruthy();
   },
 };
@@ -312,7 +312,7 @@ export const bodyMedium: Story = {
     await userEvent.hover(canvas.getByTestId('typography'));
 
     expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBeTruthy();
+    expect(fontFamily).toBe('Satoshi');
     expect(fontSize).toBeTruthy();
   },
 };
@@ -339,7 +339,7 @@ export const bodySmall: Story = {
     await userEvent.hover(canvas.getByTestId('typography'));
 
     expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBeTruthy();
+    expect(fontFamily).toBe('Satoshi');
     expect(fontSize).toBeTruthy();
   },
 };
@@ -366,7 +366,7 @@ export const labelLarge: Story = {
     await userEvent.hover(canvas.getByTestId('typography'));
 
     expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBeTruthy();
+    expect(fontFamily).toBe('Proto');
     expect(fontSize).toBeTruthy();
   },
 };
@@ -393,7 +393,7 @@ export const labelMedium: Story = {
     await userEvent.hover(canvas.getByTestId('typography'));
 
     expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBeTruthy();
+    expect(fontFamily).toBe('Proto');
     expect(fontSize).toBeTruthy();
   },
 };
@@ -422,7 +422,7 @@ export const labelSmall: Story = {
     await userEvent.hover(canvas.getByTestId('typography'));
 
     expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBeTruthy();
+    expect(fontFamily).toBe('Proto');
     expect(remFontSize).toBeTruthy();
   },
 };
