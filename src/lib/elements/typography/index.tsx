@@ -20,6 +20,7 @@ export const Typography = forwardRef<
   return (
     <TypographyElement
       variant={variant}
+      data-testid="typography"
       {...getSizeStyle(variant, size)}
       {...props}
       ref={ref}
