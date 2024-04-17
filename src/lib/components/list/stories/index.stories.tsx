@@ -47,11 +47,13 @@ export const Normal: Story = {
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
     const list = canvas.getByTestId('list');
+    const arrowRightIcon = canvas.getByTestId('arrow-right-icon');
 
     await userEvent.hover(canvas.getByTestId('list'));
     await userEvent.click(canvas.getByTestId('list'));
     await userEvent.click(canvas.getByTestId('arrow-right-icon'));
     expect(list).toBeTruthy();
+    expect(arrowRightIcon).toBeTruthy();
     expect(args.title).toBe('List Title');
     expect(args.items.length).toBe(3);
   },
