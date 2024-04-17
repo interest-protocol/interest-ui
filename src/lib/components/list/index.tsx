@@ -35,6 +35,7 @@ export const List: FC<PropsWithChildren<ListProps>> = ({ title, items }) => {
               height="100%"
               maxWidth="0.313rem"
               maxHeight="0.626rem"
+              data-testid="arrow-right-icon"
             />
           </Motion>
         }
