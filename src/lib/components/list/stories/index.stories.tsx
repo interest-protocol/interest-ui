@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+import { expect, userEvent, within } from '@storybook/test';
 import React from 'react';
 import { v4 } from 'uuid';
 
@@ -41,5 +42,16 @@ export const Normal: Story = {
         key={v4()}
       />,
     ],
+  },
+
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const list = canvas.getByTestId('list');
+
+    await userEvent.hover(canvas.getByTestId('list'));
+    await userEvent.click(canvas.getByTestId('list'));
+    expect(list).toBeTruthy();
+    expect(args.title).toBe('List Title');
+    expect(args.items.length).toBe(3);
   },
 };

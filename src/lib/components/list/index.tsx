@@ -13,12 +13,14 @@ export const List: FC<PropsWithChildren<ListProps>> = ({ title, items }) => {
       onMouseEnter={() => setOpenList(true)}
       onMouseLeave={() => setOpenList(false)}
       width={['100%', '100%', '22.5rem', '22.5rem']}
+      data-testid="list"
     >
       <ListItem
         title={title}
         SuffixIcon={
           <Motion
             display="flex"
+            data-testid="list-item"
             width="0.313rem"
             height="0.626rem"
             color="onSurface"
