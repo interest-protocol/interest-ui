@@ -73,7 +73,7 @@ export const DefaultInterval: Story = {
 
     const background = computedStyle.getPropertyValue('background');
     const max = args.max;
-    const initialInterval = args.initial[1] - args.initial[0];
+    const initialInterval = args.initial && args.initial[1] - args.initial[0];
 
     await userEvent.type(canvas.getByTestId('slider'), '100');
 
