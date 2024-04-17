@@ -1,6 +1,6 @@
 # config file
 commitlint.config.js
-next.config.js
+*.config.js
 
 node_modules
 dist
