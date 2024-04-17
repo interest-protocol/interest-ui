@@ -52,9 +52,12 @@ export const Normal: Story = {
     await userEvent.hover(canvas.getByTestId('list'));
     await userEvent.click(canvas.getByTestId('list'));
     await userEvent.click(canvas.getByTestId('arrow-right-icon'));
+
+    const listItems = args.items;
+
     expect(list).toBeTruthy();
     expect(arrowRightIcon).toBeTruthy();
     expect(args.title).toBe('List Title');
-    expect(args.items.length).toBe(3);
+    expect(listItems).toHaveLength(3);
   },
 };
