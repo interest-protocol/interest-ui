@@ -34,7 +34,6 @@ const SliderElement: FC<SliderProps> = ({
     <Range
       max={max}
       min={min}
-      data-testid="slider"
       step={step}
       values={values}
       disabled={disabled}

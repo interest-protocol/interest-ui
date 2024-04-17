@@ -136,7 +136,7 @@ export const InTheEndWithoutTooltip: Story = {
     await userEvent.type(canvas.getByTestId('slider'), '100');
 
     const availableOptions = await canvas.findAllByTestId('slider');
-    await expect(availableOptions.length).toBe(1);
+    await expect(availableOptions).toHaveLength(1);
     await expect(max).toBe(100);
     await expect(initial).toBe(100);
     expect(background.trim()).toBeTruthy();
