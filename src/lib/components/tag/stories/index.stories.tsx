@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, waitFor, within } from '@storybook/test';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { Box } from '../../../elements';
@@ -48,6 +49,27 @@ export const Filled: Story = {
 
     expect(border.includes('none')).toBeTruthy();
     expect(background.includes('rgba(0, 0, 0, 0)')).toBeFalsy();
+  },
+};
+
+export const WithHoverAction: Story = {
+  args: {
+    size: 'large',
+    children: 'Label',
+    variant: 'filled',
+    onClose: undefined,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const tag = canvas.getByTestId('testTag') as HTMLButtonElement;
+
+    const computedStylebefore = getComputedStyle(tag);
+    const beforeHover = computedStylebefore.getPropertyValue('background');
+    console.log('beforeHover', beforeHover);
+
+    await waitFor(async () => {
+      await userEvent.hover(tag);
+    });
   },
 };
 
