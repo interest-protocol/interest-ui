@@ -77,6 +77,7 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
 
     return (
       <Box
+        data-testid="token-field"
         opacity={disabled ? 0.32 : 1}
         cursor={disabled ? 'not-allowed' : 'normal'}
       >
@@ -147,6 +148,7 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
             <TokenFieldElement
               ref={ref}
               id={id}
+              data-test-id="token-field-input"
               all="unset"
               type="text"
               width="100%"
