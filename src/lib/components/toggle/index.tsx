@@ -56,6 +56,7 @@ export const ToggleButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
       color="onSurface"
       alignItems="center"
       textTransform="capitalize"
+      data-testid="toggle"
     >
       <LabelElement
         ml="0.375rem"
