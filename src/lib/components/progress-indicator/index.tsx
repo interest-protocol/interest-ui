@@ -1,5 +1,6 @@
 import React, { FC, PropsWithChildren } from 'react';
 
+import { Box } from '../../elements';
 import { ProgressIndicatorProps } from '../progress-indicator';
 import { ProgressBar } from './progress-bar';
 import { ProgressCircle } from './progress-circle';
@@ -10,11 +11,13 @@ export const ProgressIndicator: FC<
   if (variant === 'bar') return <ProgressBar value={value ?? 0} {...props} />;
 
   return (
-    <ProgressCircle
-      size={size}
-      value={variant === 'loading' ? -1 : value ?? 0}
-      {...props}
-    />
+    <Box data-testid="progressIndicator">
+      <ProgressCircle
+        size={size}
+        value={variant === 'loading' ? -1 : value ?? 0}
+        {...props}
+      />
+    </Box>
   );
 };
 
