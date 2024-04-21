@@ -76,6 +76,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
         all="inherit"
         opacity={disabled ? 0.32 : 1}
         cursor={disabled ? 'not-allowed' : 'normal'}
+        data-testid="textField"
       >
         {label && (
           <LabelElement htmlFor={id}>
