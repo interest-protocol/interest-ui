@@ -20,21 +20,21 @@ export const Normal: Story = {
   },
 };
 
-export const NormalWithIndetermated: Story = {
+export const NormalWithIndeterminate: Story = {
   args: {
     disabled: false,
     defaultValue: false,
     label: 'Checkbox Label',
-    allowIndetermatedValue: true,
+    allowIndeterminateValue: true,
   },
 };
 
-export const NormalWithIndetermatedAndSupportText: Story = {
+export const NormalWithIndeterminateAndSupportText: Story = {
   args: {
     disabled: false,
     defaultValue: false,
     label: 'Checkbox Label',
-    allowIndetermatedValue: false,
+    allowIndeterminateValue: false,
     supportingText: 'Supporting Text',
   },
 };
