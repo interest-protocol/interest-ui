@@ -35,7 +35,7 @@ export const BarChart: Story = {
     const color = computedStyle.getPropertyValue('color');
     const background = computedStyle.getPropertyValue('background');
 
-    await step('Char hover event', async () => {
+    await step('Bar chart hover event', async () => {
       await userEvent.hover(canvas.getByTestId('chart'));
     });
 
@@ -68,7 +68,7 @@ export const AreaChart: Story = {
     const color = computedStyle.getPropertyValue('color');
     const background = computedStyle.getPropertyValue('background');
 
-    await step('Char hover event', async () => {
+    await step('Area chart hover event', async () => {
       await userEvent.hover(canvas.getByTestId('chart'));
     });
 
@@ -101,7 +101,7 @@ export const StepsChart: Story = {
     const color = computedStyle.getPropertyValue('color');
     const background = computedStyle.getPropertyValue('background');
 
-    await step('Char hover event', async () => {
+    await step('Steps chart hover event', async () => {
       await userEvent.hover(canvas.getByTestId('chart'));
     });
 
@@ -144,7 +144,7 @@ export const PieChart: Story = {
     const color = computedStyle.getPropertyValue('color');
     const background = computedStyle.getPropertyValue('background');
 
-    await step('Char hover event', async () => {
+    await step('Pie chart hover event', async () => {
       await userEvent.hover(canvas.getByTestId('pieChart'));
     });
 
