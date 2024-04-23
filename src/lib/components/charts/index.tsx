@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 
+import { Box } from '../../elements';
 import BarChart from './bar-chart';
 import { ChartsProps } from './charts.types';
 import { isPieChart } from './charts.utils';
@@ -14,7 +15,12 @@ const CommonChart = {
 };
 
 export const Chart: FC<ChartsProps> = (props) => {
-  if (isPieChart(props)) return <CircleChart {...props} />;
+  if (isPieChart(props))
+    return (
+      <Box data-testid="pieChart">
+        <CircleChart {...props} />
+      </Box>
+    );
 
   const { variant } = props;
 
@@ -22,5 +28,9 @@ export const Chart: FC<ChartsProps> = (props) => {
 
   if (!Chart) return null;
 
-  return <Chart {...props} />;
+  return (
+    <Box data-testid="chart">
+      <Chart {...props} />;
+    </Box>
+  );
 };
