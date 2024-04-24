@@ -69,7 +69,7 @@ export const Custom: Story = {
   },
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
-    const dialog = canvas.getByTestId('dialog');
+    const dialog = canvas.getByRole('dialog');
     const computedStyle = getComputedStyle(dialog);
     const background = computedStyle.getPropertyValue('background');
 
@@ -77,7 +77,7 @@ export const Custom: Story = {
 
     expect(parentOnlyChild).toBe(1);
 
-    userEvent.click(canvas.getByTestId('close-button'));
+    userEvent.click(canvas.getByRole('close-button'));
 
     expect(background.includes('rgba(0, 0, 0, 0)')).toBeFalsy();
     expect(args.isOpen).toBe(true);
@@ -107,13 +107,13 @@ export const Success: Story = {
   },
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
-    const dialog = canvas.getByTestId('dialog');
+    const dialog = canvas.getByRole('dialog');
     const computedStyle = getComputedStyle(dialog);
     const background = computedStyle.getPropertyValue('background');
     const color = computedStyle.getPropertyValue('color');
 
-    userEvent.click(canvas.getByTestId('close-button'));
-    userEvent.click(canvas.getByTestId('got-it-button'));
+    userEvent.click(canvas.getByRole('close-button'));
+    userEvent.click(canvas.getByRole('got-it-button'));
 
     expect(color.trim()).toBeTruthy();
     expect(background.includes('rgba(0, 0, 0, 0)')).toBeFalsy();
@@ -149,13 +149,13 @@ export const Warning: Story = {
   },
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
-    const dialog = canvas.getByTestId('dialog');
+    const dialog = canvas.getByRole('dialog');
     const computedStyle = getComputedStyle(dialog);
     const background = computedStyle.getPropertyValue('background');
     const color = computedStyle.getPropertyValue('color');
 
-    userEvent.click(canvas.getByTestId('close-button'));
-    userEvent.click(canvas.getByTestId('got-it-button'));
+    userEvent.click(canvas.getByRole('close-button'));
+    userEvent.click(canvas.getByRole('got-it-button'));
 
     expect(color.trim()).toBeTruthy();
     expect(background.includes('rgba(0, 0, 0, 0)')).toBeFalsy();
@@ -187,12 +187,12 @@ export const Error: Story = {
   },
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
-    const dialog = canvas.getByTestId('dialog');
+    const dialog = canvas.getByRole('dialog');
     const computedStyle = getComputedStyle(dialog);
     const background = computedStyle.getPropertyValue('background');
     const color = computedStyle.getPropertyValue('color');
 
-    userEvent.click(canvas.getByTestId('close-button'));
+    userEvent.click(canvas.getByRole('close-button'));
 
     expect(color.trim()).toBeTruthy();
     expect(background.includes('rgba(0, 0, 0, 0)')).toBeFalsy();
@@ -223,13 +223,13 @@ export const Info: Story = {
   },
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
-    const dialog = canvas.getByTestId('dialog');
+    const dialog = canvas.getByRole('dialog');
     const computedStyle = getComputedStyle(dialog);
     const background = computedStyle.getPropertyValue('background');
     const color = computedStyle.getPropertyValue('color');
 
-    userEvent.click(canvas.getByTestId('close-button'));
-    userEvent.click(canvas.getByTestId('got-it-button'));
+    userEvent.click(canvas.getByRole('close-button'));
+    userEvent.click(canvas.getByRole('got-it-button'));
 
     expect(color.trim()).toBeTruthy();
     expect(background.includes('rgba(0, 0, 0, 0)')).toBeFalsy();
@@ -265,13 +265,13 @@ export const General: Story = {
   },
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
-    const dialog = canvas.getByTestId('dialog');
+    const dialog = canvas.getByRole('dialog');
     const computedStyle = getComputedStyle(dialog);
     const background = computedStyle.getPropertyValue('background');
     const color = computedStyle.getPropertyValue('color');
 
-    userEvent.click(canvas.getByTestId('close-button'));
-    userEvent.click(canvas.getByTestId('got-it-button'));
+    userEvent.click(canvas.getByRole('close-button'));
+    userEvent.click(canvas.getByRole('got-it-button'));
 
     expect(color.trim()).toBeTruthy();
     expect(background.includes('rgba(0, 0, 0, 0)')).toBeFalsy();
@@ -299,7 +299,7 @@ export const Loading: Story = {
   },
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
-    const dialog = canvas.getByTestId('dialog');
+    const dialog = canvas.getByRole('dialog');
     const computedStyle = getComputedStyle(dialog);
     const background = computedStyle.getPropertyValue('background');
     const color = computedStyle.getPropertyValue('color');

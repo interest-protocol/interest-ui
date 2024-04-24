@@ -28,7 +28,7 @@ export const Dialog: FC<DialogProps> = ({
       justifyContent="center"
       boxShadow="dropShadow.2xl"
       backgroundColor="lowestContainer"
-      data-testid="dialog"
+      role="dialog"
     >
       <Box
         display="flex"
@@ -115,7 +115,8 @@ export const Dialog: FC<DialogProps> = ({
                     borderColor="outlineVariant"
                     borderRadius="xs"
                     color={COLOR_MAP.info}
-                    data-testid="close-button"
+                    // eslint-disable-next-line jsx-a11y/aria-role
+                    role="close-button"
                   >
                     {(secondaryButton as IDialogButton).label}
                   </Button>
@@ -131,7 +132,8 @@ export const Dialog: FC<DialogProps> = ({
                     flex="3"
                     variant="filled"
                     borderRadius="xs"
-                    data-testid="got-it-button"
+                    // eslint-disable-next-line jsx-a11y/aria-role
+                    role="got-it-button"
                   >
                     {(primaryButton as IDialogButton).label}
                   </Button>
