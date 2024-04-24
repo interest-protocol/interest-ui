@@ -77,7 +77,8 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
 
     return (
       <Box
-        data-testid="token-field"
+        // eslint-disable-next-line jsx-a11y/aria-role
+        role="token-field"
         opacity={disabled ? 0.32 : 1}
         cursor={disabled ? 'not-allowed' : 'normal'}
       >

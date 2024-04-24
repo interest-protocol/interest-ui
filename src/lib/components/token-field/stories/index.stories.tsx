@@ -44,7 +44,7 @@ export const FilledWithToken: Story = {
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const tokenField = canvas.getByTestId('token-field');
+    const tokenField = canvas.getByRole('token-field');
     const computedStyle = getComputedStyle(tokenField);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
@@ -84,7 +84,7 @@ export const FilledWithTokenWithoutLabel: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const tokenField = canvas.getByTestId('token-field');
+    const tokenField = canvas.getByRole('token-field');
     const computedStyle = getComputedStyle(tokenField);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
@@ -124,7 +124,7 @@ export const FilledWithLabelToTheLeft: Story = {
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const tokenField = canvas.getByTestId('token-field');
+    const tokenField = canvas.getByRole('token-field');
     const computedStyle = getComputedStyle(tokenField);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
@@ -163,7 +163,7 @@ export const FilledWithTokenError: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const tokenField = canvas.getByTestId('token-field');
+    const tokenField = canvas.getByRole('token-field');
     const computedStyle = getComputedStyle(tokenField);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
@@ -204,7 +204,7 @@ export const FilledWithTokenDisabled: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const tokenField = canvas.getByTestId('token-field');
+    const tokenField = canvas.getByRole('token-field');
     const computedStyle = getComputedStyle(tokenField);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
@@ -243,7 +243,7 @@ export const FilledWithoutTokenIcon: Story = {
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const tokenField = canvas.getByTestId('token-field');
+    const tokenField = canvas.getByRole('token-field');
     const computedStyle = getComputedStyle(tokenField);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
@@ -277,7 +277,7 @@ export const FilledWithoutTokenIconError: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const tokenField = canvas.getByTestId('token-field');
+    const tokenField = canvas.getByRole('token-field');
     const computedStyle = getComputedStyle(tokenField);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
@@ -313,7 +313,7 @@ export const FilledWithoutTokenIconDisabled: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const tokenField = canvas.getByTestId('token-field');
+    const tokenField = canvas.getByRole('token-field');
     const computedStyle = getComputedStyle(tokenField);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
@@ -350,7 +350,7 @@ export const OutlineWithToken: Story = {
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const tokenField = canvas.getByTestId('token-field');
+    const tokenField = canvas.getByRole('token-field');
     const computedStyle = getComputedStyle(tokenField);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
@@ -390,7 +390,7 @@ export const OutlineWithLabelToTheLeft: Story = {
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const tokenField = canvas.getByTestId('token-field');
+    const tokenField = canvas.getByRole('token-field');
     const computedStyle = getComputedStyle(tokenField);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
@@ -431,7 +431,7 @@ export const OutlineWithTokenError: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const tokenField = canvas.getByTestId('token-field');
+    const tokenField = canvas.getByRole('token-field');
     const computedStyle = getComputedStyle(tokenField);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
@@ -473,7 +473,7 @@ export const OutlineWithTokenDisabled: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const tokenField = canvas.getByTestId('token-field');
+    const tokenField = canvas.getByRole('token-field');
     const computedStyle = getComputedStyle(tokenField);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
@@ -513,7 +513,7 @@ export const OutlineWithoutTokenIcon: Story = {
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const tokenField = canvas.getByTestId('token-field');
+    const tokenField = canvas.getByRole('token-field');
     const computedStyle = getComputedStyle(tokenField);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
@@ -549,7 +549,7 @@ export const OutlineWithoutTokenIconError: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const tokenField = canvas.getByTestId('token-field');
+    const tokenField = canvas.getByRole('token-field');
     const computedStyle = getComputedStyle(tokenField);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
@@ -586,7 +586,7 @@ export const OutlineWithoutTokenIconDisabled: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const tokenField = canvas.getByTestId('token-field');
+    const tokenField = canvas.getByRole('token-field');
     const computedStyle = getComputedStyle(tokenField);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
