@@ -32,14 +32,14 @@ export const NormalBar: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const progressIndicator = canvas.getByTestId('progressIndicator');
+    const progressIndicator = canvas.getByRole('progressIndicator');
     const computedStyle = getComputedStyle(progressIndicator);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
     const background = computedStyle.getPropertyValue('background');
 
     await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByTestId('progressIndicator'));
+      await userEvent.click(canvas.getByRole('progressIndicator'));
     });
 
     await step('Check property value and args', () => {
@@ -58,13 +58,13 @@ export const WarningBar: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const progressIndicator = canvas.getByTestId('progressIndicator');
+    const progressIndicator = canvas.getByRole('progressIndicator');
     const computedStyle = getComputedStyle(progressIndicator);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
     const background = computedStyle.getPropertyValue('background');
     await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByTestId('progressIndicator'));
+      await userEvent.click(canvas.getByRole('progressIndicator'));
     });
 
     await step('Check property value and args', () => {
@@ -83,13 +83,13 @@ export const DangerousBar: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const progressIndicator = canvas.getByTestId('progressIndicator');
+    const progressIndicator = canvas.getByRole('progressIndicator');
     const computedStyle = getComputedStyle(progressIndicator);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
     const background = computedStyle.getPropertyValue('background');
     await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByTestId('progressIndicator'));
+      await userEvent.click(canvas.getByRole('progressIndicator'));
     });
 
     await step('Check property value and args', () => {
@@ -109,13 +109,13 @@ export const Circle: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const progressIndicator = canvas.getByTestId('progressIndicator');
+    const progressIndicator = canvas.getByRole('progressIndicator');
     const computedStyle = getComputedStyle(progressIndicator);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
     const background = computedStyle.getPropertyValue('background');
     await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByTestId('progressIndicator'));
+      await userEvent.click(canvas.getByRole('progressIndicator'));
     });
 
     await step('Check property value and args', () => {
@@ -136,13 +136,13 @@ export const BigCircle: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const progressIndicator = canvas.getByTestId('progressIndicator');
+    const progressIndicator = canvas.getByRole('progressIndicator');
     const computedStyle = getComputedStyle(progressIndicator);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
     const background = computedStyle.getPropertyValue('background');
     await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByTestId('progressIndicator'));
+      await userEvent.click(canvas.getByRole('progressIndicator'));
     });
 
     await step('Check property value and args', () => {
@@ -161,13 +161,13 @@ export const LoadingCircle: Story = {
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const progressIndicator = canvas.getByTestId('progressIndicator');
+    const progressIndicator = canvas.getByRole('progressIndicator');
     const computedStyle = getComputedStyle(progressIndicator);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
     const background = computedStyle.getPropertyValue('background');
     await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByTestId('progressIndicator'));
+      await userEvent.click(canvas.getByRole('progressIndicator'));
     });
 
     await step('Check property value and args', () => {

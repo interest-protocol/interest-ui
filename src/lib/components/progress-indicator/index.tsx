@@ -11,7 +11,8 @@ export const ProgressIndicator: FC<
   if (variant === 'bar') return <ProgressBar value={value ?? 0} {...props} />;
 
   return (
-    <Box data-testid="progressIndicator">
+    // eslint-disable-next-line jsx-a11y/aria-role
+    <Box role="progressIndicator">
       <ProgressCircle
         size={size}
         value={variant === 'loading' ? -1 : value ?? 0}
