@@ -38,7 +38,7 @@ export const Default: Story = {
     bottomValue: false,
     showZeroValue: false,
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
     const slider = canvas.getByTestId('slider');
@@ -47,12 +47,16 @@ export const Default: Story = {
     const background = computedStyle.getPropertyValue('background');
     const max = args.max;
 
-    await userEvent.type(canvas.getByTestId('slider'), '100');
+    await step('onClick test event', async () => {
+      await userEvent.type(canvas.getByTestId('slider'), '100');
+    });
 
-    const availableOptions = await canvas.findAllByTestId('slider');
-    await expect(availableOptions.length).toBe(1);
-    await expect(max).toBe(100);
-    expect(background.trim()).toBeTruthy();
+    await step('Check args and style property', async () => {
+      const availableOptions = await canvas.findAllByTestId('slider');
+      await expect(availableOptions.length).toBe(1);
+      await expect(max).toBe(100);
+      expect(background.trim()).toBeTruthy();
+    });
   },
 };
 
@@ -65,7 +69,7 @@ export const DefaultInterval: Story = {
     bottomValue: false,
     showZeroValue: false,
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
     const slider = canvas.getByTestId('slider');
@@ -75,13 +79,17 @@ export const DefaultInterval: Story = {
     const max = args.max;
     const initialInterval = args.initial && args.initial[1] - args.initial[0];
 
-    await userEvent.type(canvas.getByTestId('slider'), '100');
+    await step('onClick test event', async () => {
+      await userEvent.type(canvas.getByTestId('slider'), '100');
+    });
 
-    const availableOptions = await canvas.findAllByTestId('slider');
-    await expect(availableOptions.length).toBe(1);
-    await expect(max).toBe(100);
-    await expect(initialInterval).toBe(20);
-    expect(background.trim()).toBeTruthy();
+    await step('Check args and style property', async () => {
+      const availableOptions = await canvas.findAllByTestId('slider');
+      await expect(availableOptions.length).toBe(1);
+      await expect(max).toBe(100);
+      await expect(initialInterval).toBe(20);
+      expect(background.trim()).toBeTruthy();
+    });
   },
 };
 
@@ -94,7 +102,7 @@ export const InTheMiddleWithoutTooltip: Story = {
     bottomValue: false,
     showZeroValue: false,
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
     const slider = canvas.getByTestId('slider');
@@ -104,13 +112,17 @@ export const InTheMiddleWithoutTooltip: Story = {
     const max = args.max;
     const initial = args.initial;
 
-    await userEvent.type(canvas.getByTestId('slider'), '100');
+    await step('onClick test event', async () => {
+      await userEvent.type(canvas.getByTestId('slider'), '100');
+    });
 
-    const availableOptions = await canvas.findAllByTestId('slider');
-    await expect(availableOptions.length).toBe(1);
-    await expect(max).toBe(100);
-    await expect(initial).toBe(50);
-    expect(background.trim()).toBeTruthy();
+    await step('Check args and style property', async () => {
+      const availableOptions = await canvas.findAllByTestId('slider');
+      await expect(availableOptions.length).toBe(1);
+      await expect(max).toBe(100);
+      await expect(initial).toBe(50);
+      expect(background.trim()).toBeTruthy();
+    });
   },
 };
 
@@ -123,7 +135,7 @@ export const InTheEndWithoutTooltip: Story = {
     bottomValue: false,
     showZeroValue: false,
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
     const slider = canvas.getByTestId('slider');
@@ -133,13 +145,17 @@ export const InTheEndWithoutTooltip: Story = {
     const max = args.max;
     const initial = args.initial;
 
-    await userEvent.type(canvas.getByTestId('slider'), '100');
+    await step('onClick test event', async () => {
+      await userEvent.type(canvas.getByTestId('slider'), '100');
+    });
 
-    const availableOptions = await canvas.findAllByTestId('slider');
-    await expect(availableOptions).toHaveLength(1);
-    await expect(max).toBe(100);
-    await expect(initial).toBe(100);
-    expect(background.trim()).toBeTruthy();
+    await step('Check args and style property', async () => {
+      const availableOptions = await canvas.findAllByTestId('slider');
+      await expect(availableOptions).toHaveLength(1);
+      await expect(max).toBe(100);
+      await expect(initial).toBe(100);
+      expect(background.trim()).toBeTruthy();
+    });
   },
 };
 
@@ -152,7 +168,7 @@ export const InTheMiddleWithTooltip: Story = {
     bottomValue: true,
     showZeroValue: false,
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
     const slider = canvas.getByTestId('slider');
@@ -162,15 +178,19 @@ export const InTheMiddleWithTooltip: Story = {
     const max = args.max;
     const initial = args.initial;
 
-    await userEvent.type(canvas.getByTestId('slider'), '100');
+    await step('onClick test event', async () => {
+      await userEvent.type(canvas.getByTestId('slider'), '100');
+    });
 
-    const availableOptions = await canvas.findAllByTestId('slider');
-    expect(availableOptions.length).toBe(1);
-    expect(max).toBe(100);
-    expect(initial).toBe(50);
-    expect(background.trim()).toBeTruthy();
-    expect(args.withTooltip).toBeTruthy();
-    expect(args.bottomValue).toBeTruthy();
+    await step('Check args and style property', async () => {
+      const availableOptions = await canvas.findAllByTestId('slider');
+      expect(availableOptions.length).toBe(1);
+      expect(max).toBe(100);
+      expect(initial).toBe(50);
+      expect(background.trim()).toBeTruthy();
+      expect(args.withTooltip).toBeTruthy();
+      expect(args.bottomValue).toBeTruthy();
+    });
   },
 };
 
@@ -183,7 +203,7 @@ export const InTheEndWithTooltip: Story = {
     bottomValue: false,
     showZeroValue: false,
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
     const slider = canvas.getByTestId('slider');
@@ -193,13 +213,17 @@ export const InTheEndWithTooltip: Story = {
     const max = args.max;
     const initial = args.initial;
 
-    await userEvent.type(canvas.getByTestId('slider'), '100');
+    await step('onClick test event', async () => {
+      await userEvent.type(canvas.getByTestId('slider'), '100');
+    });
 
-    const availableOptions = await canvas.findAllByTestId('slider');
-    expect(availableOptions.length).toBe(1);
-    expect(max).toBe(100);
-    expect(initial).toBe(100);
-    expect(background.trim()).toBeTruthy();
-    expect(args.withTooltip).toBeTruthy();
+    await step('Check args and style property', async () => {
+      const availableOptions = await canvas.findAllByTestId('slider');
+      expect(availableOptions.length).toBe(1);
+      expect(max).toBe(100);
+      expect(initial).toBe(100);
+      expect(background.trim()).toBeTruthy();
+      expect(args.withTooltip).toBeTruthy();
+    });
   },
 };
