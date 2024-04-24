@@ -30,7 +30,7 @@ export const DisplayLarge: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByTestId('typography');
+    const typography = canvas.getByRole('text');
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -38,7 +38,7 @@ export const DisplayLarge: Story = {
     const fontSize = computedStyle.getPropertyValue('font-size');
 
     expect(typography).toHaveTextContent('p');
-    await userEvent.hover(canvas.getByTestId('typography'));
+    await userEvent.hover(canvas.getByRole('text'));
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Proto');
@@ -57,7 +57,7 @@ export const DisplayMedium: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByTestId('typography');
+    const typography = canvas.getByRole('text');
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -65,7 +65,7 @@ export const DisplayMedium: Story = {
     const fontSize = computedStyle.getPropertyValue('font-size');
 
     expect(typography).toHaveTextContent('p');
-    await userEvent.hover(canvas.getByTestId('typography'));
+    await userEvent.hover(canvas.getByRole('text'));
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Proto');
@@ -84,7 +84,7 @@ export const DisplaySmall: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByTestId('typography');
+    const typography = canvas.getByRole('text');
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -92,7 +92,7 @@ export const DisplaySmall: Story = {
     const fontSize = computedStyle.getPropertyValue('font-size');
 
     expect(typography).toHaveTextContent('p');
-    await userEvent.hover(canvas.getByTestId('typography'));
+    await userEvent.hover(canvas.getByRole('text'));
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Proto');
@@ -111,7 +111,7 @@ export const headlineLarge: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByTestId('typography');
+    const typography = canvas.getByRole('text');
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -119,7 +119,7 @@ export const headlineLarge: Story = {
     const fontSize = computedStyle.getPropertyValue('font-size');
 
     expect(typography).toHaveTextContent('Headline Large');
-    await userEvent.hover(canvas.getByTestId('typography'));
+    await userEvent.hover(canvas.getByRole('text'));
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Proto');
@@ -138,7 +138,7 @@ export const headlineMedium: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByTestId('typography');
+    const typography = canvas.getByRole('text');
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -146,7 +146,7 @@ export const headlineMedium: Story = {
     const fontSize = computedStyle.getPropertyValue('font-size');
 
     expect(typography).toHaveTextContent('Headline Medium');
-    await userEvent.hover(canvas.getByTestId('typography'));
+    await userEvent.hover(canvas.getByRole('text'));
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Proto');
@@ -165,7 +165,7 @@ export const headlineSmall: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByTestId('typography');
+    const typography = canvas.getByRole('text');
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -173,7 +173,7 @@ export const headlineSmall: Story = {
     const fontSize = computedStyle.getPropertyValue('font-size');
 
     expect(typography).toHaveTextContent('Headline Small');
-    await userEvent.hover(canvas.getByTestId('typography'));
+    await userEvent.hover(canvas.getByRole('text'));
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Proto');
@@ -192,7 +192,7 @@ export const titleLarge: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByTestId('typography');
+    const typography = canvas.getByRole('text');
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -200,7 +200,7 @@ export const titleLarge: Story = {
     const fontSize = computedStyle.getPropertyValue('font-size');
 
     expect(typography).toHaveTextContent('Title Large');
-    await userEvent.hover(canvas.getByTestId('typography'));
+    await userEvent.hover(canvas.getByRole('text'));
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Satoshi');
@@ -219,7 +219,7 @@ export const titleMedium: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByTestId('typography');
+    const typography = canvas.getByRole('text');
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -228,7 +228,7 @@ export const titleMedium: Story = {
 
     // check if the label is being render
     expect(typography).toHaveTextContent('Title Medium');
-    await userEvent.hover(canvas.getByTestId('typography'));
+    await userEvent.hover(canvas.getByRole('text'));
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Satoshi');
@@ -247,7 +247,7 @@ export const titleSmall: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByTestId('typography');
+    const typography = canvas.getByRole('text');
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -255,7 +255,7 @@ export const titleSmall: Story = {
     const fontSize = computedStyle.getPropertyValue('font-size');
 
     expect(typography).toHaveTextContent('Title Small');
-    await userEvent.hover(canvas.getByTestId('typography'));
+    await userEvent.hover(canvas.getByRole('text'));
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Satoshi');
@@ -274,7 +274,7 @@ export const bodyLarge: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByTestId('typography');
+    const typography = canvas.getByRole('text');
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -282,7 +282,7 @@ export const bodyLarge: Story = {
     const fontSize = computedStyle.getPropertyValue('font-size');
 
     expect(typography).toHaveTextContent('Body Large');
-    await userEvent.hover(canvas.getByTestId('typography'));
+    await userEvent.hover(canvas.getByRole('text'));
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Satoshi');
@@ -301,7 +301,7 @@ export const bodyMedium: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByTestId('typography');
+    const typography = canvas.getByRole('text');
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -309,7 +309,7 @@ export const bodyMedium: Story = {
     const fontSize = computedStyle.getPropertyValue('font-size');
 
     expect(typography).toHaveTextContent('Body Medium');
-    await userEvent.hover(canvas.getByTestId('typography'));
+    await userEvent.hover(canvas.getByRole('text'));
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Satoshi');
@@ -328,7 +328,7 @@ export const bodySmall: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByTestId('typography');
+    const typography = canvas.getByRole('text');
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -336,7 +336,7 @@ export const bodySmall: Story = {
     const fontSize = computedStyle.getPropertyValue('font-size');
 
     expect(typography).toHaveTextContent('Body Small');
-    await userEvent.hover(canvas.getByTestId('typography'));
+    await userEvent.hover(canvas.getByRole('text'));
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Satoshi');
@@ -355,7 +355,7 @@ export const labelLarge: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByTestId('typography');
+    const typography = canvas.getByRole('text');
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -363,7 +363,7 @@ export const labelLarge: Story = {
     const fontSize = computedStyle.getPropertyValue('font-size');
 
     expect(typography).toHaveTextContent('Label Large');
-    await userEvent.hover(canvas.getByTestId('typography'));
+    await userEvent.hover(canvas.getByRole('text'));
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Proto');
@@ -382,7 +382,7 @@ export const labelMedium: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByTestId('typography');
+    const typography = canvas.getByRole('text');
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -390,7 +390,7 @@ export const labelMedium: Story = {
     const fontSize = computedStyle.getPropertyValue('font-size');
 
     expect(typography).toHaveTextContent('Label Medium');
-    await userEvent.hover(canvas.getByTestId('typography'));
+    await userEvent.hover(canvas.getByRole('text'));
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Proto');
@@ -409,7 +409,7 @@ export const labelSmall: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByTestId('typography');
+    const typography = canvas.getByRole('text');
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -419,7 +419,7 @@ export const labelSmall: Story = {
     const remFontSize = convertedFontSize / 16 / 10;
 
     expect(typography).toHaveTextContent('Label Small');
-    await userEvent.hover(canvas.getByTestId('typography'));
+    await userEvent.hover(canvas.getByRole('text'));
 
     expect(color.trim()).toBeTruthy();
     expect(fontFamily).toBe('Proto');
