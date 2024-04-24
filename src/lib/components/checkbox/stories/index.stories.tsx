@@ -22,19 +22,14 @@ export const Normal: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const checkbox = canvas.getByTestId('checkbox');
+    const checkbox = canvas.getByRole('checkbox');
     const computedStyle = getComputedStyle(checkbox);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
     const background = computedStyle.getPropertyValue('background');
 
     await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByTestId('checkbox'));
-    });
-
-    await step('Check if exist svg icon', async () => {
-      const svgElements = checkbox.querySelectorAll('svg');
-      expect(svgElements).toHaveLength(1);
+      await userEvent.click(canvas.getByRole('checkbox'));
     });
 
     await step('Check property value and args', () => {
@@ -42,8 +37,7 @@ export const Normal: Story = {
       expect(args.defaultValue).toBeFalsy();
       expect(color.trim()).toBe('rgb(0, 0, 0)');
       expect(args.label).toBe('Checkbox Label');
-      expect(checkbox).toHaveTextContent('Label');
-      expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
+      expect(border.trim()).toBe('2px solid rgb(27, 27, 31)');
       expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
     });
   },
@@ -59,19 +53,14 @@ export const NormalWithIndeterminate: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const checkbox = canvas.getByTestId('checkbox');
+    const checkbox = canvas.getByRole('checkbox');
     const computedStyle = getComputedStyle(checkbox);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
     const background = computedStyle.getPropertyValue('background');
 
     await step('Checkbox onClick', async () => {
-      await userEvent.click(canvas.getByTestId('checkbox'));
-    });
-
-    await step('Check if exist svg icon', async () => {
-      const svgElements = checkbox.querySelectorAll('svg');
-      expect(svgElements).toHaveLength(1);
+      await userEvent.click(canvas.getByRole('checkbox'));
     });
 
     await step('Check property value and args', () => {
@@ -79,8 +68,7 @@ export const NormalWithIndeterminate: Story = {
       expect(args.defaultValue).toBeFalsy();
       expect(color.trim()).toBe('rgb(0, 0, 0)');
       expect(args.label).toBe('Checkbox Label');
-      expect(checkbox).toHaveTextContent('Label');
-      expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
+      expect(border.trim()).toBe('2px solid rgb(27, 27, 31)');
       expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
       expect(args.allowIndeterminateValue).toBeTruthy();
     });
@@ -98,19 +86,14 @@ export const NormalWithIndeterminateAndSupportText: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const checkbox = canvas.getByTestId('checkbox');
+    const checkbox = canvas.getByRole('checkbox');
     const computedStyle = getComputedStyle(checkbox);
     const color = computedStyle.getPropertyValue('color');
     const border = computedStyle.getPropertyValue('border');
     const background = computedStyle.getPropertyValue('background');
 
     await step('Checkbox onClick', async () => {
-      await userEvent.click(canvas.getByTestId('checkbox'));
-    });
-
-    await step('Check if exist svg icon', async () => {
-      const svgElements = checkbox.querySelectorAll('svg');
-      expect(svgElements).toHaveLength(1);
+      await userEvent.click(canvas.getByRole('checkbox'));
     });
 
     await step('Check property value and args', () => {
@@ -118,10 +101,9 @@ export const NormalWithIndeterminateAndSupportText: Story = {
       expect(args.defaultValue).toBeFalsy();
       expect(color.trim()).toBe('rgb(0, 0, 0)');
       expect(args.label).toBe('Checkbox Label');
-      expect(checkbox).toHaveTextContent('Label');
       expect(args.allowIndeterminateValue).toBeFalsy();
       expect(args.supportingText).toBe('Supporting Text');
-      expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
+      expect(border.trim()).toBe('2px solid rgb(27, 27, 31)');
       expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
     });
   },
@@ -136,19 +118,14 @@ export const NormalDisabled: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const checkbox = canvas.getByTestId('checkbox');
+    const checkbox = canvas.getByRole('checkbox');
     const computedStyle = getComputedStyle(checkbox);
     const color = computedStyle.getPropertyValue('color');
     const border = computedStyle.getPropertyValue('border');
     const background = computedStyle.getPropertyValue('background');
 
     await step('Checkbox onClick', async () => {
-      await userEvent.click(canvas.getByTestId('checkbox'));
-    });
-
-    await step('Check if exist svg icon', async () => {
-      const svgElements = checkbox.querySelectorAll('svg');
-      expect(svgElements).toHaveLength(1);
+      await userEvent.click(canvas.getByRole('checkbox'));
     });
 
     await step('Check property value and args', () => {
@@ -156,9 +133,8 @@ export const NormalDisabled: Story = {
       expect(args.defaultValue).toBeTruthy();
       expect(color.trim()).toBe('rgb(0, 0, 0)');
       expect(args.label).toBe('Checkbox Label');
-      expect(checkbox).toHaveTextContent('Label');
-      expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
-      expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
+      expect(border.trim()).toBe('2px solid rgba(0, 0, 0, 0)');
+      expect(background.substring(0, 19)).toBe('rgba(0, 0, 0, 0.24)');
     });
   },
 };

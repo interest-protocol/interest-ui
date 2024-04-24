@@ -54,7 +54,6 @@ export const Checkbox: FC<CheckboxProps> = ({
       gap="l"
       display="flex"
       alignItems="center"
-      data-testid="checkbox"
       cursor={disabled ? 'not-allowed' : 'pointer'}
     >
       <Box
