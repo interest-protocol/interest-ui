@@ -28,7 +28,7 @@ export const Default: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const textField = canvas.getByTestId('textField');
+    const textField = canvas.getByRole('input');
     const computedStyle = getComputedStyle(textField);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
@@ -39,7 +39,7 @@ export const Default: Story = {
     expect(inputElement).toHaveLength(1);
 
     await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByTestId('textField'));
+      await userEvent.click(canvas.getByRole('input'));
     });
 
     await step('Check property value and args', () => {
@@ -62,7 +62,7 @@ export const WithPrefix: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const textField = canvas.getByTestId('textField');
+    const textField = canvas.getByRole('input');
     const computedStyle = getComputedStyle(textField);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
@@ -77,7 +77,7 @@ export const WithPrefix: Story = {
     expect(inputElement).toHaveLength(1);
 
     await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByTestId('textField'));
+      await userEvent.click(canvas.getByRole('input'));
     });
 
     await step('Check Property value and args', () => {
@@ -102,7 +102,7 @@ export const WithPrefixSucess: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const textField = canvas.getByTestId('textField');
+    const textField = canvas.getByRole('input');
     const computedStyle = getComputedStyle(textField);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
@@ -117,7 +117,7 @@ export const WithPrefixSucess: Story = {
     expect(inputElement).toHaveLength(1);
 
     await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByTestId('textField'));
+      await userEvent.click(canvas.getByRole('input'));
     });
 
     await step('Check Property value and args', () => {
@@ -142,7 +142,7 @@ export const WithSuffix: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const textField = canvas.getByTestId('textField');
+    const textField = canvas.getByRole('input');
     const computedStyle = getComputedStyle(textField);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
@@ -157,7 +157,7 @@ export const WithSuffix: Story = {
     expect(inputElement).toHaveLength(1);
 
     await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByTestId('textField'));
+      await userEvent.click(canvas.getByRole('input'));
     });
 
     await step('Check Property value and args', () => {
@@ -180,7 +180,7 @@ export const WithTopLabel: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const textField = canvas.getByTestId('textField');
+    const textField = canvas.getByRole('input');
     const computedStyle = getComputedStyle(textField);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
@@ -191,7 +191,7 @@ export const WithTopLabel: Story = {
     expect(inputElement).toHaveLength(1);
 
     await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByTestId('textField'));
+      await userEvent.click(canvas.getByRole('input'));
     });
 
     await step('Check property value and args', () => {
@@ -216,7 +216,7 @@ export const Combined: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const textField = canvas.getByTestId('textField');
+    const textField = canvas.getByRole('input');
     const computedStyle = getComputedStyle(textField);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
@@ -231,7 +231,7 @@ export const Combined: Story = {
     expect(inputElement).toHaveLength(1);
 
     await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByTestId('textField'));
+      await userEvent.click(canvas.getByRole('input'));
     });
 
     await step('Check property value and args', () => {
@@ -255,7 +255,7 @@ export const Error: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const textField = canvas.getByTestId('textField');
+    const textField = canvas.getByRole('input');
     const computedStyle = getComputedStyle(textField);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
@@ -270,7 +270,7 @@ export const Error: Story = {
     expect(inputElement).toHaveLength(1);
 
     await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByTestId('textField'));
+      await userEvent.click(canvas.getByRole('input'));
     });
 
     await step('Check property value and args', () => {
@@ -296,7 +296,7 @@ export const ErrorCombined: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const textField = canvas.getByTestId('textField');
+    const textField = canvas.getByRole('input');
     const computedStyle = getComputedStyle(textField);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
@@ -311,7 +311,7 @@ export const ErrorCombined: Story = {
     expect(inputElement).toHaveLength(1);
 
     await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByTestId('textField'));
+      await userEvent.click(canvas.getByRole('input'));
     });
 
     await step('Check property value and args', () => {
@@ -343,7 +343,7 @@ export const ErrorCombinedWithWrapper: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const textField = canvas.getByTestId('textField');
+    const textField = canvas.getByRole('input');
     const computedStyle = getComputedStyle(textField);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
@@ -358,7 +358,7 @@ export const ErrorCombinedWithWrapper: Story = {
     expect(inputElement).toHaveLength(1);
 
     await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByTestId('textField'));
+      await userEvent.click(canvas.getByRole('input'));
     });
 
     await step('Check property value and args', () => {
@@ -381,7 +381,7 @@ export const Disabled: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const textField = canvas.getByTestId('textField');
+    const textField = canvas.getByRole('input');
     const computedStyle = getComputedStyle(textField);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
@@ -392,7 +392,7 @@ export const Disabled: Story = {
     expect(inputElement).toHaveLength(1);
 
     await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByTestId('textField'));
+      await userEvent.click(canvas.getByRole('input'));
     });
 
     await step('Check property value and args', () => {
