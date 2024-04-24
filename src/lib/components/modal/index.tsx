@@ -18,7 +18,8 @@ export const Modal: FC<PropsWithChildren<ModalProps>> = ({
   const background = `rgba(0,0,0,${opaque ? 1 : 0.5})`;
 
   return (
-    <Box data-testid="modal">
+    // eslint-disable-next-line jsx-a11y/aria-role
+    <Box role="modal">
       <ReactModal
         {...props}
         isOpen={isOpen}

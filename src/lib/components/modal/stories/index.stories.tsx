@@ -65,7 +65,7 @@ export const Normal: Story = {
   play: async ({ args, step, canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const modal = canvas.getByTestId('modal');
+    const modal = canvas.getByRole('modal');
     const computedStyle = getComputedStyle(modal);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
