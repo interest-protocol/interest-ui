@@ -29,14 +29,14 @@ export const BarChart: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const chart = canvas.getByTestId('chart');
+    const chart = canvas.getByRole('chart');
     const computedStyle = getComputedStyle(chart);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
     const background = computedStyle.getPropertyValue('background');
 
     await step('Bar chart hover event', async () => {
-      await userEvent.hover(canvas.getByTestId('chart'));
+      await userEvent.hover(canvas.getByRole('chart'));
     });
 
     await step('Check if exist svg icon', async () => {
@@ -62,14 +62,14 @@ export const AreaChart: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const chart = canvas.getByTestId('chart');
+    const chart = canvas.getByRole('chart');
     const computedStyle = getComputedStyle(chart);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
     const background = computedStyle.getPropertyValue('background');
 
     await step('Area chart hover event', async () => {
-      await userEvent.hover(canvas.getByTestId('chart'));
+      await userEvent.hover(canvas.getByRole('chart'));
     });
 
     await step('Check if exist svg icon', async () => {
@@ -95,14 +95,14 @@ export const StepsChart: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const chart = canvas.getByTestId('chart');
+    const chart = canvas.getByRole('chart');
     const computedStyle = getComputedStyle(chart);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
     const background = computedStyle.getPropertyValue('background');
 
     await step('Steps chart hover event', async () => {
-      await userEvent.hover(canvas.getByTestId('chart'));
+      await userEvent.hover(canvas.getByRole('chart'));
     });
 
     await step('Check if exist svg icon', async () => {
@@ -138,14 +138,14 @@ export const PieChart: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const chart = canvas.getByTestId('pieChart');
+    const chart = canvas.getByRole('pieChart');
     const computedStyle = getComputedStyle(chart);
     const border = computedStyle.getPropertyValue('border');
     const color = computedStyle.getPropertyValue('color');
     const background = computedStyle.getPropertyValue('background');
 
     await step('Pie chart hover event', async () => {
-      await userEvent.hover(canvas.getByTestId('pieChart'));
+      await userEvent.hover(canvas.getByRole('pieChart'));
     });
 
     await step('Check if exist svg icon', async () => {

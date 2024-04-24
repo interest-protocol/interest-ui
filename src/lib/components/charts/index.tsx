@@ -17,7 +17,8 @@ const CommonChart = {
 export const Chart: FC<ChartsProps> = (props) => {
   if (isPieChart(props))
     return (
-      <Box data-testid="pieChart">
+      // eslint-disable-next-line jsx-a11y/aria-role
+      <Box role="pieChart">
         <CircleChart {...props} />
       </Box>
     );
@@ -29,7 +30,8 @@ export const Chart: FC<ChartsProps> = (props) => {
   if (!Chart) return null;
 
   return (
-    <Box data-testid="chart">
+    // eslint-disable-next-line jsx-a11y/aria-role
+    <Box role="chart">
       <Chart {...props} />;
     </Box>
   );
