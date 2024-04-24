@@ -56,7 +56,8 @@ export const ToggleButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
       color="onSurface"
       alignItems="center"
       textTransform="capitalize"
-      data-testid="toggle"
+      // eslint-disable-next-line jsx-a11y/aria-role
+      role="toggle"
     >
       <LabelElement
         ml="0.375rem"

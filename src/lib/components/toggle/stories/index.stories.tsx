@@ -28,7 +28,7 @@ export const Normal: Story = {
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const toggle = canvas.getByTestId('toggle');
+    const toggle = canvas.getByRole('toggle');
     const computedStyle = getComputedStyle(toggle);
 
     const background = computedStyle.getPropertyValue('background');
@@ -44,7 +44,7 @@ export const Normal: Story = {
     );
 
     await step('Click toggle', async () => {
-      await userEvent.click(canvas.getByTestId('toggle'));
+      await userEvent.click(canvas.getByRole('toggle'));
     });
   },
 };
@@ -57,7 +57,7 @@ export const NormalWithOnChangeDemo: Story = {
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const toggle = canvas.getByTestId('toggle');
+    const toggle = canvas.getByRole('toggle');
     const computedStyle = getComputedStyle(toggle);
 
     const background = computedStyle.getPropertyValue('background');
@@ -73,7 +73,7 @@ export const NormalWithOnChangeDemo: Story = {
     );
 
     await step('Click toggle', async () => {
-      await userEvent.click(canvas.getByTestId('toggle'));
+      await userEvent.click(canvas.getByRole('toggle'));
     });
 
     await step('Call onChange toggle', async () => {
@@ -90,7 +90,7 @@ export const WithActiveIcon: Story = {
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const toggle = canvas.getByTestId('toggle');
+    const toggle = canvas.getByRole('toggle');
     const computedStyle = getComputedStyle(toggle);
 
     const background = computedStyle.getPropertyValue('background');
@@ -103,7 +103,7 @@ export const WithActiveIcon: Story = {
     });
 
     await step('Click toggle', async () => {
-      await userEvent.click(canvas.getByTestId('toggle'));
+      await userEvent.click(canvas.getByRole('toggle'));
     });
 
     await step('active icon exist', async () => {
@@ -122,7 +122,7 @@ export const WithInactiveIcon: Story = {
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const toggle = canvas.getByTestId('toggle');
+    const toggle = canvas.getByRole('toggle');
     const computedStyle = getComputedStyle(toggle);
 
     const background = computedStyle.getPropertyValue('background');
@@ -135,7 +135,7 @@ export const WithInactiveIcon: Story = {
     });
 
     await step('Click toggle', async () => {
-      await userEvent.click(canvas.getByTestId('toggle'));
+      await userEvent.click(canvas.getByRole('toggle'));
     });
 
     await step('Inactive icon exist', async () => {
@@ -155,7 +155,7 @@ export const WithActiveAndInactiveIcon: Story = {
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const toggle = canvas.getByTestId('toggle');
+    const toggle = canvas.getByRole('toggle');
     const computedStyle = getComputedStyle(toggle);
 
     const background = computedStyle.getPropertyValue('background');
@@ -168,7 +168,7 @@ export const WithActiveAndInactiveIcon: Story = {
     });
 
     await step('Click toggle', async () => {
-      await userEvent.click(canvas.getByTestId('toggle'));
+      await userEvent.click(canvas.getByRole('toggle'));
     });
 
     await step('Active and inactive icon exist', async () => {
@@ -184,7 +184,7 @@ export const Selected: Story = {
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const toggle = canvas.getByTestId('toggle');
+    const toggle = canvas.getByRole('toggle');
     const computedStyle = getComputedStyle(toggle);
 
     const background = computedStyle.getPropertyValue('background');
@@ -197,7 +197,7 @@ export const Selected: Story = {
     });
 
     await step('Click toggle', async () => {
-      await userEvent.click(canvas.getByTestId('toggle'));
+      await userEvent.click(canvas.getByRole('toggle'));
     });
   },
 };
@@ -210,7 +210,7 @@ export const SelectedDisabled: Story = {
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const toggle = canvas.getByTestId('toggle');
+    const toggle = canvas.getByRole('toggle');
     const computedStyle = getComputedStyle(toggle);
 
     const background = computedStyle.getPropertyValue('background');
@@ -223,7 +223,7 @@ export const SelectedDisabled: Story = {
     });
 
     await step('Click toggle', async () => {
-      await userEvent.click(canvas.getByTestId('toggle'));
+      await userEvent.click(canvas.getByRole('toggle'));
     });
 
     await step('Check if it disabled', async () => {
@@ -240,7 +240,7 @@ export const NotSelectedDisabled: Story = {
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const toggle = canvas.getByTestId('toggle');
+    const toggle = canvas.getByRole('toggle');
     const computedStyle = getComputedStyle(toggle);
 
     const background = computedStyle.getPropertyValue('background');
@@ -253,7 +253,7 @@ export const NotSelectedDisabled: Story = {
     });
 
     await step('Click toggle', async () => {
-      await userEvent.click(canvas.getByTestId('toggle'));
+      await userEvent.click(canvas.getByRole('toggle'));
     });
 
     await step('Active and inactive icon exist', async () => {
@@ -270,7 +270,7 @@ export const SingleLabel: Story = {
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const toggle = canvas.getByTestId('toggle');
+    const toggle = canvas.getByRole('toggle');
     const computedStyle = getComputedStyle(toggle);
 
     const background = computedStyle.getPropertyValue('background');
@@ -283,7 +283,7 @@ export const SingleLabel: Story = {
     });
 
     await step('Click toggle', async () => {
-      await userEvent.click(canvas.getByTestId('toggle'));
+      await userEvent.click(canvas.getByRole('toggle'));
     });
 
     await step('Check if labels exist and length', async () => {
@@ -300,7 +300,7 @@ export const DoubleLabel: Story = {
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const toggle = canvas.getByTestId('toggle');
+    const toggle = canvas.getByRole('toggle');
     const computedStyle = getComputedStyle(toggle);
 
     const background = computedStyle.getPropertyValue('background');
@@ -313,7 +313,7 @@ export const DoubleLabel: Story = {
     });
 
     await step('Click toggle', async () => {
-      await userEvent.click(canvas.getByTestId('toggle'));
+      await userEvent.click(canvas.getByRole('toggle'));
     });
 
     await step('Check if labels exist and length', async () => {
