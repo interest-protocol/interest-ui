@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 
 import { CircleSVG } from '../../../icons';
+import { RadioButton } from '../../radio-button';
 import { ToggleButton } from '../../toggle';
 import { DropdownButton } from '..';
 
@@ -25,6 +26,24 @@ export default meta;
 type Story = StoryObj<typeof DropdownButton>;
 
 export const WithLabel: Story = {
+  args: {
+    label: 'Label',
+    disabled: false,
+    items: [
+      {
+        SuffixIcon: <RadioButton defaultValue={false} />,
+        title: 'Option 1',
+      },
+      {
+        SuffixIcon: <RadioButton defaultValue={false} />,
+        title: 'Option 2',
+      },
+    ],
+    borderRadius: 'xs',
+  },
+};
+
+export const WithLabelRounded: Story = {
   args: {
     label: 'Label',
     disabled: false,
