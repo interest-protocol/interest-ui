@@ -46,12 +46,12 @@ export const Normal: Story = {
 
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
-    const list = canvas.getByTestId('list');
-    const arrowRightIcon = canvas.getByTestId('arrow-right-icon');
+    const list = canvas.getByRole('list');
+    const arrowRightIcon = canvas.getByRole('arrow-right-icon');
 
-    await userEvent.hover(canvas.getByTestId('list'));
-    await userEvent.click(canvas.getByTestId('list'));
-    await userEvent.click(canvas.getByTestId('arrow-right-icon'));
+    await userEvent.hover(canvas.getByRole('list'));
+    await userEvent.click(canvas.getByRole('list'));
+    await userEvent.click(canvas.getByRole('arrow-right-icon'));
 
     const listItems = args.items;
 
