@@ -20,6 +20,13 @@ export const Normal: Story = {
   },
 };
 
+export const NormalWithoutLabel: Story = {
+  args: {
+    disabled: false,
+    defaultValue: true,
+  },
+};
+
 export const NormalWithIndetermated: Story = {
   args: {
     disabled: false,
