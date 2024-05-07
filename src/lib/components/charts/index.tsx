@@ -32,7 +32,7 @@ export const Chart: FC<ChartsProps> = (props) => {
   return (
     // eslint-disable-next-line jsx-a11y/aria-role
     <Box role="chart">
-      <Chart {...props} />;
+      <Chart {...props} />
     </Box>
   );
 };
