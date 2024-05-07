@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+import { expect, userEvent, within } from '@storybook/test';
 import React, { FC, useState } from 'react';
 import { v4 } from 'uuid';
 
@@ -60,5 +61,27 @@ export const Normal: Story = {
     ariaHideApp: false,
     title: 'IPX Balance',
     hasCloseButton: true,
+  },
+  play: async ({ args, step, canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const modal = canvas.getByRole('modal');
+    const computedStyle = getComputedStyle(modal);
+    const border = computedStyle.getPropertyValue('border');
+    const color = computedStyle.getPropertyValue('color');
+    const background = computedStyle.getPropertyValue('background');
+
+    await step('onClick event', () => {
+      userEvent.click(modal);
+    });
+
+    await step('Check property value and args', () => {
+      expect(args.isOpen).toBeTruthy();
+      expect(args.allowClose).toBeTruthy();
+      expect(args.ariaHideApp).toBeFalsy();
+      expect(color.trim()).toBe('rgb(0, 0, 0)');
+      expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
+      expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
+    });
   },
 };

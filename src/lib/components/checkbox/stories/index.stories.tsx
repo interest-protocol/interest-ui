@@ -42,6 +42,33 @@ export const Normal: Story = {
     });
   },
 };
+export const NormalWithoutLabel: Story = {
+  args: {
+    disabled: false,
+    defaultValue: true,
+  },
+  play: async ({ args, canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    const checkbox = canvas.getByRole('checkbox');
+    const computedStyle = getComputedStyle(checkbox);
+    const border = computedStyle.getPropertyValue('border');
+    const color = computedStyle.getPropertyValue('color');
+    const background = computedStyle.getPropertyValue('background');
+
+    await step('Text field onClick', async () => {
+      await userEvent.click(canvas.getByRole('checkbox'));
+    });
+
+    await step('Check property value and args', () => {
+      expect(args.disabled).toBeFalsy();
+      expect(args.defaultValue).toBeTruthy();
+      expect(color.trim()).toBe('rgb(0, 0, 0)');
+      expect(border.trim()).toBe('2px solid rgb(0, 83, 219)');
+      expect(background.substring(0, 16)).toBe('rgb(0, 83, 219) ');
+    });
+  },
+};
 
 export const NormalWithIndeterminate: Story = {
   args: {
