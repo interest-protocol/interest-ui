@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+import { expect, userEvent, waitFor, within } from '@storybook/test';
 import React, { FC, PropsWithChildren } from 'react';
 
 import { Box, Typography } from '../../../elements';
@@ -41,6 +42,27 @@ export const Top: Story = {
       </Typography>
     ),
   },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const tooltipContainer = canvas.getByTestId(
+      'tooltipContainer'
+    ) as HTMLElement;
+
+    userEvent.hover(tooltipContainer);
+
+    await waitFor(() => {
+      const tooltip = canvas.getByTestId('tooltipTest');
+      const computedStyle = getComputedStyle(tooltip);
+
+      const bottomStyle = computedStyle.getPropertyValue('bottom');
+      const transformStyle = computedStyle.getPropertyValue('transform');
+
+      expect(tooltip).toBeInTheDocument();
+      expect(bottomStyle).toBe('-16px');
+      expect(transformStyle).toBe('matrix(1, 0, 0, 1, -29.1914, -41.4)');
+    });
+  },
 };
 
 export const Left: Story = {
@@ -56,6 +78,27 @@ export const Left: Story = {
         Hover Me
       </Typography>
     ),
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const tooltipContainer = canvas.getByTestId(
+      'tooltipContainer'
+    ) as HTMLElement;
+
+    userEvent.hover(tooltipContainer);
+
+    await waitFor(() => {
+      const tooltip = canvas.getByTestId('tooltipTest');
+      const computedStyle = getComputedStyle(tooltip);
+
+      const rightStyle = computedStyle.getPropertyValue('right');
+      const transformStyle = computedStyle.getPropertyValue('transform');
+
+      expect(tooltip).toBeInTheDocument();
+      expect(rightStyle).toBe('2.5625px');
+      expect(transformStyle).toBe('matrix(1, 0, 0, 1, -67.1402, -18)');
+    });
   },
 };
 
@@ -73,6 +116,27 @@ export const Right: Story = {
       </Typography>
     ),
   },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const tooltipContainer = canvas.getByTestId(
+      'tooltipContainer'
+    ) as HTMLElement;
+
+    userEvent.hover(tooltipContainer);
+
+    await waitFor(() => {
+      const tooltip = canvas.getByTestId('tooltipTest');
+      const computedStyle = getComputedStyle(tooltip);
+
+      const leftStyle = computedStyle.getPropertyValue('left');
+      const transformStyle = computedStyle.getPropertyValue('transform');
+
+      expect(tooltip).toBeInTheDocument();
+      expect(leftStyle).toBe('2.5625px');
+      expect(transformStyle).toBe('matrix(1, 0, 0, 1, 67.1402, -18)');
+    });
+  },
 };
 
 export const Bottom: Story = {
@@ -88,5 +152,26 @@ export const Bottom: Story = {
         Hover Me
       </Typography>
     ),
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const tooltipContainer = canvas.getByTestId(
+      'tooltipContainer'
+    ) as HTMLElement;
+
+    userEvent.hover(tooltipContainer);
+
+    await waitFor(() => {
+      const tooltip = canvas.getByTestId('tooltipTest');
+      const computedStyle = getComputedStyle(tooltip);
+
+      const topStyle = computedStyle.getPropertyValue('top');
+      const transformStyle = computedStyle.getPropertyValue('transform');
+
+      expect(tooltip).toBeInTheDocument();
+      expect(topStyle).toBe('-16px');
+      expect(transformStyle).toBe('matrix(1, 0, 0, 1, -29.1914, 41.4)');
+    });
   },
 };
