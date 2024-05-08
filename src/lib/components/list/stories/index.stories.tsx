@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+import { expect, userEvent, within } from '@storybook/test';
 import React from 'react';
 import { v4 } from 'uuid';
 
@@ -41,5 +42,22 @@ export const Normal: Story = {
         key={v4()}
       />,
     ],
+  },
+
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const list = canvas.getByRole('list');
+    const arrowRightIcon = canvas.getByRole('arrow-right-icon');
+
+    await userEvent.hover(canvas.getByRole('list'));
+    await userEvent.click(canvas.getByRole('list'));
+    await userEvent.click(canvas.getByRole('arrow-right-icon'));
+
+    const listItems = args.items;
+
+    expect(list).toBeTruthy();
+    expect(arrowRightIcon).toBeTruthy();
+    expect(args.title).toBe('List Title');
+    expect(listItems).toHaveLength(3);
   },
 };
