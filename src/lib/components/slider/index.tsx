@@ -41,6 +41,7 @@ const SliderElement: FC<SliderProps> = ({
       onChange={handleChange}
       renderTrack={({ props, children }) => (
         <Box
+          data-testid="slider"
           width="100%"
           display="flex"
           height="2.25rem"
