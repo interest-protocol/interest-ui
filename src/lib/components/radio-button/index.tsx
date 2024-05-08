@@ -37,6 +37,7 @@ export const RadioButton: FC<RadioButtonProps> = ({
       flexWrap="wrap"
       onClick={handleChange}
       cursor={disabled ? 'not-allowed' : 'pointer'}
+      data-testId="radioTestContainer"
     >
       <Motion
         display="flex"
@@ -51,6 +52,7 @@ export const RadioButton: FC<RadioButtonProps> = ({
         transition={{ duration: 0.5 }}
         color={disabled ? 'onSurface' : color}
         opacity={disabled ? '0.32' : '1'}
+        data-testId="radioTest"
       >
         <RadioCircleSVG
           width="100%"
