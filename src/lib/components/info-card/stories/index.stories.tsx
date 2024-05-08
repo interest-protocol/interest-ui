@@ -27,13 +27,16 @@ export const Normal: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-
     const infoCard = canvas.getByTestId('infoCardTest');
+    const computedStyle = getComputedStyle(infoCard);
+    const backgroundColor = computedStyle.getPropertyValue('background-color');
+
     const svgElements = infoCard.querySelectorAll('svg');
 
     expect(svgElements).toHaveLength(1);
     expect(infoCard).toHaveTextContent('TVL');
     expect(infoCard).toHaveTextContent('$52,294.12');
+    expect(backgroundColor).toBe('rgb(255, 255, 255)');
   },
 };
 
@@ -44,11 +47,13 @@ export const NormalWithoutIcon: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-
     const infoCard = canvas.getByTestId('infoCardTest');
+    const computedStyle = getComputedStyle(infoCard);
+    const backgroundColor = computedStyle.getPropertyValue('background-color');
     const svgElements = infoCard.querySelectorAll('svg');
 
     expect(svgElements).toHaveLength(0);
+    expect(backgroundColor).toBe('rgb(255, 255, 255)');
   },
 };
 
@@ -62,11 +67,15 @@ export const WithClickEvent: Story = {
   },
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
-
     const infoCard = canvas.getByTestId('infoCardTest');
+    const computedStyle = getComputedStyle(infoCard);
+    const backgroundColor = computedStyle.getPropertyValue('background-color');
 
     infoCard.click();
+    const svgElements = infoCard.querySelectorAll('svg');
 
+    expect(svgElements).toHaveLength(1);
     expect(args.onClick).toHaveBeenCalledOnce();
+    expect(backgroundColor).toBe('rgb(255, 255, 255)');
   },
 };
