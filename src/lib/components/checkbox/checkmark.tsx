@@ -3,14 +3,14 @@ import React from 'react';
 
 import { SVGProps } from '../../icons/icons.types';
 
-export const Checkmark: FC<SVGProps & { isIndeterminated?: boolean }> = ({
+export const Checkmark: FC<SVGProps & { isIndeterminate?: boolean }> = ({
   maxHeight,
   maxWidth,
-  isIndeterminated,
+  isIndeterminate,
 }) => {
   return (
     <svg width={maxWidth} height={maxHeight} viewBox="0 0 16 16">
-      {isIndeterminated ? (
+      {isIndeterminate ? (
         <path
           d="M2.66666 7.33333H13.3333V8.66667H2.66666V7.33333Z"
           fill="white"

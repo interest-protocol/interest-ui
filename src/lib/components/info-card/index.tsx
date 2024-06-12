@@ -30,6 +30,7 @@ export const InfoCard: FC<PropsWithChildren<InfoCardProps>> = ({
       justifyContent="space-between"
       color={dark ? 'lowestContainer' : 'onSurface'}
       {...(onClick && { onClick, cursor: 'pointer' })}
+      data-testId="infoCardTest"
     >
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Typography mr="m" variant="label" size="large">

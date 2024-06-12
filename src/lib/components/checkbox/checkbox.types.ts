@@ -10,10 +10,10 @@ export type LabelElementProps = Omit<
   'color'
 >;
 export interface CheckboxProps extends CheckedButtonElementProps {
-  label: string;
+  label?: string;
   name?: string;
   onClick: () => void;
   defaultValue: boolean;
   supportingText?: string;
-  allowIndetermatedValue?: boolean;
+  allowIndeterminateValue?: boolean;
 }

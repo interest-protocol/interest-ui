@@ -33,6 +33,7 @@ export const Tabs: FC<TabsProps> = ({
       width={width || 'max-content'}
       bg={dark ? '#ffffff14' : '#00000014'}
       borderRadius={type == 'circle' ? 'full' : '0.625rem'}
+      data-testId="tabsTest"
     >
       {items.map((item, index) => (
         <TabItem

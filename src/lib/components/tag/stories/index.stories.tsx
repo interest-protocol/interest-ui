@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+import { expect, fn, waitFor, within } from '@storybook/test';
 import React from 'react';
 
 import { Box } from '../../../elements';
@@ -28,28 +29,25 @@ export default meta;
 
 type Story = StoryObj<typeof Tag>;
 
-export const FilledWithCombined: Story = {
+export const Filled: Story = {
   args: {
     size: 'large',
     children: 'Label',
     variant: 'filled',
-    PrefixIcon: (
-      <Box
-        p=".1875rem"
-        width="2rem"
-        height="2rem"
-        display="flex"
-        color="onSurface"
-        alignItems="center"
-        borderRadius="full"
-        justifyContent="center"
-      >
-        <ErrorSVG maxWidth="1.125rem" maxHeight="1.125rem" width="100%" />
-      </Box>
-    ),
-    onClose: () => {
-      alert('close button licked');
-    },
+    onClose: undefined,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const tag = canvas.getByTestId('testTag');
+
+    const computedStyle = getComputedStyle(tag);
+
+    const border = computedStyle.getPropertyValue('border');
+    const background = computedStyle.getPropertyValue('background');
+
+    expect(border.includes('none')).toBeTruthy();
+    expect(background.includes('rgba(0, 0, 0, 0)')).toBeFalsy();
   },
 };
 
@@ -72,25 +70,105 @@ export const FilledWithPrefix: Story = {
         <ErrorSVG maxWidth="1.125rem" maxHeight="1.125rem" width="100%" />
       </Box>
     ),
+    onClose: undefined,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const tag = canvas.getByTestId('testTag');
+
+    const svgElements = tag.querySelectorAll('svg');
+    expect(svgElements).toHaveLength(1);
+
+    const firstChild = tag.firstElementChild;
+
+    expect(firstChild).toBeInTheDocument();
+    expect(firstChild).toBeVisible();
+
+    if (firstChild?.tagName.toLowerCase() === 'div') {
+      const childElement = firstChild.firstElementChild;
+
+      expect(childElement?.tagName.toLocaleLowerCase()).toBe('svg');
+    } else {
+      expect(firstChild?.tagName.toLocaleLowerCase()).toBe('svg');
+    }
   },
 };
 
-export const FilledWithDismiss: Story = {
+export const FilledWithCombined: Story = {
   args: {
     size: 'large',
     children: 'Label',
     variant: 'filled',
-    onClose: () => {
-      alert('close button licked');
-    },
+    PrefixIcon: (
+      <Box
+        p=".1875rem"
+        width="2rem"
+        height="2rem"
+        display="flex"
+        color="onSurface"
+        alignItems="center"
+        borderRadius="full"
+        justifyContent="center"
+      >
+        <ErrorSVG maxWidth="1.125rem" maxHeight="1.125rem" width="100%" />
+      </Box>
+    ),
+    onClose: () => null,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const tag = canvas.getByTestId('testTag');
+
+    const svgElements = tag.querySelectorAll('svg');
+    expect(svgElements).toHaveLength(2);
+
+    const firstChild = tag.firstElementChild;
+    const lastChild = tag.firstElementChild;
+
+    expect(firstChild).toBeInTheDocument();
+    expect(firstChild).toBeVisible();
+
+    if (firstChild && firstChild?.tagName.toLowerCase() === 'div') {
+      const childElement = firstChild.firstElementChild;
+
+      expect(childElement?.tagName.toLocaleLowerCase()).toBe('svg');
+    } else {
+      expect(firstChild?.tagName.toLocaleLowerCase()).toBe('svg');
+    }
+
+    expect(lastChild).toBeInTheDocument();
+    expect(lastChild).toBeVisible();
+
+    if (lastChild && lastChild?.tagName.toLowerCase() === 'div') {
+      const childElement = lastChild.firstElementChild;
+
+      expect(childElement?.tagName.toLocaleLowerCase()).toBe('svg');
+    } else {
+      expect(firstChild?.tagName.toLocaleLowerCase()).toBe('svg');
+    }
   },
 };
 
-export const Filled: Story = {
+export const Outlined: Story = {
   args: {
     size: 'large',
     children: 'Label',
-    variant: 'filled',
+    variant: 'outline',
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const tag = canvas.getByTestId('testTag');
+
+    const computedStyle = getComputedStyle(tag);
+
+    const border = computedStyle.getPropertyValue('border');
+    const background = computedStyle.getPropertyValue('background');
+
+    expect(border.includes('none')).toBeFalsy();
+    expect(background.includes('rgba(0, 0, 0, 0)')).toBeTruthy();
   },
 };
 
@@ -114,8 +192,41 @@ export const OutlinedWithCombined: Story = {
       </Box>
     ),
     onClose: () => {
-      alert('close button licked');
+      alert('close button clicked');
     },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const tag = canvas.getByTestId('testTag');
+
+    const svgElements = tag.querySelectorAll('svg');
+    expect(svgElements).toHaveLength(2);
+
+    const firstChild = tag.firstElementChild;
+    const lastChild = tag.firstElementChild;
+
+    expect(firstChild).toBeInTheDocument();
+    expect(firstChild).toBeVisible();
+
+    if (firstChild && firstChild?.tagName.toLowerCase() === 'div') {
+      const childElement = firstChild.firstElementChild;
+
+      expect(childElement?.tagName.toLocaleLowerCase()).toBe('svg');
+    } else {
+      expect(firstChild?.tagName.toLocaleLowerCase()).toBe('svg');
+    }
+
+    expect(lastChild).toBeInTheDocument();
+    expect(lastChild).toBeVisible();
+
+    if (lastChild && lastChild?.tagName.toLowerCase() === 'div') {
+      const childElement = lastChild.firstElementChild;
+
+      expect(childElement?.tagName.toLocaleLowerCase()).toBe('svg');
+    } else {
+      expect(firstChild?.tagName.toLocaleLowerCase()).toBe('svg');
+    }
   },
 };
 
@@ -124,6 +235,7 @@ export const OutlinedWithPrefix: Story = {
     size: 'large',
     children: 'Label',
     variant: 'outline',
+    onClose: undefined,
     PrefixIcon: (
       <Box
         p=".1875rem"
@@ -139,23 +251,84 @@ export const OutlinedWithPrefix: Story = {
       </Box>
     ),
   },
-};
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
 
-export const OutlinedWithDismiss: Story = {
-  args: {
-    size: 'large',
-    children: 'Label',
-    variant: 'outline',
-    onClose: () => {
-      alert('close button licked');
-    },
+    const tag = canvas.getByTestId('testTag');
+
+    const svgElements = tag.querySelectorAll('svg');
+    expect(svgElements).toHaveLength(1);
+
+    const firstChild = tag.firstElementChild;
+
+    expect(firstChild).toBeInTheDocument();
+    expect(firstChild).toBeVisible();
+
+    if (firstChild?.tagName.toLowerCase() === 'div') {
+      const childElement = firstChild.firstElementChild;
+
+      expect(childElement?.tagName.toLocaleLowerCase()).toBe('svg');
+    } else {
+      expect(firstChild?.tagName.toLocaleLowerCase()).toBe('svg');
+    }
   },
 };
 
-export const Outlined: Story = {
+export const WithCloseAction: Story = {
   args: {
     size: 'large',
     children: 'Label',
     variant: 'outline',
+    onClose: fn(),
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const tag = canvas.getByTestId('testTag');
+
+    const svgElements = tag.querySelectorAll('svg');
+    expect(svgElements).toHaveLength(1);
+
+    const lastChild = tag.lastElementChild as HTMLElement;
+
+    expect(lastChild).toBeInTheDocument();
+    expect(lastChild).toBeVisible();
+
+    if (lastChild && lastChild?.tagName.toLowerCase() === 'div') {
+      const childElement = lastChild.firstElementChild;
+
+      expect(childElement?.tagName.toLocaleLowerCase()).toBe('svg');
+    } else {
+      expect(lastChild?.tagName.toLocaleLowerCase()).toBe('svg');
+    }
+
+    lastChild.click();
+
+    await waitFor(() => expect(args.onClose).toHaveBeenCalledOnce());
+  },
+};
+
+export const withFocusAction: Story = {
+  args: {
+    size: 'large',
+    children: 'Label',
+    variant: 'filled',
+    onClose: undefined,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const tag = canvas.getByTestId('testTag') as HTMLElement;
+
+    await waitFor(async () => {
+      tag.focus();
+    });
+
+    await waitFor(() => {
+      tag.focus();
+      const computedStyle = getComputedStyle(tag);
+      const backgroundColor =
+        computedStyle.getPropertyValue('background-color');
+
+      expect(backgroundColor).toContain('rgb(0, 83, 219)');
+    });
   },
 };

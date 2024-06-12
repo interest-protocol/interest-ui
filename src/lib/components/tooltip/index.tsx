@@ -19,6 +19,7 @@ export const TooltipWrapper: FC<
       onMouseLeave={() => {
         setToggle(false);
       }}
+      data-testId="tooltipContainer"
     >
       {children}
       {toggle && (
@@ -28,6 +29,7 @@ export const TooltipWrapper: FC<
           animate={{
             opacity: 1,
           }}
+          data-testId="tooltipTest"
           position="absolute"
           borderRadius=".25rem"
           transform={`translate(${

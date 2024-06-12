@@ -25,6 +25,7 @@ export const ListItem: FC<PropsWithChildren<ListItemProps>> = ({
       display="flex"
       onClick={onClick}
       position="relative"
+      data-testid="listItem"
       alignItems="center"
       background="surface.container"
       cursor={disabled ? 'not-allowed' : 'initial'}

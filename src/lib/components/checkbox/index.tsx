@@ -29,7 +29,7 @@ export const Checkbox: FC<CheckboxProps> = ({
   name,
   disabled,
   supportingText,
-  allowIndetermatedValue,
+  allowIndeterminateValue,
 }) => {
   const [currentValue, setCurrentValue] = useState<number>(+defaultValue);
   const { colors } = useTheme() as Theme;
@@ -40,7 +40,7 @@ export const Checkbox: FC<CheckboxProps> = ({
     onClick?.();
     setCurrentValue(
       currentValue == 1
-        ? allowIndetermatedValue
+        ? allowIndeterminateValue
           ? -1
           : 0
         : currentValue == -1
@@ -120,7 +120,7 @@ export const Checkbox: FC<CheckboxProps> = ({
               width="100%"
               maxWidth="1rem"
               maxHeight="1rem"
-              isIndeterminated={allowIndetermatedValue && currentValue == -1}
+              isIndeterminate={allowIndeterminateValue && currentValue == -1}
             />
           </Motion>
         </LabelElement>
