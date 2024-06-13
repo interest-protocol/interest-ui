@@ -60,11 +60,9 @@ export const Filled: Story = {
       await userEvent.unhover(canvas.getByRole('button'));
     });
 
-    // check if the label is being render
     await step('Button style test', async () => {
       expect(button).toHaveTextContent('Label');
 
-      //check if has a valid background
       expect(background.trim()).toBeTruthy();
       expect(color).toBe('rgb(255, 255, 255)');
       expect(cursor).toBe('pointer');
@@ -128,7 +126,6 @@ export const FilledWithPrefix: Story = {
     await step('Button style test', async () => {
       expect(button).toHaveTextContent('Label');
 
-      //check if has a valid background
       expect(background.trim()).toBeTruthy();
       expect(color).toBe('rgb(255, 255, 255)');
       expect(cursor).toBe('pointer');
@@ -192,7 +189,6 @@ export const FilledWithSuffix: Story = {
     await step('Button style test', async () => {
       expect(button).toHaveTextContent('Label');
 
-      //check if has a valid background
       expect(background.trim()).toBeTruthy();
       expect(color).toBe('rgb(255, 255, 255)');
       expect(cursor).toBe('pointer');
@@ -269,7 +265,6 @@ export const FilledWithCombined: Story = {
     await step('Button style test', async () => {
       expect(button).toHaveTextContent('Label');
 
-      //check if has a valid background
       expect(background.trim()).toBeTruthy();
       expect(color).toBe('rgb(255, 255, 255)');
       expect(cursor).toBe('pointer');
@@ -317,7 +312,6 @@ export const Outline: Story = {
     await step('Button style test', async () => {
       expect(button).toHaveTextContent('Label');
 
-      //check if has a valid background
       expect(background.trim()).toBeTruthy();
       expect(color).toBe('rgb(0, 0, 0)');
       expect(cursor).toBe('pointer');
@@ -366,7 +360,6 @@ export const OutlineWithPrefix: Story = {
     await step('Button style test', async () => {
       expect(button).toHaveTextContent('Label');
 
-      //check if has a valid background
       expect(background.trim()).toBeTruthy();
       expect(color).toBe('rgb(0, 0, 0)');
       expect(cursor).toBe('pointer');
@@ -415,7 +408,6 @@ export const OutlineWithSuffix: Story = {
     await step('Button style test', async () => {
       expect(button).toHaveTextContent('Label');
 
-      //check if has a valid background
       expect(background.trim()).toBeTruthy();
       expect(color).toBe('rgb(0, 0, 0)');
       expect(cursor).toBe('pointer');
@@ -465,7 +457,6 @@ export const OutlineWithCombined: Story = {
     await step('Button style test', async () => {
       expect(button).toHaveTextContent('Label');
 
-      //check if has a valid background
       expect(background.trim()).toBeTruthy();
       expect(color).toBe('rgb(0, 0, 0)');
       expect(cursor).toBe('pointer');
@@ -513,7 +504,6 @@ export const Text: Story = {
     await step('Button style test', async () => {
       expect(button).toHaveTextContent('Label');
 
-      //check if has a valid background
       expect(background.trim()).toBeTruthy();
       expect(color).toBe('rgb(0, 0, 0)');
       expect(cursor).toBe('pointer');
@@ -562,7 +552,6 @@ export const TextWithPrefix: Story = {
     await step('Button style test', async () => {
       expect(button).toHaveTextContent('Label');
 
-      //check if has a valid background
       expect(background.trim()).toBeTruthy();
       expect(color).toBe('rgb(0, 0, 0)');
       expect(cursor).toBe('pointer');
@@ -611,7 +600,6 @@ export const TextWithSuffix: Story = {
     await step('Button style test', async () => {
       expect(button).toHaveTextContent('Label');
 
-      //check if has a valid background
       expect(background.trim()).toBeTruthy();
       expect(color).toBe('rgb(0, 0, 0)');
       expect(cursor).toBe('pointer');
@@ -661,7 +649,6 @@ export const TextWithCombined: Story = {
     await step('Button style test', async () => {
       expect(button).toHaveTextContent('Label');
 
-      //check if has a valid background
       expect(background.trim()).toBeTruthy();
       expect(color).toBe('rgb(0, 0, 0)');
       expect(cursor).toBe('pointer');
@@ -711,7 +698,6 @@ export const SmallTextWithCombined: Story = {
     await step('Button style test', async () => {
       expect(button).toHaveTextContent('Label');
 
-      //check if has a valid background
       expect(background.trim()).toBeTruthy();
       expect(color).toBe('rgb(0, 0, 0)');
       expect(cursor).toBe('pointer');
@@ -759,7 +745,6 @@ export const Tonal: Story = {
     await step('Button style test', async () => {
       expect(button).toHaveTextContent('Label');
 
-      //check if has a valid background
       expect(background.trim()).toBeTruthy();
       expect(color).toBe('rgb(0, 0, 0)');
       expect(cursor).toBe('pointer');
@@ -808,7 +793,6 @@ export const TonalWithSuffix: Story = {
     await step('Button style test', async () => {
       expect(button).toHaveTextContent('Label');
 
-      //check if has a valid background
       expect(background.trim()).toBeTruthy();
       expect(color).toBe('rgb(0, 0, 0)');
       expect(cursor).toBe('pointer');
@@ -858,7 +842,6 @@ export const TonalWithCombined: Story = {
     await step('Button style test', async () => {
       expect(button).toHaveTextContent('Label');
 
-      //check if has a valid background
       expect(background.trim()).toBeTruthy();
       expect(color).toBe('rgb(0, 0, 0)');
       expect(cursor).toBe('pointer');
@@ -877,8 +860,8 @@ export const Icon: Story = {
     const canvas = within(canvasElement);
     const button = canvas.getByRole('button');
 
-    const parentChildrens = button.childNodes;
-    expect(parentChildrens).toHaveLength(1);
+    const parentChildren = button.childNodes;
+    expect(parentChildren).toHaveLength(1);
 
     const parentOnlyChild = button.firstElementChild;
 
@@ -910,7 +893,6 @@ export const Icon: Story = {
     });
 
     await step('Button style test', async () => {
-      //check if has a valid background
       expect(background.trim()).toBeTruthy();
       expect(color).toBe('rgb(255, 255, 255)');
       expect(cursor).toBe('pointer');
@@ -960,7 +942,6 @@ export const ButtonWithAction: Story = {
     await step('Button style test', async () => {
       expect(button).toHaveTextContent('Press here');
 
-      //check if has a valid background
       expect(background.trim()).toBeTruthy();
       expect(color).toBe('rgb(0, 0, 0)');
       expect(cursor).toBe('pointer');
@@ -999,7 +980,6 @@ export const DisabledButton: Story = {
     await step('Button style test', async () => {
       expect(button).toHaveTextContent('Label');
 
-      //check if has a valid background
       expect(background.trim()).toBeTruthy();
       expect(color).toBe('rgb(27, 27, 31)');
       expect(cursor).toBe('not-allowed');
