@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, userEvent, within } from '@storybook/test';
+import { expect, within } from '@storybook/test';
 
 import { Typography } from '.';
 
@@ -37,12 +37,16 @@ export const DisplayLarge: Story = {
     const fontFamily = computedStyle.getPropertyValue('font-family');
     const fontSize = computedStyle.getPropertyValue('font-size');
 
-    expect(typography).toHaveTextContent('p');
-    await userEvent.hover(canvas.getByRole('text'));
-
-    expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBe('Proto');
-    expect(fontSize).toBe('57.008px');
+    expect(typography.tagName, 'It should render in the h1 tag').toBe('H1');
+    expect(typography.textContent, 'It should render the text correctly').toBe(
+      'Display large'
+    );
+    expect(fontSize, 'It should render the text at 57px').toBe('57.008px');
+    expect(
+      fontFamily,
+      'It should render the text with the font-family Proto'
+    ).toBe('Proto');
+    expect(color, 'It should render the text at 57px').toBe('rgb(27, 27, 31)');
   },
 };
 
@@ -64,12 +68,16 @@ export const DisplayMedium: Story = {
     const fontFamily = computedStyle.getPropertyValue('font-family');
     const fontSize = computedStyle.getPropertyValue('font-size');
 
-    expect(typography).toHaveTextContent('p');
-    await userEvent.hover(canvas.getByRole('text'));
-
-    expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBe('Proto');
-    expect(fontSize).toBe('45.008px');
+    expect(typography.tagName, 'It should render in the h1 tag').toBe('H2');
+    expect(typography.textContent, 'It should render the text correctly').toBe(
+      'Display small'
+    );
+    expect(fontSize, 'It should render the text at 45px').toBe('45.008px');
+    expect(
+      fontFamily,
+      'It should render the text with the font-family Proto'
+    ).toBe('Proto');
+    expect(color, 'It should render the text at 57px').toBe('rgb(27, 27, 31)');
   },
 };
 
@@ -91,12 +99,16 @@ export const DisplaySmall: Story = {
     const fontFamily = computedStyle.getPropertyValue('font-family');
     const fontSize = computedStyle.getPropertyValue('font-size');
 
-    expect(typography).toHaveTextContent('p');
-    await userEvent.hover(canvas.getByRole('text'));
-
-    expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBe('Proto');
-    expect(fontSize).toBe('36px');
+    expect(typography.tagName, 'It should render in the P tag').toBe('P');
+    expect(typography.textContent, 'It should render the text correctly').toBe(
+      'Display small'
+    );
+    expect(fontSize, 'It should render the text at 36px').toBe('36px');
+    expect(
+      fontFamily,
+      'It should render the text with the font-family Proto'
+    ).toBe('Proto');
+    expect(color, 'It should render the text at 57px').toBe('rgb(27, 27, 31)');
   },
 };
 
@@ -118,12 +130,16 @@ export const headlineLarge: Story = {
     const fontFamily = computedStyle.getPropertyValue('font-family');
     const fontSize = computedStyle.getPropertyValue('font-size');
 
-    expect(typography).toHaveTextContent('Headline Large');
-    await userEvent.hover(canvas.getByRole('text'));
-
-    expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBe('Proto');
-    expect(fontSize).toBe('32px');
+    expect(typography.tagName, 'It should render in the P tag').toBe('P');
+    expect(typography.textContent, 'It should render the text correctly').toBe(
+      'Headline Large'
+    );
+    expect(fontSize, 'It should render the text at 32px').toBe('32px');
+    expect(
+      fontFamily,
+      'It should render the text with the font-family Proto'
+    ).toBe('Proto');
+    expect(color, 'It should render the text at 57px').toBe('rgb(27, 27, 31)');
   },
 };
 
@@ -145,12 +161,16 @@ export const headlineMedium: Story = {
     const fontFamily = computedStyle.getPropertyValue('font-family');
     const fontSize = computedStyle.getPropertyValue('font-size');
 
-    expect(typography).toHaveTextContent('Headline Medium');
-    await userEvent.hover(canvas.getByRole('text'));
-
-    expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBe('Proto');
-    expect(fontSize).toBe('28px');
+    expect(typography.tagName, 'It should render in the P tag').toBe('P');
+    expect(typography.textContent, 'It should render the text correctly').toBe(
+      'Headline Medium'
+    );
+    expect(fontSize, 'It should render the text at 28px').toBe('28px');
+    expect(
+      fontFamily,
+      'It should render the text with the font-family Proto'
+    ).toBe('Proto');
+    expect(color, 'It should render the text at 57px').toBe('rgb(27, 27, 31)');
   },
 };
 
@@ -172,12 +192,16 @@ export const headlineSmall: Story = {
     const fontFamily = computedStyle.getPropertyValue('font-family');
     const fontSize = computedStyle.getPropertyValue('font-size');
 
-    expect(typography).toHaveTextContent('Headline Small');
-    await userEvent.hover(canvas.getByRole('text'));
-
-    expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBe('Proto');
-    expect(fontSize).toBe('24px');
+    expect(typography.tagName, 'It should render in the P tag').toBe('P');
+    expect(typography.textContent, 'It should render the text correctly').toBe(
+      'Headline Small'
+    );
+    expect(fontSize, 'It should render the text at 24px').toBe('24px');
+    expect(
+      fontFamily,
+      'It should render the text with the font-family Proto'
+    ).toBe('Proto');
+    expect(color, 'It should render the text at 57px').toBe('rgb(27, 27, 31)');
   },
 };
 
@@ -199,12 +223,16 @@ export const titleLarge: Story = {
     const fontFamily = computedStyle.getPropertyValue('font-family');
     const fontSize = computedStyle.getPropertyValue('font-size');
 
-    expect(typography).toHaveTextContent('Title Large');
-    await userEvent.hover(canvas.getByRole('text'));
-
-    expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBe('Satoshi');
-    expect(fontSize).toBe('22px');
+    expect(typography.tagName, 'It should render in the P tag').toBe('P');
+    expect(typography.textContent, 'It should render the text correctly').toBe(
+      'Title Large'
+    );
+    expect(fontSize, 'It should render the text at 22px').toBe('22px');
+    expect(
+      fontFamily,
+      'It should render the text with the font-family Satoshi'
+    ).toBe('Satoshi');
+    expect(color, 'It should render the text at 57px').toBe('rgb(27, 27, 31)');
   },
 };
 
@@ -226,13 +254,16 @@ export const titleMedium: Story = {
     const fontFamily = computedStyle.getPropertyValue('font-family');
     const fontSize = computedStyle.getPropertyValue('font-size');
 
-    // check if the label is being render
-    expect(typography).toHaveTextContent('Title Medium');
-    await userEvent.hover(canvas.getByRole('text'));
-
-    expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBe('Satoshi');
-    expect(fontSize).toBe('16px');
+    expect(typography.tagName, 'It should render in the P tag').toBe('P');
+    expect(typography.textContent, 'It should render the text correctly').toBe(
+      'Title Medium'
+    );
+    expect(fontSize, 'It should render the text at 16px').toBe('16px');
+    expect(
+      fontFamily,
+      'It should render the text with the font-family Satoshi'
+    ).toBe('Satoshi');
+    expect(color, 'It should render the text at 57px').toBe('rgb(27, 27, 31)');
   },
 };
 
@@ -254,12 +285,16 @@ export const titleSmall: Story = {
     const fontFamily = computedStyle.getPropertyValue('font-family');
     const fontSize = computedStyle.getPropertyValue('font-size');
 
-    expect(typography).toHaveTextContent('Title Small');
-    await userEvent.hover(canvas.getByRole('text'));
-
-    expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBe('Satoshi');
-    expect(fontSize).toBe('14px');
+    expect(typography.tagName, 'It should render in the P tag').toBe('P');
+    expect(typography.textContent, 'It should render the text correctly').toBe(
+      'Title Small'
+    );
+    expect(fontSize, 'It should render the text at 14px').toBe('14px');
+    expect(
+      fontFamily,
+      'It should render the text with the font-family Satoshi'
+    ).toBe('Satoshi');
+    expect(color, 'It should render the text at 57px').toBe('rgb(27, 27, 31)');
   },
 };
 
@@ -281,12 +316,16 @@ export const bodyLarge: Story = {
     const fontFamily = computedStyle.getPropertyValue('font-family');
     const fontSize = computedStyle.getPropertyValue('font-size');
 
-    expect(typography).toHaveTextContent('Body Large');
-    await userEvent.hover(canvas.getByRole('text'));
-
-    expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBe('Satoshi');
-    expect(fontSize).toBe('16px');
+    expect(typography.tagName, 'It should render in the P tag').toBe('P');
+    expect(typography.textContent, 'It should render the text correctly').toBe(
+      'Body Large'
+    );
+    expect(fontSize, 'It should render the text at 16px').toBe('16px');
+    expect(
+      fontFamily,
+      'It should render the text with the font-family Satoshi'
+    ).toBe('Satoshi');
+    expect(color, 'It should render the text at 57px').toBe('rgb(27, 27, 31)');
   },
 };
 
@@ -308,12 +347,18 @@ export const bodyMedium: Story = {
     const fontFamily = computedStyle.getPropertyValue('font-family');
     const fontSize = computedStyle.getPropertyValue('font-size');
 
-    expect(typography).toHaveTextContent('Body Medium');
-    await userEvent.hover(canvas.getByRole('text'));
-
-    expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBe('Satoshi');
-    expect(fontSize).toBe('14px');
+    expect(typography.tagName, 'It should render in the P tag').toBe('P');
+    expect(typography.textContent, 'It should render the text correctly').toBe(
+      'Body Medium'
+    );
+    expect(fontSize, 'It should render the text at 14px').toBe('14px');
+    expect(
+      fontFamily,
+      'It should render the text with the font-family Satoshi'
+    ).toBe('Satoshi');
+    expect(color, 'It should render the text with right color').toBe(
+      'rgb(27, 27, 31)'
+    );
   },
 };
 
@@ -335,12 +380,18 @@ export const bodySmall: Story = {
     const fontFamily = computedStyle.getPropertyValue('font-family');
     const fontSize = computedStyle.getPropertyValue('font-size');
 
-    expect(typography).toHaveTextContent('Body Small');
-    await userEvent.hover(canvas.getByRole('text'));
-
-    expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBe('Satoshi');
-    expect(fontSize).toBe('12px');
+    expect(typography.tagName, 'It should render in the P tag').toBe('P');
+    expect(typography.textContent, 'It should render the text correctly').toBe(
+      'Body Small'
+    );
+    expect(fontSize, 'It should render the text at 12px').toBe('12px');
+    expect(
+      fontFamily,
+      'It should render the text with the font-family Satoshi'
+    ).toBe('Satoshi');
+    expect(color, 'It should render the text with right color').toBe(
+      'rgb(27, 27, 31)'
+    );
   },
 };
 
@@ -362,12 +413,20 @@ export const labelLarge: Story = {
     const fontFamily = computedStyle.getPropertyValue('font-family');
     const fontSize = computedStyle.getPropertyValue('font-size');
 
-    expect(typography).toHaveTextContent('Label Large');
-    await userEvent.hover(canvas.getByRole('text'));
-
-    expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBe('Proto');
-    expect(fontSize).toBe('14px');
+    expect(typography.tagName, 'It should render in the LABEL tag').toBe(
+      'LABEL'
+    );
+    expect(typography.textContent, 'It should render the text correctly').toBe(
+      'Label Large'
+    );
+    expect(fontSize, 'It should render the text at 14px').toBe('14px');
+    expect(
+      fontFamily,
+      'It should render the text with the font-family Proto'
+    ).toBe('Proto');
+    expect(color, 'It should render the text with right color').toBe(
+      'rgb(27, 27, 31)'
+    );
   },
 };
 
@@ -389,12 +448,20 @@ export const labelMedium: Story = {
     const fontFamily = computedStyle.getPropertyValue('font-family');
     const fontSize = computedStyle.getPropertyValue('font-size');
 
-    expect(typography).toHaveTextContent('Label Medium');
-    await userEvent.hover(canvas.getByRole('text'));
-
-    expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBe('Proto');
-    expect(fontSize).toBe('12px');
+    expect(typography.tagName, 'It should render in the LABEL tag').toBe(
+      'LABEL'
+    );
+    expect(typography.textContent, 'It should render the text correctly').toBe(
+      'Label Medium'
+    );
+    expect(fontSize, 'It should render the text at 12px').toBe('12px');
+    expect(
+      fontFamily,
+      'It should render the text with the font-family Proto'
+    ).toBe('Proto');
+    expect(color, 'It should render the text with right color').toBe(
+      'rgb(27, 27, 31)'
+    );
   },
 };
 
@@ -415,14 +482,20 @@ export const labelSmall: Story = {
     const color = computedStyle.getPropertyValue('color');
     const fontFamily = computedStyle.getPropertyValue('font-family');
     const fontSize = computedStyle.getPropertyValue('font-size');
-    const convertedFontSize = parseInt(fontSize);
-    const remFontSize = convertedFontSize / 16 / 10;
 
-    expect(typography).toHaveTextContent('Label Small');
-    await userEvent.hover(canvas.getByRole('text'));
-
-    expect(color.trim()).toBeTruthy();
-    expect(fontFamily).toBe('Proto');
-    expect(remFontSize).toBe(0.06875);
+    expect(typography.tagName, 'It should render in the LABEL tag').toBe(
+      'LABEL'
+    );
+    expect(typography.textContent, 'It should render the text correctly').toBe(
+      'Label Small'
+    );
+    expect(fontSize, 'It should render the text at 11px').toBe('11.008px');
+    expect(
+      fontFamily,
+      'It should render the text with the font-family Proto'
+    ).toBe('Proto');
+    expect(color, 'It should render the text with right color').toBe(
+      'rgb(27, 27, 31)'
+    );
   },
 };
