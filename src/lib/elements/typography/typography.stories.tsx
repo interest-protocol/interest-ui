@@ -46,7 +46,9 @@ export const DisplayLarge: Story = {
       fontFamily,
       'It should render the text with the font-family Proto'
     ).toBe('Proto');
-    expect(color, 'It should render the text at 57px').toBe('rgb(27, 27, 31)');
+    expect(color, 'It should render the text has the right color').toBe(
+      'rgb(27, 27, 31)'
+    );
   },
 };
 
@@ -68,7 +70,7 @@ export const DisplayMedium: Story = {
     const fontFamily = computedStyle.getPropertyValue('font-family');
     const fontSize = computedStyle.getPropertyValue('font-size');
 
-    expect(typography.tagName, 'It should render in the h1 tag').toBe('H2');
+    expect(typography.tagName, 'It should render in the h2 tag').toBe('H2');
     expect(typography.textContent, 'It should render the text correctly').toBe(
       'Display small'
     );
@@ -77,7 +79,9 @@ export const DisplayMedium: Story = {
       fontFamily,
       'It should render the text with the font-family Proto'
     ).toBe('Proto');
-    expect(color, 'It should render the text at 57px').toBe('rgb(27, 27, 31)');
+    expect(color, 'It should render the text has the right color').toBe(
+      'rgb(27, 27, 31)'
+    );
   },
 };
 
@@ -108,7 +112,9 @@ export const DisplaySmall: Story = {
       fontFamily,
       'It should render the text with the font-family Proto'
     ).toBe('Proto');
-    expect(color, 'It should render the text at 57px').toBe('rgb(27, 27, 31)');
+    expect(color, 'It should render the text has the right color').toBe(
+      'rgb(27, 27, 31)'
+    );
   },
 };
 
@@ -139,7 +145,9 @@ export const headlineLarge: Story = {
       fontFamily,
       'It should render the text with the font-family Proto'
     ).toBe('Proto');
-    expect(color, 'It should render the text at 57px').toBe('rgb(27, 27, 31)');
+    expect(color, 'It should render the text has the right color').toBe(
+      'rgb(27, 27, 31)'
+    );
   },
 };
 
@@ -170,7 +178,9 @@ export const headlineMedium: Story = {
       fontFamily,
       'It should render the text with the font-family Proto'
     ).toBe('Proto');
-    expect(color, 'It should render the text at 57px').toBe('rgb(27, 27, 31)');
+    expect(color, 'It should render the text has the right color').toBe(
+      'rgb(27, 27, 31)'
+    );
   },
 };
 
@@ -201,7 +211,9 @@ export const headlineSmall: Story = {
       fontFamily,
       'It should render the text with the font-family Proto'
     ).toBe('Proto');
-    expect(color, 'It should render the text at 57px').toBe('rgb(27, 27, 31)');
+    expect(color, 'It should render the text has the right color').toBe(
+      'rgb(27, 27, 31)'
+    );
   },
 };
 
@@ -232,7 +244,9 @@ export const titleLarge: Story = {
       fontFamily,
       'It should render the text with the font-family Satoshi'
     ).toBe('Satoshi');
-    expect(color, 'It should render the text at 57px').toBe('rgb(27, 27, 31)');
+    expect(color, 'It should render the text has the right color').toBe(
+      'rgb(27, 27, 31)'
+    );
   },
 };
 
@@ -263,7 +277,9 @@ export const titleMedium: Story = {
       fontFamily,
       'It should render the text with the font-family Satoshi'
     ).toBe('Satoshi');
-    expect(color, 'It should render the text at 57px').toBe('rgb(27, 27, 31)');
+    expect(color, 'It should render the text has the right color').toBe(
+      'rgb(27, 27, 31)'
+    );
   },
 };
 
@@ -294,7 +310,9 @@ export const titleSmall: Story = {
       fontFamily,
       'It should render the text with the font-family Satoshi'
     ).toBe('Satoshi');
-    expect(color, 'It should render the text at 57px').toBe('rgb(27, 27, 31)');
+    expect(color, 'It should render the text has the right color').toBe(
+      'rgb(27, 27, 31)'
+    );
   },
 };
 
@@ -325,7 +343,9 @@ export const bodyLarge: Story = {
       fontFamily,
       'It should render the text with the font-family Satoshi'
     ).toBe('Satoshi');
-    expect(color, 'It should render the text at 57px').toBe('rgb(27, 27, 31)');
+    expect(color, 'It should render the text has the right color').toBe(
+      'rgb(27, 27, 31)'
+    );
   },
 };
 
