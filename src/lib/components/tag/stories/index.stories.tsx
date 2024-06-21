@@ -6,6 +6,15 @@ import { Box } from '../../../elements';
 import { ErrorSVG } from '../../../icons';
 import { Tag } from '..';
 
+const rgbToHex = (rgb: string) => {
+  const result = /^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/.exec(rgb);
+  return result
+    ? `#${((1 << 24) + (+result[1] << 16) + (+result[2] << 8) + +result[3])
+        .toString(16)
+        .slice(1)}`.toUpperCase()
+    : rgb;
+};
+
 const meta: Meta<typeof Tag> = {
   title: 'Tag',
   component: Tag,
@@ -39,59 +48,79 @@ export const Filled: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const tag = canvas.getByTestId('testTag');
+    const tag = canvas.getByRole('button');
 
     const computedStyle = getComputedStyle(tag);
 
-    const border = computedStyle.getPropertyValue('border');
-    const background = computedStyle.getPropertyValue('background');
+    const backgroundColor = computedStyle.getPropertyValue('background-color');
 
-    expect(border.includes('none')).toBeTruthy();
-    expect(background.includes('rgba(0, 0, 0, 0)')).toBeFalsy();
+    const hexColor = rgbToHex(backgroundColor);
+
+    expect(tag, 'Tag should be rendered in the document').toBeInTheDocument();
+
+    expect(tag, 'The tag should contain the label "Label"').toHaveTextContent(
+      'Label'
+    );
+
+    expect(hexColor, 'The background color should be white (#FFFFFF)').toBe(
+      '#FFFFFF'
+    );
   },
 };
+
+const ErrorSvg = (
+  <Box
+    p=".1875rem"
+    width="2rem"
+    height="2rem"
+    display="flex"
+    color="onSurface"
+    alignItems="center"
+    borderRadius="full"
+    justifyContent="center"
+  >
+    <ErrorSVG maxWidth="1.125rem" maxHeight="1.125rem" width="100%" />
+  </Box>
+);
 
 export const FilledWithPrefix: Story = {
   args: {
     size: 'large',
     children: 'Label',
     variant: 'filled',
-    PrefixIcon: (
-      <Box
-        p=".1875rem"
-        width="2rem"
-        height="2rem"
-        display="flex"
-        color="onSurface"
-        alignItems="center"
-        borderRadius="full"
-        justifyContent="center"
-      >
-        <ErrorSVG maxWidth="1.125rem" maxHeight="1.125rem" width="100%" />
-      </Box>
-    ),
+    PrefixIcon: ErrorSvg,
     onClose: undefined,
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const tag = canvas.getByTestId('testTag');
+    const tag = canvas.getByRole('button');
 
     const svgElements = tag.querySelectorAll('svg');
-    expect(svgElements).toHaveLength(1);
-
     const firstChild = tag.firstElementChild;
 
-    expect(firstChild).toBeInTheDocument();
-    expect(firstChild).toBeVisible();
+    const computedStyle = getComputedStyle(tag);
 
-    if (firstChild?.tagName.toLowerCase() === 'div') {
-      const childElement = firstChild.firstElementChild;
+    const backgroundColor = computedStyle.getPropertyValue('background-color');
 
-      expect(childElement?.tagName.toLocaleLowerCase()).toBe('svg');
-    } else {
-      expect(firstChild?.tagName.toLocaleLowerCase()).toBe('svg');
-    }
+    const hexColor = rgbToHex(backgroundColor);
+
+    expect(tag, 'Tag should be rendered in the document').toBeInTheDocument();
+
+    expect(tag, 'The tag should contain the label "Label"').toHaveTextContent(
+      'Label'
+    );
+
+    expect(hexColor, 'The background color should be white (#FFFFFF)').toBe(
+      '#FFFFFF'
+    );
+
+    expect(svgElements, 'It should contain only one SVG').toHaveLength(1);
+
+    expect(
+      firstChild?.firstElementChild?.tagName,
+      'The first element of the tag should be an svg'
+    ).toBe('svg');
   },
 };
 
@@ -100,54 +129,57 @@ export const FilledWithCombined: Story = {
     size: 'large',
     children: 'Label',
     variant: 'filled',
-    PrefixIcon: (
-      <Box
-        p=".1875rem"
-        width="2rem"
-        height="2rem"
-        display="flex"
-        color="onSurface"
-        alignItems="center"
-        borderRadius="full"
-        justifyContent="center"
-      >
-        <ErrorSVG maxWidth="1.125rem" maxHeight="1.125rem" width="100%" />
-      </Box>
-    ),
-    onClose: () => null,
+    PrefixIcon: ErrorSvg,
+    onClose: () => ({}),
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const tag = canvas.getByTestId('testTag');
+    const tag = canvas.getByRole('button');
 
     const svgElements = tag.querySelectorAll('svg');
-    expect(svgElements).toHaveLength(2);
-
+    const svgElementsSize = svgElements.length;
     const firstChild = tag.firstElementChild;
-    const lastChild = tag.firstElementChild;
+    const lastChild = tag.lastElementChild;
 
-    expect(firstChild).toBeInTheDocument();
-    expect(firstChild).toBeVisible();
+    const childrenArray = Array.from(tag.children);
+    const middleChildIndex = Math.floor(childrenArray.length / 2);
+    const middleChild = childrenArray[middleChildIndex];
 
-    if (firstChild && firstChild?.tagName.toLowerCase() === 'div') {
-      const childElement = firstChild.firstElementChild;
+    const computedStyle = getComputedStyle(tag);
 
-      expect(childElement?.tagName.toLocaleLowerCase()).toBe('svg');
-    } else {
-      expect(firstChild?.tagName.toLocaleLowerCase()).toBe('svg');
-    }
+    const backgroundColor = computedStyle.getPropertyValue('background-color');
 
-    expect(lastChild).toBeInTheDocument();
-    expect(lastChild).toBeVisible();
+    const hexColor = rgbToHex(backgroundColor);
 
-    if (lastChild && lastChild?.tagName.toLowerCase() === 'div') {
-      const childElement = lastChild.firstElementChild;
+    expect(tag, 'Tag should be rendered in the document').toBeInTheDocument();
 
-      expect(childElement?.tagName.toLocaleLowerCase()).toBe('svg');
-    } else {
-      expect(firstChild?.tagName.toLocaleLowerCase()).toBe('svg');
-    }
+    expect(tag, 'The tag should contain the label "Label"').toHaveTextContent(
+      'Label'
+    );
+
+    expect(hexColor, 'The background color should be white (#FFFFFF)').toBe(
+      '#FFFFFF'
+    );
+
+    expect(svgElements, 'It should contain 2 SVGs').toHaveLength(
+      svgElementsSize
+    );
+
+    expect(
+      firstChild?.firstElementChild?.tagName,
+      'The first element of the tag should be an svg'
+    ).toBe('svg');
+
+    expect(
+      middleChild.tagName,
+      'The middle element of the tag should be an svg'
+    ).not.toBe('svg');
+
+    expect(
+      lastChild?.lastElementChild?.tagName,
+      'The last element of the tag should be an svg when onClose props in passed'
+    ).toBe('svg');
   },
 };
 
@@ -156,19 +188,33 @@ export const Outlined: Story = {
     size: 'large',
     children: 'Label',
     variant: 'outline',
+    onClose: undefined,
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const tag = canvas.getByTestId('testTag');
+    const tag = canvas.getByRole('button');
 
     const computedStyle = getComputedStyle(tag);
 
-    const border = computedStyle.getPropertyValue('border');
-    const background = computedStyle.getPropertyValue('background');
+    const backgroundColor = computedStyle.getPropertyValue('background-color');
+    const borderStyle = computedStyle.getPropertyValue('border');
 
-    expect(border.includes('none')).toBeFalsy();
-    expect(background.includes('rgba(0, 0, 0, 0)')).toBeTruthy();
+    const hexColor = rgbToHex(backgroundColor);
+
+    expect(tag, 'Tag should be rendered in the document').toBeInTheDocument();
+
+    expect(tag, 'The tag should contain the label "Label"').toHaveTextContent(
+      'Label'
+    );
+
+    expect(hexColor, 'The background color should be empty').toBe(
+      'rgba(0, 0, 0, 0)'
+    );
+
+    expect(borderStyle, 'The tag should contain a border').toContain(
+      '1px solid'
+    );
   },
 };
 
@@ -177,56 +223,61 @@ export const OutlinedWithCombined: Story = {
     size: 'large',
     children: 'Label',
     variant: 'outline',
-    PrefixIcon: (
-      <Box
-        p=".1875rem"
-        width="2rem"
-        height="2rem"
-        display="flex"
-        color="onSurface"
-        alignItems="center"
-        borderRadius="full"
-        justifyContent="center"
-      >
-        <ErrorSVG maxWidth="1.125rem" maxHeight="1.125rem" width="100%" />
-      </Box>
-    ),
-    onClose: () => {
-      alert('close button clicked');
-    },
+    PrefixIcon: ErrorSvg,
+    onClose: () => ({}),
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const tag = canvas.getByTestId('testTag');
-
+    const tag = canvas.getByRole('button');
     const svgElements = tag.querySelectorAll('svg');
-    expect(svgElements).toHaveLength(2);
-
+    const svgElementsSize = svgElements.length;
     const firstChild = tag.firstElementChild;
-    const lastChild = tag.firstElementChild;
+    const lastChild = tag.lastElementChild;
 
-    expect(firstChild).toBeInTheDocument();
-    expect(firstChild).toBeVisible();
+    const childrenArray = Array.from(tag.children);
+    const middleChildIndex = Math.floor(childrenArray.length / 2);
+    const middleChild = childrenArray[middleChildIndex];
 
-    if (firstChild && firstChild?.tagName.toLowerCase() === 'div') {
-      const childElement = firstChild.firstElementChild;
+    const computedStyle = getComputedStyle(tag);
 
-      expect(childElement?.tagName.toLocaleLowerCase()).toBe('svg');
-    } else {
-      expect(firstChild?.tagName.toLocaleLowerCase()).toBe('svg');
-    }
+    const backgroundColor = computedStyle.getPropertyValue('background-color');
+    const borderStyle = computedStyle.getPropertyValue('border');
 
-    expect(lastChild).toBeInTheDocument();
-    expect(lastChild).toBeVisible();
+    const hexColor = rgbToHex(backgroundColor);
 
-    if (lastChild && lastChild?.tagName.toLowerCase() === 'div') {
-      const childElement = lastChild.firstElementChild;
+    expect(tag, 'Tag should be rendered in the document').toBeInTheDocument();
 
-      expect(childElement?.tagName.toLocaleLowerCase()).toBe('svg');
-    } else {
-      expect(firstChild?.tagName.toLocaleLowerCase()).toBe('svg');
-    }
+    expect(tag, 'The tag should contain the label "Label"').toHaveTextContent(
+      'Label'
+    );
+
+    expect(hexColor, 'The background color should be empty').toBe(
+      'rgba(0, 0, 0, 0)'
+    );
+
+    expect(borderStyle, 'The tag should contain a border').toContain(
+      '1px solid'
+    );
+
+    expect(svgElements, 'It should contain 2 SVGs').toHaveLength(
+      svgElementsSize
+    );
+
+    expect(
+      firstChild?.firstElementChild?.tagName,
+      'The first element of the tag should be an svg'
+    ).toBe('svg');
+
+    expect(
+      middleChild.tagName,
+      'The middle element of the tag should be an svg'
+    ).not.toBe('svg');
+
+    expect(
+      lastChild?.lastElementChild?.tagName,
+      'The last element of the tag should be an svg when onClose props in passed'
+    ).toBe('svg');
   },
 };
 
@@ -236,41 +287,43 @@ export const OutlinedWithPrefix: Story = {
     children: 'Label',
     variant: 'outline',
     onClose: undefined,
-    PrefixIcon: (
-      <Box
-        p=".1875rem"
-        width="2rem"
-        height="2rem"
-        display="flex"
-        color="onSurface"
-        alignItems="center"
-        borderRadius="full"
-        justifyContent="center"
-      >
-        <ErrorSVG maxWidth="1.125rem" maxHeight="1.125rem" width="100%" />
-      </Box>
-    ),
+    PrefixIcon: ErrorSvg,
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const tag = canvas.getByTestId('testTag');
+    const tag = canvas.getByRole('button') as HTMLButtonElement;
 
     const svgElements = tag.querySelectorAll('svg');
-    expect(svgElements).toHaveLength(1);
-
     const firstChild = tag.firstElementChild;
 
-    expect(firstChild).toBeInTheDocument();
-    expect(firstChild).toBeVisible();
+    const computedStyle = getComputedStyle(tag);
 
-    if (firstChild?.tagName.toLowerCase() === 'div') {
-      const childElement = firstChild.firstElementChild;
+    const backgroundColor = computedStyle.getPropertyValue('background-color');
+    const borderStyle = computedStyle.getPropertyValue('border');
 
-      expect(childElement?.tagName.toLocaleLowerCase()).toBe('svg');
-    } else {
-      expect(firstChild?.tagName.toLocaleLowerCase()).toBe('svg');
-    }
+    const hexColor = rgbToHex(backgroundColor);
+
+    expect(tag, 'Tag should be rendered in the document').toBeInTheDocument();
+
+    expect(tag, 'The tag should contain the label "Label"').toHaveTextContent(
+      'Label'
+    );
+
+    expect(hexColor, 'The background color should be empty').toBe(
+      'rgba(0, 0, 0, 0)'
+    );
+
+    expect(borderStyle, 'The tag should contain a border').toContain(
+      '1px solid'
+    );
+
+    expect(svgElements, 'It should contain only one SVG').toHaveLength(1);
+
+    expect(
+      firstChild?.firstElementChild?.tagName,
+      'The first element of the tag should be an svg'
+    ).toBe('svg');
   },
 };
 
@@ -278,32 +331,44 @@ export const WithCloseAction: Story = {
   args: {
     size: 'large',
     children: 'Label',
-    variant: 'outline',
+    variant: 'filled',
     onClose: fn(),
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const tag = canvas.getByTestId('testTag');
+
+    const tag = canvas.getByRole('button');
 
     const svgElements = tag.querySelectorAll('svg');
-    expect(svgElements).toHaveLength(1);
-
     const lastChild = tag.lastElementChild as HTMLElement;
 
-    expect(lastChild).toBeInTheDocument();
-    expect(lastChild).toBeVisible();
+    const computedStyle = getComputedStyle(tag);
 
-    if (lastChild && lastChild?.tagName.toLowerCase() === 'div') {
-      const childElement = lastChild.firstElementChild;
+    const backgroundColor = computedStyle.getPropertyValue('background-color');
 
-      expect(childElement?.tagName.toLocaleLowerCase()).toBe('svg');
-    } else {
-      expect(lastChild?.tagName.toLocaleLowerCase()).toBe('svg');
-    }
+    const hexColor = rgbToHex(backgroundColor);
 
-    lastChild.click();
+    expect(tag, 'Tag should be rendered in the document').toBeInTheDocument();
 
-    await waitFor(() => expect(args.onClose).toHaveBeenCalledOnce());
+    expect(tag, 'The tag should contain the label "Label"').toHaveTextContent(
+      'Label'
+    );
+    expect(svgElements, 'It should contain only one SVG').toHaveLength(1);
+
+    expect(hexColor, 'The background color should be white (#FFFFFF)').toBe(
+      '#FFFFFF'
+    );
+
+    await step('Click tag test', async () => {
+      lastChild.click();
+    });
+
+    await waitFor(() =>
+      expect(
+        args.onClose,
+        'When click on the close icon, onClose event should be called at least once'
+      ).toHaveBeenCalledOnce()
+    );
   },
 };
 
@@ -314,21 +379,45 @@ export const withFocusAction: Story = {
     variant: 'filled',
     onClose: undefined,
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const tag = canvas.getByTestId('testTag') as HTMLElement;
 
-    await waitFor(async () => {
-      tag.focus();
-    });
+    const tag = canvas.getByRole('button') as HTMLElement;
 
-    await waitFor(() => {
-      tag.focus();
-      const computedStyle = getComputedStyle(tag);
-      const backgroundColor =
-        computedStyle.getPropertyValue('background-color');
+    const computedStyle = getComputedStyle(tag);
 
-      expect(backgroundColor).toContain('rgb(0, 83, 219)');
+    const backgroundColor = computedStyle.getPropertyValue('background-color');
+
+    const hexColor = rgbToHex(backgroundColor);
+
+    expect(tag, 'Tag should be rendered in the document').toBeInTheDocument();
+
+    expect(tag, 'The tag should contain the label "Label"').toHaveTextContent(
+      'Label'
+    );
+
+    expect(hexColor, 'The background color should be white (#FFFFFF)').toBe(
+      '#FFFFFF'
+    );
+
+    await step('Focus tag test', async () => {
+      await waitFor(async () => {
+        tag.focus();
+      });
+
+      await waitFor(() => {
+        tag.focus();
+        const computedStyle = getComputedStyle(tag);
+        const backgroundColor =
+          computedStyle.getPropertyValue('background-color');
+
+        const hexColor = rgbToHex(backgroundColor);
+
+        expect(
+          hexColor,
+          'When tag is focused the background color should be "#0053DB"'
+        ).toBe('#0053DB');
+      });
     });
   },
 };
