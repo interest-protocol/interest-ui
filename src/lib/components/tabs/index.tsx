@@ -33,12 +33,13 @@ export const Tabs: FC<TabsProps> = ({
       width={width || 'max-content'}
       bg={dark ? '#ffffff14' : '#00000014'}
       borderRadius={type == 'circle' ? 'full' : '0.625rem'}
-      data-testId="tabsTest"
+      // eslint-disable-next-line jsx-a11y/aria-role
+      role="tabsTest"
     >
       {items.map((item, index) => (
         <TabItem
-          key={v4()}
           px={px}
+          key={v4()}
           item={item}
           type={type}
           isSelected={index === tabIndex}

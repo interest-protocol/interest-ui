@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, waitFor, within } from '@storybook/test';
+import { expect, fireEvent, fn, within } from '@storybook/test';
 
 import { Tabs } from '..';
 
@@ -19,16 +19,53 @@ export const Circle: Story = {
     type: 'circle',
     width: '',
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step, args }) => {
+    let currentOption = 0;
     const canvas = within(canvasElement);
+    const tabs = canvas.getByRole('tabsTest');
 
-    const tabs = canvas.getByTestId('tabsTest');
+    await step('Check the structure of the Tab Circular', async () => {
+      expect(
+        tabs,
+        'It is expected that the tab has a full border-radius'
+      ).toHaveStyle('border-radius: 159984px');
+      expect(
+        tabs,
+        'It is expected that the tab has a background #00000014'
+      ).toHaveStyle('background-color: #00000014');
+      expect(
+        tabs.childNodes.length,
+        `It is expected that the tab has ${args.items.length} tabItems`
+      ).toBe(args.items.length);
+    });
 
-    await waitFor(() => {
-      const computedStyle = getComputedStyle(tabs);
-      const borderRadius = computedStyle.getPropertyValue('border-radius');
+    await step(
+      'Check that the selected option is correctly applied ',
+      async () => {
+        expect(
+          tabs.childNodes[currentOption].textContent,
+          `It is expected that the selected option will be option "${args.items[currentOption]}"`
+        ).toBe(args.items[currentOption]);
+        const tabItemWrapperSelected =
+          tabs.children[currentOption].children[0].childNodes[1];
+        expect(
+          tabItemWrapperSelected,
+          'It is expected that the selected option has a wrapper with "background-colour #fff" over it'
+        ).toHaveStyle('background-color: #fff');
+        expect(
+          tabItemWrapperSelected,
+          'It is expected that the selected option has a wrapper with "border-radius: full" over it'
+        ).toHaveStyle('border-radius: 159984px');
+      }
+    );
 
-      expect(borderRadius).toBe('159984px');
+    await step('Check navigation between options', async () => {
+      currentOption++;
+      fireEvent.click(tabs.children[currentOption]);
+      expect(
+        tabs.childNodes[currentOption].textContent,
+        `It is expected that the new selected option will be option "${args.items[currentOption]}"`
+      ).toBe(args.items[currentOption]);
     });
   },
 };
@@ -39,16 +76,53 @@ export const Square: Story = {
     type: 'square',
     width: '',
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step, args }) => {
+    let currentOption = 0;
     const canvas = within(canvasElement);
+    const tabs = canvas.getByRole('tabsTest');
 
-    const tabs = canvas.getByTestId('tabsTest');
+    await step('Check the structure of the Tab Square', async () => {
+      expect(
+        tabs,
+        'It is expected that the tab has a full border-radius'
+      ).toHaveStyle('border-radius: 10px');
+      expect(
+        tabs,
+        'It is expected that the tab has a background #00000014'
+      ).toHaveStyle('background-color: #00000014');
+      expect(
+        tabs.childNodes.length,
+        `It is expected that the tab has ${args.items.length} tabItems`
+      ).toBe(args.items.length);
+    });
 
-    await waitFor(() => {
-      const computedStyle = getComputedStyle(tabs);
-      const borderRadius = computedStyle.getPropertyValue('border-radius');
+    await step(
+      'Check that the selected option is correctly applied ',
+      async () => {
+        expect(
+          tabs.childNodes[currentOption].textContent,
+          `It is expected that the selected option will be option "${args.items[currentOption]}"`
+        ).toBe(args.items[currentOption]);
+        const tabItemWrapperSelected =
+          tabs.children[currentOption].children[0].childNodes[1];
+        expect(
+          tabItemWrapperSelected,
+          'It is expected that the selected option has a wrapper with "background-colour #fff" over it'
+        ).toHaveStyle('background-color: #fff');
+        expect(
+          tabItemWrapperSelected,
+          'It is expected that the selected option has a wrapper with "border-radius: full" over it'
+        ).toHaveStyle('border-radius: 8px');
+      }
+    );
 
-      expect(borderRadius).toBe('10px');
+    await step('Check navigation between options', async () => {
+      currentOption++;
+      fireEvent.click(tabs.children[currentOption]);
+      expect(
+        tabs.childNodes[currentOption].textContent,
+        `It is expected that the new selected option will be option "${args.items[currentOption]}"`
+      ).toBe(args.items[currentOption]);
     });
   },
 };
