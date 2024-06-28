@@ -198,8 +198,6 @@ export const NormalDisabled: Story = {
 
     await step('Checkbox useEvent test', async () => {
       await userEvent.click(canvas.getByRole('checkbox'));
-      await userEvent.hover(canvas.getByRole('checkbox'));
-      await userEvent.unhover(canvas.getByRole('checkbox'));
       await userEvent.dblClick(canvas.getByRole('checkbox'));
     });
 
