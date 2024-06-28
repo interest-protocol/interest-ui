@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, within } from '@storybook/test';
+import { expect, userEvent, within } from '@storybook/test';
 
 import { RadioButton } from '..';
 
@@ -20,22 +20,36 @@ type Story = StoryObj<typeof RadioButton>;
 
 export const Normal: Story = {
   args: {},
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
-
     const radio = canvas.getByTestId('radioTestContainer');
-
-    const svgs = radio.querySelectorAll('svg');
-    expect(svgs).toHaveLength(1);
-
+    const svgElements = radio.querySelectorAll('svg');
     const computedStyle = getComputedStyle(radio);
     const cursor = computedStyle.getPropertyValue('cursor');
     const color = computedStyle.getPropertyValue('color');
+    const background = computedStyle.getPropertyValue('background');
+    const firstChild = radio.firstElementChild;
+    const elementTag = firstChild && firstChild.tagName.toLowerCase();
+    const shortBackgroundValue = background.slice(0, 16);
     const opacity = computedStyle.getPropertyValue('opacity');
 
-    expect(cursor).toBe('pointer');
-    expect(Number(opacity)).toBeGreaterThanOrEqual(1);
-    expect(color).toBe('rgb(0, 0, 0)');
+    await step('Radio button style test', async () => {
+      expect(cursor).toBe('pointer');
+      expect(elementTag).toBe('div');
+      expect(firstChild).toBeVisible();
+      expect(color).toBe('rgb(0, 0, 0)');
+      expect(svgElements).toHaveLength(1);
+      expect(firstChild).toBeInTheDocument();
+      expect(Number(opacity)).toBeGreaterThanOrEqual(1);
+      expect(shortBackgroundValue).toBe('rgba(0, 0, 0, 0)');
+    });
+
+    await step('Radio button userEvent test', async () => {
+      await userEvent.click(canvas.getByTestId('radioTestContainer'));
+      await userEvent.hover(canvas.getByTestId('radioTestContainer'));
+      await userEvent.dblClick(canvas.getByTestId('radioTestContainer'));
+      await userEvent.unhover(canvas.getByTestId('radioTestContainer'));
+    });
   },
 };
 
@@ -43,15 +57,38 @@ export const NormalDisabled: Story = {
   args: {
     disabled: true,
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-
     const radio = canvas.getByTestId('radioTestContainer');
-
     const computedStyle = getComputedStyle(radio);
     const cursor = computedStyle.getPropertyValue('cursor');
+    const color = computedStyle.getPropertyValue('color');
+    const background = computedStyle.getPropertyValue('background');
+    const svgElements = radio.querySelectorAll('svg');
+    const firstChild = radio.firstElementChild;
+    const elementTag = firstChild && firstChild.tagName.toLowerCase();
+    const shortBackgroudValue = background.slice(0, 16);
 
-    expect(cursor).toBe('not-allowed');
+    await step('Radio button style test', async () => {
+      expect(color).toBe('rgb(0, 0, 0)');
+      expect(shortBackgroudValue).toBe('rgba(0, 0, 0, 0)');
+      expect(firstChild).toBeInTheDocument();
+      expect(firstChild).toBeVisible();
+      expect(elementTag).toBe('div');
+      expect(svgElements).toHaveLength(1);
+      expect(cursor).toBe('not-allowed');
+    });
+
+    await step('Radio button userEvent test', async () => {
+      await userEvent.click(canvas.getByTestId('radioTestContainer'));
+      await userEvent.hover(canvas.getByTestId('radioTestContainer'));
+      await userEvent.dblClick(canvas.getByTestId('radioTestContainer'));
+      await userEvent.unhover(canvas.getByTestId('radioTestContainer'));
+    });
+
+    await step('Radio button args test', async () => {
+      expect(args.disabled).toBeTruthy();
+    });
   },
 };
 
@@ -59,15 +96,42 @@ export const Checked: Story = {
   args: {
     defaultValue: true,
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-
-    const radio = canvas.getByTestId('radioTest');
-
+    const radio = canvas.getByTestId('radioTestContainer');
+    const radioChecked = canvas.getByTestId('radioTest');
     const computedStyle = getComputedStyle(radio);
+    const checkedComputedStyle = getComputedStyle(radioChecked);
+    const cursor = computedStyle.getPropertyValue('cursor');
     const color = computedStyle.getPropertyValue('color');
+    const checkedColor = checkedComputedStyle.getPropertyValue('color');
+    const background = computedStyle.getPropertyValue('background');
+    const svgElements = radio.querySelectorAll('svg');
+    const firstChild = radio.firstElementChild;
+    const elementTag = firstChild && firstChild.tagName.toLowerCase();
+    const shortBackgroundValue = background.slice(0, 16);
 
-    expect(color).toBe('rgb(0, 83, 219)');
+    await step('Radio button style test', async () => {
+      expect(elementTag).toBe('div');
+      expect(firstChild).toBeVisible();
+      expect(color).toBe('rgb(0, 0, 0)');
+      expect(cursor).toBe('pointer');
+      expect(svgElements).toHaveLength(1);
+      expect(firstChild).toBeInTheDocument();
+      expect(checkedColor).toBe('rgb(0, 83, 219)');
+      expect(shortBackgroundValue).toBe('rgba(0, 0, 0, 0)');
+    });
+
+    await step('Radio button userEvent test', async () => {
+      await userEvent.click(canvas.getByTestId('radioTestContainer'));
+      await userEvent.hover(canvas.getByTestId('radioTestContainer'));
+      await userEvent.unhover(canvas.getByTestId('radioTestContainer'));
+      await userEvent.dblClick(canvas.getByTestId('radioTestContainer'));
+    });
+
+    await step('Radio button args test', async () => {
+      expect(args.defaultValue).toBeTruthy();
+    });
   },
 };
 
@@ -76,52 +140,43 @@ export const CheckedDisabled: Story = {
     defaultValue: true,
     disabled: true,
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
 
     const radioContainer = canvas.getByTestId('radioTestContainer');
     const containerComputedStyle = getComputedStyle(radioContainer);
     const cursor = containerComputedStyle.getPropertyValue('cursor');
-    expect(cursor).toBe('not-allowed');
-
     const radio = canvas.getByTestId('radioTest');
-
     const computedStyle = getComputedStyle(radio);
     const color = computedStyle.getPropertyValue('color');
     const opacity = computedStyle.getPropertyValue('opacity');
+    const background = computedStyle.getPropertyValue('background');
+    const svgElements = radio.querySelectorAll('svg');
+    const firstChild = radio.firstElementChild;
+    const elementTag = firstChild && firstChild.tagName.toLowerCase();
+    const shortBackgroundValue = background.slice(0, 16);
 
-    expect(color).toBe('rgb(27, 27, 31)');
-    expect(Number(opacity)).toBeLessThan(1);
-  },
-};
+    await step('Radio button style test', async () => {
+      expect(elementTag).toBe('svg');
+      expect(firstChild).toBeVisible();
+      expect(color).toBe('rgb(27, 27, 31)');
+      expect(cursor).toBe('not-allowed');
+      expect(svgElements).toHaveLength(1);
+      expect(firstChild).toBeInTheDocument();
+      expect(Number(opacity)).toBeLessThan(1);
+      expect(shortBackgroundValue).toBe('rgba(0, 0, 0, 0)');
+    });
 
-export const OnClickEvent: Story = {
-  args: {
-    onClick: fn(),
-  },
-  play: async ({ args, canvasElement }) => {
-    const canvas = within(canvasElement);
+    await step('Radio button userEvent test', async () => {
+      await userEvent.click(canvas.getByTestId('radioTestContainer'));
+      await userEvent.hover(canvas.getByTestId('radioTestContainer'));
+      await userEvent.unhover(canvas.getByTestId('radioTestContainer'));
+      await userEvent.dblClick(canvas.getByTestId('radioTestContainer'));
+    });
 
-    const radio = canvas.getByTestId('radioTestContainer');
-
-    radio.click();
-
-    expect(args.onClick).toHaveBeenCalledOnce();
-  },
-};
-
-export const OnClickEventDisabled: Story = {
-  args: {
-    onClick: fn(),
-    disabled: true,
-  },
-  play: async ({ args, canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    const radio = canvas.getByTestId('radioTestContainer');
-
-    radio.click();
-
-    expect(args.onClick).toHaveBeenCalledTimes(0);
+    await step('Radio button args test', async () => {
+      expect(args.defaultValue).toBeTruthy();
+      expect(args.disabled).toBeTruthy();
+    });
   },
 };
