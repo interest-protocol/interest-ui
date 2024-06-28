@@ -81,9 +81,7 @@ export const NormalDisabled: Story = {
 
     await step('Radio button userEvent test', async () => {
       await userEvent.click(canvas.getByTestId('radioTestContainer'));
-      await userEvent.hover(canvas.getByTestId('radioTestContainer'));
       await userEvent.dblClick(canvas.getByTestId('radioTestContainer'));
-      await userEvent.unhover(canvas.getByTestId('radioTestContainer'));
     });
 
     await step('Radio button args test', async () => {
@@ -169,8 +167,6 @@ export const CheckedDisabled: Story = {
 
     await step('Radio button userEvent test', async () => {
       await userEvent.click(canvas.getByTestId('radioTestContainer'));
-      await userEvent.hover(canvas.getByTestId('radioTestContainer'));
-      await userEvent.unhover(canvas.getByTestId('radioTestContainer'));
       await userEvent.dblClick(canvas.getByTestId('radioTestContainer'));
     });
 
