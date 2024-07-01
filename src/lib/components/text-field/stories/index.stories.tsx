@@ -36,17 +36,23 @@ export const Default: Story = {
     const textAlignment = computedStyle.getPropertyValue('text-align');
 
     const inputElement = textField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
 
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('input'));
-    });
-
-    await step('Check property value and args', () => {
+    await step('Textfield style test', async () => {
+      expect(inputElement).toHaveLength(1);
       expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
       expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
       expect(color.trim()).toBe('rgb(0, 0, 0)');
       expect(textAlignment).toBe('start');
+    });
+
+    await step('Textfield userEvent test', async () => {
+      await userEvent.click(canvas.getByRole('input'));
+      await userEvent.dblClick(canvas.getByRole('input'));
+      await userEvent.hover(canvas.getByRole('input'));
+      await userEvent.unhover(canvas.getByRole('input'));
+    });
+
+    await step('Textfield args test', () => {
       expect(args.placeholder).toBe('0.123');
     });
   },
@@ -69,24 +75,30 @@ export const WithPrefix: Story = {
     const background = computedStyle.getPropertyValue('background');
     const textAlignment = computedStyle.getPropertyValue('text-align');
 
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = textField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
+    await step('Textfield style test', async () => {
+      const svgElement = textField.querySelectorAll('svg');
+      expect(svgElement).toHaveLength(1);
 
-    const inputElement = textField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('input'));
-    });
-
-    await step('Check Property value and args', () => {
+      const inputElement = textField.querySelectorAll('input');
+      expect(inputElement).toHaveLength(1);
       expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
       expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
       expect(color.trim()).toBe('rgb(0, 0, 0)');
       expect(textAlignment).toBe('start');
-      expect(args.placeholder).toBe('0.123');
       expect(textField).toHaveTextContent('Label');
+    });
+
+    await step('Textfield userEvent test', async () => {
+      await userEvent.click(canvas.getByRole('input'));
+      await userEvent.dblClick(canvas.getByRole('input'));
+      await userEvent.hover(canvas.getByRole('input'));
+      await userEvent.unhover(canvas.getByRole('input'));
+    });
+
+    await step('Check Property value and args', () => {
+      expect(args.placeholder).toBe('0.123');
+      expect(args.supportingText).toBe('Supporting text');
+      expect(args.label).toBe('Label');
     });
   },
 };
@@ -109,24 +121,30 @@ export const WithPrefixSucess: Story = {
     const background = computedStyle.getPropertyValue('background');
     const textAlignment = computedStyle.getPropertyValue('text-align');
 
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = textField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
+    await step('Textfield style test', async () => {
+      const svgElement = textField.querySelectorAll('svg');
+      expect(svgElement).toHaveLength(1);
 
-    const inputElement = textField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('input'));
-    });
-
-    await step('Check Property value and args', () => {
+      const inputElement = textField.querySelectorAll('input');
+      expect(inputElement).toHaveLength(1);
       expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
       expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
       expect(color.trim()).toBe('rgb(0, 0, 0)');
       expect(textAlignment).toBe('start');
-      expect(args.placeholder).toBe('0.123');
       expect(textField).toHaveTextContent('Label');
+    });
+
+    await step('Textfield userEvent test', async () => {
+      await userEvent.click(canvas.getByRole('input'));
+      await userEvent.dblClick(canvas.getByRole('input'));
+      await userEvent.hover(canvas.getByRole('input'));
+      await userEvent.unhover(canvas.getByRole('input'));
+    });
+
+    await step('Check Property value and args', () => {
+      expect(args.placeholder).toBe('0.123');
+      expect(args.supportingText).toBe('Supporting text');
+      expect(args.label).toBe('Label');
       expect(args.status).toBe('success');
     });
   },
@@ -149,24 +167,30 @@ export const WithSuffix: Story = {
     const background = computedStyle.getPropertyValue('background');
     const textAlignment = computedStyle.getPropertyValue('text-align');
 
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = textField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
+    await step('Textfield style test', async () => {
+      const svgElement = textField.querySelectorAll('svg');
+      expect(svgElement).toHaveLength(1);
 
-    const inputElement = textField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('input'));
-    });
-
-    await step('Check Property value and args', () => {
+      const inputElement = textField.querySelectorAll('input');
+      expect(inputElement).toHaveLength(1);
       expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
       expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
       expect(color.trim()).toBe('rgb(0, 0, 0)');
       expect(textAlignment).toBe('start');
-      expect(args.placeholder).toBe('0.123');
       expect(textField).toHaveTextContent('Label');
+    });
+
+    await step('Textfield userEvent test', async () => {
+      await userEvent.click(canvas.getByRole('input'));
+      await userEvent.dblClick(canvas.getByRole('input'));
+      await userEvent.hover(canvas.getByRole('input'));
+      await userEvent.unhover(canvas.getByRole('input'));
+    });
+
+    await step('Check Property value and args', () => {
+      expect(args.placeholder).toBe('0.123');
+      expect(args.supportingText).toBe('Supporting text');
+      expect(args.label).toBe('Label');
     });
   },
 };
@@ -187,20 +211,27 @@ export const WithTopLabel: Story = {
     const background = computedStyle.getPropertyValue('background');
     const textAlignment = computedStyle.getPropertyValue('text-align');
 
-    const inputElement = textField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('input'));
-    });
-
-    await step('Check property value and args', () => {
+    await step('Textfield style test', async () => {
+      const inputElement = textField.querySelectorAll('input');
+      expect(inputElement).toHaveLength(1);
       expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
       expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
       expect(color.trim()).toBe('rgb(0, 0, 0)');
       expect(textAlignment).toBe('start');
-      expect(args.placeholder).toBe('0.123');
       expect(textField).toHaveTextContent('Label');
+    });
+
+    await step('Textfield userEvent test', async () => {
+      await userEvent.click(canvas.getByRole('input'));
+      await userEvent.dblClick(canvas.getByRole('input'));
+      await userEvent.hover(canvas.getByRole('input'));
+      await userEvent.unhover(canvas.getByRole('input'));
+    });
+
+    await step('Check Property value and args', () => {
+      expect(args.placeholder).toBe('0.123');
+      expect(args.supportingText).toBe('Supporting text');
+      expect(args.label).toBe('Label');
     });
   },
 };
@@ -223,24 +254,30 @@ export const Combined: Story = {
     const background = computedStyle.getPropertyValue('background');
     const textAlignment = computedStyle.getPropertyValue('text-align');
 
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = textField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(2);
+    await step('Textfield style test', async () => {
+      const svgElement = textField.querySelectorAll('svg');
+      expect(svgElement).toHaveLength(2);
 
-    const inputElement = textField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('input'));
-    });
-
-    await step('Check property value and args', () => {
+      const inputElement = textField.querySelectorAll('input');
+      expect(inputElement).toHaveLength(1);
       expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
       expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
       expect(color.trim()).toBe('rgb(0, 0, 0)');
       expect(textAlignment).toBe('start');
-      expect(args.placeholder).toBe('0.123');
       expect(textField).toHaveTextContent('Label');
+    });
+
+    await step('Textfield userEvent test', async () => {
+      await userEvent.click(canvas.getByRole('input'));
+      await userEvent.dblClick(canvas.getByRole('input'));
+      await userEvent.hover(canvas.getByRole('input'));
+      await userEvent.unhover(canvas.getByRole('input'));
+    });
+
+    await step('Check Property value and args', () => {
+      expect(args.placeholder).toBe('0.123');
+      expect(args.supportingText).toBe('Supporting text');
+      expect(args.label).toBe('Label');
     });
   },
 };
@@ -262,23 +299,28 @@ export const Error: Story = {
     const background = computedStyle.getPropertyValue('background');
     const textAlignment = computedStyle.getPropertyValue('text-align');
 
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = textField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
+    await step('Textfield style test', async () => {
+      const svgElement = textField.querySelectorAll('svg');
+      expect(svgElement).toHaveLength(1);
 
-    const inputElement = textField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('input'));
-    });
-
-    await step('Check property value and args', () => {
+      const inputElement = textField.querySelectorAll('input');
+      expect(inputElement).toHaveLength(1);
       expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
       expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
       expect(color.trim()).toBe('rgb(0, 0, 0)');
       expect(textAlignment).toBe('start');
+    });
+
+    await step('Textfield userEvent test', async () => {
+      await userEvent.click(canvas.getByRole('input'));
+      await userEvent.dblClick(canvas.getByRole('input'));
+      await userEvent.hover(canvas.getByRole('input'));
+      await userEvent.unhover(canvas.getByRole('input'));
+    });
+
+    await step('Check Property value and args', () => {
       expect(args.placeholder).toBe('0.123');
+      expect(args.supportingText).toBe('Enter a valid amount');
       expect(args.status).toBe('error');
     });
   },
@@ -303,24 +345,30 @@ export const ErrorCombined: Story = {
     const background = computedStyle.getPropertyValue('background');
     const textAlignment = computedStyle.getPropertyValue('text-align');
 
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = textField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(2);
+    await step('Textfield style test', async () => {
+      const svgElement = textField.querySelectorAll('svg');
+      expect(svgElement).toHaveLength(2);
 
-    const inputElement = textField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('input'));
-    });
-
-    await step('Check property value and args', () => {
+      const inputElement = textField.querySelectorAll('input');
+      expect(inputElement).toHaveLength(1);
       expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
       expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
       expect(color.trim()).toBe('rgb(0, 0, 0)');
       expect(textAlignment).toBe('start');
-      expect(args.placeholder).toBe('0.123');
       expect(textField).toHaveTextContent('Label');
+    });
+
+    await step('Textfield userEvent test', async () => {
+      await userEvent.click(canvas.getByRole('input'));
+      await userEvent.dblClick(canvas.getByRole('input'));
+      await userEvent.hover(canvas.getByRole('input'));
+      await userEvent.unhover(canvas.getByRole('input'));
+    });
+
+    await step('Check Property value and args', () => {
+      expect(args.placeholder).toBe('0.123');
+      expect(args.supportingText).toBe('Supporting text');
+      expect(args.label).toBe('Label');
       expect(args.status).toBe('error');
     });
   },
@@ -350,24 +398,30 @@ export const ErrorCombinedWithWrapper: Story = {
     const background = computedStyle.getPropertyValue('background');
     const textAlignment = computedStyle.getPropertyValue('text-align');
 
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = textField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(2);
+    await step('Textfield style test', async () => {
+      const svgElement = textField.querySelectorAll('svg');
+      expect(svgElement).toHaveLength(2);
 
-    const inputElement = textField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('input'));
-    });
-
-    await step('Check property value and args', () => {
+      const inputElement = textField.querySelectorAll('input');
+      expect(inputElement).toHaveLength(1);
       expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
       expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
       expect(color.trim()).toBe('rgb(0, 0, 0)');
       expect(textAlignment).toBe('start');
-      expect(args.placeholder).toBe('0.123');
       expect(textField).toHaveTextContent('Label');
+    });
+
+    await step('Textfield userEvent test', async () => {
+      await userEvent.click(canvas.getByRole('input'));
+      await userEvent.dblClick(canvas.getByRole('input'));
+      await userEvent.hover(canvas.getByRole('input'));
+      await userEvent.unhover(canvas.getByRole('input'));
+    });
+
+    await step('Check Property value and args', () => {
+      expect(args.placeholder).toBe('0.123');
+      expect(args.supportingText).toBe('Supporting text');
+      expect(args.label).toBe('Label');
       expect(args.status).toBe('error');
     });
   },
@@ -388,18 +442,23 @@ export const Disabled: Story = {
     const background = computedStyle.getPropertyValue('background');
     const textAlignment = computedStyle.getPropertyValue('text-align');
 
-    const inputElement = textField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('input'));
-    });
-
-    await step('Check property value and args', () => {
+    await step('Textfield style test', async () => {
+      const inputElement = textField.querySelectorAll('input');
+      expect(inputElement).toHaveLength(1);
       expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
       expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
       expect(color.trim()).toBe('rgb(0, 0, 0)');
       expect(textAlignment).toBe('start');
+    });
+
+    await step('Textfield userEvent test', async () => {
+      await userEvent.click(canvas.getByRole('input'));
+      await userEvent.dblClick(canvas.getByRole('input'));
+      await userEvent.hover(canvas.getByRole('input'));
+      await userEvent.unhover(canvas.getByRole('input'));
+    });
+
+    await step('Check Property value and args', () => {
       expect(args.placeholder).toBe('0.123');
       expect(args.disabled).toBeTruthy();
     });
