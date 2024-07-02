@@ -8,12 +8,12 @@ export const RangeType: FC<RangeTypeProps> = ({
   value,
   disabled,
   bottomValue,
-  withTooltip,
+  withoutTooltip,
   showZeroValue,
 }) => {
   return (
     <>
-      {withTooltip ? (
+      {withoutTooltip ? (
         <TooltipWrapper
           bg="lowestContainer"
           tooltipPosition={bottomValue ? 'bottom' : 'top'}
