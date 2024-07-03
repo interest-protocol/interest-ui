@@ -107,16 +107,14 @@ export const Dialog: FC<DialogProps> = ({
               ? secondaryButton
               : !!(secondaryButton as IDialogButton).label && (
                   <Button
-                    marginRight="s"
-                    justifyContent="center"
                     flex="1"
+                    marginRight="s"
                     variant="outline"
-                    onClick={(secondaryButton as IDialogButton).onClick}
-                    borderColor="outlineVariant"
                     borderRadius="xs"
                     color={COLOR_MAP.info}
-                    // eslint-disable-next-line jsx-a11y/aria-role
-                    role="close-button"
+                    justifyContent="center"
+                    borderColor="outlineVariant"
+                    onClick={(secondaryButton as IDialogButton).onClick}
                   >
                     {(secondaryButton as IDialogButton).label}
                   </Button>
@@ -132,8 +130,6 @@ export const Dialog: FC<DialogProps> = ({
                     flex="3"
                     variant="filled"
                     borderRadius="xs"
-                    // eslint-disable-next-line jsx-a11y/aria-role
-                    role="got-it-button"
                   >
                     {(primaryButton as IDialogButton).label}
                   </Button>
