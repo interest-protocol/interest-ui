@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
+import { clearAllMocks, expect, fn, userEvent, within } from '@storybook/test';
 import React from 'react';
 
 import { PlusIcon, SwapIcon } from '../../../../storybook/icons';
@@ -33,45 +33,110 @@ export const Filled: Story = {
     variant: 'filled',
     children: 'Label',
     disabled: false,
+    onClick: fn(),
   },
-  play: async ({ canvasElement, step, args }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const button = canvas.getByRole('button');
+    let button = canvas.getByRole('button');
     const computedStyle = getComputedStyle(button);
 
-    const background = computedStyle.getPropertyValue('background');
     const color = computedStyle.getPropertyValue('color');
-    const cursor = computedStyle.getPropertyValue('cursor');
 
     await step('onClick button test', async () => {
       await userEvent.click(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called once'
+      ).toHaveBeenCalledOnce();
     });
+
+    clearAllMocks();
 
     await step('Double click button test', async () => {
       await userEvent.dblClick(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called twice'
+      ).toHaveBeenCalledTimes(2);
     });
+
+    clearAllMocks();
 
     await step('Hover button test', async () => {
-      await userEvent.hover(canvas.getByRole('button'));
+      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
+      await userEvent.pointer({ target: button, offset: 3 });
+
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+
+      const background = computedStyle.getPropertyValue('background');
+
+      expect(
+        background,
+        `It expects that the background contains "linear-gradient(0deg, rgba(255, 255, 255, 0.133), rgba(255, 255, 255, 0.133))"`
+      ).toContain(
+        'linear-gradient(0deg, rgba(255, 255, 255, 0.133), rgba(255, 255, 255, 0.133))'
+      );
     });
 
-    await step('Unhover button test', async () => {
-      await userEvent.unhover(canvas.getByRole('button'));
+    clearAllMocks();
+
+    await step('Focus button test', async () => {
+      button.focus();
+
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+
+      const background = computedStyle.getPropertyValue('background');
+
+      expect(
+        background,
+        `It expects that the background contains "linear-gradient(0deg, rgba(255, 255, 255, 0.133), rgba(255, 255, 255, 0.133))"`
+      ).toContain(
+        'linear-gradient(0deg, rgba(255, 255, 255, 0.133), rgba(255, 255, 255, 0.133))'
+      );
     });
+
+    clearAllMocks();
 
     await step('Button style test', async () => {
-      expect(button).toHaveTextContent('Label');
+      expect(button, 'It should render the text correctly').toHaveTextContent(
+        'Label'
+      );
 
-      expect(background.trim()).toBeTruthy();
-      expect(color).toBe('rgb(255, 255, 255)');
-      expect(cursor).toBe('pointer');
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+      const backgroundColor =
+        computedStyle.getPropertyValue('background-color');
+
+      expect(
+        backgroundColor,
+        'It expects that the background color is "rgb(0, 83, 219)"'
+      ).toBe('rgb(0, 83, 219)');
+      expect(color, 'The color style should be "rgb(255, 255, 255)"').toBe(
+        'rgb(255, 255, 255)'
+      );
+      expect(button, 'The cursor style should be pointer').toHaveStyle(
+        'cursor: pointer'
+      );
     });
 
+    clearAllMocks();
+
     await step('Button args test', async () => {
-      expect(args.variant).toBe('filled');
-      expect(args.children).toBe('Label');
-      expect(args.disabled).toBeFalsy();
+      expect(args.variant, 'The argument variant must be "filled"').toBe(
+        'filled'
+      );
+      expect(args.children, 'The argument children must be "Label"').toBe(
+        'Label'
+      );
+      expect(
+        args.disabled,
+        'The argument disabled must be "false"'
+      ).toBeFalsy();
     });
   },
 };
@@ -82,18 +147,16 @@ export const FilledWithPrefix: Story = {
     children: 'Label',
     PrefixIcon: <PlusIcon />,
     disabled: false,
+    onClick: fn(),
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
 
-    const button = canvas.getByRole('button');
+    let button = canvas.getByRole('button');
     const computedStyle = getComputedStyle(button);
 
-    const background = computedStyle.getPropertyValue('background');
     const color = computedStyle.getPropertyValue('color');
-    const cursor = computedStyle.getPropertyValue('cursor');
 
-    // check how many svg are in the button. In this case, can only be one in it
     const svgElements = button.querySelectorAll('svg');
     expect(svgElements).toHaveLength(1);
 
@@ -102,39 +165,94 @@ export const FilledWithPrefix: Story = {
 
     await step('onClick button test', async () => {
       await userEvent.click(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called once'
+      ).toHaveBeenCalledOnce();
     });
+
+    clearAllMocks();
 
     await step('Double click button test', async () => {
       await userEvent.dblClick(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called twice'
+      ).toHaveBeenCalledTimes(2);
     });
+
+    clearAllMocks();
 
     await step('Hover button test', async () => {
-      await userEvent.hover(canvas.getByRole('button'));
+      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
+      await userEvent.pointer({ target: button, offset: 3 });
+
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+
+      const background = computedStyle.getPropertyValue('background');
+
+      expect(
+        background,
+        `It expects that the background contains "linear-gradient(0deg, rgba(255, 255, 255, 0.133), rgba(255, 255, 255, 0.133))"`
+      ).toContain(
+        'linear-gradient(0deg, rgba(255, 255, 255, 0.133), rgba(255, 255, 255, 0.133))'
+      );
     });
 
-    await step('Unhover button test', async () => {
-      await userEvent.unhover(canvas.getByRole('button'));
-    });
+    clearAllMocks();
 
-    // check if the first child in the button is an svg and if it is in the document
     await step('Button icon as SVG test', async () => {
-      expect(firstChild).toBeInTheDocument();
-      expect(firstChild).toBeVisible();
-      expect(elementTag).toEqual('svg');
+      expect(
+        firstChild,
+        'The first child of the button must be rendered'
+      ).toBeInTheDocument();
+      expect(
+        firstChild,
+        'The first element of the button must be visible'
+      ).toBeVisible();
+      expect(elementTag, 'The tag of the first child should be an svg').toEqual(
+        'svg'
+      );
     });
 
     await step('Button style test', async () => {
-      expect(button).toHaveTextContent('Label');
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+      const backgroundColor =
+        computedStyle.getPropertyValue('background-color');
 
-      expect(background.trim()).toBeTruthy();
-      expect(color).toBe('rgb(255, 255, 255)');
-      expect(cursor).toBe('pointer');
+      expect(button, 'It should render the text correctly').toHaveTextContent(
+        'Label'
+      );
+
+      expect(
+        backgroundColor,
+        'It expects that the background color is "rgb(0, 83, 219)"'
+      ).toBe('rgb(0, 83, 219)');
+
+      expect(color, 'The color style should be "rgb(255, 255, 255)"').toBe(
+        'rgb(255, 255, 255)'
+      );
+
+      expect(button, 'The cursor style should be pointer').toHaveStyle(
+        'cursor: pointer'
+      );
     });
 
     await step('Button args test', async () => {
-      expect(args.variant).toBe('filled');
-      expect(args.children).toBe('Label');
-      expect(args.disabled).toBeFalsy();
+      expect(args.variant, 'The argument variant must be "filled"').toBe(
+        'filled'
+      );
+      expect(args.children, 'The argument children must be "Label"').toBe(
+        'Label'
+      );
+      expect(
+        args.disabled,
+        'The argument disabled must be "false"'
+      ).toBeFalsy();
     });
   },
 };
@@ -145,18 +263,16 @@ export const FilledWithSuffix: Story = {
     children: 'Label',
     SuffixIcon: <PlusIcon />,
     disabled: false,
+    onClick: fn(),
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
 
-    const button = canvas.getByRole('button');
+    let button = canvas.getByRole('button');
     const computedStyle = getComputedStyle(button);
 
-    const background = computedStyle.getPropertyValue('background');
     const color = computedStyle.getPropertyValue('color');
-    const cursor = computedStyle.getPropertyValue('cursor');
 
-    // check how many svg are in the button. In this case, can only be one in it
     const svgElements = button.querySelectorAll('svg');
     expect(svgElements).toHaveLength(1);
 
@@ -165,39 +281,94 @@ export const FilledWithSuffix: Story = {
 
     await step('onClick button test', async () => {
       await userEvent.click(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called once'
+      ).toHaveBeenCalledOnce();
     });
+
+    clearAllMocks();
 
     await step('Double click button test', async () => {
       await userEvent.dblClick(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called twice'
+      ).toHaveBeenCalledTimes(2);
     });
+
+    clearAllMocks();
 
     await step('Hover button test', async () => {
-      await userEvent.hover(canvas.getByRole('button'));
+      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
+      await userEvent.pointer({ target: button, offset: 3 });
+
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+
+      const background = computedStyle.getPropertyValue('background');
+
+      expect(
+        background,
+        `It expects that the background contains "linear-gradient(0deg, rgba(255, 255, 255, 0.133), rgba(255, 255, 255, 0.133))"`
+      ).toContain(
+        'linear-gradient(0deg, rgba(255, 255, 255, 0.133), rgba(255, 255, 255, 0.133))'
+      );
     });
 
-    await step('Unhover button test', async () => {
-      await userEvent.unhover(canvas.getByRole('button'));
-    });
+    clearAllMocks();
 
-    // check if the last child in the button is an svg and if it is in the document
     await step('Button icon as SVG test', async () => {
-      expect(lastChild).toBeInTheDocument();
-      expect(lastChild).toBeVisible();
-      expect(elementTag).toEqual('svg');
+      expect(
+        lastChild,
+        'The last child of the button must be rendered'
+      ).toBeInTheDocument();
+      expect(
+        lastChild,
+        'The last element of the button must be visible'
+      ).toBeVisible();
+      expect(elementTag, 'The tag of the last child should be an svg').toEqual(
+        'svg'
+      );
     });
 
     await step('Button style test', async () => {
-      expect(button).toHaveTextContent('Label');
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+      const backgroundColor =
+        computedStyle.getPropertyValue('background-color');
 
-      expect(background.trim()).toBeTruthy();
-      expect(color).toBe('rgb(255, 255, 255)');
-      expect(cursor).toBe('pointer');
+      expect(button, 'It should render the text correctly').toHaveTextContent(
+        'Label'
+      );
+
+      expect(
+        backgroundColor,
+        'It expects that the background color is "rgb(0, 83, 219)"'
+      ).toBe('rgb(0, 83, 219)');
+
+      expect(color, 'The color style should be "rgb(255, 255, 255)"').toBe(
+        'rgb(255, 255, 255)'
+      );
+
+      expect(button, 'The cursor style should be pointer').toHaveStyle(
+        'cursor: pointer'
+      );
     });
 
     await step('Button args test', async () => {
-      expect(args.variant).toBe('filled');
-      expect(args.children).toBe('Label');
-      expect(args.disabled).toBeFalsy();
+      expect(args.variant, 'The argument variant must be "filled"').toBe(
+        'filled'
+      );
+      expect(args.children, 'The argument children must be "Label"').toBe(
+        'Label'
+      );
+      expect(
+        args.disabled,
+        'The argument disabled must be "false"'
+      ).toBeFalsy();
     });
   },
 };
@@ -209,15 +380,14 @@ export const FilledWithCombined: Story = {
     PrefixIcon: <PlusIcon />,
     SuffixIcon: <PlusIcon />,
     disabled: false,
+    onClick: fn(),
   },
-  play: async ({ canvasElement, step }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const button = canvas.getByRole('button');
+    let button = canvas.getByRole('button');
     const computedStyle = getComputedStyle(button);
-    const background = computedStyle.getPropertyValue('background');
     const color = computedStyle.getPropertyValue('color');
-    const cursor = computedStyle.getPropertyValue('cursor');
 
     // check how many svg are in the button. In this case, can only be one in it
     const svgElements = button.querySelectorAll('svg');
@@ -231,43 +401,109 @@ export const FilledWithCombined: Story = {
 
     await step('onClick button test', async () => {
       await userEvent.click(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called once'
+      ).toHaveBeenCalledOnce();
     });
+
+    clearAllMocks();
 
     await step('Double click button test', async () => {
       await userEvent.dblClick(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called twice'
+      ).toHaveBeenCalledTimes(2);
     });
+
+    clearAllMocks();
 
     await step('Hover button test', async () => {
-      await userEvent.hover(canvas.getByRole('button'));
+      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
+      await userEvent.pointer({ target: button, offset: 3 });
+
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+
+      const background = computedStyle.getPropertyValue('background');
+
+      expect(
+        background,
+        `It expects that the background contains "linear-gradient(0deg, rgba(255, 255, 255, 0.133), rgba(255, 255, 255, 0.133))"`
+      ).toContain(
+        'linear-gradient(0deg, rgba(255, 255, 255, 0.133), rgba(255, 255, 255, 0.133))'
+      );
     });
 
-    await step('Unhover button test', async () => {
-      await userEvent.unhover(canvas.getByRole('button'));
-    });
+    clearAllMocks();
 
-    // check if the last child in the button is an svg and if it is in the document
     await step('Button icon as SVG test', async () => {
-      expect(lastChild).toBeInTheDocument();
-      expect(lastChild).toBeVisible();
-    });
+      expect(
+        firstChild,
+        'The first child of the button must be rendered'
+      ).toBeInTheDocument();
+      expect(
+        firstChild,
+        'The first element of the button must be visible'
+      ).toBeVisible();
+      expect(
+        firstChildTag,
+        'The tag of the first child should be an svg'
+      ).toEqual('svg');
 
-    // check if the last and the first child in the button, are visible
-    await step('Button args test', async () => {
-      expect(lastChild).toBeInTheDocument();
-      expect(lastChild).toBeVisible();
-      expect(lastChildTag).toEqual('svg');
+      expect(
+        lastChild,
+        'The last child of the button must be rendered'
+      ).toBeInTheDocument();
 
-      expect(firstChild).toBeInTheDocument();
-      expect(firstChild).toBeVisible();
-      expect(firstChildTag).toEqual('svg');
+      expect(
+        lastChild,
+        'The last element of the button must be visible'
+      ).toBeVisible();
+      expect(
+        lastChildTag,
+        'The tag of the last child should be an svg'
+      ).toEqual('svg');
     });
 
     await step('Button style test', async () => {
-      expect(button).toHaveTextContent('Label');
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+      const backgroundColor =
+        computedStyle.getPropertyValue('background-color');
 
-      expect(background.trim()).toBeTruthy();
-      expect(color).toBe('rgb(255, 255, 255)');
-      expect(cursor).toBe('pointer');
+      expect(button, 'It should render the text correctly').toHaveTextContent(
+        'Label'
+      );
+
+      expect(
+        backgroundColor,
+        'It expects that the background color is "rgb(0, 83, 219)"'
+      ).toBe('rgb(0, 83, 219)');
+
+      expect(color, 'The color style should be "rgb(255, 255, 255)"').toBe(
+        'rgb(255, 255, 255)'
+      );
+
+      expect(button, 'The cursor style should be pointer').toHaveStyle(
+        'cursor: pointer'
+      );
+    });
+
+    await step('Button args test', async () => {
+      expect(args.variant, 'The argument variant must be "filled"').toBe(
+        'filled'
+      );
+      expect(args.children, 'The argument children must be "Label"').toBe(
+        'Label'
+      );
+      expect(
+        args.disabled,
+        'The argument disabled must be "false"'
+      ).toBeFalsy();
     });
   },
 };
@@ -277,44 +513,103 @@ export const Outline: Story = {
     variant: 'outline',
     children: 'Label',
     disabled: false,
+    onClick: fn(),
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
 
-    const button = canvas.getByRole('button');
+    let button = canvas.getByRole('button');
     const computedStyle = getComputedStyle(button);
-    const background = computedStyle.getPropertyValue('background');
     const color = computedStyle.getPropertyValue('color');
-    const cursor = computedStyle.getPropertyValue('cursor');
 
     await step('onClick button test', async () => {
       await userEvent.click(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called once'
+      ).toHaveBeenCalledOnce();
     });
+
+    clearAllMocks();
 
     await step('Double click button test', async () => {
       await userEvent.dblClick(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called twice'
+      ).toHaveBeenCalledTimes(2);
     });
+
+    clearAllMocks();
 
     await step('Hover button test', async () => {
-      await userEvent.hover(canvas.getByRole('button'));
+      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
+      await userEvent.pointer({ target: button, offset: 3 });
+
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+
+      const background = computedStyle.getPropertyValue('background');
+
+      expect(
+        background,
+        `It expects that the background contains "rgba(0, 0, 0, 0)"`
+      ).toContain('rgba(0, 0, 0, 0)');
+
+      expect(
+        button,
+        `It expects that the border color style to be "rgb(0, 83, 219)"`
+      ).toHaveStyle('border-color: rgb(0, 83, 219)');
+
+      expect(
+        button,
+        `It expects that the color style to be "rgb(0, 83, 219)"`
+      ).toHaveStyle('color: rgb(0, 83, 219)');
     });
 
-    await step('Unhover button test', async () => {
-      await userEvent.unhover(canvas.getByRole('button'));
+    clearAllMocks();
+
+    await step('Button style test', async () => {
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+      const backgroundColor =
+        computedStyle.getPropertyValue('background-color');
+
+      expect(button, 'It should render the text correctly').toHaveTextContent(
+        'Label'
+      );
+
+      expect(
+        backgroundColor,
+        'It expects that the background color is "transparent"'
+      ).toBe('rgba(0, 0, 0, 0)');
+
+      expect(color, 'The color style should be "rgb(0, 0, 0)"').toBe(
+        'rgb(0, 0, 0)'
+      );
+
+      expect(button, 'The cursor style should be pointer').toHaveStyle(
+        'cursor: pointer'
+      );
+
+      expect(button, 'The border style should be "1px solid"').toHaveStyle(
+        'border: 1px solid rgb(0, 83, 219)'
+      );
     });
 
     await step('Button args test', async () => {
-      expect(args.variant).toBe('outline');
-      expect(args.children).toBe('Label');
-      expect(args.disabled).toBeFalsy();
-    });
-
-    await step('Button style test', async () => {
-      expect(button).toHaveTextContent('Label');
-
-      expect(background.trim()).toBeTruthy();
-      expect(color).toBe('rgb(0, 0, 0)');
-      expect(cursor).toBe('pointer');
+      expect(args.variant, 'The argument variant msut be "outline"').toBe(
+        'outline'
+      );
+      expect(args.children, 'The argument children must be "Label"').toBe(
+        'Label'
+      );
+      expect(
+        args.disabled,
+        'The argument disabled must be "false"'
+      ).toBeFalsy();
     });
   },
 };
@@ -325,44 +620,95 @@ export const OutlineWithPrefix: Story = {
     children: 'Label',
     PrefixIcon: <PlusIcon />,
     disabled: false,
+    onClick: fn(),
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
 
-    const button = canvas.getByRole('button');
+    let button = canvas.getByRole('button');
     const computedStyle = getComputedStyle(button);
-    const background = computedStyle.getPropertyValue('background');
     const color = computedStyle.getPropertyValue('color');
-    const cursor = computedStyle.getPropertyValue('cursor');
+    const svgElements = button.querySelectorAll('svg');
+    expect(svgElements).toHaveLength(1);
+
+    const firstChild = button.firstElementChild;
+    const elementTag = firstChild && firstChild.tagName.toLowerCase();
 
     await step('onClick button test', async () => {
       await userEvent.click(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called once'
+      ).toHaveBeenCalledOnce();
     });
+
+    clearAllMocks();
 
     await step('Double click button test', async () => {
       await userEvent.dblClick(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called twice'
+      ).toHaveBeenCalledTimes(2);
     });
 
-    await step('Hover button test', async () => {
-      await userEvent.hover(canvas.getByRole('button'));
-    });
+    clearAllMocks();
 
-    await step('Unhover button test', async () => {
-      await userEvent.unhover(canvas.getByRole('button'));
-    });
-
-    await step('Button args test', async () => {
-      expect(args.variant).toBe('outline');
-      expect(args.children).toBe('Label');
-      expect(args.disabled).toBeFalsy();
+    await step('Button icon as SVG test', async () => {
+      expect(
+        firstChild,
+        'The first child of the button must be rendered'
+      ).toBeInTheDocument();
+      expect(
+        firstChild,
+        'The first element of the button must be visible'
+      ).toBeVisible();
+      expect(elementTag, 'The tag of the first child should be an svg').toEqual(
+        'svg'
+      );
     });
 
     await step('Button style test', async () => {
-      expect(button).toHaveTextContent('Label');
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+      const backgroundColor =
+        computedStyle.getPropertyValue('background-color');
 
-      expect(background.trim()).toBeTruthy();
-      expect(color).toBe('rgb(0, 0, 0)');
-      expect(cursor).toBe('pointer');
+      expect(button, 'It should render the text correctly').toHaveTextContent(
+        'Label'
+      );
+
+      expect(
+        backgroundColor,
+        'It expects that the background color is "transparent"'
+      ).toBe('rgba(0, 0, 0, 0)');
+
+      expect(color, 'The color style should be "rgb(0, 0, 0)"').toBe(
+        'rgb(0, 0, 0)'
+      );
+
+      expect(button, 'The cursor style should be pointer').toHaveStyle(
+        'cursor: pointer'
+      );
+
+      expect(button, 'The border style should be "1px solid"').toHaveStyle(
+        'border: 1px solid rgb(0, 83, 219)'
+      );
+    });
+
+    await step('Button args test', async () => {
+      expect(args.variant, 'The argument variant msut be "outline"').toBe(
+        'outline'
+      );
+      expect(args.children, 'The argument children must be "Label"').toBe(
+        'Label'
+      );
+      expect(
+        args.disabled,
+        'The argument disabled must be "false"'
+      ).toBeFalsy();
     });
   },
 };
@@ -373,44 +719,95 @@ export const OutlineWithSuffix: Story = {
     children: 'Label',
     SuffixIcon: <PlusIcon />,
     disabled: false,
+    onClick: fn(),
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
 
-    const button = canvas.getByRole('button');
+    let button = canvas.getByRole('button');
     const computedStyle = getComputedStyle(button);
-    const background = computedStyle.getPropertyValue('background');
     const color = computedStyle.getPropertyValue('color');
-    const cursor = computedStyle.getPropertyValue('cursor');
+    const svgElements = button.querySelectorAll('svg');
+    expect(svgElements).toHaveLength(1);
+
+    const lastChild = button.lastElementChild;
+    const elementTag = lastChild && lastChild.tagName.toLowerCase();
 
     await step('onClick button test', async () => {
       await userEvent.click(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called once'
+      ).toHaveBeenCalledOnce();
     });
+
+    clearAllMocks();
 
     await step('Double click button test', async () => {
       await userEvent.dblClick(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called twice'
+      ).toHaveBeenCalledTimes(2);
     });
 
-    await step('Hover button test', async () => {
-      await userEvent.hover(canvas.getByRole('button'));
-    });
+    clearAllMocks();
 
-    await step('Unhover button test', async () => {
-      await userEvent.unhover(canvas.getByRole('button'));
-    });
-
-    await step('Button args test', async () => {
-      expect(args.variant).toBe('outline');
-      expect(args.children).toBe('Label');
-      expect(args.disabled).toBeFalsy();
+    await step('Button icon as SVG test', async () => {
+      expect(
+        lastChild,
+        'The last child of the button must be rendered'
+      ).toBeInTheDocument();
+      expect(
+        lastChild,
+        'The last element of the button must be visible'
+      ).toBeVisible();
+      expect(elementTag, 'The tag of the first child should be an svg').toEqual(
+        'svg'
+      );
     });
 
     await step('Button style test', async () => {
-      expect(button).toHaveTextContent('Label');
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+      const backgroundColor =
+        computedStyle.getPropertyValue('background-color');
 
-      expect(background.trim()).toBeTruthy();
-      expect(color).toBe('rgb(0, 0, 0)');
-      expect(cursor).toBe('pointer');
+      expect(button, 'It should render the text correctly').toHaveTextContent(
+        'Label'
+      );
+
+      expect(
+        backgroundColor,
+        'It expects that the background color is "transparent"'
+      ).toBe('rgba(0, 0, 0, 0)');
+
+      expect(color, 'The color style should be "rgb(0, 0, 0)"').toBe(
+        'rgb(0, 0, 0)'
+      );
+
+      expect(button, 'The cursor style should be pointer').toHaveStyle(
+        'cursor: pointer'
+      );
+
+      expect(button, 'The border style should be "1px solid"').toHaveStyle(
+        'border: 1px solid rgb(0, 83, 219)'
+      );
+    });
+
+    await step('Button args test', async () => {
+      expect(args.variant, 'The argument variant msut be "outline"').toBe(
+        'outline'
+      );
+      expect(args.children, 'The argument children must be "Label"').toBe(
+        'Label'
+      );
+      expect(
+        args.disabled,
+        'The argument disabled must be "false"'
+      ).toBeFalsy();
     });
   },
 };
@@ -422,44 +819,117 @@ export const OutlineWithCombined: Story = {
     PrefixIcon: <PlusIcon />,
     SuffixIcon: <PlusIcon />,
     disabled: false,
+    onClick: fn(),
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
 
-    const button = canvas.getByRole('button');
+    let button = canvas.getByRole('button');
     const computedStyle = getComputedStyle(button);
-    const background = computedStyle.getPropertyValue('background');
     const color = computedStyle.getPropertyValue('color');
-    const cursor = computedStyle.getPropertyValue('cursor');
+
+    const svgElements = button.querySelectorAll('svg');
+    expect(svgElements.length).toBe(2);
+
+    const firstChild = button.firstElementChild as SVGElement;
+    const firstChildTag = firstChild && firstChild.tagName.toLowerCase();
+
+    const lastChild = button.lastElementChild as SVGElement;
+    const lastChildTag = lastChild && lastChild.tagName.toLowerCase();
 
     await step('onClick button test', async () => {
       await userEvent.click(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called once'
+      ).toHaveBeenCalledOnce();
     });
+
+    clearAllMocks();
 
     await step('Double click button test', async () => {
       await userEvent.dblClick(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called twice'
+      ).toHaveBeenCalledTimes(2);
     });
 
-    await step('Hover button test', async () => {
-      await userEvent.hover(canvas.getByRole('button'));
-    });
+    clearAllMocks();
 
-    await step('Unhover button test', async () => {
-      await userEvent.unhover(canvas.getByRole('button'));
-    });
+    await step('Button icon as SVG test', async () => {
+      expect(
+        firstChild,
+        'The first child of the button must be rendered'
+      ).toBeInTheDocument();
 
-    await step('Button args test', async () => {
-      expect(args.variant).toBe('outline');
-      expect(args.children).toBe('Label');
-      expect(args.disabled).toBeFalsy();
+      expect(
+        firstChild,
+        'The first element of the button must be visible'
+      ).toBeVisible();
+
+      expect(
+        firstChildTag,
+        'The tag of the first child should be an svg'
+      ).toEqual('svg');
+
+      expect(
+        lastChild,
+        'The last child of the button must be rendered'
+      ).toBeInTheDocument();
+
+      expect(
+        lastChild,
+        'The last element of the button must be visible'
+      ).toBeVisible();
+
+      expect(
+        lastChildTag,
+        'The tag of the last child should be an svg'
+      ).toEqual('svg');
     });
 
     await step('Button style test', async () => {
-      expect(button).toHaveTextContent('Label');
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+      const backgroundColor =
+        computedStyle.getPropertyValue('background-color');
 
-      expect(background.trim()).toBeTruthy();
-      expect(color).toBe('rgb(0, 0, 0)');
-      expect(cursor).toBe('pointer');
+      expect(button, 'It should render the text correctly').toHaveTextContent(
+        'Label'
+      );
+
+      expect(
+        backgroundColor,
+        'It expects that the background color is "transparent"'
+      ).toBe('rgba(0, 0, 0, 0)');
+
+      expect(color, 'The color style should be "rgb(0, 0, 0)"').toBe(
+        'rgb(0, 0, 0)'
+      );
+
+      expect(button, 'The cursor style should be pointer').toHaveStyle(
+        'cursor: pointer'
+      );
+
+      expect(button, 'The border style should be "1px solid"').toHaveStyle(
+        'border: 1px solid rgb(0, 83, 219)'
+      );
+    });
+
+    await step('Button args test', async () => {
+      expect(args.variant, 'The argument variant msut be "outline"').toBe(
+        'outline'
+      );
+      expect(args.children, 'The argument children must be "Label"').toBe(
+        'Label'
+      );
+      expect(
+        args.disabled,
+        'The argument disabled must be "false"'
+      ).toBeFalsy();
     });
   },
 };
@@ -469,44 +939,97 @@ export const Text: Story = {
     variant: 'text',
     children: 'Label',
     disabled: false,
+    onClick: fn(),
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
 
-    const button = canvas.getByRole('button');
+    let button = canvas.getByRole('button');
     const computedStyle = getComputedStyle(button);
-    const background = computedStyle.getPropertyValue('background');
     const color = computedStyle.getPropertyValue('color');
-    const cursor = computedStyle.getPropertyValue('cursor');
 
     await step('onClick button test', async () => {
       await userEvent.click(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called once'
+      ).toHaveBeenCalledOnce();
     });
+
+    clearAllMocks();
 
     await step('Double click button test', async () => {
       await userEvent.dblClick(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called twice'
+      ).toHaveBeenCalledTimes(2);
     });
+
+    clearAllMocks();
 
     await step('Hover button test', async () => {
-      await userEvent.hover(canvas.getByRole('button'));
+      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
+      await userEvent.pointer({ target: button, offset: 3 });
+
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+
+      const background = computedStyle.getPropertyValue('background');
+
+      expect(
+        background,
+        `It expects that the background contains "rgba(0, 0, 0, 0)"`
+      ).toContain('rgba(0, 0, 0, 0)');
+
+      expect(
+        button,
+        `It expects that the color style to be "rgb(0, 0, 0)"`
+      ).toHaveStyle('color: rgb(0, 0, 0)');
     });
 
-    await step('Unhover button test', async () => {
-      await userEvent.unhover(canvas.getByRole('button'));
+    clearAllMocks();
+
+    await step('Button style test', async () => {
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+      const backgroundColor =
+        computedStyle.getPropertyValue('background-color');
+
+      expect(button, 'It should render the text correctly').toHaveTextContent(
+        'Label'
+      );
+
+      expect(
+        backgroundColor,
+        'It expects that the background color to be "rgba(0, 0, 0, 0)"'
+      ).toBe('rgba(0, 0, 0, 0)');
+
+      expect(color, 'The color style should be "rgb(0, 0, 0)"').toBe(
+        'rgb(0, 0, 0)'
+      );
+
+      expect(button, 'The cursor style should be pointer').toHaveStyle(
+        'cursor: pointer'
+      );
+
+      expect(
+        button,
+        'The border style should be "0px none rgb(0, 0, 0)"'
+      ).toHaveStyle('border: 0px none rgb(0, 0, 0)');
     });
 
     await step('Button args test', async () => {
-      expect(args.variant).toBe('text');
-      expect(args.children).toBe('Label');
-      expect(args.disabled).toBeFalsy();
-    });
-
-    await step('Button style test', async () => {
-      expect(button).toHaveTextContent('Label');
-
-      expect(background.trim()).toBeTruthy();
-      expect(color).toBe('rgb(0, 0, 0)');
-      expect(cursor).toBe('pointer');
+      expect(args.variant, 'The argument variant must be "text"').toBe('text');
+      expect(args.children, 'The argument children must be "Label"').toBe(
+        'Label'
+      );
+      expect(
+        args.disabled,
+        'The argument disabled must be "false"'
+      ).toBeFalsy();
     });
   },
 };
@@ -517,44 +1040,120 @@ export const TextWithPrefix: Story = {
     children: 'Label',
     PrefixIcon: <PlusIcon />,
     disabled: false,
+    onClick: fn(),
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
 
-    const button = canvas.getByRole('button');
+    let button = canvas.getByRole('button');
     const computedStyle = getComputedStyle(button);
-    const background = computedStyle.getPropertyValue('background');
     const color = computedStyle.getPropertyValue('color');
-    const cursor = computedStyle.getPropertyValue('cursor');
+
+    const svgElements = button.querySelectorAll('svg');
+    expect(
+      svgElements,
+      'It expects that the button only have one svg'
+    ).toHaveLength(1);
+
+    const firstChild = button.firstElementChild;
+    const elementTag = firstChild && firstChild.tagName.toLowerCase();
 
     await step('onClick button test', async () => {
       await userEvent.click(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called once'
+      ).toHaveBeenCalledOnce();
     });
+
+    clearAllMocks();
 
     await step('Double click button test', async () => {
       await userEvent.dblClick(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called twice'
+      ).toHaveBeenCalledTimes(2);
     });
+
+    clearAllMocks();
 
     await step('Hover button test', async () => {
-      await userEvent.hover(canvas.getByRole('button'));
+      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
+      await userEvent.pointer({ target: button, offset: 3 });
+
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+
+      const background = computedStyle.getPropertyValue('background');
+
+      expect(
+        background,
+        `It expects that the background contains "rgba(0, 0, 0, 0)"`
+      ).toContain('rgba(0, 0, 0, 0)');
+
+      expect(
+        button,
+        `It expects that the color style to be "rgb(0, 0, 0)"`
+      ).toHaveStyle('color: rgb(0, 0, 0)');
     });
 
-    await step('Unhover button test', async () => {
-      await userEvent.unhover(canvas.getByRole('button'));
-    });
+    clearAllMocks();
 
-    await step('Button args test', async () => {
-      expect(args.variant).toBe('text');
-      expect(args.children).toBe('Label');
-      expect(args.disabled).toBeFalsy();
+    await step('Button icon as SVG test', async () => {
+      expect(
+        firstChild,
+        'The first child of the button must be rendered'
+      ).toBeInTheDocument();
+      expect(
+        firstChild,
+        'The first element of the button must be visible'
+      ).toBeVisible();
+      expect(elementTag, 'The tag of the first child should be an svg').toEqual(
+        'svg'
+      );
     });
 
     await step('Button style test', async () => {
-      expect(button).toHaveTextContent('Label');
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+      const backgroundColor =
+        computedStyle.getPropertyValue('background-color');
 
-      expect(background.trim()).toBeTruthy();
-      expect(color).toBe('rgb(0, 0, 0)');
-      expect(cursor).toBe('pointer');
+      expect(button, 'It should render the text correctly').toHaveTextContent(
+        'Label'
+      );
+
+      expect(
+        backgroundColor,
+        'It expects that the background color to be "rgba(0, 0, 0, 0)"'
+      ).toBe('rgba(0, 0, 0, 0)');
+
+      expect(color, 'The color style should be "rgb(0, 0, 0)"').toBe(
+        'rgb(0, 0, 0)'
+      );
+
+      expect(button, 'The cursor style should be pointer').toHaveStyle(
+        'cursor: pointer'
+      );
+
+      expect(
+        button,
+        'The border style should be "0px none rgb(0, 0, 0)"'
+      ).toHaveStyle('border: 0px none rgb(0, 0, 0)');
+    });
+
+    await step('Button args test', async () => {
+      expect(args.variant, 'The argument variant must be "text"').toBe('text');
+      expect(args.children, 'The argument children must be "Label"').toBe(
+        'Label'
+      );
+      expect(
+        args.disabled,
+        'The argument disabled must be "false"'
+      ).toBeFalsy();
     });
   },
 };
@@ -565,44 +1164,119 @@ export const TextWithSuffix: Story = {
     children: 'Label',
     SuffixIcon: <PlusIcon />,
     disabled: false,
+    onClick: fn(),
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
 
-    const button = canvas.getByRole('button');
+    let button = canvas.getByRole('button');
     const computedStyle = getComputedStyle(button);
-    const background = computedStyle.getPropertyValue('background');
     const color = computedStyle.getPropertyValue('color');
-    const cursor = computedStyle.getPropertyValue('cursor');
+
+    const svgElements = button.querySelectorAll('svg');
+    expect(
+      svgElements,
+      'It expects that the button only have one svg'
+    ).toHaveLength(1);
+
+    const lastChild = button.lastElementChild;
+    const elementTag = lastChild && lastChild.tagName.toLowerCase();
 
     await step('onClick button test', async () => {
       await userEvent.click(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called once'
+      ).toHaveBeenCalledOnce();
     });
+
+    clearAllMocks();
 
     await step('Double click button test', async () => {
       await userEvent.dblClick(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called twice'
+      ).toHaveBeenCalledTimes(2);
     });
+    clearAllMocks();
 
     await step('Hover button test', async () => {
-      await userEvent.hover(canvas.getByRole('button'));
+      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
+      await userEvent.pointer({ target: button, offset: 3 });
+
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+
+      const background = computedStyle.getPropertyValue('background');
+
+      expect(
+        background,
+        `It expects that the background contains "rgba(0, 0, 0, 0)"`
+      ).toContain('rgba(0, 0, 0, 0)');
+
+      expect(
+        button,
+        `It expects that the color style to be "rgb(0, 0, 0)"`
+      ).toHaveStyle('color: rgb(0, 0, 0)');
     });
 
-    await step('Unhover button test', async () => {
-      await userEvent.unhover(canvas.getByRole('button'));
-    });
+    clearAllMocks();
 
-    await step('Button args test', async () => {
-      expect(args.variant).toBe('text');
-      expect(args.children).toBe('Label');
-      expect(args.disabled).toBeFalsy();
+    await step('Button icon as SVG test', async () => {
+      expect(
+        lastChild,
+        'The last child of the button must be rendered'
+      ).toBeInTheDocument();
+      expect(
+        lastChild,
+        'The last element of the button must be visible'
+      ).toBeVisible();
+      expect(elementTag, 'The tag of the last child should be an svg').toEqual(
+        'svg'
+      );
     });
 
     await step('Button style test', async () => {
-      expect(button).toHaveTextContent('Label');
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+      const backgroundColor =
+        computedStyle.getPropertyValue('background-color');
 
-      expect(background.trim()).toBeTruthy();
-      expect(color).toBe('rgb(0, 0, 0)');
-      expect(cursor).toBe('pointer');
+      expect(button, 'It should render the text correctly').toHaveTextContent(
+        'Label'
+      );
+
+      expect(
+        backgroundColor,
+        'It expects that the background color to be "rgba(0, 0, 0, 0)"'
+      ).toBe('rgba(0, 0, 0, 0)');
+
+      expect(color, 'The color style should be "rgb(0, 0, 0)"').toBe(
+        'rgb(0, 0, 0)'
+      );
+
+      expect(button, 'The cursor style should be pointer').toHaveStyle(
+        'cursor: pointer'
+      );
+
+      expect(
+        button,
+        'The border style should be "0px none rgb(0, 0, 0)"'
+      ).toHaveStyle('border: 0px none rgb(0, 0, 0)');
+    });
+
+    await step('Button args test', async () => {
+      expect(args.variant, 'The argument variant must be "text"').toBe('text');
+      expect(args.children, 'The argument children must be "Label"').toBe(
+        'Label'
+      );
+      expect(
+        args.disabled,
+        'The argument disabled must be "false"'
+      ).toBeFalsy();
     });
   },
 };
@@ -614,93 +1288,133 @@ export const TextWithCombined: Story = {
     PrefixIcon: <PlusIcon />,
     SuffixIcon: <PlusIcon />,
     disabled: false,
+    onClick: fn(),
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
 
-    const button = canvas.getByRole('button');
+    let button = canvas.getByRole('button');
     const computedStyle = getComputedStyle(button);
-    const background = computedStyle.getPropertyValue('background');
     const color = computedStyle.getPropertyValue('color');
-    const cursor = computedStyle.getPropertyValue('cursor');
+    const svgElements = button.querySelectorAll('svg');
+    expect(svgElements.length).toBe(2);
+
+    const firstChild = button.firstElementChild as SVGElement;
+    const firstChildTag = firstChild && firstChild.tagName.toLowerCase();
+
+    const lastChild = button.lastElementChild as SVGElement;
+    const lastChildTag = lastChild && lastChild.tagName.toLowerCase();
 
     await step('onClick button test', async () => {
       await userEvent.click(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called once'
+      ).toHaveBeenCalledOnce();
     });
+
+    clearAllMocks();
 
     await step('Double click button test', async () => {
       await userEvent.dblClick(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called twice'
+      ).toHaveBeenCalledTimes(2);
     });
+    clearAllMocks();
 
     await step('Hover button test', async () => {
-      await userEvent.hover(canvas.getByRole('button'));
+      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
+      await userEvent.pointer({ target: button, offset: 3 });
+
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+
+      const background = computedStyle.getPropertyValue('background');
+
+      expect(
+        background,
+        `It expects that the background contains "rgba(0, 0, 0, 0)"`
+      ).toContain('rgba(0, 0, 0, 0)');
+
+      expect(
+        button,
+        `It expects that the color style to be "rgb(0, 0, 0)"`
+      ).toHaveStyle('color: rgb(0, 0, 0)');
     });
 
-    await step('Unhover button test', async () => {
-      await userEvent.unhover(canvas.getByRole('button'));
-    });
+    clearAllMocks();
 
-    await step('Button args test', async () => {
-      expect(args.variant).toBe('text');
-      expect(args.children).toBe('Label');
-      expect(args.disabled).toBeFalsy();
+    await step('Button icon as SVG test', async () => {
+      expect(
+        firstChild,
+        'The first child of the button must be rendered'
+      ).toBeInTheDocument();
+      expect(
+        firstChild,
+        'The first element of the button must be visible'
+      ).toBeVisible();
+      expect(
+        firstChildTag,
+        'The tag of the first child should be an svg'
+      ).toEqual('svg');
+
+      expect(
+        lastChild,
+        'The last child of the button must be rendered'
+      ).toBeInTheDocument();
+
+      expect(
+        lastChild,
+        'The last element of the button must be visible'
+      ).toBeVisible();
+      expect(
+        lastChildTag,
+        'The tag of the last child should be an svg'
+      ).toEqual('svg');
     });
 
     await step('Button style test', async () => {
-      expect(button).toHaveTextContent('Label');
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+      const backgroundColor =
+        computedStyle.getPropertyValue('background-color');
 
-      expect(background.trim()).toBeTruthy();
-      expect(color).toBe('rgb(0, 0, 0)');
-      expect(cursor).toBe('pointer');
-    });
-  },
-};
+      expect(button, 'It should render the text correctly').toHaveTextContent(
+        'Label'
+      );
 
-export const SmallTextWithCombined: Story = {
-  args: {
-    variant: 'text',
-    children: 'Label',
-    PrefixIcon: <PlusIcon />,
-    SuffixIcon: <PlusIcon />,
-    disabled: false,
-  },
-  play: async ({ canvasElement, step, args }) => {
-    const canvas = within(canvasElement);
+      expect(
+        backgroundColor,
+        'It expects that the background color to be "rgba(0, 0, 0, 0)"'
+      ).toBe('rgba(0, 0, 0, 0)');
 
-    const button = canvas.getByRole('button');
-    const computedStyle = getComputedStyle(button);
-    const background = computedStyle.getPropertyValue('background');
-    const color = computedStyle.getPropertyValue('color');
-    const cursor = computedStyle.getPropertyValue('cursor');
+      expect(color, 'The color style should be "rgb(0, 0, 0)"').toBe(
+        'rgb(0, 0, 0)'
+      );
 
-    await step('onClick button test', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-    });
+      expect(button, 'The cursor style should be pointer').toHaveStyle(
+        'cursor: pointer'
+      );
 
-    await step('Double click button test', async () => {
-      await userEvent.dblClick(canvas.getByRole('button'));
-    });
-
-    await step('Hover button test', async () => {
-      await userEvent.hover(canvas.getByRole('button'));
-    });
-
-    await step('Unhover button test', async () => {
-      await userEvent.unhover(canvas.getByRole('button'));
+      expect(
+        button,
+        'The border style should be "0px none rgb(0, 0, 0)"'
+      ).toHaveStyle('border: 0px none rgb(0, 0, 0)');
     });
 
     await step('Button args test', async () => {
-      expect(args.variant).toBe('text');
-      expect(args.children).toBe('Label');
-      expect(args.disabled).toBeFalsy();
-    });
-
-    await step('Button style test', async () => {
-      expect(button).toHaveTextContent('Label');
-
-      expect(background.trim()).toBeTruthy();
-      expect(color).toBe('rgb(0, 0, 0)');
-      expect(cursor).toBe('pointer');
+      expect(args.variant, 'The argument variant must be "text"').toBe('text');
+      expect(args.children, 'The argument children must be "Label"').toBe(
+        'Label'
+      );
+      expect(
+        args.disabled,
+        'The argument disabled must be "false"'
+      ).toBeFalsy();
     });
   },
 };
@@ -710,44 +1424,90 @@ export const Tonal: Story = {
     variant: 'tonal',
     children: 'Label',
     disabled: false,
+    onClick: fn(),
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
 
-    const button = canvas.getByRole('button');
+    let button = canvas.getByRole('button');
     const computedStyle = getComputedStyle(button);
-    const background = computedStyle.getPropertyValue('background');
     const color = computedStyle.getPropertyValue('color');
-    const cursor = computedStyle.getPropertyValue('cursor');
 
     await step('onClick button test', async () => {
       await userEvent.click(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called once'
+      ).toHaveBeenCalledOnce();
     });
+
+    clearAllMocks();
 
     await step('Double click button test', async () => {
       await userEvent.dblClick(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called twice'
+      ).toHaveBeenCalledTimes(2);
     });
+
+    clearAllMocks();
 
     await step('Hover button test', async () => {
-      await userEvent.hover(canvas.getByRole('button'));
+      await userEvent.hover(button);
+      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
+
+      const computedStyle = getComputedStyle(button);
+
+      const background = computedStyle.getPropertyValue('background');
+
+      console.log('background', background);
+
+      expect(
+        background,
+        `It expects that the background contains "rgba(0, 83, 219, 0.08)"`
+      ).toContain('rgba(0, 83, 219, 0.08)');
     });
 
-    await step('Unhover button test', async () => {
-      await userEvent.unhover(canvas.getByRole('button'));
-    });
-
-    await step('Button args test', async () => {
-      expect(args.variant).toBe('tonal');
-      expect(args.children).toBe('Label');
-      expect(args.disabled).toBeFalsy();
-    });
+    clearAllMocks();
 
     await step('Button style test', async () => {
-      expect(button).toHaveTextContent('Label');
+      expect(button, 'It should render the text correctly').toHaveTextContent(
+        'Label'
+      );
 
-      expect(background.trim()).toBeTruthy();
-      expect(color).toBe('rgb(0, 0, 0)');
-      expect(cursor).toBe('pointer');
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+      const backgroundColor =
+        computedStyle.getPropertyValue('background-color');
+
+      expect(
+        backgroundColor,
+        'It expects that the background color to be "rgba(0, 83, 219, 0.08)"'
+      ).toBe('rgba(0, 83, 219, 0.08)');
+      expect(color, 'The color style should be "rgb(0, 0, 0)"').toBe(
+        'rgb(0, 0, 0)'
+      );
+      expect(button, 'The cursor style should be pointer').toHaveStyle(
+        'cursor: pointer'
+      );
+    });
+
+    clearAllMocks();
+
+    await step('Button args test', async () => {
+      expect(args.variant, 'The argument variant must be "tonal"').toBe(
+        'tonal'
+      );
+      expect(args.children, 'The argument children must be "Label"').toBe(
+        'Label'
+      );
+      expect(
+        args.disabled,
+        'The argument disabled must be "false"'
+      ).toBeFalsy();
     });
   },
 };
@@ -758,44 +1518,113 @@ export const TonalWithSuffix: Story = {
     children: 'Label',
     PrefixIcon: <PlusIcon />,
     disabled: false,
+    onClick: fn(),
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
 
-    const button = canvas.getByRole('button');
+    let button = canvas.getByRole('button');
     const computedStyle = getComputedStyle(button);
-    const background = computedStyle.getPropertyValue('background');
     const color = computedStyle.getPropertyValue('color');
-    const cursor = computedStyle.getPropertyValue('cursor');
+
+    const svgElements = button.querySelectorAll('svg');
+    expect(
+      svgElements,
+      'It expects that the button only have one svg'
+    ).toHaveLength(1);
+
+    const lastChild = button.lastElementChild;
+    const elementTag = lastChild && lastChild.tagName.toLowerCase();
 
     await step('onClick button test', async () => {
       await userEvent.click(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called once'
+      ).toHaveBeenCalledOnce();
     });
+
+    clearAllMocks();
 
     await step('Double click button test', async () => {
       await userEvent.dblClick(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called twice'
+      ).toHaveBeenCalledTimes(2);
     });
+
+    clearAllMocks();
 
     await step('Hover button test', async () => {
-      await userEvent.hover(canvas.getByRole('button'));
+      await userEvent.hover(button);
+      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
+
+      const computedStyle = getComputedStyle(button);
+
+      const background = computedStyle.getPropertyValue('background');
+
+      console.log('background', background);
+
+      expect(
+        background,
+        `It expects that the background contains "rgba(0, 83, 219, 0.08)"`
+      ).toContain('rgba(0, 83, 219, 0.08)');
     });
 
-    await step('Unhover button test', async () => {
-      await userEvent.unhover(canvas.getByRole('button'));
-    });
+    clearAllMocks();
 
-    await step('Button args test', async () => {
-      expect(args.variant).toBe('tonal');
-      expect(args.children).toBe('Label');
-      expect(args.disabled).toBeFalsy();
+    await step('Button icon as SVG test', async () => {
+      expect(
+        lastChild,
+        'The last child of the button must be rendered'
+      ).toBeInTheDocument();
+      expect(
+        lastChild,
+        'The last element of the button must be visible'
+      ).toBeVisible();
+      expect(elementTag, 'The tag of the last child should be an svg').toEqual(
+        'svg'
+      );
     });
 
     await step('Button style test', async () => {
-      expect(button).toHaveTextContent('Label');
+      expect(button, 'It should render the text correctly').toHaveTextContent(
+        'Label'
+      );
 
-      expect(background.trim()).toBeTruthy();
-      expect(color).toBe('rgb(0, 0, 0)');
-      expect(cursor).toBe('pointer');
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+      const backgroundColor =
+        computedStyle.getPropertyValue('background-color');
+
+      expect(
+        backgroundColor,
+        'It expects that the background color to be "rgba(0, 83, 219, 0.08)"'
+      ).toBe('rgba(0, 83, 219, 0.08)');
+      expect(color, 'The color style should be "rgb(0, 0, 0)"').toBe(
+        'rgb(0, 0, 0)'
+      );
+      expect(button, 'The cursor style should be pointer').toHaveStyle(
+        'cursor: pointer'
+      );
+    });
+
+    clearAllMocks();
+
+    await step('Button args test', async () => {
+      expect(args.variant, 'The argument variant must be "tonal"').toBe(
+        'tonal'
+      );
+      expect(args.children, 'The argument children must be "Label"').toBe(
+        'Label'
+      );
+      expect(
+        args.disabled,
+        'The argument disabled must be "false"'
+      ).toBeFalsy();
     });
   },
 };
@@ -807,44 +1636,129 @@ export const TonalWithCombined: Story = {
     PrefixIcon: <PlusIcon />,
     SuffixIcon: <PlusIcon />,
     disabled: false,
+    onClick: fn(),
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
 
-    const button = canvas.getByRole('button');
+    let button = canvas.getByRole('button');
     const computedStyle = getComputedStyle(button);
-    const background = computedStyle.getPropertyValue('background');
     const color = computedStyle.getPropertyValue('color');
-    const cursor = computedStyle.getPropertyValue('cursor');
+
+    const svgElements = button.querySelectorAll('svg');
+    expect(svgElements.length).toBe(2);
+
+    const firstChild = button.firstElementChild as SVGElement;
+    const firstChildTag = firstChild && firstChild.tagName.toLowerCase();
+
+    const lastChild = button.lastElementChild as SVGElement;
+    const lastChildTag = lastChild && lastChild.tagName.toLowerCase();
 
     await step('onClick button test', async () => {
       await userEvent.click(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called once'
+      ).toHaveBeenCalledOnce();
     });
+
+    clearAllMocks();
 
     await step('Double click button test', async () => {
       await userEvent.dblClick(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called twice'
+      ).toHaveBeenCalledTimes(2);
     });
+
+    clearAllMocks();
 
     await step('Hover button test', async () => {
-      await userEvent.hover(canvas.getByRole('button'));
+      await userEvent.hover(button);
+      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
+
+      const computedStyle = getComputedStyle(button);
+
+      const background = computedStyle.getPropertyValue('background');
+
+      console.log('background', background);
+
+      expect(
+        background,
+        `It expects that the background contains "rgba(0, 83, 219, 0.08)"`
+      ).toContain('rgba(0, 83, 219, 0.08)');
     });
 
-    await step('Unhover button test', async () => {
-      await userEvent.unhover(canvas.getByRole('button'));
-    });
+    await step('Button icon as SVG test', async () => {
+      expect(
+        firstChild,
+        'The first child of the button must be rendered'
+      ).toBeInTheDocument();
 
-    await step('Button args test', async () => {
-      expect(args.variant).toBe('tonal');
-      expect(args.children).toBe('Label');
-      expect(args.disabled).toBeFalsy();
+      expect(
+        firstChild,
+        'The first element of the button must be visible'
+      ).toBeVisible();
+
+      expect(
+        firstChildTag,
+        'The tag of the first child should be an svg'
+      ).toEqual('svg');
+
+      expect(
+        lastChild,
+        'The last child of the button must be rendered'
+      ).toBeInTheDocument();
+
+      expect(
+        lastChild,
+        'The last element of the button must be visible'
+      ).toBeVisible();
+
+      expect(
+        lastChildTag,
+        'The tag of the last child should be an svg'
+      ).toEqual('svg');
     });
 
     await step('Button style test', async () => {
-      expect(button).toHaveTextContent('Label');
+      expect(button, 'It should render the text correctly').toHaveTextContent(
+        'Label'
+      );
 
-      expect(background.trim()).toBeTruthy();
-      expect(color).toBe('rgb(0, 0, 0)');
-      expect(cursor).toBe('pointer');
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+      const backgroundColor =
+        computedStyle.getPropertyValue('background-color');
+
+      expect(
+        backgroundColor,
+        'It expects that the background color to be "rgba(0, 83, 219, 0.08)"'
+      ).toBe('rgba(0, 83, 219, 0.08)');
+      expect(color, 'The color style should be "rgb(0, 0, 0)"').toBe(
+        'rgb(0, 0, 0)'
+      );
+      expect(button, 'The cursor style should be pointer').toHaveStyle(
+        'cursor: pointer'
+      );
+    });
+
+    clearAllMocks();
+
+    await step('Button args test', async () => {
+      expect(args.variant, 'The argument variant must be "tonal"').toBe(
+        'tonal'
+      );
+      expect(args.children, 'The argument children must be "Label"').toBe(
+        'Label'
+      );
+      expect(
+        args.disabled,
+        'The argument disabled must be "false"'
+      ).toBeFalsy();
     });
   },
 };
@@ -855,96 +1769,101 @@ export const Icon: Story = {
     children: <SwapIcon />,
     disabled: false,
     isIcon: true,
+    onClick: fn(),
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-    const button = canvas.getByRole('button');
+    let button = canvas.getByRole('button');
 
     const parentChildren = button.childNodes;
     expect(parentChildren).toHaveLength(1);
 
     const parentOnlyChild = button.firstElementChild;
 
-    expect(parentOnlyChild?.tagName.trim()).toBe('svg');
-
     const computedStyle = getComputedStyle(button);
-    const background = computedStyle.getPropertyValue('background');
     const color = computedStyle.getPropertyValue('color');
-    const cursor = computedStyle.getPropertyValue('cursor');
 
     await step('onClick button test', async () => {
       await userEvent.click(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called once'
+      ).toHaveBeenCalledOnce();
     });
+
+    clearAllMocks();
 
     await step('Double click button test', async () => {
       await userEvent.dblClick(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called twice'
+      ).toHaveBeenCalledTimes(2);
     });
+
+    clearAllMocks();
 
     await step('Hover button test', async () => {
-      await userEvent.hover(canvas.getByRole('button'));
+      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
+      await userEvent.pointer({ target: button, offset: 3 });
+
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+
+      const background = computedStyle.getPropertyValue('background');
+
+      expect(
+        background,
+        `It expects that the background contains "linear-gradient(0deg, rgba(255, 255, 255, 0.133), rgba(255, 255, 255, 0.133))"`
+      ).toContain(
+        'linear-gradient(0deg, rgba(255, 255, 255, 0.133), rgba(255, 255, 255, 0.133))'
+      );
     });
 
-    await step('Unhover button test', async () => {
-      await userEvent.unhover(canvas.getByRole('button'));
-    });
+    clearAllMocks();
 
-    await step('Button args test', async () => {
-      expect(args.variant).toBe('filled');
+    await step('Button icon as SVG test', async () => {
+      expect(
+        parentOnlyChild,
+        'The only child of the button must be rendered'
+      ).toBeInTheDocument();
+      expect(
+        parentOnlyChild,
+        'The only child of the  the button must be visible'
+      ).toBeVisible();
+
+      expect(
+        parentOnlyChild?.tagName.trim(),
+        'The tag of the first child should be an svg'
+      ).toBe('svg');
     });
 
     await step('Button style test', async () => {
-      expect(background.trim()).toBeTruthy();
-      expect(color).toBe('rgb(255, 255, 255)');
-      expect(cursor).toBe('pointer');
-    });
-  },
-};
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+      const backgroundColor =
+        computedStyle.getPropertyValue('background-color');
 
-export const ButtonWithAction: Story = {
-  args: {
-    variant: 'outline',
-    children: 'Press here',
-    disabled: false,
-    selected: false,
-    onClick: fn(),
-  },
-  play: async ({ args, canvasElement, step }) => {
-    const canvas = within(canvasElement);
-    const button = canvas.getByRole('button');
-    const computedStyle = getComputedStyle(button);
-    const background = computedStyle.getPropertyValue('background');
-    const color = computedStyle.getPropertyValue('color');
-    const cursor = computedStyle.getPropertyValue('cursor');
-
-    await step('onClick button test', async () => {
-      await userEvent.click(canvas.getByRole('button'));
+      expect(
+        backgroundColor,
+        'It expects that the background color is "rgb(0, 83, 219)"'
+      ).toBe('rgb(0, 83, 219)');
+      expect(color, 'The color style should be "rgb(255, 255, 255)"').toBe(
+        'rgb(255, 255, 255)'
+      );
+      expect(button, 'The cursor style should be pointer').toHaveStyle(
+        'cursor: pointer'
+      );
     });
 
-    await step('Double click button test', async () => {
-      await userEvent.dblClick(canvas.getByRole('button'));
-    });
-
-    await step('Hover button test', async () => {
-      await userEvent.hover(canvas.getByRole('button'));
-    });
-
-    await step('Unhover button test', async () => {
-      await userEvent.unhover(canvas.getByRole('button'));
-    });
+    clearAllMocks();
 
     await step('Button args test', async () => {
-      expect(args.variant).toBe('outline');
-      expect(args.children).toBe('Press here');
-      expect(args.disabled).toBeFalsy();
-      expect(args.selected).toBeFalsy();
-    });
-
-    await step('Button style test', async () => {
-      expect(button).toHaveTextContent('Press here');
-
-      expect(background.trim()).toBeTruthy();
-      expect(color).toBe('rgb(0, 0, 0)');
-      expect(cursor).toBe('pointer');
+      expect(args.variant, 'The argument variant must be "filled"').toBe(
+        'filled'
+      );
     });
   },
 };
@@ -959,33 +1878,100 @@ export const DisabledButton: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const button = canvas.getByRole('button');
+    let button = canvas.getByRole('button');
 
     const computedStyle = getComputedStyle(button);
 
-    const cursor = computedStyle.getPropertyValue('cursor');
     const opacity = Number(computedStyle.getPropertyValue('opacity'));
-    const background = computedStyle.getPropertyValue('background');
     const color = computedStyle.getPropertyValue('color');
 
-    await step('Button args test', async () => {
-      expect(args.variant).toBe('filled');
-      expect(args.children).toBe('Label');
-      expect(args.disabled).toBeTruthy();
-      expect(args.selected).toBeFalsy();
-      //expect the event to not be called, because the button is disabled
-      await waitFor(() => expect(args.onClick).toHaveBeenCalledTimes(0));
+    await step('onClick button test', async () => {
+      await userEvent.click(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called once'
+      ).not.toHaveBeenCalledOnce();
     });
+
+    clearAllMocks();
+
+    await step('Double click button test', async () => {
+      await userEvent.dblClick(canvas.getByRole('button'));
+
+      expect(
+        args.onClick,
+        'It expect that the click event is called twice'
+      ).not.toHaveBeenCalledTimes(2);
+    });
+
+    clearAllMocks();
+
+    await step('Hover button test', async () => {
+      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
+      await userEvent.pointer({ target: button, offset: 3 });
+
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+
+      const background = computedStyle.getPropertyValue('background');
+
+      expect(
+        background,
+        `It expects that the background contains "rgba(0, 0, 0, 0.16)"`
+      ).toContain('rgba(0, 0, 0, 0.16)');
+
+      expect(button, 'The cursor style should be pointer').toHaveStyle(
+        'cursor: not-allowed'
+      );
+    });
+
+    clearAllMocks();
 
     await step('Button style test', async () => {
-      expect(button).toHaveTextContent('Label');
+      button = canvas.getByRole('button');
+      const computedStyle = getComputedStyle(button);
+      const backgroundColor =
+        computedStyle.getPropertyValue('background-color');
 
-      expect(background.trim()).toBeTruthy();
-      expect(color).toBe('rgb(27, 27, 31)');
-      expect(cursor).toBe('not-allowed');
-      expect(opacity).toBeLessThan(1);
+      expect(button, 'It should render the text correctly').toHaveTextContent(
+        'Label'
+      );
+
+      expect(
+        backgroundColor,
+        'It expects that the background color is "rgba(0, 0, 0, 0.16)"'
+      ).toBe('rgba(0, 0, 0, 0.16)');
+
+      expect(color, 'The color style should be "rgb(27, 27, 31)"').toBe(
+        'rgb(27, 27, 31)'
+      );
+
+      expect(
+        opacity,
+        'The opacity of the button should be less than 1'
+      ).toBeLessThan(1);
+
+      expect(button, 'The cursor style should be pointer').toHaveStyle(
+        'cursor: not-allowed'
+      );
     });
 
-    expect(button).toBeDisabled();
+    await step('Button args test', async () => {
+      expect(args.variant, 'The argument variant must be "filled"').toBe(
+        'filled'
+      );
+      expect(args.children, 'The argument children must be "Label"').toBe(
+        'Label'
+      );
+      expect(
+        args.disabled,
+        'The argument disabled must be "true"'
+      ).toBeTruthy();
+
+      expect(args.selected, 'The argument selected must be "true"').toBeFalsy();
+    });
+
+    expect(button, 'It expects that the button is disbled').toBeDisabled();
   },
 };
