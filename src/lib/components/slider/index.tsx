@@ -11,7 +11,7 @@ import { ThumbWrapper } from './thumb-wrapper';
 
 const SliderElement: FC<SliderProps> = ({
   min = 0,
-  step = 1,
+  step,
   onChange,
   max = 100,
   initial = 0,
@@ -34,7 +34,7 @@ const SliderElement: FC<SliderProps> = ({
     <Range
       max={max}
       min={min}
-      step={step}
+      step={step || undefined}
       values={values}
       disabled={disabled}
       allowOverlap
