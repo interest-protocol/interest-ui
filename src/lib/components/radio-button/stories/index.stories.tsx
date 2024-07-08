@@ -23,28 +23,52 @@ export const Normal: Story = {
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
     const radio = canvas.getByTestId('radioTestContainer');
+    const radioIconContainer = canvas.getByTestId('radioTest');
     const svgElements = radio.querySelectorAll('svg');
-    const computedStyle = getComputedStyle(radio);
-    const cursor = computedStyle.getPropertyValue('cursor');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
     const firstChild = radio.firstElementChild;
     const elementTag = firstChild && firstChild.tagName.toLowerCase();
-    const shortBackgroundValue = background.slice(0, 16);
-    const opacity = computedStyle.getPropertyValue('opacity');
 
-    await step('Radio button style test', async () => {
-      expect(cursor).toBe('pointer');
-      expect(elementTag).toBe('div');
-      expect(firstChild).toBeVisible();
-      expect(color).toBe('rgb(0, 0, 0)');
-      expect(svgElements).toHaveLength(1);
-      expect(firstChild).toBeInTheDocument();
-      expect(Number(opacity)).toBeGreaterThanOrEqual(1);
-      expect(shortBackgroundValue).toBe('rgba(0, 0, 0, 0)');
+    await step('Checking Radio wrapper', async () => {
+      expect(
+        radio,
+        "It's expected that the radio wrapper has a display of flex"
+      ).toHaveStyle('display: flex');
+      expect(radio, "It's expected to have cursor pointer").toHaveStyle(
+        'cursor: pointer'
+      );
+      expect(elementTag, "It's expected the wrapper to be a div element").toBe(
+        'div'
+      );
+      expect(
+        svgElements,
+        "It's expected have at least  a svg element"
+      ).toHaveLength(1);
     });
 
-    await step('Radio button userEvent test', async () => {
+    await step('Checking radio icon Container', async () => {
+      expect(
+        radioIconContainer,
+        "It's expected icon container has a display flex"
+      ).toHaveStyle('display: flex');
+      expect(
+        radioIconContainer,
+        "It's expected icon container do has a width of 20px"
+      ).toHaveStyle('width: 20px');
+      expect(
+        radioIconContainer,
+        "It's expected icon container has a height of 20px"
+      ).toHaveStyle('height: 20px');
+      expect(
+        radioIconContainer,
+        "It's expected icon container has a color of rgb(27, 27, 31)"
+      ).toHaveStyle('color: rgb(27, 27, 31');
+      expect(
+        radioIconContainer,
+        "It's expected icon container to has an opacity of 1"
+      ).toHaveStyle('opacity: 1');
+    });
+
+    await step('Checking radio user event', async () => {
       await userEvent.click(canvas.getByTestId('radioTestContainer'));
       await userEvent.hover(canvas.getByTestId('radioTestContainer'));
       await userEvent.dblClick(canvas.getByTestId('radioTestContainer'));
@@ -60,32 +84,37 @@ export const NormalDisabled: Story = {
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
     const radio = canvas.getByTestId('radioTestContainer');
-    const computedStyle = getComputedStyle(radio);
-    const cursor = computedStyle.getPropertyValue('cursor');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
     const svgElements = radio.querySelectorAll('svg');
     const firstChild = radio.firstElementChild;
     const elementTag = firstChild && firstChild.tagName.toLowerCase();
-    const shortBackgroudValue = background.slice(0, 16);
 
-    await step('Radio button style test', async () => {
-      expect(color).toBe('rgb(0, 0, 0)');
-      expect(shortBackgroudValue).toBe('rgba(0, 0, 0, 0)');
-      expect(firstChild).toBeInTheDocument();
-      expect(firstChild).toBeVisible();
-      expect(elementTag).toBe('div');
-      expect(svgElements).toHaveLength(1);
-      expect(cursor).toBe('not-allowed');
+    await step('Checking the style for the Radio wrapper', async () => {
+      expect(
+        radio,
+        "It's expected that the radio wrapper has a display of flex"
+      ).toHaveStyle('display: flex');
+      expect(radio, "It's expected to have cursor not-allowed").toHaveStyle(
+        'cursor: not-allowed'
+      );
+      expect(elementTag, "It's expected the wrapper to be a div element").toBe(
+        'div'
+      );
+      expect(
+        svgElements,
+        "It's expected have at least  a svg element"
+      ).toHaveLength(1);
     });
 
-    await step('Radio button userEvent test', async () => {
+    await step('Checking radio user event', async () => {
       await userEvent.click(canvas.getByTestId('radioTestContainer'));
       await userEvent.dblClick(canvas.getByTestId('radioTestContainer'));
     });
 
-    await step('Radio button args test', async () => {
-      expect(args.disabled).toBeTruthy();
+    await step('Checking radio args', async () => {
+      expect(
+        args.disabled,
+        "It's expected args disabled to be true"
+      ).toBeTruthy();
     });
   },
 };
@@ -98,37 +127,60 @@ export const Checked: Story = {
     const canvas = within(canvasElement);
     const radio = canvas.getByTestId('radioTestContainer');
     const radioChecked = canvas.getByTestId('radioTest');
-    const computedStyle = getComputedStyle(radio);
-    const checkedComputedStyle = getComputedStyle(radioChecked);
-    const cursor = computedStyle.getPropertyValue('cursor');
-    const color = computedStyle.getPropertyValue('color');
-    const checkedColor = checkedComputedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
     const svgElements = radio.querySelectorAll('svg');
     const firstChild = radio.firstElementChild;
     const elementTag = firstChild && firstChild.tagName.toLowerCase();
-    const shortBackgroundValue = background.slice(0, 16);
 
-    await step('Radio button style test', async () => {
-      expect(elementTag).toBe('div');
-      expect(firstChild).toBeVisible();
-      expect(color).toBe('rgb(0, 0, 0)');
-      expect(cursor).toBe('pointer');
-      expect(svgElements).toHaveLength(1);
-      expect(firstChild).toBeInTheDocument();
-      expect(checkedColor).toBe('rgb(0, 83, 219)');
-      expect(shortBackgroundValue).toBe('rgba(0, 0, 0, 0)');
+    await step('Checking the style for the Radio wrapper', async () => {
+      expect(
+        radio,
+        "It's expected that the radio wrapper has a display of flex"
+      ).toHaveStyle('display: flex');
+      expect(radio, "It's expected to have cursor pointer").toHaveStyle(
+        'cursor: pointer'
+      );
+      expect(elementTag, "It's expected the wrapper to be a div element").toBe(
+        'div'
+      );
+      expect(
+        svgElements,
+        "It's expected have at least  a svg element"
+      ).toHaveLength(1);
     });
 
-    await step('Radio button userEvent test', async () => {
+    expect(
+      radioChecked,
+      "It's expected icon container has a display flex"
+    ).toHaveStyle('display: flex');
+    expect(
+      radioChecked,
+      "It's expected icon container do has a width of 20px"
+    ).toHaveStyle('width: 20px');
+    expect(
+      radioChecked,
+      "It's expected icon container has a height of 20px"
+    ).toHaveStyle('height: 20px');
+    expect(
+      radioChecked,
+      "It's expected icon container has a color of rgb(0, 83, 219)"
+    ).toHaveStyle('color: rgb(0, 83, 219');
+    expect(
+      radioChecked,
+      "It's expected icon container to has an opacity of 1"
+    ).toHaveStyle('opacity: 1');
+
+    await step('Checking radio user event', async () => {
       await userEvent.click(canvas.getByTestId('radioTestContainer'));
       await userEvent.hover(canvas.getByTestId('radioTestContainer'));
       await userEvent.unhover(canvas.getByTestId('radioTestContainer'));
       await userEvent.dblClick(canvas.getByTestId('radioTestContainer'));
     });
 
-    await step('Radio button args test', async () => {
-      expect(args.defaultValue).toBeTruthy();
+    await step('Checking radio args', async () => {
+      expect(
+        args.defaultValue,
+        "It's expected defaultValue to be true"
+      ).toBeTruthy();
     });
   },
 };
@@ -140,39 +192,65 @@ export const CheckedDisabled: Story = {
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-
-    const radioContainer = canvas.getByTestId('radioTestContainer');
-    const containerComputedStyle = getComputedStyle(radioContainer);
-    const cursor = containerComputedStyle.getPropertyValue('cursor');
-    const radio = canvas.getByTestId('radioTest');
-    const computedStyle = getComputedStyle(radio);
-    const color = computedStyle.getPropertyValue('color');
-    const opacity = computedStyle.getPropertyValue('opacity');
-    const background = computedStyle.getPropertyValue('background');
+    const radio = canvas.getByTestId('radioTestContainer');
+    const radioIconContainer = canvas.getByTestId('radioTest');
     const svgElements = radio.querySelectorAll('svg');
     const firstChild = radio.firstElementChild;
     const elementTag = firstChild && firstChild.tagName.toLowerCase();
-    const shortBackgroundValue = background.slice(0, 16);
 
-    await step('Radio button style test', async () => {
-      expect(elementTag).toBe('svg');
-      expect(firstChild).toBeVisible();
-      expect(color).toBe('rgb(27, 27, 31)');
-      expect(cursor).toBe('not-allowed');
-      expect(svgElements).toHaveLength(1);
-      expect(firstChild).toBeInTheDocument();
-      expect(Number(opacity)).toBeLessThan(1);
-      expect(shortBackgroundValue).toBe('rgba(0, 0, 0, 0)');
+    await step('Checking Radio wrapper', async () => {
+      expect(
+        radio,
+        "It's expected that the radio wrapper has a display of flex"
+      ).toHaveStyle('display: flex');
+      expect(radio, "It's expected to have cursor not-allowed").toHaveStyle(
+        'cursor: not-allowed'
+      );
+      expect(elementTag, "It's expected the wrapper to be a div element").toBe(
+        'div'
+      );
+      expect(
+        svgElements,
+        "It's expected have at least  a svg element"
+      ).toHaveLength(1);
     });
 
-    await step('Radio button userEvent test', async () => {
+    await step('Checking radio icon Container', async () => {
+      expect(
+        radioIconContainer,
+        "It's expected icon container has a display flex"
+      ).toHaveStyle('display: flex');
+      expect(
+        radioIconContainer,
+        "It's expected icon container do has a width of 20px"
+      ).toHaveStyle('width: 20px');
+      expect(
+        radioIconContainer,
+        "It's expected icon container has a height of 20px"
+      ).toHaveStyle('height: 20px');
+      expect(
+        radioIconContainer,
+        "It's expected icon container has a color of rgb(27, 27, 31)"
+      ).toHaveStyle('color: rgb(27, 27, 31');
+      expect(
+        radioIconContainer,
+        "It's expected icon container to has an opacity of 0.32"
+      ).toHaveStyle('opacity: 0.32');
+    });
+
+    await step('Checking radio user event', async () => {
       await userEvent.click(canvas.getByTestId('radioTestContainer'));
+      await userEvent.hover(canvas.getByTestId('radioTestContainer'));
       await userEvent.dblClick(canvas.getByTestId('radioTestContainer'));
+      await userEvent.unhover(canvas.getByTestId('radioTestContainer'));
     });
 
-    await step('Radio button args test', async () => {
-      expect(args.defaultValue).toBeTruthy();
-      expect(args.disabled).toBeTruthy();
+    await step('Checking radio args', async () => {
+      expect(
+        args.defaultValue,
+        "It's expected defaultValue to be true"
+      ).toBeTruthy();
+      expect(args.disabled, "It's expected disabled to be true").toBeTruthy();
     });
   },
 };
