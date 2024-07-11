@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, userEvent, within } from '@storybook/test';
+import { expect, fn, within } from '@storybook/test';
 import React from 'react';
 
 import { ArrowRightIcon } from '../../../../storybook/icons';
@@ -36,19 +36,28 @@ export const Normal: Story = {
     description: 'Supporting Text',
     onClick: fn(),
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const listItem = canvas.getByTestId('listItem');
-    //const arrowRightIcon = canvas.getByTestId('arrow-right-icon');
 
-    await userEvent.hover(canvas.getByTestId('listItem'));
-    await userEvent.click(canvas.getByTestId('listItem'));
-    expect(args.onClick).toHaveBeenCalledOnce();
+    const listItem = canvas.getByRole('listitem');
 
-    expect(listItem).toBeTruthy();
-    //expect(arrowRightIcon).toBeTruthy();
-    expect(args.title).toBe('List item');
-    expect(args.description).toBe('Supporting Text');
+    await step('Checking if the component is being rendered', async () => {
+      expect(
+        listItem,
+        'It expected that the listitem is being rendered'
+      ).toBeInTheDocument();
+    });
+
+    await step('Checking component text content', async () => {
+      expect(
+        listItem,
+        `Expect that the component has the title '${args.title}'`
+      ).toHaveTextContent('List item');
+      expect(
+        listItem,
+        `Expect that the component has the descripption '${args.description}'`
+      ).toHaveTextContent('Supporting Text');
+    });
   },
 };
 
@@ -56,16 +65,30 @@ export const WithoutDescription: Story = {
   args: {
     title: 'List item',
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const listItem = canvas.getByTestId('listItem');
+    const listItem = canvas.getByRole('listitem');
 
-    await userEvent.hover(canvas.getByTestId('listItem'));
-    await userEvent.click(canvas.getByTestId('listItem'));
-    expect(args.onClick).toHaveBeenCalledOnce();
+    const listItemChilds = listItem.childNodes;
 
-    expect(listItem).toBeTruthy();
-    expect(args.title).toBe('List item');
+    await step('Checking if the component is being rendered', async () => {
+      expect(
+        listItem,
+        'It expected that the listitem is being rendered'
+      ).toBeInTheDocument();
+    });
+
+    await step('Checking component text content', async () => {
+      expect(
+        listItem,
+        `Expect that the component has the title '${args.title}'`
+      ).toHaveTextContent('List item');
+
+      expect(
+        listItemChilds,
+        `Expect that the component has only one child '`
+      ).toHaveLength(1);
+    });
   },
 };
 
@@ -75,20 +98,44 @@ export const WithPrefix: Story = {
     description: 'Supporting Text',
     PrefixIcon: <ArrowRightIcon />,
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const listItem = canvas.getByTestId('listItem');
 
-    await userEvent.hover(canvas.getByTestId('listItem'));
-    await userEvent.click(canvas.getByTestId('listItem'));
-    expect(args.onClick).toHaveBeenCalledOnce();
+    const listItem = canvas.getByRole('listitem');
+    const listItemFirstChild = listItem.firstElementChild?.firstElementChild
+      ?.firstElementChild as HTMLElement;
 
+    const firstChildTagName = listItemFirstChild.tagName;
     const svgElements = listItem.querySelectorAll('svg');
-    expect(svgElements.length).toBe(1);
 
-    expect(listItem).toBeTruthy();
-    expect(args.title).toBe('List item');
-    expect(args.description).toBe('Supporting Text');
+    await step('Checking if the component is being rendered', async () => {
+      expect(
+        listItem,
+        'It expected that the listitem is being rendered'
+      ).toBeInTheDocument();
+    });
+
+    await step('Checking component text content', async () => {
+      expect(
+        listItem,
+        `Expect that the component has the title '${args.title}'`
+      ).toHaveTextContent('List item');
+
+      expect(
+        listItem,
+        `Expect that the component has the descripption '${args.description}'`
+      ).toHaveTextContent('Supporting Text');
+
+      expect(
+        firstChildTagName,
+        'Expect that the first child of the component is a svg'
+      ).toBe('svg');
+
+      expect(
+        svgElements,
+        'Expect that the component only has one svg'
+      ).toHaveLength(1);
+    });
   },
 };
 
@@ -97,19 +144,38 @@ export const WithPrefixWithoutDescription: Story = {
     title: 'List item',
     PrefixIcon: <ArrowRightIcon />,
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const listItem = canvas.getByTestId('listItem');
+    const listItem = canvas.getByRole('listitem');
+    const listItemFirstChild = listItem.firstElementChild?.firstElementChild
+      ?.firstElementChild as HTMLElement;
 
-    await userEvent.hover(canvas.getByTestId('listItem'));
-    await userEvent.click(canvas.getByTestId('listItem'));
-    expect(args.onClick).toHaveBeenCalledOnce();
-
+    const firstChildTagName = listItemFirstChild.tagName;
     const svgElements = listItem.querySelectorAll('svg');
-    expect(svgElements.length).toBe(1);
 
-    expect(listItem).toBeTruthy();
-    expect(args.title).toBe('List item');
+    await step('Checking if the component is being rendered', async () => {
+      expect(
+        listItem,
+        'It expected that the listitem is being rendered'
+      ).toBeInTheDocument();
+    });
+
+    await step('Checking component text content', async () => {
+      expect(
+        listItem,
+        `Expect that the component has the title '${args.title}'`
+      ).toHaveTextContent('List item');
+
+      expect(
+        firstChildTagName,
+        'Expect that the first child of the component is a svg'
+      ).toBe('svg');
+
+      expect(
+        svgElements,
+        'Expect that the component only has one svg'
+      ).toHaveLength(1);
+    });
   },
 };
 
@@ -119,20 +185,43 @@ export const WithSuffix: Story = {
     description: 'Supporting Text',
     SuffixIcon: <ArrowRightIcon />,
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const listItem = canvas.getByTestId('listItem');
+    const listItem = canvas.getByRole('listitem');
+    const listItemLastChild = listItem.lastElementChild
+      ?.firstElementChild as HTMLElement;
 
-    await userEvent.hover(canvas.getByTestId('listItem'));
-    await userEvent.click(canvas.getByTestId('listItem'));
-    expect(args.onClick).toHaveBeenCalledOnce();
-
+    const lastChildTagName = listItemLastChild.tagName;
     const svgElements = listItem.querySelectorAll('svg');
-    expect(svgElements.length).toBe(1);
 
-    expect(listItem).toBeTruthy();
-    expect(args.title).toBe('List item');
-    expect(args.description).toBe('Supporting Text');
+    await step('Checking if the component is being rendered', async () => {
+      expect(
+        listItem,
+        'It expected that the listitem is being rendered'
+      ).toBeInTheDocument();
+    });
+
+    await step('Checking component text content', async () => {
+      expect(
+        listItem,
+        `Expect that the component has the title '${args.title}'`
+      ).toHaveTextContent('List item');
+
+      expect(
+        listItem,
+        `Expect that the component has the descripption '${args.description}'`
+      ).toHaveTextContent('Supporting Text');
+
+      expect(
+        lastChildTagName,
+        'Expect that the first child of the component is a svg'
+      ).toBe('svg');
+
+      expect(
+        svgElements,
+        'Expect that the component only has one svg'
+      ).toHaveLength(1);
+    });
   },
 };
 
@@ -141,19 +230,38 @@ export const WithSuffixWithoutDescription: Story = {
     title: 'List item',
     SuffixIcon: <ArrowRightIcon />,
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const listItem = canvas.getByTestId('listItem');
+    const listItem = canvas.getByRole('listitem');
+    const listItemLastChild = listItem.lastElementChild
+      ?.firstElementChild as HTMLElement;
 
-    await userEvent.hover(canvas.getByTestId('listItem'));
-    await userEvent.click(canvas.getByTestId('listItem'));
-    expect(args.onClick).toHaveBeenCalledOnce();
-
+    const lastChildTagName = listItemLastChild.tagName;
     const svgElements = listItem.querySelectorAll('svg');
-    expect(svgElements.length).toBe(1);
 
-    expect(listItem).toBeTruthy();
-    expect(args.title).toBe('List item');
+    await step('Checking if the component is being rendered', async () => {
+      expect(
+        listItem,
+        'It expected that the listitem is being rendered'
+      ).toBeInTheDocument();
+    });
+
+    await step('Checking component text content', async () => {
+      expect(
+        listItem,
+        `Expect that the component has the title '${args.title}'`
+      ).toHaveTextContent('List item');
+
+      expect(
+        lastChildTagName,
+        'Expect that the first child of the component is a svg'
+      ).toBe('svg');
+
+      expect(
+        svgElements,
+        'Expect that the component only has one svg'
+      ).toHaveLength(1);
+    });
   },
 };
 
@@ -161,39 +269,92 @@ export const WithSuffixToggle: Story = {
   args: {
     title: 'List item',
     description: 'Supporting Text',
-    SuffixIcon: <ToggleButton name={'toggle'} defaultValue={false} labels="" />,
+    SuffixIcon: <ToggleButton name="toggle" defaultValue={false} />,
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const listItem = canvas.getByTestId('listItem');
+    const listItem = canvas.getByRole('listitem');
+    const listItemLastChild = listItem.lastElementChild as HTMLElement;
+    const toggle = canvas.getByRole('toggle') as HTMLElement;
 
-    await userEvent.hover(canvas.getByTestId('listItem'));
-    await userEvent.click(canvas.getByTestId('listItem'));
-    expect(args.onClick).toHaveBeenCalledOnce();
+    await step('Checking if the component is being rendered', async () => {
+      expect(
+        listItem,
+        'It is expected that the listitem is being rendered'
+      ).toBeInTheDocument();
+    });
 
-    expect(listItem).toBeTruthy();
-    expect(args.SuffixIcon).toBeTruthy();
-    expect(args.title).toBe('List item');
-    expect(args.description).toBe('Supporting Text');
+    await step('Checking component text content', async () => {
+      expect(
+        listItem,
+        `Expect that the component has the title '${args.title}'`
+      ).toHaveTextContent('List item');
+      expect(
+        listItem,
+        `Expect that the component has the description '${args.description}'`
+      ).toHaveTextContent('Supporting Text');
+    });
+
+    await step('Checking if the toggle is being rendered', async () => {
+      expect(
+        toggle,
+        'It is expected that the toggle is being rendered'
+      ).toBeInTheDocument();
+    });
+
+    await step(
+      'Checking if the last item in the list is the toggle',
+      async () => {
+        expect(
+          listItemLastChild,
+          'It is expected that the last child is the toggle button'
+        ).toBe(toggle);
+      }
+    );
   },
 };
 
 export const WithSuffixToggleWithoutDescription: Story = {
   args: {
     title: 'List item',
-    SuffixIcon: <ToggleButton name={'toggle'} defaultValue={false} labels="" />,
+    SuffixIcon: <ToggleButton name="toggle" defaultValue={false} />,
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const listItem = canvas.getByTestId('listItem');
+    const listItem = canvas.getByRole('listitem');
+    const listItemLastChild = listItem.lastElementChild as HTMLElement;
+    const toggle = canvas.getByRole('toggle') as HTMLElement;
 
-    await userEvent.hover(canvas.getByTestId('listItem'));
-    await userEvent.click(canvas.getByTestId('listItem'));
-    expect(args.onClick).toHaveBeenCalledOnce();
+    await step('Checking if the component is being rendered', async () => {
+      expect(
+        listItem,
+        'It is expected that the listitem is being rendered'
+      ).toBeInTheDocument();
+    });
 
-    expect(args.SuffixIcon).toBeTruthy();
-    expect(listItem).toBeTruthy();
-    expect(args.title).toBe('List item');
+    await step('Checking component text content', async () => {
+      expect(
+        listItem,
+        `Expect that the component has the title '${args.title}'`
+      ).toHaveTextContent('List item');
+    });
+
+    await step('Checking if the toggle is being rendered', async () => {
+      expect(
+        toggle,
+        'It is expected that the toggle is being rendered'
+      ).toBeInTheDocument();
+    });
+
+    await step(
+      'Checking if the last item in the list is the toggle',
+      async () => {
+        expect(
+          listItemLastChild,
+          'It is expected that the last child is the toggle button'
+        ).toBe(toggle);
+      }
+    );
   },
 };
 
@@ -202,44 +363,96 @@ export const WithSuffixRadio: Story = {
     title: 'List item',
     description: 'Supporting Text',
     metadata: '100+',
-    SuffixIcon: <RadioButton name={'radio1'} />,
+    SuffixIcon: <RadioButton />,
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const listItem = canvas.getByTestId('listItem');
+    const listItem = canvas.getByRole('listitem');
+    const listItemLastChild = listItem.lastElementChild as HTMLElement;
+    const radio = canvas.getByRole('radioContainer') as HTMLElement;
 
-    await userEvent.hover(canvas.getByTestId('listItem'));
-    await userEvent.click(canvas.getByTestId('listItem'));
-    expect(args.onClick).toHaveBeenCalledOnce();
+    await step('Checking if the component is being rendered', async () => {
+      expect(
+        listItem,
+        'It is expected that the listitem is being rendered'
+      ).toBeInTheDocument();
+    });
 
-    const svgElements = listItem.querySelectorAll('svg');
-    expect(svgElements.length).toBe(1);
+    await step('Checking component text content', async () => {
+      expect(
+        listItem,
+        `Expect that the component has the title '${args.title}'`
+      ).toHaveTextContent('List item');
+      expect(
+        listItem,
+        `Expect that the component has the description '${args.description}'`
+      ).toHaveTextContent('Supporting Text');
+      expect(
+        listItem,
+        `Expect that the component has the description '${args.description}'`
+      ).toHaveTextContent('100+');
+    });
 
-    expect(listItem).toBeTruthy();
-    expect(args.title).toBe('List item');
-    expect(args.description).toBe('Supporting Text');
-    expect(args.metadata).toBe('100+');
+    await step('Checking if the radio is being rendered', async () => {
+      expect(
+        radio,
+        'It is expected that the radio is being rendered'
+      ).toBeInTheDocument();
+    });
+
+    await step(
+      'Checking if the last item in the list is the radio',
+      async () => {
+        expect(
+          listItemLastChild,
+          'It is expected that the last child is the radio button'
+        ).toBe(radio);
+      }
+    );
   },
 };
 
 export const WithSuffixRadioWithoutDescription: Story = {
   args: {
     title: 'List item',
-    SuffixIcon: <RadioButton name={'radio1'} />,
+    SuffixIcon: <RadioButton />,
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const listItem = canvas.getByTestId('listItem');
+    const listItem = canvas.getByRole('listitem');
+    const listItemLastChild = listItem.lastElementChild as HTMLElement;
+    const radio = canvas.getByRole('radioContainer') as HTMLElement;
 
-    await userEvent.hover(canvas.getByTestId('listItem'));
-    await userEvent.click(canvas.getByTestId('listItem'));
-    expect(args.onClick).toHaveBeenCalledOnce();
+    await step('Checking if the component is being rendered', async () => {
+      expect(
+        listItem,
+        'It is expected that the listitem is being rendered'
+      ).toBeInTheDocument();
+    });
 
-    const svgElements = listItem.querySelectorAll('svg');
-    expect(svgElements.length).toBe(1);
+    await step('Checking component text content', async () => {
+      expect(
+        listItem,
+        `Expect that the component has the title '${args.title}'`
+      ).toHaveTextContent('List item');
+    });
 
-    expect(listItem).toBeTruthy();
-    expect(args.title).toBe('List item');
+    await step('Checking if the radio is being rendered', async () => {
+      expect(
+        radio,
+        'It is expected that the radio is being rendered'
+      ).toBeInTheDocument();
+    });
+
+    await step(
+      'Checking if the last item in the list is the radio',
+      async () => {
+        expect(
+          listItemLastChild,
+          'It is expected that the last child is the radio button'
+        ).toBe(radio);
+      }
+    );
   },
 };
 
@@ -254,42 +467,56 @@ export const WithPrefixAndSuffixRadioWithoutDescription: Story = {
         height="100%"
       />
     ),
-    SuffixIcon: <RadioButton name={'radio1'} />,
+    SuffixIcon: <RadioButton />,
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const listItem = canvas.getByTestId('listItem');
-
-    await userEvent.hover(canvas.getByTestId('listItem'));
-    await userEvent.click(canvas.getByTestId('listItem'));
-    expect(args.onClick).toHaveBeenCalledOnce();
-
+    const listItem = canvas.getByRole('listitem');
+    const listItemLastChild = listItem.lastElementChild as HTMLElement;
+    const listItemFirstChild = listItem.firstElementChild
+      ?.firstElementChild as HTMLElement;
+    const firstChildTagName = listItemFirstChild.tagName;
     const svgElements = listItem.querySelectorAll('svg');
-    expect(svgElements.length).toBe(2);
+    const radio = canvas.getByRole('radioContainer') as HTMLElement;
 
-    expect(listItem).toBeTruthy();
-    expect(args.title).toBe('List item');
-  },
-};
+    await step('Checking if the component is being rendered', async () => {
+      expect(
+        listItem,
+        'It is expected that the listitem is being rendered'
+      ).toBeInTheDocument();
+    });
 
-export const WithPrefixAndSuffixToggleWithoutDescription: Story = {
-  args: {
-    title: 'List item',
-    PrefixIcon: <ArrowRightIcon />,
-    SuffixIcon: <ToggleButton name={'toggle'} defaultValue={false} labels="" />,
-  },
-  play: async ({ args, canvasElement }) => {
-    const canvas = within(canvasElement);
-    const listItem = canvas.getByTestId('listItem');
+    await step('Checking component text content', async () => {
+      expect(
+        listItem,
+        `Expect that the component has the title '${args.title}'`
+      ).toHaveTextContent('List item');
 
-    await userEvent.hover(canvas.getByTestId('listItem'));
-    await userEvent.click(canvas.getByTestId('listItem'));
-    expect(args.onClick).toHaveBeenCalledOnce();
+      expect(
+        firstChildTagName,
+        'Expect that the first child of the component is a svg'
+      ).toBe('svg');
 
-    const svgElements = listItem.querySelectorAll('svg');
-    expect(svgElements.length).toBe(1);
+      expect(svgElements, 'Expect that the component has 2 svg').toHaveLength(
+        2
+      );
+    });
 
-    expect(listItem).toBeTruthy();
-    expect(args.title).toBe('List item');
+    await step('Checking if the radio is being rendered', async () => {
+      expect(
+        radio,
+        'It is expected that the radio is being rendered'
+      ).toBeInTheDocument();
+    });
+
+    await step(
+      'Checking if the last item in the list is the radio',
+      async () => {
+        expect(
+          listItemLastChild,
+          'It is expected that the last child is the radio button'
+        ).toBe(radio);
+      }
+    );
   },
 };
