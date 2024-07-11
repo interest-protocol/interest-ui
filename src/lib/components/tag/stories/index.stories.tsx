@@ -1,19 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, waitFor, within } from '@storybook/test';
+import { expect, fn, within } from '@storybook/test';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import { Box } from '../../../elements';
 import { ErrorSVG } from '../../../icons';
+import theme from '../../../theme/light';
 import { Tag } from '..';
-
-const rgbToHex = (rgb: string) => {
-  const result = /^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/.exec(rgb);
-  return result
-    ? `#${((1 << 24) + (+result[1] << 16) + (+result[2] << 8) + +result[3])
-        .toString(16)
-        .slice(1)}`.toUpperCase()
-    : rgb;
-};
+import { convertREMtoPX } from '../tag.utils';
 
 const meta: Meta<typeof Tag> = {
   title: 'Tag',
@@ -45,42 +38,66 @@ export const Filled: Story = {
     variant: 'filled',
     onClose: undefined,
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
+    const tag = canvas.getByRole('tag');
 
-    const tag = canvas.getByRole('button');
+    await step('Validating the Tag structure', () => {
+      expect(tag, "It's expected that the tag is rendered").toBeInTheDocument();
+      expect(
+        tag,
+        `It's expected that the Tag has a padding of ${convertREMtoPX(
+          theme.space['2xs']
+        )}`
+      ).toHaveStyle(`padding-bottom: ${convertREMtoPX(theme.space['2xs'])}`);
+      expect(tag, "It's expected that the Tag background is #fff").toHaveStyle(
+        'background-color: #fff'
+      );
+      expect(tag, "It's expected that the border-radius is full").toHaveStyle(
+        'border-top-left-radius: 159984px'
+      );
+      expect(
+        tag.children.length,
+        "It's expected that the tag has only one child element"
+      ).toBe(1);
+    });
 
-    const computedStyle = getComputedStyle(tag);
-
-    const backgroundColor = computedStyle.getPropertyValue('background-color');
-
-    const hexColor = rgbToHex(backgroundColor);
-
-    expect(tag, 'Tag should be rendered in the document').toBeInTheDocument();
-
-    expect(tag, 'The tag should contain the label "Label"').toHaveTextContent(
-      'Label'
-    );
-
-    expect(hexColor, 'The background color should be white (#FFFFFF)').toBe(
-      '#FFFFFF'
-    );
+    await step('Validating the Tag content', () => {
+      const typography = tag.children[0];
+      expect(
+        typography.tagName,
+        "It's expected that the tag text has a tag-name P"
+      ).toBe('P');
+      expect(
+        typography.textContent,
+        `It's expected that the tag text is ${args.children}`
+      ).toBe(args.children);
+      expect(
+        typography,
+        "it's expected that the tag text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        typography,
+        "it's expected that the tag text font-size will be 16"
+      ).toHaveStyle('font-size: 16px');
+      expect(
+        typography,
+        "it's expected that the tag text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
+      expect(
+        typography,
+        "it's expected that the text of the tag has a padding-left of 10px"
+      ).toHaveStyle('padding-left: 10px');
+      expect(
+        typography,
+        "it's expected that the text of the tag has a padding-right of 10px"
+      ).toHaveStyle('padding-right: 10px');
+    });
   },
 };
 
 const ErrorSvg = (
-  <Box
-    p=".1875rem"
-    width="2rem"
-    height="2rem"
-    display="flex"
-    color="onSurface"
-    alignItems="center"
-    borderRadius="full"
-    justifyContent="center"
-  >
-    <ErrorSVG maxWidth="1.125rem" maxHeight="1.125rem" width="100%" />
-  </Box>
+  <ErrorSVG maxWidth="1.125rem" maxHeight="1.125rem" width="100%" />
 );
 
 export const FilledWithPrefix: Story = {
@@ -91,36 +108,77 @@ export const FilledWithPrefix: Story = {
     PrefixIcon: ErrorSvg,
     onClose: undefined,
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
+    const tag = canvas.getByRole('tag');
 
-    const tag = canvas.getByRole('button');
+    await step('Validating the Tag structure', () => {
+      expect(tag, "It's expected that the tag is rendered").toBeInTheDocument();
+      expect(
+        tag,
+        `It's expected that the Tag has a padding of ${convertREMtoPX(
+          theme.space['2xs']
+        )}`
+      ).toHaveStyle(`padding-bottom: ${convertREMtoPX(theme.space['2xs'])}`);
+      expect(tag, "It's expected that the Tag background is #fff").toHaveStyle(
+        'background-color: #fff'
+      );
+      expect(tag, "It's expected that the border-radius is full").toHaveStyle(
+        'border-top-left-radius: 159984px'
+      );
+      expect(
+        tag.children.length,
+        "It's expected that the tag has only two child element"
+      ).toBe(2);
+    });
 
-    const svgElements = tag.querySelectorAll('svg');
-    const firstChild = tag.firstElementChild;
+    await step('Validating the PrefixIcon of the tag', () => {
+      const PrefixIcon = tag.children[0];
+      expect(
+        PrefixIcon.tagName,
+        "It's expected that PrefixIcon will be an SVG"
+      ).toBe('svg');
+      expect(
+        PrefixIcon,
+        `It's expected that the PrefixIcon has a max-width of ${convertREMtoPX(
+          '1.125rem'
+        )}`
+      ).toHaveStyle(`max-width: ${convertREMtoPX('1.125rem')}`);
+      expect(
+        PrefixIcon,
+        `It's expected that the PrefixIcon has a max-height of ${convertREMtoPX(
+          '1.125rem'
+        )}`
+      ).toHaveStyle(`max-height: ${convertREMtoPX('1.125rem')}`);
+    });
 
-    const computedStyle = getComputedStyle(tag);
-
-    const backgroundColor = computedStyle.getPropertyValue('background-color');
-
-    const hexColor = rgbToHex(backgroundColor);
-
-    expect(tag, 'Tag should be rendered in the document').toBeInTheDocument();
-
-    expect(tag, 'The tag should contain the label "Label"').toHaveTextContent(
-      'Label'
-    );
-
-    expect(hexColor, 'The background color should be white (#FFFFFF)').toBe(
-      '#FFFFFF'
-    );
-
-    expect(svgElements, 'It should contain only one SVG').toHaveLength(1);
-
-    expect(
-      firstChild?.firstElementChild?.tagName,
-      'The first element of the tag should be an svg'
-    ).toBe('svg');
+    await step('Validating the Tag content', () => {
+      const typography = tag.children[1];
+      expect(
+        typography.tagName,
+        "It's expected that the tag text has a tag-name P"
+      ).toBe('P');
+      expect(
+        typography.textContent,
+        `It's expected that the tag text is ${args.children}`
+      ).toBe(args.children);
+      expect(
+        typography,
+        "it's expected that the tag text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        typography,
+        "it's expected that the tag text font-size will be 16"
+      ).toHaveStyle('font-size: 16px');
+      expect(
+        typography,
+        "it's expected that the tag text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
+      expect(
+        typography,
+        "it's expected that the text of the tag has a padding-right of 10px"
+      ).toHaveStyle('padding-right: 10px');
+    });
   },
 };
 
@@ -130,56 +188,100 @@ export const FilledWithCombined: Story = {
     children: 'Label',
     variant: 'filled',
     PrefixIcon: ErrorSvg,
-    onClose: () => ({}),
+    onClose: fn(),
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
+    const tag = canvas.getByRole('tag');
 
-    const tag = canvas.getByRole('button');
+    await step('Validating the Tag structure', () => {
+      expect(tag, "It's expected that the tag is rendered").toBeInTheDocument();
+      expect(
+        tag,
+        `It's expected that the Tag has a padding of ${convertREMtoPX(
+          theme.space['2xs']
+        )}`
+      ).toHaveStyle(`padding-bottom: ${convertREMtoPX(theme.space['2xs'])}`);
+      expect(tag, "It's expected that the Tag background is #fff").toHaveStyle(
+        'background-color: #fff'
+      );
+      expect(tag, "It's expected that the border-radius is full").toHaveStyle(
+        'border-top-left-radius: 159984px'
+      );
+      expect(
+        tag.children.length,
+        "It's expected that the tag has only two child element"
+      ).toBe(3);
+    });
 
-    const svgElements = tag.querySelectorAll('svg');
-    const svgElementsSize = svgElements.length;
-    const firstChild = tag.firstElementChild;
-    const lastChild = tag.lastElementChild;
+    await step('Validating the PrefixIcon of the tag', () => {
+      const PrefixIcon = tag.children[0];
+      expect(
+        PrefixIcon.tagName,
+        "It's expected that PrefixIcon will be an SVG"
+      ).toBe('svg');
+      expect(
+        PrefixIcon,
+        `It's expected that the PrefixIcon has a max-width of ${convertREMtoPX(
+          '1.125rem'
+        )}`
+      ).toHaveStyle(`max-width: ${convertREMtoPX('1.125rem')}`);
+      expect(
+        PrefixIcon,
+        `It's expected that the PrefixIcon has a max-height of ${convertREMtoPX(
+          '1.125rem'
+        )}`
+      ).toHaveStyle(`max-height: ${convertREMtoPX('1.125rem')}`);
+    });
 
-    const childrenArray = Array.from(tag.children);
-    const middleChildIndex = Math.floor(childrenArray.length / 2);
-    const middleChild = childrenArray[middleChildIndex];
+    await step('Validating the Tag content', () => {
+      const typography = tag.children[1];
+      expect(
+        typography.tagName,
+        "It's expected that the tag text has a tag-name P"
+      ).toBe('P');
+      expect(
+        typography.textContent,
+        `It's expected that the tag text is ${args.children}`
+      ).toBe(args.children);
+      expect(
+        typography,
+        "it's expected that the tag text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        typography,
+        "it's expected that the tag text font-size will be 16"
+      ).toHaveStyle('font-size: 16px');
+      expect(
+        typography,
+        "it's expected that the tag text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
+    });
 
-    const computedStyle = getComputedStyle(tag);
-
-    const backgroundColor = computedStyle.getPropertyValue('background-color');
-
-    const hexColor = rgbToHex(backgroundColor);
-
-    expect(tag, 'Tag should be rendered in the document').toBeInTheDocument();
-
-    expect(tag, 'The tag should contain the label "Label"').toHaveTextContent(
-      'Label'
-    );
-
-    expect(hexColor, 'The background color should be white (#FFFFFF)').toBe(
-      '#FFFFFF'
-    );
-
-    expect(svgElements, 'It should contain 2 SVGs').toHaveLength(
-      svgElementsSize
-    );
-
-    expect(
-      firstChild?.firstElementChild?.tagName,
-      'The first element of the tag should be an svg'
-    ).toBe('svg');
-
-    expect(
-      middleChild.tagName,
-      'The middle element of the tag should be an svg'
-    ).not.toBe('svg');
-
-    expect(
-      lastChild?.lastElementChild?.tagName,
-      'The last element of the tag should be an svg when onClose props in passed'
-    ).toBe('svg');
+    await step("Validating the tag's close button", async () => {
+      const CloseIcon = tag.children[2];
+      await userEvent.click(CloseIcon);
+      expect(
+        args.onClose,
+        "It's expected that the onClose button will only be called once after the click"
+      ).toHaveBeenCalledOnce();
+      expect(
+        CloseIcon.children[0].tagName,
+        "It's expected that this onClose button will have an SVG Icon"
+      ).toBe('svg');
+      expect(
+        CloseIcon,
+        `It's expected that the onClose button will have a width of ${convertREMtoPX(
+          '1.125rem'
+        )}`
+      ).toHaveStyle(`width: ${convertREMtoPX('1.125rem')}`);
+      expect(
+        CloseIcon,
+        `It's expected that the onClose button will have a width of ${convertREMtoPX(
+          '1.125rem'
+        )}`
+      ).toHaveStyle(`height: ${convertREMtoPX('1.125rem')}`);
+    });
   },
 };
 
@@ -190,94 +292,65 @@ export const Outlined: Story = {
     variant: 'outline',
     onClose: undefined,
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
+    const tag = canvas.getByRole('tag');
 
-    const tag = canvas.getByRole('button');
+    await step('Validating the Tag structure', () => {
+      expect(tag, "It's expected that the tag is rendered").toBeInTheDocument();
+      expect(
+        tag,
+        `It's expected that the Tag has a padding of ${convertREMtoPX(
+          theme.space['2xs']
+        )}`
+      ).toHaveStyle(`padding-bottom: ${convertREMtoPX(theme.space['2xs'])}`);
+      expect(tag, "It's expected that the Tag background is #0000").toHaveStyle(
+        'background-color: #0000'
+      );
+      expect(tag, "It's expected that the border-radius is full").toHaveStyle(
+        'border-top-left-radius: 159984px'
+      );
+      expect(
+        tag,
+        "It's expected that the tag's border will be 1px solid #C6C6CA"
+      ).toHaveStyle('border: 1px solid #C6C6CA');
+      expect(
+        tag.children.length,
+        "It's expected that the tag has only one child element"
+      ).toBe(1);
+    });
 
-    const computedStyle = getComputedStyle(tag);
-
-    const backgroundColor = computedStyle.getPropertyValue('background-color');
-    const borderStyle = computedStyle.getPropertyValue('border');
-
-    const hexColor = rgbToHex(backgroundColor);
-
-    expect(tag, 'Tag should be rendered in the document').toBeInTheDocument();
-
-    expect(tag, 'The tag should contain the label "Label"').toHaveTextContent(
-      'Label'
-    );
-
-    expect(hexColor, 'The background color should be empty').toBe(
-      'rgba(0, 0, 0, 0)'
-    );
-
-    expect(borderStyle, 'The tag should contain a border').toContain(
-      '1px solid'
-    );
-  },
-};
-
-export const OutlinedWithCombined: Story = {
-  args: {
-    size: 'large',
-    children: 'Label',
-    variant: 'outline',
-    PrefixIcon: ErrorSvg,
-    onClose: () => ({}),
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    const tag = canvas.getByRole('button');
-    const svgElements = tag.querySelectorAll('svg');
-    const svgElementsSize = svgElements.length;
-    const firstChild = tag.firstElementChild;
-    const lastChild = tag.lastElementChild;
-
-    const childrenArray = Array.from(tag.children);
-    const middleChildIndex = Math.floor(childrenArray.length / 2);
-    const middleChild = childrenArray[middleChildIndex];
-
-    const computedStyle = getComputedStyle(tag);
-
-    const backgroundColor = computedStyle.getPropertyValue('background-color');
-    const borderStyle = computedStyle.getPropertyValue('border');
-
-    const hexColor = rgbToHex(backgroundColor);
-
-    expect(tag, 'Tag should be rendered in the document').toBeInTheDocument();
-
-    expect(tag, 'The tag should contain the label "Label"').toHaveTextContent(
-      'Label'
-    );
-
-    expect(hexColor, 'The background color should be empty').toBe(
-      'rgba(0, 0, 0, 0)'
-    );
-
-    expect(borderStyle, 'The tag should contain a border').toContain(
-      '1px solid'
-    );
-
-    expect(svgElements, 'It should contain 2 SVGs').toHaveLength(
-      svgElementsSize
-    );
-
-    expect(
-      firstChild?.firstElementChild?.tagName,
-      'The first element of the tag should be an svg'
-    ).toBe('svg');
-
-    expect(
-      middleChild.tagName,
-      'The middle element of the tag should be an svg'
-    ).not.toBe('svg');
-
-    expect(
-      lastChild?.lastElementChild?.tagName,
-      'The last element of the tag should be an svg when onClose props in passed'
-    ).toBe('svg');
+    await step('Validating the Tag content', () => {
+      const typography = tag.children[0];
+      expect(
+        typography.tagName,
+        "It's expected that the tag text has a tag-name P"
+      ).toBe('P');
+      expect(
+        typography.textContent,
+        `It's expected that the tag text is ${args.children}`
+      ).toBe(args.children);
+      expect(
+        typography,
+        "it's expected that the tag text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        typography,
+        "it's expected that the tag text font-size will be 16"
+      ).toHaveStyle('font-size: 16px');
+      expect(
+        typography,
+        "it's expected that the tag text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
+      expect(
+        typography,
+        "it's expected that the text of the tag has a padding-left of 10px"
+      ).toHaveStyle('padding-left: 10px');
+      expect(
+        typography,
+        "it's expected that the text of the tag has a padding-right of 10px"
+      ).toHaveStyle('padding-right: 10px');
+    });
   },
 };
 
@@ -289,135 +362,187 @@ export const OutlinedWithPrefix: Story = {
     onClose: undefined,
     PrefixIcon: ErrorSvg,
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
+    const tag = canvas.getByRole('tag');
 
-    const tag = canvas.getByRole('button') as HTMLButtonElement;
-
-    const svgElements = tag.querySelectorAll('svg');
-    const firstChild = tag.firstElementChild;
-
-    const computedStyle = getComputedStyle(tag);
-
-    const backgroundColor = computedStyle.getPropertyValue('background-color');
-    const borderStyle = computedStyle.getPropertyValue('border');
-
-    const hexColor = rgbToHex(backgroundColor);
-
-    expect(tag, 'Tag should be rendered in the document').toBeInTheDocument();
-
-    expect(tag, 'The tag should contain the label "Label"').toHaveTextContent(
-      'Label'
-    );
-
-    expect(hexColor, 'The background color should be empty').toBe(
-      'rgba(0, 0, 0, 0)'
-    );
-
-    expect(borderStyle, 'The tag should contain a border').toContain(
-      '1px solid'
-    );
-
-    expect(svgElements, 'It should contain only one SVG').toHaveLength(1);
-
-    expect(
-      firstChild?.firstElementChild?.tagName,
-      'The first element of the tag should be an svg'
-    ).toBe('svg');
-  },
-};
-
-export const WithCloseAction: Story = {
-  args: {
-    size: 'large',
-    children: 'Label',
-    variant: 'filled',
-    onClose: fn(),
-  },
-  play: async ({ args, canvasElement, step }) => {
-    const canvas = within(canvasElement);
-
-    const tag = canvas.getByRole('button');
-
-    const svgElements = tag.querySelectorAll('svg');
-    const lastChild = tag.lastElementChild as HTMLElement;
-
-    const computedStyle = getComputedStyle(tag);
-
-    const backgroundColor = computedStyle.getPropertyValue('background-color');
-
-    const hexColor = rgbToHex(backgroundColor);
-
-    expect(tag, 'Tag should be rendered in the document').toBeInTheDocument();
-
-    expect(tag, 'The tag should contain the label "Label"').toHaveTextContent(
-      'Label'
-    );
-    expect(svgElements, 'It should contain only one SVG').toHaveLength(1);
-
-    expect(hexColor, 'The background color should be white (#FFFFFF)').toBe(
-      '#FFFFFF'
-    );
-
-    await step('Click tag test', async () => {
-      lastChild.click();
+    await step('Validating the Tag structure', () => {
+      expect(tag, "It's expected that the tag is rendered").toBeInTheDocument();
+      expect(
+        tag,
+        `It's expected that the Tag has a padding of ${convertREMtoPX(
+          theme.space['2xs']
+        )}`
+      ).toHaveStyle(`padding-bottom: ${convertREMtoPX(theme.space['2xs'])}`);
+      expect(tag, "It's expected that the Tag background is #0000").toHaveStyle(
+        'background-color: #0000'
+      );
+      expect(tag, "It's expected that the border-radius is full").toHaveStyle(
+        'border-top-left-radius: 159984px'
+      );
+      expect(
+        tag,
+        "It's expected that the tag's border will be 1px solid #C6C6CA"
+      ).toHaveStyle('border: 1px solid #C6C6CA');
+      expect(
+        tag.children.length,
+        "It's expected that the tag has only one child element"
+      ).toBe(2);
     });
 
-    await waitFor(() =>
+    await step('Validating the PrefixIcon of the tag', () => {
+      const PrefixIcon = tag.children[0];
       expect(
-        args.onClose,
-        'When click on the close icon, onClose event should be called at least once'
-      ).toHaveBeenCalledOnce()
-    );
+        PrefixIcon.tagName,
+        "It's expected that PrefixIcon will be an SVG"
+      ).toBe('svg');
+      expect(
+        PrefixIcon,
+        `It's expected that the PrefixIcon has a max-width of ${convertREMtoPX(
+          '1.125rem'
+        )}`
+      ).toHaveStyle(`max-width: ${convertREMtoPX('1.125rem')}`);
+      expect(
+        PrefixIcon,
+        `It's expected that the PrefixIcon has a max-height of ${convertREMtoPX(
+          '1.125rem'
+        )}`
+      ).toHaveStyle(`max-height: ${convertREMtoPX('1.125rem')}`);
+    });
+
+    await step('Validating the Tag content', () => {
+      const typography = tag.children[1];
+      expect(
+        typography.tagName,
+        "It's expected that the tag text has a tag-name P"
+      ).toBe('P');
+      expect(
+        typography.textContent,
+        `It's expected that the tag text is ${args.children}`
+      ).toBe(args.children);
+      expect(
+        typography,
+        "it's expected that the tag text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        typography,
+        "it's expected that the tag text font-size will be 16"
+      ).toHaveStyle('font-size: 16px');
+      expect(
+        typography,
+        "it's expected that the tag text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
+      expect(
+        typography,
+        "it's expected that the text of the tag has a padding-right of 10px"
+      ).toHaveStyle('padding-right: 10px');
+    });
   },
 };
 
-export const withFocusAction: Story = {
+export const OutlinedWithCombined: Story = {
   args: {
     size: 'large',
     children: 'Label',
-    variant: 'filled',
-    onClose: undefined,
+    variant: 'outline',
+    PrefixIcon: ErrorSvg,
+    onClose: fn(),
   },
-  play: async ({ canvasElement, step }) => {
+  play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
+    const tag = canvas.getByRole('tag');
 
-    const tag = canvas.getByRole('button') as HTMLElement;
+    await step('Validating the Tag structure', () => {
+      expect(tag, "It's expected that the tag is rendered").toBeInTheDocument();
+      expect(
+        tag,
+        `It's expected that the Tag has a padding of ${convertREMtoPX(
+          theme.space['2xs']
+        )}`
+      ).toHaveStyle(`padding-bottom: ${convertREMtoPX(theme.space['2xs'])}`);
+      expect(tag, "It's expected that the Tag background is #0000").toHaveStyle(
+        'background-color: #0000'
+      );
+      expect(tag, "It's expected that the border-radius is full").toHaveStyle(
+        'border-top-left-radius: 159984px'
+      );
+      expect(
+        tag,
+        "It's expected that the tag's border will be 1px solid #C6C6CA"
+      ).toHaveStyle('border: 1px solid #C6C6CA');
+      expect(
+        tag.children.length,
+        "It's expected that the tag has only three child element"
+      ).toBe(3);
+    });
 
-    const computedStyle = getComputedStyle(tag);
+    await step('Validating the PrefixIcon of the tag', () => {
+      const PrefixIcon = tag.children[0];
+      expect(
+        PrefixIcon.tagName,
+        "It's expected that PrefixIcon will be an SVG"
+      ).toBe('svg');
+      expect(
+        PrefixIcon,
+        `It's expected that the PrefixIcon has a max-width of ${convertREMtoPX(
+          '1.125rem'
+        )}`
+      ).toHaveStyle(`max-width: ${convertREMtoPX('1.125rem')}`);
+      expect(
+        PrefixIcon,
+        `It's expected that the PrefixIcon has a max-height of ${convertREMtoPX(
+          '1.125rem'
+        )}`
+      ).toHaveStyle(`max-height: ${convertREMtoPX('1.125rem')}`);
+    });
 
-    const backgroundColor = computedStyle.getPropertyValue('background-color');
+    await step('Validating the Tag content', () => {
+      const typography = tag.children[1];
+      expect(
+        typography.tagName,
+        "It's expected that the tag text has a tag-name P"
+      ).toBe('P');
+      expect(
+        typography.textContent,
+        `It's expected that the tag text is ${args.children}`
+      ).toBe(args.children);
+      expect(
+        typography,
+        "it's expected that the tag text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        typography,
+        "it's expected that the tag text font-size will be 16"
+      ).toHaveStyle('font-size: 16px');
+      expect(
+        typography,
+        "it's expected that the tag text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
+    });
 
-    const hexColor = rgbToHex(backgroundColor);
-
-    expect(tag, 'Tag should be rendered in the document').toBeInTheDocument();
-
-    expect(tag, 'The tag should contain the label "Label"').toHaveTextContent(
-      'Label'
-    );
-
-    expect(hexColor, 'The background color should be white (#FFFFFF)').toBe(
-      '#FFFFFF'
-    );
-
-    await step('Focus tag test', async () => {
-      await waitFor(async () => {
-        tag.focus();
-      });
-
-      await waitFor(() => {
-        tag.focus();
-        const computedStyle = getComputedStyle(tag);
-        const backgroundColor =
-          computedStyle.getPropertyValue('background-color');
-
-        const hexColor = rgbToHex(backgroundColor);
-
-        expect(
-          hexColor,
-          'When tag is focused the background color should be "#0053DB"'
-        ).toBe('#0053DB');
-      });
+    await step("Validating the tag's close button", async () => {
+      const CloseIcon = tag.children[2];
+      await userEvent.click(CloseIcon);
+      expect(
+        args.onClose,
+        "It's expected that the onClose button will only be called once after the click"
+      ).toHaveBeenCalledOnce();
+      expect(
+        CloseIcon.children[0].tagName,
+        "It's expected that this onClose button will have an SVG Icon"
+      ).toBe('svg');
+      expect(
+        CloseIcon,
+        `It's expected that the onClose button will have a width of ${convertREMtoPX(
+          '1.125rem'
+        )}`
+      ).toHaveStyle(`width: ${convertREMtoPX('1.125rem')}`);
+      expect(
+        CloseIcon,
+        `It's expected that the onClose button will have a width of ${convertREMtoPX(
+          '1.125rem'
+        )}`
+      ).toHaveStyle(`height: ${convertREMtoPX('1.125rem')}`);
     });
   },
 };
