@@ -23,11 +23,11 @@ const iconVariants = {
 };
 
 export const Checkbox: FC<CheckboxProps> = ({
+  name,
   label,
   onClick,
-  defaultValue,
-  name,
   disabled,
+  defaultValue,
   supportingText,
   allowIndeterminateValue,
 }) => {
@@ -76,9 +76,9 @@ export const Checkbox: FC<CheckboxProps> = ({
           width="1.125rem"
           height="1.125rem"
           appearance="none"
+          border="2px solid"
           onClick={handleClick}
           borderRadius="0.25rem"
-          border="2px solid"
           cursor={disabled ? 'not-allowed' : 'pointer'}
           nHover={{
             boxShadow: '0 0 .1875rem .3125rem' + colors['onPrimary'] + '1F',
@@ -106,15 +106,15 @@ export const Checkbox: FC<CheckboxProps> = ({
           left="50%"
           htmlFor={label}
           position="absolute"
+          color={colors['onPrimary']}
           transform="translate(-50%, -43%)"
           cursor={disabled ? 'not-allowed' : 'pointer'}
-          color={colors['onPrimary']}
         >
           <Motion
+            height="1rem"
             initial="hidden"
             variants={iconVariants}
             animate={currentValue != 0 ? 'visible' : 'hidden'}
-            height="1rem"
           >
             <Checkmark
               width="100%"
