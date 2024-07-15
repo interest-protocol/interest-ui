@@ -1,34 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
-import React, { FC, useState } from 'react';
+import { expect, fn, userEvent, within } from '@storybook/test';
 
-import { Button } from '../../button';
-import { DialogProps } from '../dialog.types';
-import { Dialog as IUDialog } from '../index';
-
-const Dialog: FC<DialogProps> = (args) => {
-  const [isOpen, setIsOpen] = useState(args.isOpen);
-
-  return (
-    <IUDialog
-      {...args}
-      isOpen={isOpen}
-      onClose={() => {
-        setIsOpen(false);
-        args.onClose?.();
-      }}
-    />
-  );
-};
+import { Dialog, IDialogButton } from '..';
 
 const meta: Meta<typeof Dialog> = {
   title: 'Dialog',
   component: Dialog,
   argTypes: {
-    isOpen: {
-      defaultValue: false,
-      control: { type: 'boolean' },
-    },
     title: {
       defaultValue: 'Title',
       control: { type: 'text' },
@@ -47,51 +25,159 @@ type Story = StoryObj<typeof Dialog>;
 
 export const Custom: Story = {
   args: {
-    isOpen: true,
     title: 'Custom Dialog',
     message:
       "This is the error description. It can be anything you want and as long as you want. But please don't make it too long.",
     status: 'success',
-    primaryButton: (
-      <Button
-        variant="tonal"
-        width="100%"
-        display="flex"
-        justifyContent="center"
-      >
-        Text
-      </Button>
-    ),
+    primaryButton: {
+      label: 'Continue',
+      onClick: fn(),
+    },
     secondaryButton: {
       label: 'CLOSE',
       onClick: fn(),
     },
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const dialog = canvas.getByRole('dialog');
-    const computedStyle = getComputedStyle(dialog);
-    const background = computedStyle.getPropertyValue('background');
 
-    const parentOnlyChild = dialog.ELEMENT_NODE;
+    await step('Checking the structure of the Dialog box', () => {
+      expect(
+        dialog,
+        "It's expected that the Dialog has a width of 400px"
+      ).toHaveStyle('width: 400px');
+      expect(
+        dialog,
+        "It's expected that the Dialog has a padding of 24px"
+      ).toHaveStyle('padding: 24px');
+      expect(
+        dialog,
+        "It's expected that the Dialog box has a border-radius of 8px"
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        dialog,
+        "It's expected that the Dialog box has a background-color #fff"
+      ).toHaveStyle('background-color: #fff');
+    });
 
-    expect(parentOnlyChild).toBe(1);
+    await step('Checking the dialog box header', () => {
+      const headerDialogBox = dialog.children[0].children[0];
+      expect(
+        headerDialogBox.textContent,
+        `It's expected that the dialog box header will be ${args.title}`
+      ).toBe(args.title);
+      expect(
+        headerDialogBox,
+        `It's expected that the font-family of the dialog box header is ${
+          args.fontFamily || 'Satoshi'
+        }`
+      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+      expect(
+        headerDialogBox,
+        "It's expected that the font-weight of the dialog box header is 500"
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        headerDialogBox,
+        "It's expected that the font-size of the box dialog header is 22px"
+      ).toHaveStyle('font-size: 22px');
+      expect(
+        headerDialogBox,
+        "It's expected that the box dialog header is centred"
+      ).toHaveStyle('text-align: center');
+    });
 
-    userEvent.click(canvas.getByRole('close-button'));
+    await step('Checking the body in the box dialog', () => {
+      const bodyDialogBox = dialog.children[1].children;
 
-    expect(background.includes('rgba(0, 0, 0, 0)')).toBeFalsy();
-    expect(args.isOpen).toBe(true);
-    expect(args.title).toBe('Custom Dialog');
-    expect(args.status).toBe('success');
-    await waitFor(() =>
-      expect(args.secondaryButton.onClick).toHaveBeenCalledTimes(0)
-    );
+      expect(
+        bodyDialogBox.length,
+        "It's expected that the body of the box dialog will have two children"
+      ).toBe(2);
+      expect(
+        bodyDialogBox[1].textContent,
+        "It's expected that the content of the message will be similar to what was sent"
+      ).toBe(args.message);
+      expect(
+        bodyDialogBox[1],
+        `It's expected that the font-family of the message body will be ${
+          args.fontFamily || 'Satoshi'
+        }`
+      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+      expect(
+        bodyDialogBox[1],
+        `It's expected that the font-weight of the message body will be 500`
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        bodyDialogBox[1],
+        "It's expected that the font-size of the message body will be 14px"
+      ).toHaveStyle('font-size: 14px');
+      expect(
+        bodyDialogBox[1],
+        "It's expected that the body text of the message is centred"
+      ).toHaveStyle('text-align: center');
+    });
+
+    await step('Checking the footer in the box dialog', () => {
+      const footerDialogBox = dialog.children[2].children;
+      const primaryButton = footerDialogBox[1];
+      const secondaryButton = footerDialogBox[0];
+      expect(
+        footerDialogBox.length,
+        "It's expected that the footer of the box dialog will have two children"
+      ).toBe(2);
+      expect(
+        secondaryButton.tagName,
+        "It's expected that the secondary element will be a button"
+      ).toBe('BUTTON');
+      expect(
+        secondaryButton.textContent,
+        `It's expected that the text of the secondary button will be ${
+          (args.secondaryButton as IDialogButton).label
+        }`
+      ).toBe((args.secondaryButton as IDialogButton).label);
+      expect(
+        secondaryButton,
+        "It's expected that the secondary button of the footer will have a background-color #0000"
+      ).toHaveStyle('background-color: #0000');
+      expect(
+        primaryButton.tagName,
+        "It's expected that the primary element will be a button"
+      ).toBe('BUTTON');
+      expect(
+        primaryButton.textContent,
+        `It's expected that the text of the primary button will be ${
+          (args.primaryButton as IDialogButton).label
+        }`
+      ).toBe((args.primaryButton as IDialogButton).label);
+      expect(
+        primaryButton,
+        "It's expected that the primary button of the footer will have a background-color #0053db"
+      ).toHaveStyle('background-color: #0053db');
+    });
+
+    await step('Checking that the footer buttons are clickable', async () => {
+      const footerDialogBox = dialog.children[2].children;
+      const primaryButton = footerDialogBox[1];
+      const secondaryButton = footerDialogBox[0];
+
+      await userEvent.click(secondaryButton);
+      expect(
+        (args.secondaryButton as IDialogButton).onClick,
+        "It's expected that the secondary button will have received an interaction from the click event"
+      ).toHaveBeenCalledOnce();
+
+      await userEvent.click(primaryButton);
+      expect(
+        (args.primaryButton as IDialogButton).onClick,
+        "It's expected that the primary button will have received an interaction from the click event"
+      ).toHaveBeenCalledOnce();
+    });
   },
 };
 
 export const Success: Story = {
   args: {
-    isOpen: true,
     title: 'Title',
     message:
       "This is the error description. It can be anything you want and as long as you want. But please don't make it too long.",
@@ -105,35 +191,146 @@ export const Success: Story = {
       onClick: fn(),
     },
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const dialog = canvas.getByRole('dialog');
-    const computedStyle = getComputedStyle(dialog);
-    const background = computedStyle.getPropertyValue('background');
-    const color = computedStyle.getPropertyValue('color');
 
-    userEvent.click(canvas.getByRole('close-button'));
-    userEvent.click(canvas.getByRole('got-it-button'));
+    await step('Checking the structure of the Dialog box', () => {
+      expect(
+        dialog,
+        "It's expected that the Dialog has a width of 400px"
+      ).toHaveStyle('width: 400px');
+      expect(
+        dialog,
+        "It's expected that the Dialog has a padding of 24px"
+      ).toHaveStyle('padding: 24px');
+      expect(
+        dialog,
+        "It's expected that the Dialog box has a border-radius of 8px"
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        dialog,
+        "It's expected that the Dialog box has a background-color #fff"
+      ).toHaveStyle('background-color: #fff');
+    });
 
-    expect(color.trim()).toBeTruthy();
-    expect(background.includes('rgba(0, 0, 0, 0)')).toBeFalsy();
-    expect(args.isOpen).toBe(true);
-    expect(args.title).toBe('Title');
-    expect(args.status).toBe('success');
-    expect(args.primaryButton.label).toBeTruthy(0);
-    await waitFor(() =>
-      expect(args.primaryButton.onClick).toHaveBeenCalledTimes(0)
-    );
-    await waitFor(() =>
-      expect(args.secondaryButton.onClick).toHaveBeenCalledTimes(0)
-    );
-    expect(args.primaryButton.label).toBeTruthy(0);
+    await step('Checking the dialog box header', () => {
+      const headerDialogBox = dialog.children[0].children[0];
+      expect(
+        headerDialogBox.textContent,
+        `It's expected that the dialog box header will be ${args.title}`
+      ).toBe(args.title);
+      expect(
+        headerDialogBox,
+        `It's expected that the font-family of the dialog box header is ${
+          args.fontFamily || 'Satoshi'
+        }`
+      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+      expect(
+        headerDialogBox,
+        "It's expected that the font-weight of the dialog box header is 500"
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        headerDialogBox,
+        "It's expected that the font-size of the box dialog header is 22px"
+      ).toHaveStyle('font-size: 22px');
+      expect(
+        headerDialogBox,
+        "It's expected that the box dialog header is centred"
+      ).toHaveStyle('text-align: center');
+    });
+
+    await step('Checking the body in the box dialog', () => {
+      const bodyDialogBox = dialog.children[1].children;
+
+      expect(
+        bodyDialogBox.length,
+        "It's expected that the body of the box dialog will have two children"
+      ).toBe(2);
+      expect(
+        bodyDialogBox[1].textContent,
+        "It's expected that the content of the message will be similar to what was sent"
+      ).toBe(args.message);
+      expect(
+        bodyDialogBox[1],
+        `It's expected that the font-family of the message body will be ${
+          args.fontFamily || 'Satoshi'
+        }`
+      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+      expect(
+        bodyDialogBox[1],
+        `It's expected that the font-weight of the message body will be 500`
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        bodyDialogBox[1],
+        "It's expected that the font-size of the message body will be 14px"
+      ).toHaveStyle('font-size: 14px');
+      expect(
+        bodyDialogBox[1],
+        "It's expected that the body text of the message is centred"
+      ).toHaveStyle('text-align: center');
+    });
+
+    await step('Checking the footer in the box dialog', () => {
+      const footerDialogBox = dialog.children[2].children;
+      const primaryButton = footerDialogBox[1];
+      const secondaryButton = footerDialogBox[0];
+      expect(
+        footerDialogBox.length,
+        "It's expected that the footer of the box dialog will have two children"
+      ).toBe(2);
+      expect(
+        secondaryButton.tagName,
+        "It's expected that the secondary element will be a button"
+      ).toBe('BUTTON');
+      expect(
+        secondaryButton.textContent,
+        `It's expected that the text of the secondary button will be ${
+          (args.secondaryButton as IDialogButton).label
+        }`
+      ).toBe((args.secondaryButton as IDialogButton).label);
+      expect(
+        secondaryButton,
+        "It's expected that the secondary button of the footer will have a background-color #0000"
+      ).toHaveStyle('background-color: #0000');
+      expect(
+        primaryButton.tagName,
+        "It's expected that the primary element will be a button"
+      ).toBe('BUTTON');
+      expect(
+        primaryButton.textContent,
+        `It's expected that the text of the primary button will be ${
+          (args.primaryButton as IDialogButton).label
+        }`
+      ).toBe((args.primaryButton as IDialogButton).label);
+      expect(
+        primaryButton,
+        "It's expected that the primary button of the footer will have a background-color #0053db"
+      ).toHaveStyle('background-color: #0053db');
+    });
+
+    await step('Checking that the footer buttons are clickable', async () => {
+      const footerDialogBox = dialog.children[2].children;
+      const primaryButton = footerDialogBox[1];
+      const secondaryButton = footerDialogBox[0];
+
+      await userEvent.click(secondaryButton);
+      expect(
+        (args.secondaryButton as IDialogButton).onClick,
+        "It's expected that the secondary button will have received an interaction from the click event"
+      ).toHaveBeenCalledOnce();
+
+      await userEvent.click(primaryButton);
+      expect(
+        (args.primaryButton as IDialogButton).onClick,
+        "It's expected that the primary button will have received an interaction from the click event"
+      ).toHaveBeenCalledOnce();
+    });
   },
 };
 
 export const Warning: Story = {
   args: {
-    isOpen: true,
     title: 'Title',
     message:
       "This is the error description. It can be anything you want and as long as you want. But please don't make it too long.",
@@ -147,35 +344,146 @@ export const Warning: Story = {
       onClick: fn(),
     },
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const dialog = canvas.getByRole('dialog');
-    const computedStyle = getComputedStyle(dialog);
-    const background = computedStyle.getPropertyValue('background');
-    const color = computedStyle.getPropertyValue('color');
 
-    userEvent.click(canvas.getByRole('close-button'));
-    userEvent.click(canvas.getByRole('got-it-button'));
+    await step('Checking the structure of the Dialog box', () => {
+      expect(
+        dialog,
+        "It's expected that the Dialog has a width of 400px"
+      ).toHaveStyle('width: 400px');
+      expect(
+        dialog,
+        "It's expected that the Dialog has a padding of 24px"
+      ).toHaveStyle('padding: 24px');
+      expect(
+        dialog,
+        "It's expected that the Dialog box has a border-radius of 8px"
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        dialog,
+        "It's expected that the Dialog box has a background-color #fff"
+      ).toHaveStyle('background-color: #fff');
+    });
 
-    expect(color.trim()).toBeTruthy();
-    expect(background.includes('rgba(0, 0, 0, 0)')).toBeFalsy();
-    expect(args.isOpen).toBe(true);
-    expect(args.title).toBe('Title');
-    expect(args.status).toBe('warning');
-    expect(args.primaryButton.label).toBeTruthy(0);
-    await waitFor(() =>
-      expect(args.primaryButton.onClick).toHaveBeenCalledTimes(0)
-    );
-    await waitFor(() =>
-      expect(args.secondaryButton.onClick).toHaveBeenCalledTimes(0)
-    );
-    expect(args.primaryButton.label).toBeTruthy(0);
+    await step('Checking the dialog box header', () => {
+      const headerDialogBox = dialog.children[0].children[0];
+      expect(
+        headerDialogBox.textContent,
+        `It's expected that the dialog box header will be ${args.title}`
+      ).toBe(args.title);
+      expect(
+        headerDialogBox,
+        `It's expected that the font-family of the dialog box header is ${
+          args.fontFamily || 'Satoshi'
+        }`
+      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+      expect(
+        headerDialogBox,
+        "It's expected that the font-weight of the dialog box header is 500"
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        headerDialogBox,
+        "It's expected that the font-size of the box dialog header is 22px"
+      ).toHaveStyle('font-size: 22px');
+      expect(
+        headerDialogBox,
+        "It's expected that the box dialog header is centred"
+      ).toHaveStyle('text-align: center');
+    });
+
+    await step('Checking the body in the box dialog', () => {
+      const bodyDialogBox = dialog.children[1].children;
+
+      expect(
+        bodyDialogBox.length,
+        "It's expected that the body of the box dialog will have two children"
+      ).toBe(2);
+      expect(
+        bodyDialogBox[1].textContent,
+        "It's expected that the content of the message will be similar to what was sent"
+      ).toBe(args.message);
+      expect(
+        bodyDialogBox[1],
+        `It's expected that the font-family of the message body will be ${
+          args.fontFamily || 'Satoshi'
+        }`
+      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+      expect(
+        bodyDialogBox[1],
+        `It's expected that the font-weight of the message body will be 500`
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        bodyDialogBox[1],
+        "It's expected that the font-size of the message body will be 14px"
+      ).toHaveStyle('font-size: 14px');
+      expect(
+        bodyDialogBox[1],
+        "It's expected that the body text of the message is centred"
+      ).toHaveStyle('text-align: center');
+    });
+
+    await step('Checking the footer in the box dialog', () => {
+      const footerDialogBox = dialog.children[2].children;
+      const primaryButton = footerDialogBox[1];
+      const secondaryButton = footerDialogBox[0];
+      expect(
+        footerDialogBox.length,
+        "It's expected that the footer of the box dialog will have two children"
+      ).toBe(2);
+      expect(
+        secondaryButton.tagName,
+        "It's expected that the secondary element will be a button"
+      ).toBe('BUTTON');
+      expect(
+        secondaryButton.textContent,
+        `It's expected that the text of the secondary button will be ${
+          (args.secondaryButton as IDialogButton).label
+        }`
+      ).toBe((args.secondaryButton as IDialogButton).label);
+      expect(
+        secondaryButton,
+        "It's expected that the secondary button of the footer will have a background-color #0000"
+      ).toHaveStyle('background-color: #0000');
+      expect(
+        primaryButton.tagName,
+        "It's expected that the primary element will be a button"
+      ).toBe('BUTTON');
+      expect(
+        primaryButton.textContent,
+        `It's expected that the text of the primary button will be ${
+          (args.primaryButton as IDialogButton).label
+        }`
+      ).toBe((args.primaryButton as IDialogButton).label);
+      expect(
+        primaryButton,
+        "It's expected that the primary button of the footer will have a background-color #0053db"
+      ).toHaveStyle('background-color: #0053db');
+    });
+
+    await step('Checking that the footer buttons are clickable', async () => {
+      const footerDialogBox = dialog.children[2].children;
+      const primaryButton = footerDialogBox[1];
+      const secondaryButton = footerDialogBox[0];
+
+      await userEvent.click(secondaryButton);
+      expect(
+        (args.secondaryButton as IDialogButton).onClick,
+        "It's expected that the secondary button will have received an interaction from the click event"
+      ).toHaveBeenCalledOnce();
+
+      await userEvent.click(primaryButton);
+      expect(
+        (args.primaryButton as IDialogButton).onClick,
+        "It's expected that the primary button will have received an interaction from the click event"
+      ).toHaveBeenCalledOnce();
+    });
   },
 };
 
 export const Error: Story = {
   args: {
-    isOpen: true,
     title: 'Title',
     message:
       "This is the error description. It can be anything you want and as long as you want. But please don't make it too long.",
@@ -185,29 +493,124 @@ export const Error: Story = {
       onClick: fn(),
     },
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const dialog = canvas.getByRole('dialog');
-    const computedStyle = getComputedStyle(dialog);
-    const background = computedStyle.getPropertyValue('background');
-    const color = computedStyle.getPropertyValue('color');
 
-    userEvent.click(canvas.getByRole('close-button'));
+    await step('Checking the structure of the Dialog box', () => {
+      expect(
+        dialog,
+        "It's expected that the Dialog has a width of 400px"
+      ).toHaveStyle('width: 400px');
+      expect(
+        dialog,
+        "It's expected that the Dialog has a padding of 24px"
+      ).toHaveStyle('padding: 24px');
+      expect(
+        dialog,
+        "It's expected that the Dialog box has a border-radius of 8px"
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        dialog,
+        "It's expected that the Dialog box has a background-color #fff"
+      ).toHaveStyle('background-color: #fff');
+    });
 
-    expect(color.trim()).toBeTruthy();
-    expect(background.includes('rgba(0, 0, 0, 0)')).toBeFalsy();
-    expect(args.isOpen).toBe(true);
-    expect(args.title).toBe('Title');
-    expect(args.status).toBe('error');
-    await waitFor(() =>
-      expect(args.secondaryButton.onClick).toHaveBeenCalledTimes(0)
-    );
+    await step('Checking the dialog box header', () => {
+      const headerDialogBox = dialog.children[0].children[0];
+      expect(
+        headerDialogBox.textContent,
+        `It's expected that the dialog box header will be ${args.title}`
+      ).toBe(args.title);
+      expect(
+        headerDialogBox,
+        `It's expected that the font-family of the dialog box header is ${
+          args.fontFamily || 'Satoshi'
+        }`
+      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+      expect(
+        headerDialogBox,
+        "It's expected that the font-weight of the dialog box header is 500"
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        headerDialogBox,
+        "It's expected that the font-size of the box dialog header is 22px"
+      ).toHaveStyle('font-size: 22px');
+      expect(
+        headerDialogBox,
+        "It's expected that the box dialog header is centred"
+      ).toHaveStyle('text-align: center');
+    });
+
+    await step('Checking the body in the box dialog', () => {
+      const bodyDialogBox = dialog.children[1].children;
+
+      expect(
+        bodyDialogBox.length,
+        "It's expected that the body of the box dialog will have two children"
+      ).toBe(2);
+      expect(
+        bodyDialogBox[1].textContent,
+        "It's expected that the content of the message will be similar to what was sent"
+      ).toBe(args.message);
+      expect(
+        bodyDialogBox[1],
+        `It's expected that the font-family of the message body will be ${
+          args.fontFamily || 'Satoshi'
+        }`
+      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+      expect(
+        bodyDialogBox[1],
+        `It's expected that the font-weight of the message body will be 500`
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        bodyDialogBox[1],
+        "It's expected that the font-size of the message body will be 14px"
+      ).toHaveStyle('font-size: 14px');
+      expect(
+        bodyDialogBox[1],
+        "It's expected that the body text of the message is centred"
+      ).toHaveStyle('text-align: center');
+    });
+
+    await step('Checking the footer in the box dialog', () => {
+      const footerDialogBox = dialog.children[2].children;
+      const secondaryButton = footerDialogBox[0];
+      expect(
+        footerDialogBox.length,
+        "It's expected that the footer of the box dialog will have one children"
+      ).toBe(1);
+      expect(
+        secondaryButton.tagName,
+        "It's expected that the secondary element will be a button"
+      ).toBe('BUTTON');
+      expect(
+        secondaryButton.textContent,
+        `It's expected that the text of the secondary button will be ${
+          (args.secondaryButton as IDialogButton).label
+        }`
+      ).toBe((args.secondaryButton as IDialogButton).label);
+      expect(
+        secondaryButton,
+        "It's expected that the secondary button of the footer will have a background-color #0000"
+      ).toHaveStyle('background-color: #0000');
+    });
+
+    await step('Checking that the footer buttons are clickable', async () => {
+      const footerDialogBox = dialog.children[2].children;
+      const secondaryButton = footerDialogBox[0];
+
+      await userEvent.click(secondaryButton);
+      expect(
+        (args.secondaryButton as IDialogButton).onClick,
+        "It's expected that the secondary button will have received an interaction from the click event"
+      ).toHaveBeenCalledOnce();
+    });
   },
 };
 
 export const Info: Story = {
   args: {
-    isOpen: true,
     title: 'Title',
     message:
       "This is the error description. It can be anything you want and as long as you want. But please don't make it too long.",
@@ -221,35 +624,146 @@ export const Info: Story = {
       onClick: fn(),
     },
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const dialog = canvas.getByRole('dialog');
-    const computedStyle = getComputedStyle(dialog);
-    const background = computedStyle.getPropertyValue('background');
-    const color = computedStyle.getPropertyValue('color');
 
-    userEvent.click(canvas.getByRole('close-button'));
-    userEvent.click(canvas.getByRole('got-it-button'));
+    await step('Checking the structure of the Dialog box', () => {
+      expect(
+        dialog,
+        "It's expected that the Dialog has a width of 400px"
+      ).toHaveStyle('width: 400px');
+      expect(
+        dialog,
+        "It's expected that the Dialog has a padding of 24px"
+      ).toHaveStyle('padding: 24px');
+      expect(
+        dialog,
+        "It's expected that the Dialog box has a border-radius of 8px"
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        dialog,
+        "It's expected that the Dialog box has a background-color #fff"
+      ).toHaveStyle('background-color: #fff');
+    });
 
-    expect(color.trim()).toBeTruthy();
-    expect(background.includes('rgba(0, 0, 0, 0)')).toBeFalsy();
-    expect(args.isOpen).toBe(true);
-    expect(args.title).toBe('Title');
-    expect(args.status).toBe('info');
-    expect(args.primaryButton.label).toBeTruthy(0);
-    await waitFor(() =>
-      expect(args.primaryButton.onClick).toHaveBeenCalledTimes(0)
-    );
-    await waitFor(() =>
-      expect(args.secondaryButton.onClick).toHaveBeenCalledTimes(0)
-    );
-    expect(args.primaryButton.label).toBeTruthy(0);
+    await step('Checking the dialog box header', () => {
+      const headerDialogBox = dialog.children[0].children[0];
+      expect(
+        headerDialogBox.textContent,
+        `It's expected that the dialog box header will be ${args.title}`
+      ).toBe(args.title);
+      expect(
+        headerDialogBox,
+        `It's expected that the font-family of the dialog box header is ${
+          args.fontFamily || 'Satoshi'
+        }`
+      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+      expect(
+        headerDialogBox,
+        "It's expected that the font-weight of the dialog box header is 500"
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        headerDialogBox,
+        "It's expected that the font-size of the box dialog header is 22px"
+      ).toHaveStyle('font-size: 22px');
+      expect(
+        headerDialogBox,
+        "It's expected that the box dialog header is centred"
+      ).toHaveStyle('text-align: center');
+    });
+
+    await step('Checking the body in the box dialog', () => {
+      const bodyDialogBox = dialog.children[1].children;
+
+      expect(
+        bodyDialogBox.length,
+        "It's expected that the body of the box dialog will have two children"
+      ).toBe(2);
+      expect(
+        bodyDialogBox[1].textContent,
+        "It's expected that the content of the message will be similar to what was sent"
+      ).toBe(args.message);
+      expect(
+        bodyDialogBox[1],
+        `It's expected that the font-family of the message body will be ${
+          args.fontFamily || 'Satoshi'
+        }`
+      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+      expect(
+        bodyDialogBox[1],
+        `It's expected that the font-weight of the message body will be 500`
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        bodyDialogBox[1],
+        "It's expected that the font-size of the message body will be 14px"
+      ).toHaveStyle('font-size: 14px');
+      expect(
+        bodyDialogBox[1],
+        "It's expected that the body text of the message is centred"
+      ).toHaveStyle('text-align: center');
+    });
+
+    await step('Checking the footer in the box dialog', () => {
+      const footerDialogBox = dialog.children[2].children;
+      const primaryButton = footerDialogBox[1];
+      const secondaryButton = footerDialogBox[0];
+      expect(
+        footerDialogBox.length,
+        "It's expected that the footer of the box dialog will have two children"
+      ).toBe(2);
+      expect(
+        secondaryButton.tagName,
+        "It's expected that the secondary element will be a button"
+      ).toBe('BUTTON');
+      expect(
+        secondaryButton.textContent,
+        `It's expected that the text of the secondary button will be ${
+          (args.secondaryButton as IDialogButton).label
+        }`
+      ).toBe((args.secondaryButton as IDialogButton).label);
+      expect(
+        secondaryButton,
+        "It's expected that the secondary button of the footer will have a background-color #0000"
+      ).toHaveStyle('background-color: #0000');
+      expect(
+        primaryButton.tagName,
+        "It's expected that the primary element will be a button"
+      ).toBe('BUTTON');
+      expect(
+        primaryButton.textContent,
+        `It's expected that the text of the primary button will be ${
+          (args.primaryButton as IDialogButton).label
+        }`
+      ).toBe((args.primaryButton as IDialogButton).label);
+      expect(
+        primaryButton,
+        "It's expected that the primary button of the footer will have a background-color #0053db"
+      ).toHaveStyle('background-color: #0053db');
+    });
+
+    await step('Checking that the footer buttons are clickable', async () => {
+      const footerDialogBox = dialog.children[2].children;
+      const primaryButton = footerDialogBox[1];
+      const secondaryButton = footerDialogBox[0];
+
+      await userEvent.click(secondaryButton);
+      expect(
+        (args.secondaryButton as IDialogButton).onClick,
+        "It's expected that the secondary button will have received an interaction from the click event"
+      ).toHaveBeenCalledOnce();
+
+      await userEvent.click(primaryButton);
+      expect(
+        (args.primaryButton as IDialogButton).onClick,
+        "It's expected that the primary button will have received an interaction from the click event"
+      ).toHaveBeenCalledOnce();
+    });
   },
 };
 
 export const General: Story = {
   args: {
-    isOpen: true,
     title: 'Title',
     message:
       "This is the error description. It can be anything you want and as long as you want. But please don't make it too long.",
@@ -263,51 +777,229 @@ export const General: Story = {
       onClick: fn(),
     },
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const dialog = canvas.getByRole('dialog');
-    const computedStyle = getComputedStyle(dialog);
-    const background = computedStyle.getPropertyValue('background');
-    const color = computedStyle.getPropertyValue('color');
 
-    userEvent.click(canvas.getByRole('close-button'));
-    userEvent.click(canvas.getByRole('got-it-button'));
+    await step('Checking the structure of the Dialog box', () => {
+      expect(
+        dialog,
+        "It's expected that the Dialog has a width of 400px"
+      ).toHaveStyle('width: 400px');
+      expect(
+        dialog,
+        "It's expected that the Dialog has a padding of 24px"
+      ).toHaveStyle('padding: 24px');
+      expect(
+        dialog,
+        "It's expected that the Dialog box has a border-radius of 8px"
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        dialog,
+        "It's expected that the Dialog box has a background-color #fff"
+      ).toHaveStyle('background-color: #fff');
+    });
 
-    expect(color.trim()).toBeTruthy();
-    expect(background.includes('rgba(0, 0, 0, 0)')).toBeFalsy();
-    expect(args.isOpen).toBe(true);
-    expect(args.title).toBe('Title');
-    expect(args.status).toBe('general');
-    expect(args.primaryButton.label).toBeTruthy(0);
-    await waitFor(() =>
-      expect(args.primaryButton.onClick).toHaveBeenCalledTimes(0)
-    );
-    await waitFor(() =>
-      expect(args.secondaryButton.onClick).toHaveBeenCalledTimes(0)
-    );
-    expect(args.primaryButton.label).toBeTruthy(0);
+    await step('Checking the dialog box header', () => {
+      const headerDialogBox = dialog.children[0].children[0];
+      expect(
+        headerDialogBox.textContent,
+        `It's expected that the dialog box header will be ${args.title}`
+      ).toBe(args.title);
+      expect(
+        headerDialogBox,
+        `It's expected that the font-family of the dialog box header is ${
+          args.fontFamily || 'Satoshi'
+        }`
+      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+      expect(
+        headerDialogBox,
+        "It's expected that the font-weight of the dialog box header is 500"
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        headerDialogBox,
+        "It's expected that the font-size of the box dialog header is 22px"
+      ).toHaveStyle('font-size: 22px');
+      expect(
+        headerDialogBox,
+        "It's expected that the box dialog header is centred"
+      ).toHaveStyle('text-align: center');
+    });
+
+    await step('Checking the body in the box dialog', () => {
+      const bodyDialogBox = dialog.children[1].children;
+
+      expect(
+        bodyDialogBox.length,
+        "It's expected that the body of the box dialog will have two children"
+      ).toBe(1);
+      expect(
+        bodyDialogBox[0].textContent,
+        "It's expected that the content of the message will be similar to what was sent"
+      ).toBe(args.message);
+      expect(
+        bodyDialogBox[0],
+        `It's expected that the font-family of the message body will be ${
+          args.fontFamily || 'Satoshi'
+        }`
+      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+      expect(
+        bodyDialogBox[0],
+        `It's expected that the font-weight of the message body will be 500`
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        bodyDialogBox[0],
+        "It's expected that the font-size of the message body will be 14px"
+      ).toHaveStyle('font-size: 14px');
+      expect(
+        bodyDialogBox[0],
+        "It's expected that the body text of the message is centred"
+      ).toHaveStyle('text-align: center');
+    });
+
+    await step('Checking the footer in the box dialog', () => {
+      const footerDialogBox = dialog.children[2].children;
+      const primaryButton = footerDialogBox[1];
+      const secondaryButton = footerDialogBox[0];
+      expect(
+        footerDialogBox.length,
+        "It's expected that the footer of the box dialog will have two children"
+      ).toBe(2);
+      expect(
+        secondaryButton.tagName,
+        "It's expected that the secondary element will be a button"
+      ).toBe('BUTTON');
+      expect(
+        secondaryButton.textContent,
+        `It's expected that the text of the secondary button will be ${
+          (args.secondaryButton as IDialogButton).label
+        }`
+      ).toBe((args.secondaryButton as IDialogButton).label);
+      expect(
+        secondaryButton,
+        "It's expected that the secondary button of the footer will have a background-color #0000"
+      ).toHaveStyle('background-color: #0000');
+      expect(
+        primaryButton.tagName,
+        "It's expected that the primary element will be a button"
+      ).toBe('BUTTON');
+      expect(
+        primaryButton.textContent,
+        `It's expected that the text of the primary button will be ${
+          (args.primaryButton as IDialogButton).label
+        }`
+      ).toBe((args.primaryButton as IDialogButton).label);
+      expect(
+        primaryButton,
+        "It's expected that the primary button of the footer will have a background-color #0053db"
+      ).toHaveStyle('background-color: #0053db');
+    });
+
+    await step('Checking that the footer buttons are clickable', async () => {
+      const footerDialogBox = dialog.children[2].children;
+      const primaryButton = footerDialogBox[1];
+      const secondaryButton = footerDialogBox[0];
+
+      await userEvent.click(secondaryButton);
+      expect(
+        (args.secondaryButton as IDialogButton).onClick,
+        "It's expected that the secondary button will have received an interaction from the click event"
+      ).toHaveBeenCalledOnce();
+
+      await userEvent.click(primaryButton);
+      expect(
+        (args.primaryButton as IDialogButton).onClick,
+        "It's expected that the primary button will have received an interaction from the click event"
+      ).toHaveBeenCalledOnce();
+    });
   },
 };
 
 export const Loading: Story = {
   args: {
-    isOpen: true,
     title: 'Title',
     message:
       "This is the error description. It can be anything you want and as long as you want. But please don't make it too long.",
     status: 'loading',
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const dialog = canvas.getByRole('dialog');
-    const computedStyle = getComputedStyle(dialog);
-    const background = computedStyle.getPropertyValue('background');
-    const color = computedStyle.getPropertyValue('color');
 
-    expect(color.trim()).toBeTruthy();
-    expect(background.includes('rgba(0, 0, 0, 0)')).toBeFalsy();
-    expect(args.isOpen).toBe(true);
-    expect(args.title).toBe('Title');
-    expect(args.status).toBe('loading');
+    await step('Checking the structure of the Dialog box', () => {
+      expect(
+        dialog,
+        "It's expected that the Dialog has a width of 400px"
+      ).toHaveStyle('width: 400px');
+      expect(
+        dialog,
+        "It's expected that the Dialog has a padding of 24px"
+      ).toHaveStyle('padding: 24px');
+      expect(
+        dialog,
+        "It's expected that the Dialog box has a border-radius of 8px"
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        dialog,
+        "It's expected that the Dialog box has a background-color #fff"
+      ).toHaveStyle('background-color: #fff');
+    });
+
+    await step('Checking the dialog box header', () => {
+      const headerDialogBox = dialog.children[0].children[0];
+      expect(
+        headerDialogBox.textContent,
+        `It's expected that the dialog box header will be ${args.title}`
+      ).toBe(args.title);
+      expect(
+        headerDialogBox,
+        `It's expected that the font-family of the dialog box header is ${
+          args.fontFamily || 'Satoshi'
+        }`
+      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+      expect(
+        headerDialogBox,
+        "It's expected that the font-weight of the dialog box header is 500"
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        headerDialogBox,
+        "It's expected that the font-size of the box dialog header is 22px"
+      ).toHaveStyle('font-size: 22px');
+      expect(
+        headerDialogBox,
+        "It's expected that the box dialog header is centred"
+      ).toHaveStyle('text-align: center');
+    });
+
+    await step('Checking the body in the box dialog', () => {
+      const bodyDialogBox = dialog.children[1].children;
+
+      expect(
+        bodyDialogBox.length,
+        "It's expected that the body of the box dialog will have two children"
+      ).toBe(2);
+      expect(
+        bodyDialogBox[1].textContent,
+        "It's expected that the content of the message will be similar to what was sent"
+      ).toBe(args.message);
+      expect(
+        bodyDialogBox[1],
+        `It's expected that the font-family of the message body will be ${
+          args.fontFamily || 'Satoshi'
+        }`
+      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+      expect(
+        bodyDialogBox[1],
+        `It's expected that the font-weight of the message body will be 500`
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        bodyDialogBox[1],
+        "It's expected that the font-size of the message body will be 14px"
+      ).toHaveStyle('font-size: 14px');
+      expect(
+        bodyDialogBox[1],
+        "It's expected that the body text of the message is centred"
+      ).toHaveStyle('text-align: center');
+    });
   },
 };
