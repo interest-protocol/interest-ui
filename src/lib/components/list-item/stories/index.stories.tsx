@@ -48,11 +48,46 @@ export const Normal: Story = {
       ).toBeInTheDocument();
     });
 
+    await step('Checking the listitem structure', () => {
+      const listItemFirstChild = listItem.firstElementChild as HTMLElement;
+
+      const numberOfTexts = listItem.getElementsByTagName('span').length;
+      expect(numberOfTexts, `It's expected that listitem as 2 texts`).toBe(2);
+
+      expect(
+        listItem,
+        `It's expected that the display of the listitem is flex`
+      ).toHaveStyle('display: flex');
+
+      expect(
+        listItem,
+        `It's expected that the display of the listitem is flex`
+      ).toHaveStyle('display: flex');
+
+      expect(
+        listItemFirstChild,
+        `It's expected that the display of the listitem is flex`
+      ).toHaveStyle('display: flex');
+
+      expect(
+        listItemFirstChild,
+        `It's expected that the flex-direction of the listitem is column`
+      ).toHaveStyle(`flex-direction: column`);
+
+      expect(
+        listItemFirstChild,
+        `It's expected that the display of the listitem is ${
+          args.fontFamily || 'Satoshi'
+        }`
+      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+    });
+
     await step('Checking component text content', async () => {
       expect(
         listItem,
         `Expect that the component has the title '${args.title}'`
       ).toHaveTextContent('List item');
+
       expect(
         listItem,
         `Expect that the component has the descripption '${args.description}'`
@@ -76,6 +111,35 @@ export const WithoutDescription: Story = {
         listItem,
         'It expected that the listitem is being rendered'
       ).toBeInTheDocument();
+    });
+
+    await step('Checking the listitem structure', () => {
+      const listItemFirstChild = listItem.firstElementChild as HTMLElement;
+
+      const numberOfTexts = listItem.getElementsByTagName('span').length;
+      expect(numberOfTexts, `It's expected that listitem as 1 texts`).toBe(1);
+
+      expect(
+        listItem,
+        `It's expected that the display of the listitem is flex`
+      ).toHaveStyle('display: flex');
+
+      expect(
+        listItemFirstChild,
+        `It's expected that the display of the listitem is flex`
+      ).toHaveStyle('display: flex');
+
+      expect(
+        listItemFirstChild,
+        `It's expected that the flex-direction of the listitem is column`
+      ).toHaveStyle(`flex-direction: column`);
+
+      expect(
+        listItemFirstChild,
+        `It's expected that the display of the listitem is ${
+          args.fontFamily || 'Satoshi'
+        }`
+      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
     });
 
     await step('Checking component text content', async () => {
@@ -115,16 +179,11 @@ export const WithPrefix: Story = {
       ).toBeInTheDocument();
     });
 
-    await step('Checking component text content', async () => {
-      expect(
-        listItem,
-        `Expect that the component has the title '${args.title}'`
-      ).toHaveTextContent('List item');
+    await step('Checking the listitem structure', () => {
+      const listItemSecondChild = listItem.childNodes[1] as HTMLElement;
 
-      expect(
-        listItem,
-        `Expect that the component has the descripption '${args.description}'`
-      ).toHaveTextContent('Supporting Text');
+      const numberOfTexts = listItem.getElementsByTagName('span').length;
+      expect(numberOfTexts, `It's expected that listitem as 2 texts`).toBe(2);
 
       expect(
         firstChildTagName,
@@ -135,6 +194,35 @@ export const WithPrefix: Story = {
         svgElements,
         'Expect that the component only has one svg'
       ).toHaveLength(1);
+
+      expect(
+        listItemSecondChild,
+        `It's expected that the display of the listitem is flex`
+      ).toHaveStyle('display: flex');
+
+      expect(
+        listItemSecondChild,
+        `It's expected that the second child style has flex-direction of the listitem is column`
+      ).toHaveStyle(`flex-direction: column`);
+
+      expect(
+        listItemSecondChild,
+        `It's expected that the display of the listitem is ${
+          args.fontFamily || 'Satoshi'
+        }`
+      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+    });
+
+    await step('Checking component text content', async () => {
+      expect(
+        listItem,
+        `Expect that the component has the title '${args.title}'`
+      ).toHaveTextContent('List item');
+
+      expect(
+        listItem,
+        `Expect that the component has the descripption '${args.description}'`
+      ).toHaveTextContent('Supporting Text');
     });
   },
 };
@@ -160,11 +248,11 @@ export const WithPrefixWithoutDescription: Story = {
       ).toBeInTheDocument();
     });
 
-    await step('Checking component text content', async () => {
-      expect(
-        listItem,
-        `Expect that the component has the title '${args.title}'`
-      ).toHaveTextContent('List item');
+    await step('Checking the listitem structure', () => {
+      const listItemSecondChild = listItem.childNodes[1] as HTMLElement;
+
+      const numberOfTexts = listItem.getElementsByTagName('span').length;
+      expect(numberOfTexts, `It's expected that listitem as 1 texts`).toBe(1);
 
       expect(
         firstChildTagName,
@@ -175,6 +263,30 @@ export const WithPrefixWithoutDescription: Story = {
         svgElements,
         'Expect that the component only has one svg'
       ).toHaveLength(1);
+
+      expect(
+        listItemSecondChild,
+        `It's expected that the display of the listitem is flex`
+      ).toHaveStyle('display: flex');
+
+      expect(
+        listItemSecondChild,
+        `It's expected that the second child style has flex-direction of the listitem is column`
+      ).toHaveStyle(`flex-direction: column`);
+
+      expect(
+        listItemSecondChild,
+        `It's expected that the display of the listitem is ${
+          args.fontFamily || 'Satoshi'
+        }`
+      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+    });
+
+    await step('Checking component text content', async () => {
+      expect(
+        listItem,
+        `Expect that the component has the title '${args.title}'`
+      ).toHaveTextContent('List item');
     });
   },
 };
@@ -201,6 +313,40 @@ export const WithSuffix: Story = {
       ).toBeInTheDocument();
     });
 
+    await step('Checking the listitem structure', () => {
+      const listItemSecondChild = listItem.childNodes[1] as HTMLElement;
+
+      const numberOfTexts = listItem.getElementsByTagName('span').length;
+      expect(numberOfTexts, `It's expected that listitem as 2 texts`).toBe(2);
+
+      expect(
+        lastChildTagName,
+        'Expect that the last child of the component is a svg'
+      ).toBe('svg');
+
+      expect(
+        svgElements,
+        'Expect that the component only has one svg'
+      ).toHaveLength(1);
+
+      expect(
+        listItemSecondChild,
+        `It's expected that the display of the listitem is flex`
+      ).toHaveStyle('display: flex');
+
+      expect(
+        listItemSecondChild,
+        `It's expected that the second child style has flex-direction of the listitem is row`
+      ).toHaveStyle(`flex-direction: row`);
+
+      expect(
+        listItemSecondChild,
+        `It's expected that the display of the listitem is ${
+          args.fontFamily || 'Satoshi'
+        }`
+      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+    });
+
     await step('Checking component text content', async () => {
       expect(
         listItem,
@@ -211,16 +357,6 @@ export const WithSuffix: Story = {
         listItem,
         `Expect that the component has the descripption '${args.description}'`
       ).toHaveTextContent('Supporting Text');
-
-      expect(
-        lastChildTagName,
-        'Expect that the first child of the component is a svg'
-      ).toBe('svg');
-
-      expect(
-        svgElements,
-        'Expect that the component only has one svg'
-      ).toHaveLength(1);
     });
   },
 };
@@ -246,21 +382,45 @@ export const WithSuffixWithoutDescription: Story = {
       ).toBeInTheDocument();
     });
 
-    await step('Checking component text content', async () => {
-      expect(
-        listItem,
-        `Expect that the component has the title '${args.title}'`
-      ).toHaveTextContent('List item');
+    await step('Checking the listitem structure', () => {
+      const listItemSecondChild = listItem.childNodes[1] as HTMLElement;
+
+      const numberOfTexts = listItem.getElementsByTagName('span').length;
+      expect(numberOfTexts, `It's expected that listitem as 1 texts`).toBe(1);
 
       expect(
         lastChildTagName,
-        'Expect that the first child of the component is a svg'
+        'Expect that the last child of the component is a svg'
       ).toBe('svg');
 
       expect(
         svgElements,
         'Expect that the component only has one svg'
       ).toHaveLength(1);
+
+      expect(
+        listItemSecondChild,
+        `It's expected that the display of the listitem is flex`
+      ).toHaveStyle('display: flex');
+
+      expect(
+        listItemSecondChild,
+        `It's expected that the second child style has flex-direction of the listitem is row`
+      ).toHaveStyle(`flex-direction: row`);
+
+      expect(
+        listItemSecondChild,
+        `It's expected that the display of the listitem is ${
+          args.fontFamily || 'Satoshi'
+        }`
+      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+    });
+
+    await step('Checking component text content', async () => {
+      expect(
+        listItem,
+        `Expect that the component has the title '${args.title}'`
+      ).toHaveTextContent('List item');
     });
   },
 };
@@ -293,6 +453,30 @@ export const WithSuffixToggle: Story = {
         listItem,
         `Expect that the component has the description '${args.description}'`
       ).toHaveTextContent('Supporting Text');
+    });
+
+    await step('Checking the listitem structure', () => {
+      const listItemSecondChild = listItem.childNodes[1] as HTMLElement;
+
+      const numberOfTexts = listItem.getElementsByTagName('span').length;
+      expect(numberOfTexts, `It's expected that listitem as 2 texts`).toBe(2);
+
+      expect(
+        listItemSecondChild,
+        `It's expected that the display of the listitem is flex`
+      ).toHaveStyle('display: flex');
+
+      expect(
+        listItemSecondChild,
+        `It's expected that the second child style has flex-direction of the listitem is row`
+      ).toHaveStyle(`flex-direction: row`);
+
+      expect(
+        listItemSecondChild,
+        `It's expected that the display of the listitem is ${
+          args.fontFamily || 'Satoshi'
+        }`
+      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
     });
 
     await step('Checking if the toggle is being rendered', async () => {
@@ -337,6 +521,30 @@ export const WithSuffixToggleWithoutDescription: Story = {
         listItem,
         `Expect that the component has the title '${args.title}'`
       ).toHaveTextContent('List item');
+    });
+
+    await step('Checking the listitem structure', () => {
+      const listItemSecondChild = listItem.childNodes[1] as HTMLElement;
+
+      const numberOfTexts = listItem.getElementsByTagName('span').length;
+      expect(numberOfTexts, `It's expected that listitem as 1 texts`).toBe(1);
+
+      expect(
+        listItemSecondChild,
+        `It's expected that the display of the listitem is flex`
+      ).toHaveStyle('display: flex');
+
+      expect(
+        listItemSecondChild,
+        `It's expected that the second child style has flex-direction of the listitem is row`
+      ).toHaveStyle(`flex-direction: row`);
+
+      expect(
+        listItemSecondChild,
+        `It's expected that the display of the listitem is ${
+          args.fontFamily || 'Satoshi'
+        }`
+      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
     });
 
     await step('Checking if the toggle is being rendered', async () => {
@@ -393,6 +601,30 @@ export const WithSuffixRadio: Story = {
       ).toHaveTextContent('100+');
     });
 
+    await step('Checking the listitem structure', () => {
+      const firstItemChild = listItem.childNodes[0] as HTMLElement;
+
+      const numberOfTexts = listItem.getElementsByTagName('span').length;
+      expect(numberOfTexts, `It's expected that listitem as 3 texts`).toBe(3);
+
+      expect(
+        firstItemChild,
+        `It's expected that the display of the listitem is flex`
+      ).toHaveStyle('display: flex');
+
+      expect(
+        firstItemChild,
+        `It's expected that the first child style has flex-direction of the listitem is row`
+      ).toHaveStyle(`flex-direction: column`);
+
+      expect(
+        firstItemChild,
+        `It's expected that the display of the listitem is ${
+          args.fontFamily || 'Satoshi'
+        }`
+      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+    });
+
     await step('Checking if the radio is being rendered', async () => {
       expect(
         radio,
@@ -444,6 +676,30 @@ export const WithSuffixRadioWithoutDescription: Story = {
       ).toBeInTheDocument();
     });
 
+    await step('Checking the listitem structure', () => {
+      const firstItemChild = listItem.childNodes[0] as HTMLElement;
+
+      const numberOfTexts = listItem.getElementsByTagName('span').length;
+      expect(numberOfTexts, `It's expected that listitem as 2 texts`).toBe(2);
+
+      expect(
+        firstItemChild,
+        `It's expected that the display of the listitem is flex`
+      ).toHaveStyle('display: flex');
+
+      expect(
+        firstItemChild,
+        `It's expected that the first child style has flex-direction of the listitem is row`
+      ).toHaveStyle(`flex-direction: column`);
+
+      expect(
+        firstItemChild,
+        `It's expected that the display of the listitem is ${
+          args.fontFamily || 'Satoshi'
+        }`
+      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+    });
+
     await step(
       'Checking if the last item in the list is the radio',
       async () => {
@@ -475,7 +731,10 @@ export const WithPrefixAndSuffixRadioWithoutDescription: Story = {
     const listItemLastChild = listItem.lastElementChild as HTMLElement;
     const listItemFirstChild = listItem.firstElementChild
       ?.firstElementChild as HTMLElement;
+    const lastItemChild = listItem.firstElementChild
+      ?.lastElementChild as HTMLElement;
     const firstChildTagName = listItemFirstChild.tagName;
+    const lastChildTagName = lastItemChild.tagName;
     const svgElements = listItem.querySelectorAll('svg');
     const radio = canvas.getByRole('radioContainer') as HTMLElement;
 
@@ -497,9 +756,38 @@ export const WithPrefixAndSuffixRadioWithoutDescription: Story = {
         'Expect that the first child of the component is a svg'
       ).toBe('svg');
 
+      expect(
+        lastChildTagName,
+        'Expect that the last child of the component is a svg'
+      ).toBe('svg');
+
       expect(svgElements, 'Expect that the component has 2 svg').toHaveLength(
         2
       );
+    });
+
+    await step('Checking the listitem structure', () => {
+      const firstItemChild = listItem.childNodes[0] as HTMLElement;
+
+      const numberOfTexts = listItem.getElementsByTagName('span').length;
+      expect(numberOfTexts, `It's expected that listitem as 1 texts`).toBe(1);
+
+      expect(
+        firstItemChild,
+        `It's expected that the display of the listitem is flex`
+      ).toHaveStyle('display: flex');
+
+      expect(
+        firstItemChild,
+        `It's expected that the first child style has flex-direction of the listitem is row`
+      ).toHaveStyle(`flex-direction: row`);
+
+      expect(
+        firstItemChild,
+        `It's expected that the display of the listitem is ${
+          args.fontFamily || 'Satoshi'
+        }`
+      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
     });
 
     await step('Checking if the radio is being rendered', async () => {
