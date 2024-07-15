@@ -22,12 +22,41 @@ export const Normal: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const checkbox = canvas.getByRole('checkbox');
+    const checkboxWrapper = canvas.getByRole('checkboxWrapper');
 
     await step('Checking checkbox style', async () => {
+      expect(checkbox, "It's expected to has a role of checkbox").toHaveRole(
+        'checkbox'
+      );
+      expect(checkbox.tagName, "It's expected to has an Input").toBe('INPUT');
       expect(
-        checkbox,
-        "It's expected input to be in document"
-      ).toBeInTheDocument();
+        checkbox.hasAttribute('type'),
+        "It' expected the input to has a type attribute"
+      ).toBeTruthy();
+      expect(
+        checkbox.getAttribute('type'),
+        "It's expected that the input has the type attribute as checkbox"
+      ).toBe('checkbox');
+      expect(
+        checkboxWrapper.children[2].tagName,
+        "It's expected to has a Label"
+      ).toBe('LABEL');
+      expect(
+        checkboxWrapper.children[2],
+        "It's expected to has color of rgb(27, 27, 31)"
+      ).toHaveStyle('color: rgb(27, 27, 31)');
+      expect(
+        checkboxWrapper.children[2],
+        "It's expected to has color of font size of 16px"
+      ).toHaveStyle('font-size: 16px');
+      expect(
+        checkboxWrapper.children[2],
+        "It's expected to has color of font family of satoshi"
+      ).toHaveStyle('font-family: Satoshi');
+      expect(
+        checkboxWrapper.children[2],
+        "It's expected to has cursor pointer"
+      ).toHaveStyle('cursor: pointer');
       expect(checkbox, "It's expected width to be 18px").toHaveStyle(
         'width: 18px'
       );
@@ -76,6 +105,18 @@ export const NormalWithoutLabel: Story = {
         checkbox,
         "It's expected input to be in document"
       ).toBeInTheDocument();
+      expect(checkbox, "It's expected to has a role of checkbox").toHaveRole(
+        'checkbox'
+      );
+      expect(checkbox.tagName, "It's expected to has an Input").toBe('INPUT');
+      expect(
+        checkbox.hasAttribute('type'),
+        "It' expected the input to has a type attribute"
+      ).toBeTruthy();
+      expect(
+        checkbox.getAttribute('type'),
+        "It's expected that the input has the type attribute as checkbox"
+      ).toBe('checkbox');
       expect(checkbox, "It's expected width to be 18px").toHaveStyle(
         'width: 18px'
       );
@@ -118,7 +159,41 @@ export const NormalWithIndeterminate: Story = {
     const canvas = within(canvasElement);
     const checkbox = canvas.getByRole('checkbox');
 
+    const checkboxWrapper = canvas.getByRole('checkboxWrapper');
+
     await step('Checking checkbox style', async () => {
+      expect(checkbox, "It's expected to has a role of checkbox").toHaveRole(
+        'checkbox'
+      );
+      expect(checkbox.tagName, "It's expected to has an Input").toBe('INPUT');
+      expect(
+        checkbox.hasAttribute('type'),
+        "It' expected the input to has a type attribute"
+      ).toBeTruthy();
+      expect(
+        checkbox.getAttribute('type'),
+        "It's expected that the input has the type attribute as checkbox"
+      ).toBe('checkbox');
+      expect(
+        checkboxWrapper.children[2].tagName,
+        "It's expected to has a Label"
+      ).toBe('LABEL');
+      expect(
+        checkboxWrapper.children[2],
+        "It's expected to has color of rgb(27, 27, 31)"
+      ).toHaveStyle('color: rgb(27, 27, 31)');
+      expect(
+        checkboxWrapper.children[2],
+        "It's expected to has color of font size of 16px"
+      ).toHaveStyle('font-size: 16px');
+      expect(
+        checkboxWrapper.children[2],
+        "It's expected to has color of font family of satoshi"
+      ).toHaveStyle('font-family: Satoshi');
+      expect(
+        checkboxWrapper.children[2],
+        "It's expected to has cursor pointer"
+      ).toHaveStyle('cursor: pointer');
       expect(
         checkbox,
         "It's expected input to be in document"
@@ -173,8 +248,41 @@ export const NormalWithIndeterminateAndSupportText: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const checkbox = canvas.getByRole('checkbox');
+    const checkboxWrapper = canvas.getByRole('checkboxWrapper');
 
-    await step('Checking checkbox style ', async () => {
+    await step('Checking checkbox style', async () => {
+      expect(checkbox, "It's expected to has a role of checkbox").toHaveRole(
+        'checkbox'
+      );
+      expect(checkbox.tagName, "It's expected to has an Input").toBe('INPUT');
+      expect(
+        checkbox.hasAttribute('type'),
+        "It' expected the input to has a type attribute"
+      ).toBeTruthy();
+      expect(
+        checkbox.getAttribute('type'),
+        "It's expected that the input has the type attribute as checkbox"
+      ).toBe('checkbox');
+      expect(
+        checkboxWrapper.children[2].tagName,
+        "It's expected to has a Label"
+      ).toBe('LABEL');
+      expect(
+        checkboxWrapper.children[2],
+        "It's expected to has color of rgb(27, 27, 31)"
+      ).toHaveStyle('color: rgb(27, 27, 31)');
+      expect(
+        checkboxWrapper.children[2],
+        "It's expected to has color of font size of 16px"
+      ).toHaveStyle('font-size: 16px');
+      expect(
+        checkboxWrapper.children[2],
+        "It's expected to has color of font family of satoshi"
+      ).toHaveStyle('font-family: Satoshi');
+      expect(
+        checkboxWrapper.children[2],
+        "It's expected to has cursor pointer"
+      ).toHaveStyle('cursor: pointer');
       expect(
         checkbox,
         "It's expected input to be in document"
@@ -231,8 +339,41 @@ export const NormalDisabled: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const checkbox = canvas.getByRole('checkbox');
+    const checkboxWrapper = canvas.getByRole('checkboxWrapper');
 
     await step('Checking checkbox style', async () => {
+      expect(checkbox, "It's expected to has a role of checkbox").toHaveRole(
+        'checkbox'
+      );
+      expect(checkbox.tagName, "It's expected to has an Input").toBe('INPUT');
+      expect(
+        checkbox.hasAttribute('type'),
+        "It' expected the input to has a type attribute"
+      ).toBeTruthy();
+      expect(
+        checkbox.getAttribute('type'),
+        "It's expected that the input has the type attribute as checkbox"
+      ).toBe('checkbox');
+      expect(
+        checkboxWrapper.children[2].tagName,
+        "It's expected to has a Label"
+      ).toBe('LABEL');
+      expect(
+        checkboxWrapper.children[2],
+        "It's expected to has color of rgb(27, 27, 31)"
+      ).toHaveStyle('color: rgb(27, 27, 31)');
+      expect(
+        checkboxWrapper.children[2],
+        "It's expected to has color of font size of 16px"
+      ).toHaveStyle('font-size: 16px');
+      expect(
+        checkboxWrapper.children[2],
+        "It's expected to has color of font family of satoshi"
+      ).toHaveStyle('font-family: Satoshi');
+      expect(
+        checkboxWrapper.children[2],
+        "It's expected to has cursor not-allowed"
+      ).toHaveStyle('cursor: not-allowed');
       expect(
         checkbox,
         "It's expected input to be in document"

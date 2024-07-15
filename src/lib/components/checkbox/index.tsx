@@ -55,6 +55,8 @@ export const Checkbox: FC<CheckboxProps> = ({
       display="flex"
       alignItems="center"
       cursor={disabled ? 'not-allowed' : 'pointer'}
+      // eslint-disable-next-line jsx-a11y/aria-role
+      role="checkboxWrapper"
     >
       <Box
         transition="all 300ms ease-in-out"
