@@ -43,19 +43,16 @@ export const ToggleButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
   const Icon = toggler ? activeIcon : inactiveIcon;
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    if (disabled) return;
     onChange?.(event);
     setToggler(not);
   };
 
   return (
     <Box
-      fontSize="s"
       display="flex"
       flexWrap="wrap"
-      fontWeight="300"
-      color="onSurface"
       alignItems="center"
-      textTransform="capitalize"
       // eslint-disable-next-line jsx-a11y/aria-role
       role="toggle"
     >
@@ -123,7 +120,7 @@ export const ToggleButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
           {labels?.label}
         </Typography>
         <Typography
-          as="label"
+          as="p"
           size="small"
           variant="body"
           color={`${colors['onSurface']}B8`}
