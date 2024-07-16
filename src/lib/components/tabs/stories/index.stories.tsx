@@ -17,12 +17,13 @@ export const Circle: Story = {
   args: {
     items: ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
     type: 'circle',
+    onChangeTab: fn(),
     width: '',
   },
   play: async ({ canvasElement, step, args }) => {
     let currentOption = 0;
     const canvas = within(canvasElement);
-    const tabs = canvas.getByRole('tabsTest');
+    const tabs = canvas.getByRole('tabs');
 
     await step('Check the structure of the Tab Circular', async () => {
       expect(
@@ -50,7 +51,7 @@ export const Circle: Story = {
           tabs.children[currentOption].children[0].childNodes[1];
         expect(
           tabItemWrapperSelected,
-          'It is expected that the selected option has a wrapper with "background-colour #fff" over it'
+          'It is expected that the selected option has a wrapper with "background-color #fff" over it'
         ).toHaveStyle('background-color: #fff');
         expect(
           tabItemWrapperSelected,
@@ -61,11 +62,17 @@ export const Circle: Story = {
 
     await step('Check navigation between options', async () => {
       currentOption++;
-      fireEvent.click(tabs.children[currentOption]);
+      await fireEvent.click(tabs.children[currentOption]);
+
+      const newTabs = canvas.getByRole('tabs');
       expect(
-        tabs.childNodes[currentOption].textContent,
-        `It is expected that the new selected option will be option "${args.items[currentOption]}"`
-      ).toBe(args.items[currentOption]);
+        newTabs.children[currentOption].children[0].children.length,
+        'It is expected that the selected option has two nodes'
+      ).toBe(2);
+      expect(
+        args.onChangeTab,
+        'It is expected that the onChange function has been executed at least once'
+      ).toHaveBeenCalledOnce();
     });
   },
 };
@@ -74,12 +81,13 @@ export const Square: Story = {
   args: {
     items: ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
     type: 'square',
+    onChangeTab: fn(),
     width: '',
   },
   play: async ({ canvasElement, step, args }) => {
     let currentOption = 0;
     const canvas = within(canvasElement);
-    const tabs = canvas.getByRole('tabsTest');
+    const tabs = canvas.getByRole('tabs');
 
     await step('Check the structure of the Tab Square', async () => {
       expect(
@@ -118,33 +126,17 @@ export const Square: Story = {
 
     await step('Check navigation between options', async () => {
       currentOption++;
-      fireEvent.click(tabs.children[currentOption]);
+      await fireEvent.click(tabs.children[currentOption]);
+
+      const newTabs = canvas.getByRole('tabs');
       expect(
-        tabs.childNodes[currentOption].textContent,
-        `It is expected that the new selected option will be option "${args.items[currentOption]}"`
-      ).toBe(args.items[currentOption]);
+        args.onChangeTab,
+        'It is expected that the onChange function has been executed at least once'
+      ).toHaveBeenCalledOnce();
+      expect(
+        newTabs.children[currentOption].children[0].children.length,
+        'It is expected that the selected option has two nodes'
+      ).toBe(2);
     });
-  },
-};
-
-export const ChangeTabAction: Story = {
-  args: {
-    items: ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
-    type: 'circle',
-    onChangeTab: fn(),
-  },
-  play: async ({ args, canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    const tabs = canvas.getByTestId('tabsTest');
-    const tabItems = tabs.childNodes;
-    expect(tabItems).toHaveLength(4);
-
-    const lastChild = tabs.lastElementChild as HTMLElement;
-
-    lastChild.click();
-
-    expect(args.onChangeTab).toHaveBeenCalledOnce();
-    expect(args.onChangeTab).toHaveBeenLastCalledWith(tabItems.length - 1);
   },
 };

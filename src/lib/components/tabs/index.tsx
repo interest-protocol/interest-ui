@@ -18,8 +18,8 @@ export const Tabs: FC<TabsProps> = ({
   const [tabIndex, setTabIndex] = useState(defaultTabIndex);
 
   const handleChangeTab = (index: number) => () => {
-    setTabIndex(index);
     onChangeTab?.(index);
+    setTabIndex(index);
   };
 
   return (
@@ -34,7 +34,7 @@ export const Tabs: FC<TabsProps> = ({
       bg={dark ? '#ffffff14' : '#00000014'}
       borderRadius={type == 'circle' ? 'full' : '0.625rem'}
       // eslint-disable-next-line jsx-a11y/aria-role
-      role="tabsTest"
+      role="tabs"
     >
       {items.map((item, index) => (
         <TabItem
