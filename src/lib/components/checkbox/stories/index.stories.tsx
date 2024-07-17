@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, userEvent, within } from '@storybook/test';
+import { expect, fn, userEvent, within } from '@storybook/test';
 
 import { Checkbox } from '..';
 
@@ -18,6 +18,7 @@ export const Normal: Story = {
     disabled: false,
     defaultValue: false,
     label: 'Checkbox Label',
+    onClick: fn(),
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
@@ -37,6 +38,22 @@ export const Normal: Story = {
         checkbox.getAttribute('type'),
         "It's expected that the input has the type attribute as checkbox"
       ).toBe('checkbox');
+      expect(checkbox, "It's expected width to be 18px").toHaveStyle(
+        'width: 18px'
+      );
+      expect(checkbox, "It's expected height to be 18px").toHaveStyle(
+        'height: 18px'
+      );
+      expect(checkbox, "It's expected to eb cursor pointer").toHaveStyle(
+        'cursor: pointer'
+      );
+      expect(
+        checkboxWrapper.childNodes.length,
+        'It is expected that the toggle wrapper has two nodes'
+      ).toBe(3);
+    });
+
+    await step('Checking checkbox label style', async () => {
       expect(
         checkboxWrapper.children[2].tagName,
         "It's expected to has a Label"
@@ -57,19 +74,11 @@ export const Normal: Story = {
         checkboxWrapper.children[2],
         "It's expected to has cursor pointer"
       ).toHaveStyle('cursor: pointer');
-      expect(checkbox, "It's expected width to be 18px").toHaveStyle(
-        'width: 18px'
-      );
-      expect(checkbox, "It's expected height to be 18px").toHaveStyle(
-        'height: 18px'
-      );
-      expect(checkbox, "It's expected to eb cursor pointer").toHaveStyle(
-        'cursor: pointer'
-      );
     });
 
     await step('Checking checkbox user event', async () => {
       await userEvent.click(canvas.getByRole('checkbox'));
+      expect(args.onClick).toHaveBeenCalledOnce();
       await userEvent.hover(canvas.getByRole('checkbox'));
       await userEvent.unhover(canvas.getByRole('checkbox'));
       await userEvent.dblClick(canvas.getByRole('checkbox'));
@@ -95,10 +104,12 @@ export const NormalWithoutLabel: Story = {
   args: {
     disabled: false,
     defaultValue: true,
+    onClick: fn(),
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const checkbox = canvas.getByRole('checkbox');
+    const checkboxWrapper = canvas.getByRole('checkboxWrapper');
 
     await step('Checking checkbox style', async () => {
       expect(
@@ -126,10 +137,15 @@ export const NormalWithoutLabel: Story = {
       expect(checkbox, "It's expected to eb cursor pointer").toHaveStyle(
         'cursor: pointer'
       );
+      expect(
+        checkboxWrapper.childNodes.length,
+        'It is expected that the toggle wrapper has two nodes'
+      ).toBe(3);
     });
 
     await step('Checking checkbox user event', async () => {
       await userEvent.click(canvas.getByRole('checkbox'));
+      expect(args.onClick).toHaveBeenCalledOnce();
       await userEvent.hover(canvas.getByRole('checkbox'));
       await userEvent.unhover(canvas.getByRole('checkbox'));
       await userEvent.dblClick(canvas.getByRole('checkbox'));
@@ -154,11 +170,11 @@ export const NormalWithIndeterminate: Story = {
     defaultValue: false,
     label: 'Checkbox Label',
     allowIndeterminateValue: true,
+    onClick: fn(),
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const checkbox = canvas.getByRole('checkbox');
-
     const checkboxWrapper = canvas.getByRole('checkboxWrapper');
 
     await step('Checking checkbox style', async () => {
@@ -174,6 +190,26 @@ export const NormalWithIndeterminate: Story = {
         checkbox.getAttribute('type'),
         "It's expected that the input has the type attribute as checkbox"
       ).toBe('checkbox');
+      expect(
+        checkbox,
+        "It's expected input to be in document"
+      ).toBeInTheDocument();
+      expect(checkbox, "It's expected width to be 18px").toHaveStyle(
+        'width: 18px'
+      );
+      expect(checkbox, "It's expected height to be 18px").toHaveStyle(
+        'height: 18px'
+      );
+      expect(checkbox, "It's expected to eb cursor pointer").toHaveStyle(
+        'cursor: pointer'
+      );
+      expect(
+        checkboxWrapper.childNodes.length,
+        'It is expected that the toggle wrapper has two nodes'
+      ).toBe(3);
+    });
+
+    await step('Checking checkbox label', async () => {
       expect(
         checkboxWrapper.children[2].tagName,
         "It's expected to has a Label"
@@ -194,23 +230,11 @@ export const NormalWithIndeterminate: Story = {
         checkboxWrapper.children[2],
         "It's expected to has cursor pointer"
       ).toHaveStyle('cursor: pointer');
-      expect(
-        checkbox,
-        "It's expected input to be in document"
-      ).toBeInTheDocument();
-      expect(checkbox, "It's expected width to be 18px").toHaveStyle(
-        'width: 18px'
-      );
-      expect(checkbox, "It's expected height to be 18px").toHaveStyle(
-        'height: 18px'
-      );
-      expect(checkbox, "It's expected to eb cursor pointer").toHaveStyle(
-        'cursor: pointer'
-      );
     });
 
     await step('Checking checkbox user event', async () => {
       await userEvent.click(canvas.getByRole('checkbox'));
+      expect(args.onClick).toHaveBeenCalledOnce();
       await userEvent.hover(canvas.getByRole('checkbox'));
       await userEvent.unhover(canvas.getByRole('checkbox'));
       await userEvent.dblClick(canvas.getByRole('checkbox'));
@@ -242,8 +266,9 @@ export const NormalWithIndeterminateAndSupportText: Story = {
     disabled: false,
     defaultValue: false,
     label: 'Checkbox Label',
-    allowIndeterminateValue: false,
+    allowIndeterminateValue: true,
     supportingText: 'Supporting Text',
+    onClick: fn(),
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
@@ -263,6 +288,26 @@ export const NormalWithIndeterminateAndSupportText: Story = {
         checkbox.getAttribute('type'),
         "It's expected that the input has the type attribute as checkbox"
       ).toBe('checkbox');
+      expect(
+        checkbox,
+        "It's expected input to be in document"
+      ).toBeInTheDocument();
+      expect(checkbox, "It's expected width to be 18px").toHaveStyle(
+        'width: 18px'
+      );
+      expect(checkbox, "It's expected height to be 18px").toHaveStyle(
+        'height: 18px'
+      );
+      expect(checkbox, "It's expected to eb cursor pointer").toHaveStyle(
+        'cursor: pointer'
+      );
+      expect(
+        checkboxWrapper.childNodes.length,
+        'It is expected that the toggle wrapper has two nodes'
+      ).toBe(3);
+    });
+
+    await step('Checking checkbox label style', async () => {
       expect(
         checkboxWrapper.children[2].tagName,
         "It's expected to has a Label"
@@ -283,23 +328,11 @@ export const NormalWithIndeterminateAndSupportText: Story = {
         checkboxWrapper.children[2],
         "It's expected to has cursor pointer"
       ).toHaveStyle('cursor: pointer');
-      expect(
-        checkbox,
-        "It's expected input to be in document"
-      ).toBeInTheDocument();
-      expect(checkbox, "It's expected width to be 18px").toHaveStyle(
-        'width: 18px'
-      );
-      expect(checkbox, "It's expected height to be 18px").toHaveStyle(
-        'height: 18px'
-      );
-      expect(checkbox, "It's expected to eb cursor pointer").toHaveStyle(
-        'cursor: pointer'
-      );
     });
 
     await step('Checking checkbox user event', async () => {
       await userEvent.click(canvas.getByRole('checkbox'));
+      expect(args.onClick).toHaveBeenCalledOnce();
       await userEvent.hover(canvas.getByRole('checkbox'));
       await userEvent.unhover(canvas.getByRole('checkbox'));
       await userEvent.dblClick(canvas.getByRole('checkbox'));
@@ -316,8 +349,8 @@ export const NormalWithIndeterminateAndSupportText: Story = {
       ).toBeFalsy();
       expect(
         args.allowIndeterminateValue,
-        "It's expected indeterminate value to be false"
-      ).toBeFalsy();
+        "It's expected indeterminate value to be true"
+      ).toBeTruthy();
       expect(
         args.label,
         "I'ts expected args label to be 'Checkbox Label'"
@@ -335,6 +368,7 @@ export const NormalDisabled: Story = {
     disabled: true,
     defaultValue: true,
     label: 'Checkbox Label',
+    onClick: fn(),
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
@@ -355,6 +389,30 @@ export const NormalDisabled: Story = {
         "It's expected that the input has the type attribute as checkbox"
       ).toBe('checkbox');
       expect(
+        checkbox,
+        "It's expected input to be in document"
+      ).toBeInTheDocument();
+      expect(checkbox, "It's expected width to be 18px").toHaveStyle(
+        'width: 18px'
+      );
+      expect(checkbox, "It's expected height to be 18px").toHaveStyle(
+        'height: 18px'
+      );
+      expect(checkbox, "It's expected to eb cursor pointer").toHaveStyle(
+        'cursor: not-allowed'
+      );
+      expect(
+        checkboxWrapper.childNodes.length,
+        'It is expected that the toggle wrapper has two nodes'
+      ).toBe(3);
+    });
+
+    await step('Checking checkbox label style', async () => {
+      expect(
+        checkboxWrapper.children[2].tagName,
+        "It's expected to has a Label"
+      ).toBe('LABEL');
+      expect(
         checkboxWrapper.children[2].tagName,
         "It's expected to has a Label"
       ).toBe('LABEL');
@@ -374,26 +432,11 @@ export const NormalDisabled: Story = {
         checkboxWrapper.children[2],
         "It's expected to has cursor not-allowed"
       ).toHaveStyle('cursor: not-allowed');
-      expect(
-        checkbox,
-        "It's expected input to be in document"
-      ).toBeInTheDocument();
-      expect(checkbox, "It's expected width to be 18px").toHaveStyle(
-        'width: 18px'
-      );
-      expect(checkbox, "It's expected height to be 18px").toHaveStyle(
-        'height: 18px'
-      );
-      expect(checkbox, "It's expected to eb cursor pointer").toHaveStyle(
-        'cursor: not-allowed'
-      );
     });
 
     await step('Checking checkbox user event', async () => {
-      await userEvent.click(canvas.getByRole('checkbox'));
       await userEvent.hover(canvas.getByRole('checkbox'));
       await userEvent.unhover(canvas.getByRole('checkbox'));
-      await userEvent.dblClick(canvas.getByRole('checkbox'));
     });
 
     await step('Checking checkbox args', async () => {
