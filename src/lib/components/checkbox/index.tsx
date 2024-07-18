@@ -58,18 +58,6 @@ export const Checkbox: FC<CheckboxProps> = ({
       // eslint-disable-next-line jsx-a11y/aria-role
       role="checkboxWrapper"
     >
-      <Box
-        transition="all 300ms ease-in-out"
-        nHover={{
-          p: disabled ? 'unset' : '0.675rem',
-          bg: disabled
-            ? 'unset'
-            : currentValue == 0
-            ? '#00000014'
-            : `${colors.primary}14`,
-        }}
-        borderRadius="full"
-      />
       <Box position="relative" width="1.125rem" height="1.125rem">
         <CheckedButtonElement
           id={label}
@@ -152,12 +140,12 @@ export const Checkbox: FC<CheckboxProps> = ({
           transition="all 300ms ease-in-out"
         />
       </Box>
-      <LabelElement
-        htmlFor={label}
-        color="onSurface"
-        cursor={disabled ? 'not-allowed' : 'pointer'}
-      >
-        <Box>
+      {label && (
+        <LabelElement
+          htmlFor={label}
+          color="onSurface"
+          cursor={disabled ? 'not-allowed' : 'pointer'}
+        >
           <Typography variant="body" size="large">
             {label}
           </Typography>
@@ -166,8 +154,8 @@ export const Checkbox: FC<CheckboxProps> = ({
               {supportingText}
             </Typography>
           )}
-        </Box>
-      </LabelElement>
+        </LabelElement>
+      )}
     </Box>
   );
 };
