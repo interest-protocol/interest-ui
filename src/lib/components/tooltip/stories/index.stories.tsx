@@ -46,50 +46,121 @@ export const Top: Story = {
     tooltipContent: tooltipContentText,
     children: tooltipChildren,
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-
     const tooltipContainer = canvas.getByLabelText(
-      'tooltipContent'
+      'tooltipContainer'
     ) as HTMLElement;
 
-    userEvent.hover(tooltipContainer);
-
-    await waitFor(() => {
-      const tooltip = canvas.getByRole('tooltip');
-      const computedStyle = getComputedStyle(tooltip);
-
-      const bottomStyle = computedStyle.getPropertyValue('bottom');
-      const topStyle = computedStyle.getPropertyValue('top');
-
-      const transformStyle = computedStyle.getPropertyValue('transform');
-
-      expect(tooltip, 'It should be render in document').toBeInTheDocument();
-
+    await step('Check the structure of the Tooltip', async () => {
       expect(
-        tooltip,
-        'The tooltip content should be rendered correctly'
-      ).toHaveTextContent('Tooltip');
+        tooltipContainer,
+        'It should be render in document'
+      ).toBeInTheDocument();
 
       expect(
         tooltipContainer,
-        'The tooltip trigger should be rendered correctly'
-      ).toHaveTextContent('Hover Me');
+        'It is expected that the tooltipContainer has a background rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
 
       expect(
-        bottomStyle,
-        'The bottom style should be -16px when tooltip is on top'
-      ).toBe('-16px');
+        tooltipContainer.children.length,
+        "It's expected that the tag has only one child element"
+      ).toBe(1);
+    });
+
+    await step('Validating the Tag content', () => {
+      const firstChild = tooltipContainer.children[0] as HTMLElement;
 
       expect(
-        topStyle,
-        'The top style should be empty when tooltip is on top'
-      ).toBe('' || '0px');
+        firstChild.tagName,
+        "It's expected that the tooltipContainer text has a tag-name P"
+      ).toBe('P');
 
       expect(
-        transformStyle,
-        'The transform style should correctly position the tooltip relative to the trigger element'
-      ).toBe('matrix(1, 0, 0, 1, -29.1914, -41.4)');
+        tooltipContainer.textContent,
+        `It's expected that the tag text is ${args.children}`
+      ).toBe('Hover Me');
+
+      expect(
+        firstChild,
+        "it's expected that the tag text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        firstChild,
+        "it's expected that the tag text font-size will be 14px"
+      ).toHaveStyle('font-size: 14px');
+      expect(
+        firstChild,
+        "it's expected that the tag text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
+    });
+
+    await step('Validating the hover event', async () => {
+      await waitFor(async () => {
+        await userEvent.hover(tooltipContainer);
+        const tooltip = canvas.getByRole('tooltip');
+
+        await step('Validating the tooltip structure', () => {
+          expect(
+            tooltip,
+            'It should be render in document'
+          ).toBeInTheDocument();
+
+          expect(
+            tooltip,
+            'It is expected that the tooltip has a background rgb(27, 27, 31)'
+          ).toHaveStyle('background-color: rgb(27, 27, 31)');
+
+          expect(
+            tooltip,
+            'It is expected that the tooltip has a top 0px'
+          ).toHaveStyle('top: 0px');
+
+          expect(
+            tooltip,
+            'It is expected that the tooltip has a right -27.9062px'
+          ).toHaveStyle('right: -27.9062px');
+
+          expect(
+            tooltip,
+            'It is expected that the tooltip has a right 30.4688px'
+          ).toHaveStyle('left: 30.4688px');
+
+          expect(
+            tooltip,
+            'It is expected that the tooltip has a bottom -16px'
+          ).toHaveStyle('bottom: -16px');
+        });
+
+        await step('Validating the Tooltip content', () => {
+          const firstChild = tooltip.children[0].children[0] as HTMLElement;
+
+          expect(
+            firstChild.tagName,
+            "It's expected that the tooltipContainer text has a tag-name P"
+          ).toBe('P');
+
+          expect(
+            tooltip.textContent,
+            `It's expected that the tooltip text is ${args.tooltipContent}`
+          ).toBe('Tooltip');
+
+          expect(
+            firstChild,
+            "it's expected that the tooltip text font-weight will be 500"
+          ).toHaveStyle('font-weight: 500');
+          expect(
+            firstChild,
+            "it's expected that the tooltip text font-size will be 14px"
+          ).toHaveStyle('font-size: 14px');
+
+          expect(
+            firstChild,
+            "it's expected that the tooltip text font-family will be Satoshi"
+          ).toHaveStyle('font-family: Satoshi');
+        });
+      });
     });
   },
 };
@@ -100,50 +171,121 @@ export const Left: Story = {
     tooltipContent: tooltipContentText,
     children: tooltipChildren,
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-
     const tooltipContainer = canvas.getByLabelText(
-      'tooltipContent'
+      'tooltipContainer'
     ) as HTMLElement;
 
-    userEvent.hover(tooltipContainer);
-
-    await waitFor(() => {
-      const tooltip = canvas.getByRole('tooltip');
-      const computedStyle = getComputedStyle(tooltip);
-
-      const leftStyle = computedStyle.getPropertyValue('left');
-      const rightStyle = computedStyle.getPropertyValue('right');
-
-      const transformStyle = computedStyle.getPropertyValue('transform');
-
-      expect(tooltip, 'It should be render in document').toBeInTheDocument();
-
+    await step('Check the structure of the Tooltip', async () => {
       expect(
-        tooltip,
-        'The tooltip content should be rendered correctly'
-      ).toHaveTextContent('Tooltip');
+        tooltipContainer,
+        'It should be render in document'
+      ).toBeInTheDocument();
 
       expect(
         tooltipContainer,
-        'The tooltip trigger should be rendered correctly'
-      ).toHaveTextContent('Hover Me');
+        'It is expected that the tooltipContainer has a background rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
 
       expect(
-        rightStyle,
-        'The right style should be 2.5625px when tooltip is on left'
-      ).toBe('2.5625px');
+        tooltipContainer.children.length,
+        "It's expected that the tag has only one child element"
+      ).toBe(1);
+    });
+
+    await step('Validating the Tag content', () => {
+      const firstChild = tooltipContainer.children[0] as HTMLElement;
 
       expect(
-        leftStyle,
-        'The right style should be empty when tooltip is on left'
-      ).toBe('' || '0px');
+        firstChild.tagName,
+        "It's expected that the tooltipContainer text has a tag-name P"
+      ).toBe('P');
 
       expect(
-        transformStyle,
-        'The transform style should correctly position the tooltip relative to the trigger element'
-      ).toBe('matrix(1, 0, 0, 1, -67.1402, -18)');
+        tooltipContainer.textContent,
+        `It's expected that the tag text is ${args.children}`
+      ).toBe('Hover Me');
+
+      expect(
+        firstChild,
+        "it's expected that the tag text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        firstChild,
+        "it's expected that the tag text font-size will be 14px"
+      ).toHaveStyle('font-size: 14px');
+      expect(
+        firstChild,
+        "it's expected that the tag text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
+    });
+
+    await step('Validating the hover event', async () => {
+      await waitFor(async () => {
+        await userEvent.hover(tooltipContainer);
+        const tooltip = canvas.getByRole('tooltip');
+
+        await step('Validating the tooltip structure', () => {
+          expect(
+            tooltip,
+            'It should be render in document'
+          ).toBeInTheDocument();
+
+          expect(
+            tooltip,
+            'It is expected that the tooltip has a background rgb(27, 27, 31)'
+          ).toHaveStyle('background-color: rgb(27, 27, 31)');
+
+          expect(
+            tooltip,
+            'It is expected that the tooltip has a top 10px'
+          ).toHaveStyle('top: 10px');
+
+          expect(
+            tooltip,
+            'It is expected that the tooltip has a right 2.5625px'
+          ).toHaveStyle('right: 2.5625px');
+
+          expect(
+            tooltip,
+            'It is expected that the tooltip has a left 0px'
+          ).toHaveStyle('left: 0px');
+
+          expect(
+            tooltip,
+            'It is expected that the tooltip has a right -26px'
+          ).toHaveStyle('bottom: -26px');
+        });
+
+        await step('Validating the Tooltip content', () => {
+          const firstChild = tooltip.children[0].children[0] as HTMLElement;
+
+          expect(
+            firstChild.tagName,
+            "It's expected that the tooltipContainer text has a tag-name P"
+          ).toBe('P');
+
+          expect(
+            tooltip.textContent,
+            `It's expected that the tooltip text is ${args.tooltipContent}`
+          ).toBe('Tooltip');
+
+          expect(
+            firstChild,
+            "it's expected that the tooltip text font-weight will be 500"
+          ).toHaveStyle('font-weight: 500');
+          expect(
+            firstChild,
+            "it's expected that the tooltip text font-size will be 14px"
+          ).toHaveStyle('font-size: 14px');
+
+          expect(
+            firstChild,
+            "it's expected that the tooltip text font-family will be Satoshi"
+          ).toHaveStyle('font-family: Satoshi');
+        });
+      });
     });
   },
 };
@@ -154,50 +296,121 @@ export const Right: Story = {
     tooltipContent: tooltipContentText,
     children: tooltipChildren,
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-
     const tooltipContainer = canvas.getByLabelText(
-      'tooltipContent'
+      'tooltipContainer'
     ) as HTMLElement;
 
-    userEvent.hover(tooltipContainer);
-
-    await waitFor(() => {
-      const tooltip = canvas.getByRole('tooltip');
-      const computedStyle = getComputedStyle(tooltip);
-
-      const leftStyle = computedStyle.getPropertyValue('left');
-      const rightStyle = computedStyle.getPropertyValue('right');
-
-      const transformStyle = computedStyle.getPropertyValue('transform');
-
-      expect(tooltip, 'It should be render in document').toBeInTheDocument();
-
+    await step('Check the structure of the Tooltip', async () => {
       expect(
-        tooltip,
-        'The tooltip content should be rendered correctly'
-      ).toHaveTextContent('Tooltip');
+        tooltipContainer,
+        'It should be render in document'
+      ).toBeInTheDocument();
 
       expect(
         tooltipContainer,
-        'The tooltip trigger should be rendered correctly'
-      ).toHaveTextContent('Hover Me');
+        'It is expected that the tooltipContainer has a background rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
 
       expect(
-        leftStyle,
-        'The right style should be 2.5625px when tooltip is on right'
-      ).toBe('2.5625px');
+        tooltipContainer.children.length,
+        "It's expected that the tag has only one child element"
+      ).toBe(1);
+    });
+
+    await step('Validating the Tag content', () => {
+      const firstChild = tooltipContainer.children[0] as HTMLElement;
 
       expect(
-        rightStyle,
-        'The right style should be empty when tooltip is on right'
-      ).toBe('' || '0px');
+        firstChild.tagName,
+        "It's expected that the tooltipContainer text has a tag-name P"
+      ).toBe('P');
 
       expect(
-        transformStyle,
-        'The transform style should correctly position the tooltip relative to the trigger element'
-      ).toBe('matrix(1, 0, 0, 1, 67.1402, -18)');
+        tooltipContainer.textContent,
+        `It's expected that the tag text is ${args.children}`
+      ).toBe('Hover Me');
+
+      expect(
+        firstChild,
+        "it's expected that the tag text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        firstChild,
+        "it's expected that the tag text font-size will be 14px"
+      ).toHaveStyle('font-size: 14px');
+      expect(
+        firstChild,
+        "it's expected that the tag text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
+    });
+
+    await step('Validating the hover event', async () => {
+      await waitFor(async () => {
+        await userEvent.hover(tooltipContainer);
+        const tooltip = canvas.getByRole('tooltip');
+
+        await step('Validating the tooltip structure', () => {
+          expect(
+            tooltip,
+            'It should be render in document'
+          ).toBeInTheDocument();
+
+          expect(
+            tooltip,
+            'It is expected that the tooltip has a background rgb(27, 27, 31)'
+          ).toHaveStyle('background-color: rgb(27, 27, 31)');
+
+          expect(
+            tooltip,
+            'It is expected that the tooltip has a top 10px'
+          ).toHaveStyle('top: 10px');
+
+          expect(
+            tooltip,
+            'It is expected that the tooltip has a right 0px'
+          ).toHaveStyle('right: 0px');
+
+          expect(
+            tooltip,
+            'It is expected that the tooltip has a left 2.5625px'
+          ).toHaveStyle('left: 2.5625px');
+
+          expect(
+            tooltip,
+            'It is expected that the tooltip has a right -26px'
+          ).toHaveStyle('bottom: -26px');
+        });
+
+        await step('Validating the Tooltip content', () => {
+          const firstChild = tooltip.children[0].children[0] as HTMLElement;
+
+          expect(
+            firstChild.tagName,
+            "It's expected that the tooltipContainer text has a tag-name P"
+          ).toBe('P');
+
+          expect(
+            tooltip.textContent,
+            `It's expected that the tooltip text is ${args.tooltipContent}`
+          ).toBe('Tooltip');
+
+          expect(
+            firstChild,
+            "it's expected that the tooltip text font-weight will be 500"
+          ).toHaveStyle('font-weight: 500');
+          expect(
+            firstChild,
+            "it's expected that the tooltip text font-size will be 14px"
+          ).toHaveStyle('font-size: 14px');
+
+          expect(
+            firstChild,
+            "it's expected that the tooltip text font-family will be Satoshi"
+          ).toHaveStyle('font-family: Satoshi');
+        });
+      });
     });
   },
 };
@@ -208,84 +421,121 @@ export const Bottom: Story = {
     tooltipContent: tooltipContentText,
     children: tooltipChildren,
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-
     const tooltipContainer = canvas.getByLabelText(
-      'tooltipContent'
+      'tooltipContainer'
     ) as HTMLElement;
 
-    userEvent.hover(tooltipContainer);
-
-    await waitFor(() => {
-      const tooltip = canvas.getByRole('tooltip');
-      const computedStyle = getComputedStyle(tooltip);
-
-      const bottomStyle = computedStyle.getPropertyValue('bottom');
-      const topStyle = computedStyle.getPropertyValue('top');
-
-      const transformStyle = computedStyle.getPropertyValue('transform');
-
-      expect(tooltip, 'It should be render in document').toBeInTheDocument();
-
+    await step('Check the structure of the Tooltip', async () => {
       expect(
-        tooltip,
-        'The tooltip content should be rendered correctly'
-      ).toHaveTextContent('Tooltip');
+        tooltipContainer,
+        'It should be render in document'
+      ).toBeInTheDocument();
 
       expect(
         tooltipContainer,
-        'The tooltip trigger should be rendered correctly'
-      ).toHaveTextContent('Hover Me');
+        'It is expected that the tooltipContainer has a background rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
 
       expect(
-        topStyle,
-        'The top style should be -16px when tooltip is on bottom'
-      ).toBe('-16px');
-
-      expect(
-        bottomStyle,
-        'The bottom style should be empty when tooltip is on bottom'
-      ).toBe('' || '0px');
-
-      expect(
-        transformStyle,
-        'The transform style should correctly position the tooltip relative to the trigger element'
-      ).toBe('matrix(1, 0, 0, 1, -29.1914, 41.4)');
+        tooltipContainer.children.length,
+        "It's expected that the tag has only one child element"
+      ).toBe(1);
     });
-  },
-};
 
-export const UnHovered: Story = {
-  args: {
-    tooltipPosition: 'bottom',
-    tooltipContent: tooltipContentText,
-    children: tooltipChildren,
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    const tooltipContainer = canvas.getByLabelText(
-      'tooltipContent'
-    ) as HTMLElement;
-
-    expect(
-      tooltipContainer,
-      'Tooltip content should be rendered in the document'
-    ).toBeInTheDocument();
-
-    expect(
-      canvas.queryByRole('tooltip'),
-      'The tooltip should not be rendered in the document before hover'
-    ).not.toBeInTheDocument();
-
-    await waitFor(() => {
-      const tooltip = canvas.queryByRole('tooltip');
+    await step('Validating the Tag content', () => {
+      const firstChild = tooltipContainer.children[0] as HTMLElement;
 
       expect(
-        tooltip,
-        'The tooltip should not be rendered in the document before hover'
-      ).not.toBeInTheDocument();
+        firstChild.tagName,
+        "It's expected that the tooltipContainer text has a tag-name P"
+      ).toBe('P');
+
+      expect(
+        tooltipContainer.textContent,
+        `It's expected that the tag text is ${args.children}`
+      ).toBe('Hover Me');
+
+      expect(
+        firstChild,
+        "it's expected that the tag text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        firstChild,
+        "it's expected that the tag text font-size will be 14px"
+      ).toHaveStyle('font-size: 14px');
+      expect(
+        firstChild,
+        "it's expected that the tag text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
+    });
+
+    await step('Validating the hover event', async () => {
+      await waitFor(async () => {
+        await userEvent.hover(tooltipContainer);
+        const tooltip = canvas.getByRole('tooltip');
+
+        await step('Validating the tooltip structure', () => {
+          expect(
+            tooltip,
+            'It should be render in document'
+          ).toBeInTheDocument();
+
+          expect(
+            tooltip,
+            'It is expected that the tooltip has a background rgb(27, 27, 31)'
+          ).toHaveStyle('background-color: rgb(27, 27, 31)');
+
+          expect(
+            tooltip,
+            'It is expected that the tooltip has a top -16px'
+          ).toHaveStyle('top: -16px');
+
+          expect(
+            tooltip,
+            'It is expected that the tooltip has a right -27.9062px'
+          ).toHaveStyle('right: -27.9062px');
+
+          expect(
+            tooltip,
+            'It is expected that the tooltip has a left 30.4688px'
+          ).toHaveStyle('left: 30.4688px');
+
+          expect(
+            tooltip,
+            'It is expected that the tooltip has a right 0px'
+          ).toHaveStyle('bottom: 0px');
+        });
+
+        await step('Validating the Tooltip content', () => {
+          const firstChild = tooltip.children[0].children[0] as HTMLElement;
+
+          expect(
+            firstChild.tagName,
+            "It's expected that the tooltipContainer text has a tag-name P"
+          ).toBe('P');
+
+          expect(
+            tooltip.textContent,
+            `It's expected that the tooltip text is ${args.tooltipContent}`
+          ).toBe('Tooltip');
+
+          expect(
+            firstChild,
+            "it's expected that the tooltip text font-weight will be 500"
+          ).toHaveStyle('font-weight: 500');
+          expect(
+            firstChild,
+            "it's expected that the tooltip text font-size will be 14px"
+          ).toHaveStyle('font-size: 14px');
+
+          expect(
+            firstChild,
+            "it's expected that the tooltip text font-family will be Satoshi"
+          ).toHaveStyle('font-family: Satoshi');
+        });
+      });
     });
   },
 };

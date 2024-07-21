@@ -19,7 +19,7 @@ export const TooltipWrapper: FC<
       onMouseLeave={() => {
         setToggle(false);
       }}
-      aria-label="tooltipContent"
+      aria-label="tooltipContainer"
     >
       {children}
       {toggle && (
