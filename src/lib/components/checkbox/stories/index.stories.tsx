@@ -53,6 +53,7 @@ export const Normal: Story = {
 
     await step('Checking checkbox style', async () => {
       const checkbox = checkboxWrapper.children[0].children[0];
+      console.log([checkbox]);
       expect(
         checkbox.tagName,
         'It is expected that the checkbox is an input'
@@ -699,7 +700,7 @@ export const NormalDisabled: Story = {
       ).toHaveStyle('align-items: center');
       expect(
         checkboxWrapper,
-        'It is expected that the wrapper has the cursor style set to pointer'
+        'It is expected that the wrapper has the cursor style set to not-allowed'
       ).toHaveStyle('cursor: not-allowed');
       expect(
         checkboxWrapper,
