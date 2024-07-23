@@ -42,6 +42,7 @@ export const RangeType: FC<RangeTypeProps> = ({
           marginTop={bottomValue ? '50px' : '-50px'}
           minWidth="2.75rem"
           justifyContent="center"
+          role="tooltip"
         >
           <Typography
             size="large"

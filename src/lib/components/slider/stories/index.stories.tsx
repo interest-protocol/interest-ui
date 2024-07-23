@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent, within } from '@storybook/test';
 
 import { Slider } from '..';
+import { convertREMtoPX } from '../slider.utils';
 
 const meta: Meta<typeof Slider> = {
   title: 'Slider',
@@ -46,46 +47,64 @@ export const Default: Story = {
     const sliderLine = canvas.getByRole('sliderLine');
     const computedStyle = getComputedStyle(sliderLine);
     const sliderLineBackground = computedStyle.getPropertyValue('background');
+    const tooltip = canvas.getByRole('tooltip');
 
-    await step('Checking if the component is being rendered', async () => {
-      expect(
-        slider,
-        'It expected that the slider is being rendered'
-      ).toBeInTheDocument();
-
+    await step('Checking if the slider structure', async () => {
       expect(
         sliderLine,
         'It expected that the slider line is being rendered'
       ).toBeInTheDocument();
-    });
-
-    await step('Checking component first appearences style', async () => {
-      expect(
-        slider,
-        `It is expected that the slider has background of #FFFFFF`
-      ).toHaveStyle('background-color: #FFFFFF');
 
       expect(
-        slider,
-        `It is expected that the slider has border color of #0053DB`
-      ).toHaveStyle('border-color: #0053DB');
+        sliderLine,
+        `It's expected that slider has the height of ${convertREMtoPX('0.25')}`
+      ).toHaveStyle('height: 4px');
 
       expect(
         sliderLineBackground,
         `It is expected that the slider has background of ${sliderLineBackground}`
       ).toContain(
-        `linear-gradient(to right, rgb(0, 83, 219) 0%, rgb(0, 83, 219) ${args.initial}%, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.08) 100%)`
+        `linear-gradient(to right, rgb(0, 83, 219) 0%, rgb(0, 83, 219) 0%, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.08) 100%)`
       );
 
       expect(
-        sliderLine,
-        `It is expected that the slider has the height of 4px`
-      ).toHaveStyle('height: 4px');
+        slider,
+        `It is expected that the slider pointer has background of #FFFFFF`
+      ).toHaveStyle('background-color: #FFFFFF');
 
       expect(
         slider,
-        `It is expected that the slider has not the tooltip with value ${args.initial}`
+        `It is expected that the slider pointer has border color of #0053DB`
+      ).toHaveStyle('border-color: #0053DB');
+
+      expect(
+        tooltip,
+        "It's expected that the tooltip is visible"
+      ).toBeVisible();
+    });
+
+    await step('Validating the Slider content', () => {
+      const typography = sliderLine.children[0].children[0].children[0];
+
+      expect(
+        typography,
+        `It's expected that the slider text don't have the inital text "${args.initial}"`
       ).not.toHaveTextContent('' + args.initial);
+
+      expect(
+        typography,
+        "it's expected that the tooltip text font-size will be 16"
+      ).toHaveStyle('font-size: 14px');
+
+      expect(
+        typography,
+        "it's expected that the tag text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Proto');
+
+      expect(
+        typography.tagName,
+        "It's expected that the slider text has a tag-name P"
+      ).toBe('P');
     });
 
     await step('Checking interactions with the slider', async () => {
@@ -125,42 +144,30 @@ export const DefaultInterval: Story = {
     const firstRange = args.initial && args.initial[0];
     const lastRange = args.initial && args.initial[1];
 
-    await step('Checking if the component is being rendered', async () => {
-      expect(
-        slider1,
-        'It expected that the first slider is being rendered'
-      ).toBeInTheDocument();
-
-      expect(
-        slider2,
-        'It expected that the last slider is being rendered'
-      ).toBeInTheDocument();
-
+    await step('Checking the slider structure', async () => {
       expect(
         sliderLine,
         'It expected that the slider line is being rendered'
       ).toBeInTheDocument();
-    });
 
-    await step('Checking component first appearences style', async () => {
       expect(
         slider1,
-        `It is expected that the first slider has background of #FFFFFF`
+        `It is expected that the first the slider pointer has background of #FFFFFF`
       ).toHaveStyle('background-color: #FFFFFF');
 
       expect(
         slider2,
-        `It is expected that the last slider has background of #FFFFFF`
+        `It is expected that the last slider pointer  has background of #FFFFFF`
       ).toHaveStyle('background-color: #FFFFFF');
 
       expect(
         slider1,
-        `It is expected that the first slider has border color of #0053DB`
+        `It is expected that the first slider pointer  has border color of #0053DB`
       ).toHaveStyle('border-color: #0053DB');
 
       expect(
         slider2,
-        `It is expected that the slider has border color of #0053DB`
+        `It is expected that the last slider pointer  has border color of #0053DB`
       ).toHaveStyle('border-color: #0053DB');
 
       expect(
@@ -172,8 +179,43 @@ export const DefaultInterval: Story = {
 
       expect(
         sliderLine,
-        `It is expected that the slider has the height of 4px`
+        `It's expected that slider has the height of ${convertREMtoPX('0.25')}`
       ).toHaveStyle('height: 4px');
+    });
+
+    await step('Validating the Slider content', () => {
+      const typography1 = sliderLine.children[0].children[0].children[0];
+      const typography2 = sliderLine.children[1].children[0].children[0];
+
+      expect(
+        typography1.tagName,
+        "It's expected that the slider text has a tag-name P"
+      ).toBe('P');
+
+      expect(
+        typography1,
+        "it's expected that the tooltip text font-size will be 16"
+      ).toHaveStyle('font-size: 14px');
+
+      expect(
+        typography1,
+        "it's expected that the tag text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Proto');
+
+      expect(
+        typography2.tagName,
+        "It's expected that the slider text has a tag-name P"
+      ).toBe('P');
+
+      expect(
+        typography2,
+        "it's expected that the tooltip text font-size will be 16"
+      ).toHaveStyle('font-size: 14px');
+
+      expect(
+        typography2,
+        "it's expected that the tag text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Proto');
 
       expect(
         slider1,
@@ -231,28 +273,16 @@ export const InTheMiddleWithoutTooltip: Story = {
     const computedStyle = getComputedStyle(sliderLine);
     const sliderLineBackground = computedStyle.getPropertyValue('background');
 
-    await step('Checking if the component is being rendered', async () => {
-      expect(
-        slider,
-        'It expected that the slider is being rendered'
-      ).toBeInTheDocument();
-
+    await step('Checking if the slider structure', async () => {
       expect(
         sliderLine,
         'It expected that the slider line is being rendered'
       ).toBeInTheDocument();
-    });
-
-    await step('Checking component first appearences style', async () => {
-      expect(
-        slider,
-        `It is expected that the slider has background of #FFFFFF`
-      ).toHaveStyle('background-color: #FFFFFF');
 
       expect(
-        slider,
-        `It is expected that the slider has border color of #0053DB`
-      ).toHaveStyle('border-color: #0053DB');
+        sliderLine,
+        `It's expected that slider has the height of ${convertREMtoPX('0.25')}`
+      ).toHaveStyle('height: 4px');
 
       expect(
         sliderLineBackground,
@@ -262,13 +292,22 @@ export const InTheMiddleWithoutTooltip: Story = {
       );
 
       expect(
-        sliderLine,
-        `It is expected that the slider has the height of 4px`
-      ).toHaveStyle('height: 4px');
+        slider,
+        `It is expected that the slider pointer has background of #FFFFFF`
+      ).toHaveStyle('background-color: #FFFFFF');
 
       expect(
         slider,
-        `It is expected that the slider has not the tooltip with value ${args.initial}`
+        `It is expected that the slider pointer has border color of #0053DB`
+      ).toHaveStyle('border-color: #0053DB');
+    });
+
+    await step('Validating the Slider content', () => {
+      const typography = sliderLine.children[0].children[0].children[0];
+
+      expect(
+        typography,
+        `It's expected that the slider text don't have the inital text "${args.initial}"`
       ).not.toHaveTextContent('' + args.initial);
     });
 
@@ -303,28 +342,16 @@ export const InTheEndWithoutTooltip: Story = {
     const computedStyle = getComputedStyle(sliderLine);
     const sliderLineBackground = computedStyle.getPropertyValue('background');
 
-    await step('Checking if the component is being rendered', async () => {
-      expect(
-        slider,
-        'It expected that the slider is being rendered'
-      ).toBeInTheDocument();
-
+    await step('Checking if the slider structure', async () => {
       expect(
         sliderLine,
         'It expected that the slider line is being rendered'
       ).toBeInTheDocument();
-    });
-
-    await step('Checking component first appearences style', async () => {
-      expect(
-        slider,
-        `It is expected that the slider has background of #FFFFFF`
-      ).toHaveStyle('background-color: #FFFFFF');
 
       expect(
-        slider,
-        `It is expected that the slider has border color of #0053DB`
-      ).toHaveStyle('border-color: #0053DB');
+        sliderLine,
+        `It's expected that slider has the height of ${convertREMtoPX('0.25')}`
+      ).toHaveStyle('height: 4px');
 
       expect(
         sliderLineBackground,
@@ -334,14 +361,23 @@ export const InTheEndWithoutTooltip: Story = {
       );
 
       expect(
-        sliderLine,
-        `It is expected that the slider has the height of 4px`
-      ).toHaveStyle('height: 4px');
+        slider,
+        `It is expected that the slider pointer has background of #FFFFFF`
+      ).toHaveStyle('background-color: #FFFFFF');
 
       expect(
         slider,
-        `It is expected that the slider has not the tooltip with value ${args.initial}`
-      ).not.toHaveTextContent('' + args.initial + '%');
+        `It is expected that the slider pointer has border color of #0053DB`
+      ).toHaveStyle('border-color: #0053DB');
+    });
+
+    await step('Validating the Slider content', () => {
+      const typography = sliderLine.children[0].children[0].children[0];
+
+      expect(
+        typography,
+        `It's expected that the slider text don't have the inital text "${args.initial}"`
+      ).not.toHaveTextContent('' + args.initial);
     });
 
     await step('Checking interactions with the slider', async () => {
@@ -375,28 +411,16 @@ export const InTheMiddleWithTooltip: Story = {
     const computedStyle = getComputedStyle(sliderLine);
     const sliderLineBackground = computedStyle.getPropertyValue('background');
 
-    await step('Checking if the component is being rendered', async () => {
-      expect(
-        slider,
-        'It expected that the slider is being rendered'
-      ).toBeInTheDocument();
-
+    await step('Checking if the slider structure', async () => {
       expect(
         sliderLine,
         'It expected that the slider line is being rendered'
       ).toBeInTheDocument();
-    });
-
-    await step('Checking component first appearences style', async () => {
-      expect(
-        slider,
-        `It is expected that the slider has background of #FFFFFF`
-      ).toHaveStyle('background-color: #FFFFFF');
 
       expect(
-        slider,
-        `It is expected that the slider has border color of #0053DB`
-      ).toHaveStyle('border-color: #0053DB');
+        sliderLine,
+        `It's expected that slider has the height of ${convertREMtoPX('0.25')}`
+      ).toHaveStyle('height: 4px');
 
       expect(
         sliderLineBackground,
@@ -406,13 +430,32 @@ export const InTheMiddleWithTooltip: Story = {
       );
 
       expect(
-        sliderLine,
-        `It is expected that the slider has the height of 4px`
-      ).toHaveStyle('height: 4px');
+        slider,
+        `It is expected that the slider pointer has background of #FFFFFF`
+      ).toHaveStyle('background-color: #FFFFFF');
 
       expect(
         slider,
-        `It is expected that the slider has not the tooltip with value ${args.initial}`
+        `It is expected that the slider pointer has border color of #0053DB`
+      ).toHaveStyle('border-color: #0053DB');
+    });
+
+    await step('Validating the Slider content', () => {
+      const typography = sliderLine.children[0].children[0].children[0];
+
+      expect(
+        typography,
+        "it's expected that the tooltip text font-size will be 16"
+      ).toHaveStyle('font-size: 14px');
+
+      expect(
+        typography,
+        "it's expected that the tag text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Proto');
+
+      expect(
+        typography,
+        `It's expected that the slider has the inital text "${args.initial}"`
       ).toHaveTextContent('' + args.initial);
     });
 
@@ -447,28 +490,16 @@ export const InTheEndWithTooltip: Story = {
     const computedStyle = getComputedStyle(sliderLine);
     const sliderLineBackground = computedStyle.getPropertyValue('background');
 
-    await step('Checking if the component is being rendered', async () => {
-      expect(
-        slider,
-        'It expected that the slider is being rendered'
-      ).toBeInTheDocument();
-
+    await step('Checking if the slider structure', async () => {
       expect(
         sliderLine,
         'It expected that the slider line is being rendered'
       ).toBeInTheDocument();
-    });
-
-    await step('Checking component first appearences style', async () => {
-      expect(
-        slider,
-        `It is expected that the slider has background of #FFFFFF`
-      ).toHaveStyle('background-color: #FFFFFF');
 
       expect(
-        slider,
-        `It is expected that the slider has border color of #0053DB`
-      ).toHaveStyle('border-color: #0053DB');
+        sliderLine,
+        `It's expected that slider has the height of ${convertREMtoPX('0.25')}`
+      ).toHaveStyle('height: 4px');
 
       expect(
         sliderLineBackground,
@@ -478,13 +509,32 @@ export const InTheEndWithTooltip: Story = {
       );
 
       expect(
-        sliderLine,
-        `It is expected that the slider has the height of 4px`
-      ).toHaveStyle('height: 4px');
+        slider,
+        `It is expected that the slider pointer has background of #FFFFFF`
+      ).toHaveStyle('background-color: #FFFFFF');
 
       expect(
         slider,
-        `It is expected that the slider has not the tooltip with value ${args.initial}`
+        `It is expected that the slider pointer has border color of #0053DB`
+      ).toHaveStyle('border-color: #0053DB');
+    });
+
+    await step('Validating the Slider content', () => {
+      const typography = sliderLine.children[0].children[0].children[0];
+
+      expect(
+        typography,
+        "it's expected that the tooltip text font-size will be 16"
+      ).toHaveStyle('font-size: 14px');
+
+      expect(
+        typography,
+        "it's expected that the tag text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Proto');
+
+      expect(
+        typography,
+        `It's expected that the slider has the inital text "${args.initial}"`
       ).toHaveTextContent('' + args.initial);
     });
 
