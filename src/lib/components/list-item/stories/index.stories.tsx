@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, within } from '@storybook/test';
+import { expect, fn, userEvent, within } from '@storybook/test';
 import React from 'react';
 
 import { ArrowRightIcon } from '../../../../storybook/icons';
@@ -40,58 +40,92 @@ export const Normal: Story = {
     const canvas = within(canvasElement);
 
     const listItem = canvas.getByRole('listitem');
+    const numberOfTexts = listItem.getElementsByTagName('span').length;
 
-    await step('Checking if the component is being rendered', async () => {
+    await step('Validating the Tag structure', () => {
       expect(
         listItem,
-        'It expected that the listitem is being rendered'
+        "It's expected that listitem is rendered"
       ).toBeInTheDocument();
-    });
-
-    await step('Checking the listitem structure', () => {
-      const listItemFirstChild = listItem.firstElementChild as HTMLElement;
-
-      const numberOfTexts = listItem.getElementsByTagName('span').length;
-      expect(numberOfTexts, `It's expected that listitem as 2 texts`).toBe(2);
 
       expect(
-        listItem,
+        listItem.children[0],
         `It's expected that the display of the listitem is flex`
       ).toHaveStyle('display: flex');
 
       expect(
-        listItem,
-        `It's expected that the display of the listitem is flex`
-      ).toHaveStyle('display: flex');
-
-      expect(
-        listItemFirstChild,
-        `It's expected that the display of the listitem is flex`
-      ).toHaveStyle('display: flex');
-
-      expect(
-        listItemFirstChild,
+        listItem.children[0],
         `It's expected that the flex-direction of the listitem is column`
       ).toHaveStyle(`flex-direction: column`);
 
       expect(
-        listItemFirstChild,
-        `It's expected that the display of the listitem is ${
-          args.fontFamily || 'Satoshi'
-        }`
-      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+        numberOfTexts,
+        "It's expected that the lsitem has 2 elements"
+      ).toBe(2);
     });
 
-    await step('Checking component text content', async () => {
-      expect(
-        listItem,
-        `Expect that the component has the title '${args.title}'`
-      ).toHaveTextContent('List item');
+    await step('Validating the Tag content', () => {
+      const title = listItem.children[0].children[0];
+      const description = listItem.children[0].children[1];
 
       expect(
-        listItem,
-        `Expect that the component has the descripption '${args.description}'`
-      ).toHaveTextContent('Supporting Text');
+        title.tagName,
+        "It's expected that the title text has a tag-name SPAN"
+      ).toBe('SPAN');
+
+      expect(
+        title,
+        `It's expected that the title text is ${args.children}`
+      ).toHaveTextContent(args.title);
+
+      expect(
+        title,
+        "it's expected that the title text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+
+      expect(
+        title,
+        "it's expected that the title text font-size will be 14"
+      ).toHaveStyle('font-size: 14px');
+
+      expect(
+        title,
+        "it's expected that the title text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
+
+      expect(
+        description.tagName,
+        "It's expected that the description text has a tag-name SPAN"
+      ).toBe('SPAN');
+
+      expect(
+        description,
+        `It's expected that the description text is ${args.description}`
+      ).toHaveTextContent(args.description || '');
+
+      expect(
+        description,
+        "it's expected that the description text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+
+      expect(
+        description,
+        "it's expected that the description text font-size will be 12"
+      ).toHaveStyle('font-size: 12px');
+
+      expect(
+        description,
+        "it's expected that the description text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
+    });
+
+    await step('Testing onClick event', async () => {
+      await userEvent.click(listItem);
+
+      expect(
+        args.onClick,
+        'It expects that when the listitem is clicked, the event onClick is called'
+      ).toHaveBeenCalled();
     });
   },
 };
@@ -99,59 +133,71 @@ export const Normal: Story = {
 export const WithoutDescription: Story = {
   args: {
     title: 'List item',
+    onClick: fn(),
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
+
     const listItem = canvas.getByRole('listitem');
+    const numberOfTexts = listItem.getElementsByTagName('span').length;
 
-    const listItemChilds = listItem.childNodes;
-
-    await step('Checking if the component is being rendered', async () => {
+    await step('Validating the Tag structure', () => {
       expect(
         listItem,
-        'It expected that the listitem is being rendered'
+        "It's expected that listitem is rendered"
       ).toBeInTheDocument();
-    });
-
-    await step('Checking the listitem structure', () => {
-      const listItemFirstChild = listItem.firstElementChild as HTMLElement;
-
-      const numberOfTexts = listItem.getElementsByTagName('span').length;
-      expect(numberOfTexts, `It's expected that listitem as 1 texts`).toBe(1);
 
       expect(
-        listItem,
+        listItem.children[0],
         `It's expected that the display of the listitem is flex`
       ).toHaveStyle('display: flex');
 
       expect(
-        listItemFirstChild,
-        `It's expected that the display of the listitem is flex`
-      ).toHaveStyle('display: flex');
-
-      expect(
-        listItemFirstChild,
+        listItem.children[0],
         `It's expected that the flex-direction of the listitem is column`
       ).toHaveStyle(`flex-direction: column`);
 
-      expect(
-        listItemFirstChild,
-        `It's expected that the display of the listitem is ${
-          args.fontFamily || 'Satoshi'
-        }`
-      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+      expect(numberOfTexts, "It's expected that the lsitem has 1 element").toBe(
+        1
+      );
     });
 
-    await step('Checking component text content', async () => {
-      expect(
-        listItem,
-        `Expect that the component has the title '${args.title}'`
-      ).toHaveTextContent('List item');
+    await step('Validating the Tag content', () => {
+      const title = listItem.children[0].children[0];
 
       expect(
-        listItemChilds,
-        `Expect that the component has only one child '`
-      ).toHaveLength(1);
+        title.tagName,
+        "It's expected that the title text has a tag-name SPAN"
+      ).toBe('SPAN');
+
+      expect(
+        title,
+        `It's expected that the title text is ${args.children}`
+      ).toHaveTextContent(args.title);
+
+      expect(
+        title,
+        "it's expected that the title text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+
+      expect(
+        title,
+        "it's expected that the title text font-size will be 14"
+      ).toHaveStyle('font-size: 14px');
+
+      expect(
+        title,
+        "it's expected that the title text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
+    });
+
+    await step('Testing onClick event', async () => {
+      await userEvent.click(listItem);
+
+      expect(
+        args.onClick,
+        'It expects that when the listitem is clicked, the event onClick is called'
+      ).toHaveBeenCalled();
     });
   },
 };
@@ -161,68 +207,101 @@ export const WithPrefix: Story = {
     title: 'List item',
     description: 'Supporting Text',
     PrefixIcon: <ArrowRightIcon />,
+    onClick: fn(),
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
     const listItem = canvas.getByRole('listitem');
-    const listItemFirstChild = listItem.firstElementChild?.firstElementChild
-      ?.firstElementChild as HTMLElement;
-
-    const firstChildTagName = listItemFirstChild.tagName;
+    const firstChild = listItem.firstChild?.firstChild
+      ?.firstChild as HTMLElement;
     const svgElements = listItem.querySelectorAll('svg');
+    const numberOfTexts = listItem.getElementsByTagName('span').length;
 
-    await step('Checking if the component is being rendered', async () => {
+    await step('Validating the Tag structure', () => {
       expect(
         listItem,
-        'It expected that the listitem is being rendered'
+        "It's expected that listitem is rendered"
       ).toBeInTheDocument();
-    });
-
-    await step('Checking the listitem structure', () => {
-      const listItemSecondChild = listItem.childNodes[1] as HTMLElement;
-
-      const numberOfTexts = listItem.getElementsByTagName('span').length;
-      expect(numberOfTexts, `It's expected that listitem as 2 texts`).toBe(2);
 
       expect(
-        firstChildTagName,
+        numberOfTexts,
+        "It's expected that the listitem has 2 text elements"
+      ).toBe(numberOfTexts);
+
+      expect(
+        firstChild.tagName,
         'Expect that the first child of the component is a svg'
       ).toBe('svg');
 
       expect(
-        svgElements,
-        'Expect that the component only has one svg'
-      ).toHaveLength(1);
-
-      expect(
-        listItemSecondChild,
-        `It's expected that the display of the listitem is flex`
-      ).toHaveStyle('display: flex');
-
-      expect(
-        listItemSecondChild,
-        `It's expected that the second child style has flex-direction of the listitem is column`
-      ).toHaveStyle(`flex-direction: column`);
-
-      expect(
-        listItemSecondChild,
-        `It's expected that the display of the listitem is ${
-          args.fontFamily || 'Satoshi'
-        }`
-      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+        svgElements.length,
+        "It's expected that the listitem has 1 svg element"
+      ).toBe(1);
     });
 
-    await step('Checking component text content', async () => {
-      expect(
-        listItem,
-        `Expect that the component has the title '${args.title}'`
-      ).toHaveTextContent('List item');
+    await step('Validating the Tag content', () => {
+      const title = listItem.children[1].children[0];
+      const description = listItem.children[1].children[1];
 
       expect(
-        listItem,
-        `Expect that the component has the descripption '${args.description}'`
-      ).toHaveTextContent('Supporting Text');
+        title.tagName,
+        "It's expected that the title text has a tag-name SPAN"
+      ).toBe('SPAN');
+
+      expect(
+        title,
+        `It's expected that the title text is ${args.children}`
+      ).toHaveTextContent(args.title);
+
+      expect(
+        title,
+        "it's expected that the title text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+
+      expect(
+        title,
+        "it's expected that the title text font-size will be 14"
+      ).toHaveStyle('font-size: 14px');
+
+      expect(
+        title,
+        "it's expected that the title text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
+
+      expect(
+        description.tagName,
+        "It's expected that the description text has a tag-name SPAN"
+      ).toBe('SPAN');
+
+      expect(
+        description,
+        `It's expected that the description text is ${args.description}`
+      ).toHaveTextContent(args.description || '');
+
+      expect(
+        description,
+        "it's expected that the description text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+
+      expect(
+        description,
+        "it's expected that the description text font-size will be 12"
+      ).toHaveStyle('font-size: 12px');
+
+      expect(
+        description,
+        "it's expected that the description text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
+    });
+
+    await step('Testing onClick event', async () => {
+      await userEvent.click(listItem);
+
+      expect(
+        args.onClick,
+        'It expects that when the listitem is clicked, the event onClick is called'
+      ).toHaveBeenCalled();
     });
   },
 };
@@ -231,62 +310,75 @@ export const WithPrefixWithoutDescription: Story = {
   args: {
     title: 'List item',
     PrefixIcon: <ArrowRightIcon />,
+    onClick: fn(),
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
+
     const listItem = canvas.getByRole('listitem');
-    const listItemFirstChild = listItem.firstElementChild?.firstElementChild
-      ?.firstElementChild as HTMLElement;
-
-    const firstChildTagName = listItemFirstChild.tagName;
+    const firstChild = listItem.firstChild?.firstChild
+      ?.firstChild as HTMLElement;
     const svgElements = listItem.querySelectorAll('svg');
+    const numberOfTexts = listItem.getElementsByTagName('span').length;
 
-    await step('Checking if the component is being rendered', async () => {
+    await step('Validating the Tag structure', () => {
       expect(
         listItem,
-        'It expected that the listitem is being rendered'
+        "It's expected that listitem is rendered"
       ).toBeInTheDocument();
-    });
-
-    await step('Checking the listitem structure', () => {
-      const listItemSecondChild = listItem.childNodes[1] as HTMLElement;
-
-      const numberOfTexts = listItem.getElementsByTagName('span').length;
-      expect(numberOfTexts, `It's expected that listitem as 1 texts`).toBe(1);
 
       expect(
-        firstChildTagName,
+        numberOfTexts,
+        "It's expected that the listitem has 1 text element"
+      ).toBe(numberOfTexts);
+
+      expect(
+        firstChild.tagName,
         'Expect that the first child of the component is a svg'
       ).toBe('svg');
 
       expect(
-        svgElements,
-        'Expect that the component only has one svg'
-      ).toHaveLength(1);
-
-      expect(
-        listItemSecondChild,
-        `It's expected that the display of the listitem is flex`
-      ).toHaveStyle('display: flex');
-
-      expect(
-        listItemSecondChild,
-        `It's expected that the second child style has flex-direction of the listitem is column`
-      ).toHaveStyle(`flex-direction: column`);
-
-      expect(
-        listItemSecondChild,
-        `It's expected that the display of the listitem is ${
-          args.fontFamily || 'Satoshi'
-        }`
-      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+        svgElements.length,
+        "It's expected that the listitem has 1 svg element"
+      ).toBe(1);
     });
 
-    await step('Checking component text content', async () => {
+    await step('Validating the Tag content', () => {
+      const title = listItem.children[1].children[0];
+
       expect(
-        listItem,
-        `Expect that the component has the title '${args.title}'`
-      ).toHaveTextContent('List item');
+        title.tagName,
+        "It's expected that the title text has a tag-name SPAN"
+      ).toBe('SPAN');
+
+      expect(
+        title,
+        `It's expected that the title text is ${args.children}`
+      ).toHaveTextContent(args.title);
+
+      expect(
+        title,
+        "it's expected that the title text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+
+      expect(
+        title,
+        "it's expected that the title text font-size will be 14"
+      ).toHaveStyle('font-size: 14px');
+
+      expect(
+        title,
+        "it's expected that the title text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
+    });
+
+    await step('Testing onClick event', async () => {
+      await userEvent.click(listItem);
+
+      expect(
+        args.onClick,
+        'It expects that when the listitem is clicked, the event onClick is called'
+      ).toHaveBeenCalled();
     });
   },
 };
@@ -296,67 +388,100 @@ export const WithSuffix: Story = {
     title: 'List item',
     description: 'Supporting Text',
     SuffixIcon: <ArrowRightIcon />,
+    onClick: fn(),
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
+
     const listItem = canvas.getByRole('listitem');
-    const listItemLastChild = listItem.lastElementChild
-      ?.firstElementChild as HTMLElement;
-
-    const lastChildTagName = listItemLastChild.tagName;
+    const lastChild = listItem.lastChild?.firstChild as HTMLElement;
     const svgElements = listItem.querySelectorAll('svg');
+    const numberOfTexts = listItem.getElementsByTagName('span').length;
 
-    await step('Checking if the component is being rendered', async () => {
+    await step('Validating the Tag structure', () => {
       expect(
         listItem,
-        'It expected that the listitem is being rendered'
+        "It's expected that listitem is rendered"
       ).toBeInTheDocument();
-    });
-
-    await step('Checking the listitem structure', () => {
-      const listItemSecondChild = listItem.childNodes[1] as HTMLElement;
-
-      const numberOfTexts = listItem.getElementsByTagName('span').length;
-      expect(numberOfTexts, `It's expected that listitem as 2 texts`).toBe(2);
 
       expect(
-        lastChildTagName,
+        numberOfTexts,
+        "It's expected that the listitem has 2 text elements"
+      ).toBe(numberOfTexts);
+
+      expect(
+        lastChild.tagName,
         'Expect that the last child of the component is a svg'
       ).toBe('svg');
 
       expect(
-        svgElements,
-        'Expect that the component only has one svg'
-      ).toHaveLength(1);
-
-      expect(
-        listItemSecondChild,
-        `It's expected that the display of the listitem is flex`
-      ).toHaveStyle('display: flex');
-
-      expect(
-        listItemSecondChild,
-        `It's expected that the second child style has flex-direction of the listitem is row`
-      ).toHaveStyle(`flex-direction: row`);
-
-      expect(
-        listItemSecondChild,
-        `It's expected that the display of the listitem is ${
-          args.fontFamily || 'Satoshi'
-        }`
-      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+        svgElements.length,
+        "It's expected that the listitem has 1 svg element"
+      ).toBe(1);
     });
 
-    await step('Checking component text content', async () => {
-      expect(
-        listItem,
-        `Expect that the component has the title '${args.title}'`
-      ).toHaveTextContent('List item');
+    await step('Validating the Tag content', () => {
+      const title = listItem.children[0].children[0];
+      const description = listItem.children[0].children[1];
 
       expect(
-        listItem,
-        `Expect that the component has the descripption '${args.description}'`
-      ).toHaveTextContent('Supporting Text');
+        title.tagName,
+        "It's expected that the title text has a tag-name SPAN"
+      ).toBe('SPAN');
+
+      expect(
+        title,
+        `It's expected that the title text is ${args.children}`
+      ).toHaveTextContent(args.title);
+
+      expect(
+        title,
+        "it's expected that the title text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+
+      expect(
+        title,
+        "it's expected that the title text font-size will be 14"
+      ).toHaveStyle('font-size: 14px');
+
+      expect(
+        title,
+        "it's expected that the title text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
+
+      expect(
+        description.tagName,
+        "It's expected that the description text has a tag-name SPAN"
+      ).toBe('SPAN');
+
+      expect(
+        description,
+        `It's expected that the description text is ${args.description}`
+      ).toHaveTextContent(args.description || '');
+
+      expect(
+        description,
+        "it's expected that the description text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+
+      expect(
+        description,
+        "it's expected that the description text font-size will be 12"
+      ).toHaveStyle('font-size: 12px');
+
+      expect(
+        description,
+        "it's expected that the description text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
+    });
+
+    await step('Testing onClick event', async () => {
+      await userEvent.click(listItem);
+
+      expect(
+        args.onClick,
+        'It expects that when the listitem is clicked, the event onClick is called'
+      ).toHaveBeenCalled();
     });
   },
 };
@@ -368,59 +493,70 @@ export const WithSuffixWithoutDescription: Story = {
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
+
     const listItem = canvas.getByRole('listitem');
-    const listItemLastChild = listItem.lastElementChild
-      ?.firstElementChild as HTMLElement;
-
-    const lastChildTagName = listItemLastChild.tagName;
+    const lastChild = listItem.lastChild?.firstChild as HTMLElement;
     const svgElements = listItem.querySelectorAll('svg');
+    const numberOfTexts = listItem.getElementsByTagName('span').length;
 
-    await step('Checking if the component is being rendered', async () => {
+    await step('Validating the Tag structure', () => {
       expect(
         listItem,
-        'It expected that the listitem is being rendered'
+        "It's expected that listitem is rendered"
       ).toBeInTheDocument();
-    });
-
-    await step('Checking the listitem structure', () => {
-      const listItemSecondChild = listItem.childNodes[1] as HTMLElement;
-
-      const numberOfTexts = listItem.getElementsByTagName('span').length;
-      expect(numberOfTexts, `It's expected that listitem as 1 texts`).toBe(1);
 
       expect(
-        lastChildTagName,
+        numberOfTexts,
+        "It's expected that the listitem has 2 text elements"
+      ).toBe(numberOfTexts);
+
+      expect(
+        lastChild.tagName,
         'Expect that the last child of the component is a svg'
       ).toBe('svg');
 
       expect(
-        svgElements,
-        'Expect that the component only has one svg'
-      ).toHaveLength(1);
-
-      expect(
-        listItemSecondChild,
-        `It's expected that the display of the listitem is flex`
-      ).toHaveStyle('display: flex');
-
-      expect(
-        listItemSecondChild,
-        `It's expected that the second child style has flex-direction of the listitem is row`
-      ).toHaveStyle(`flex-direction: row`);
-
-      expect(
-        listItemSecondChild,
-        `It's expected that the display of the listitem is ${
-          args.fontFamily || 'Satoshi'
-        }`
-      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+        svgElements.length,
+        "It's expected that the listitem has 1 svg element"
+      ).toBe(1);
     });
 
-    await step('Checking component text content', async () => {
+    await step('Validating the Tag content', () => {
+      const title = listItem.children[0].children[0];
+
       expect(
-        listItem,
-        `Expect that the component has the title '${args.title}'`
-      ).toHaveTextContent('List item');
+        title.tagName,
+        "It's expected that the title text has a tag-name SPAN"
+      ).toBe('SPAN');
+
+      expect(
+        title,
+        `It's expected that the title text is ${args.children}`
+      ).toHaveTextContent(args.title);
+
+      expect(
+        title,
+        "it's expected that the title text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+
+      expect(
+        title,
+        "it's expected that the title text font-size will be 14"
+      ).toHaveStyle('font-size: 14px');
+
+      expect(
+        title,
+        "it's expected that the title text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
+    });
+
+    await step('Testing onClick event', async () => {
+      await userEvent.click(listItem);
+
+      expect(
+        args.onClick,
+        'It expects that when the listitem is clicked, the event onClick is called'
+      ).toHaveBeenCalled();
     });
   },
 };
@@ -430,71 +566,101 @@ export const WithSuffixToggle: Story = {
     title: 'List item',
     description: 'Supporting Text',
     SuffixIcon: <ToggleButton name="toggle" defaultValue={false} />,
+    onClick: fn(),
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const listItem = canvas.getByRole('listitem');
-    const listItemLastChild = listItem.lastElementChild as HTMLElement;
-    const toggle = canvas.getByRole('toggle') as HTMLElement;
+    const lastChild = listItem.lastChild as HTMLElement;
+    const toggles = canvas.getAllByRole('toggle');
+    const numberOfTexts = listItem.getElementsByTagName('span').length;
+    const toggle = canvas.getByRole('toggle');
 
-    await step('Checking if the component is being rendered', async () => {
+    await step('Validating the Tag structure', () => {
       expect(
         listItem,
-        'It is expected that the listitem is being rendered'
+        "It's expected that listitem is rendered"
       ).toBeInTheDocument();
+
+      expect(
+        numberOfTexts,
+        "It's expected that the listitem has 2 text elements"
+      ).toBe(numberOfTexts);
+
+      expect(
+        lastChild,
+        'Expect that the last child of the component is the toggle'
+      ).toBe(toggle);
+
+      expect(
+        toggles.length + numberOfTexts,
+        "It's expected that the listitem has 3 elements"
+      ).toBe(3);
     });
 
-    await step('Checking component text content', async () => {
+    await step('Validating the Tag content', () => {
+      const title = listItem.children[0].children[0];
+      const description = listItem.children[0].children[1];
+
       expect(
-        listItem,
-        `Expect that the component has the title '${args.title}'`
-      ).toHaveTextContent('List item');
+        title.tagName,
+        "It's expected that the title text has a tag-name SPAN"
+      ).toBe('SPAN');
+
       expect(
-        listItem,
-        `Expect that the component has the description '${args.description}'`
-      ).toHaveTextContent('Supporting Text');
+        title,
+        `It's expected that the title text is ${args.children}`
+      ).toHaveTextContent(args.title);
+
+      expect(
+        title,
+        "it's expected that the title text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+
+      expect(
+        title,
+        "it's expected that the title text font-size will be 14"
+      ).toHaveStyle('font-size: 14px');
+
+      expect(
+        title,
+        "it's expected that the title text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
+
+      expect(
+        description.tagName,
+        "It's expected that the description text has a tag-name SPAN"
+      ).toBe('SPAN');
+
+      expect(
+        description,
+        `It's expected that the description text is ${args.description}`
+      ).toHaveTextContent(args.description || '');
+
+      expect(
+        description,
+        "it's expected that the description text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+
+      expect(
+        description,
+        "it's expected that the description text font-size will be 12"
+      ).toHaveStyle('font-size: 12px');
+
+      expect(
+        description,
+        "it's expected that the description text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
     });
 
-    await step('Checking the listitem structure', () => {
-      const listItemSecondChild = listItem.childNodes[1] as HTMLElement;
-
-      const numberOfTexts = listItem.getElementsByTagName('span').length;
-      expect(numberOfTexts, `It's expected that listitem as 2 texts`).toBe(2);
+    await step('Testing onClick event', async () => {
+      await userEvent.click(listItem);
 
       expect(
-        listItemSecondChild,
-        `It's expected that the display of the listitem is flex`
-      ).toHaveStyle('display: flex');
-
-      expect(
-        listItemSecondChild,
-        `It's expected that the second child style has flex-direction of the listitem is row`
-      ).toHaveStyle(`flex-direction: row`);
-
-      expect(
-        listItemSecondChild,
-        `It's expected that the display of the listitem is ${
-          args.fontFamily || 'Satoshi'
-        }`
-      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+        args.onClick,
+        'It expects that when the listitem is clicked, the event onClick is called'
+      ).toHaveBeenCalled();
     });
-
-    await step('Checking if the toggle is being rendered', async () => {
-      expect(
-        toggle,
-        'It is expected that the toggle is being rendered'
-      ).toBeInTheDocument();
-    });
-
-    await step(
-      'Checking if the last item in the list is the toggle',
-      async () => {
-        expect(
-          listItemLastChild,
-          'It is expected that the last child is the toggle button'
-        ).toBe(toggle);
-      }
-    );
   },
 };
 
@@ -506,63 +672,70 @@ export const WithSuffixToggleWithoutDescription: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const listItem = canvas.getByRole('listitem');
-    const listItemLastChild = listItem.lastElementChild as HTMLElement;
-    const toggle = canvas.getByRole('toggle') as HTMLElement;
+    const lastChild = listItem.lastChild as HTMLElement;
+    const toggles = canvas.getAllByRole('toggle');
+    const numberOfTexts = listItem.getElementsByTagName('span').length;
+    const toggle = canvas.getByRole('toggle');
 
-    await step('Checking if the component is being rendered', async () => {
+    await step('Validating the Tag structure', () => {
       expect(
         listItem,
-        'It is expected that the listitem is being rendered'
+        "It's expected that listitem is rendered"
       ).toBeInTheDocument();
+
+      expect(
+        numberOfTexts,
+        "It's expected that the listitem has 2 text elements"
+      ).toBe(numberOfTexts);
+
+      expect(
+        lastChild,
+        'Expect that the last child of the component is the toggle'
+      ).toBe(toggle);
+
+      expect(
+        toggles.length + numberOfTexts,
+        "It's expected that the listitem has 2 elements"
+      ).toBe(2);
     });
 
-    await step('Checking component text content', async () => {
+    await step('Validating the Tag content', () => {
+      const title = listItem.children[0].children[0];
+
       expect(
-        listItem,
-        `Expect that the component has the title '${args.title}'`
-      ).toHaveTextContent('List item');
+        title.tagName,
+        "It's expected that the title text has a tag-name SPAN"
+      ).toBe('SPAN');
+
+      expect(
+        title,
+        `It's expected that the title text is ${args.children}`
+      ).toHaveTextContent(args.title);
+
+      expect(
+        title,
+        "it's expected that the title text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+
+      expect(
+        title,
+        "it's expected that the title text font-size will be 14"
+      ).toHaveStyle('font-size: 14px');
+
+      expect(
+        title,
+        "it's expected that the title text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
     });
 
-    await step('Checking the listitem structure', () => {
-      const listItemSecondChild = listItem.childNodes[1] as HTMLElement;
-
-      const numberOfTexts = listItem.getElementsByTagName('span').length;
-      expect(numberOfTexts, `It's expected that listitem as 1 texts`).toBe(1);
+    await step('Testing onClick event', async () => {
+      await userEvent.click(listItem);
 
       expect(
-        listItemSecondChild,
-        `It's expected that the display of the listitem is flex`
-      ).toHaveStyle('display: flex');
-
-      expect(
-        listItemSecondChild,
-        `It's expected that the second child style has flex-direction of the listitem is row`
-      ).toHaveStyle(`flex-direction: row`);
-
-      expect(
-        listItemSecondChild,
-        `It's expected that the display of the listitem is ${
-          args.fontFamily || 'Satoshi'
-        }`
-      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+        args.onClick,
+        'It expects that when the listitem is clicked, the event onClick is called'
+      ).toHaveBeenCalled();
     });
-
-    await step('Checking if the toggle is being rendered', async () => {
-      expect(
-        toggle,
-        'It is expected that the toggle is being rendered'
-      ).toBeInTheDocument();
-    });
-
-    await step(
-      'Checking if the last item in the list is the toggle',
-      async () => {
-        expect(
-          listItemLastChild,
-          'It is expected that the last child is the toggle button'
-        ).toBe(toggle);
-      }
-    );
   },
 };
 
@@ -572,75 +745,101 @@ export const WithSuffixRadio: Story = {
     description: 'Supporting Text',
     metadata: '100+',
     SuffixIcon: <RadioButton />,
+    onClick: fn(),
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const listItem = canvas.getByRole('listitem');
-    const listItemLastChild = listItem.lastElementChild as HTMLElement;
-    const radio = canvas.getByRole('radioContainer') as HTMLElement;
+    const lastChild = listItem.lastChild as HTMLElement;
+    const radios = canvas.getAllByRole('radioContainer');
+    const numberOfTexts = listItem.getElementsByTagName('span').length;
+    const radio = canvas.getByRole('radioContainer');
 
-    await step('Checking if the component is being rendered', async () => {
+    await step('Validating the Tag structure', () => {
       expect(
         listItem,
-        'It is expected that the listitem is being rendered'
+        "It's expected that listitem is rendered"
       ).toBeInTheDocument();
+
+      expect(
+        numberOfTexts,
+        "It's expected that the listitem has 3 text elements"
+      ).toBe(3);
+
+      expect(
+        lastChild,
+        'Expect that the last child of the component is the toggle'
+      ).toBe(radio);
+
+      expect(
+        radios.length + numberOfTexts,
+        "It's expected that the listitem has 4 elements"
+      ).toBe(4);
     });
 
-    await step('Checking component text content', async () => {
+    await step('Validating the Tag content', () => {
+      const title = listItem.children[0].children[0];
+      const description = listItem.children[0].children[1];
+
       expect(
-        listItem,
-        `Expect that the component has the title '${args.title}'`
-      ).toHaveTextContent('List item');
+        title.tagName,
+        "It's expected that the title text has a tag-name SPAN"
+      ).toBe('SPAN');
+
       expect(
-        listItem,
-        `Expect that the component has the description '${args.description}'`
-      ).toHaveTextContent('Supporting Text');
+        title,
+        `It's expected that the title text is ${args.children}`
+      ).toHaveTextContent(args.title);
+
       expect(
-        listItem,
-        `Expect that the component has the description '${args.description}'`
-      ).toHaveTextContent('100+');
+        title,
+        "it's expected that the title text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+
+      expect(
+        title,
+        "it's expected that the title text font-size will be 14"
+      ).toHaveStyle('font-size: 14px');
+
+      expect(
+        title,
+        "it's expected that the title text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
+
+      expect(
+        description.tagName,
+        "It's expected that the description text has a tag-name SPAN"
+      ).toBe('SPAN');
+
+      expect(
+        description,
+        `It's expected that the description text is ${args.description}`
+      ).toHaveTextContent(args.description || '');
+
+      expect(
+        description,
+        "it's expected that the description text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+
+      expect(
+        description,
+        "it's expected that the description text font-size will be 12"
+      ).toHaveStyle('font-size: 12px');
+
+      expect(
+        description,
+        "it's expected that the description text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
     });
 
-    await step('Checking the listitem structure', () => {
-      const firstItemChild = listItem.childNodes[0] as HTMLElement;
-
-      const numberOfTexts = listItem.getElementsByTagName('span').length;
-      expect(numberOfTexts, `It's expected that listitem as 3 texts`).toBe(3);
+    await step('Testing onClick event', async () => {
+      await userEvent.click(listItem);
 
       expect(
-        firstItemChild,
-        `It's expected that the display of the listitem is flex`
-      ).toHaveStyle('display: flex');
-
-      expect(
-        firstItemChild,
-        `It's expected that the first child style has flex-direction of the listitem is row`
-      ).toHaveStyle(`flex-direction: column`);
-
-      expect(
-        firstItemChild,
-        `It's expected that the display of the listitem is ${
-          args.fontFamily || 'Satoshi'
-        }`
-      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+        args.onClick,
+        'It expects that when the listitem is clicked, the event onClick is called'
+      ).toHaveBeenCalled();
     });
-
-    await step('Checking if the radio is being rendered', async () => {
-      expect(
-        radio,
-        'It is expected that the radio is being rendered'
-      ).toBeInTheDocument();
-    });
-
-    await step(
-      'Checking if the last item in the list is the radio',
-      async () => {
-        expect(
-          listItemLastChild,
-          'It is expected that the last child is the radio button'
-        ).toBe(radio);
-      }
-    );
   },
 };
 
@@ -648,67 +847,75 @@ export const WithSuffixRadioWithoutDescription: Story = {
   args: {
     title: 'List item',
     SuffixIcon: <RadioButton />,
+    onClick: fn(),
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const listItem = canvas.getByRole('listitem');
-    const listItemLastChild = listItem.lastElementChild as HTMLElement;
-    const radio = canvas.getByRole('radioContainer') as HTMLElement;
+    const lastChild = listItem.lastChild as HTMLElement;
+    const radios = canvas.getAllByRole('radioContainer');
+    const numberOfTexts = listItem.getElementsByTagName('span').length;
+    const radio = canvas.getByRole('radioContainer');
 
-    await step('Checking if the component is being rendered', async () => {
+    await step('Validating the Tag structure', () => {
       expect(
         listItem,
-        'It is expected that the listitem is being rendered'
+        "It's expected that listitem is rendered"
       ).toBeInTheDocument();
+
+      expect(
+        numberOfTexts,
+        "It's expected that the listitem has 1 text element"
+      ).toBe(1);
+
+      expect(
+        lastChild,
+        'Expect that the last child of the component is the toggle'
+      ).toBe(radio);
+
+      expect(
+        radios.length + numberOfTexts,
+        "It's expected that the listitem has 4 elements"
+      ).toBe(2);
     });
 
-    await step('Checking component text content', async () => {
+    await step('Validating the Tag content', () => {
+      const title = listItem.children[0].children[0];
+
       expect(
-        listItem,
-        `Expect that the component has the title '${args.title}'`
-      ).toHaveTextContent('List item');
+        title.tagName,
+        "It's expected that the title text has a tag-name SPAN"
+      ).toBe('SPAN');
+
+      expect(
+        title,
+        `It's expected that the title text is ${args.children}`
+      ).toHaveTextContent(args.title);
+
+      expect(
+        title,
+        "it's expected that the title text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+
+      expect(
+        title,
+        "it's expected that the title text font-size will be 14"
+      ).toHaveStyle('font-size: 14px');
+
+      expect(
+        title,
+        "it's expected that the title text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
     });
 
-    await step('Checking if the radio is being rendered', async () => {
+    await step('Testing onClick event', async () => {
+      await userEvent.click(listItem);
+
       expect(
-        radio,
-        'It is expected that the radio is being rendered'
-      ).toBeInTheDocument();
+        args.onClick,
+        'It expects that when the listitem is clicked, the event onClick is called'
+      ).toHaveBeenCalled();
     });
-
-    await step('Checking the listitem structure', () => {
-      const firstItemChild = listItem.childNodes[0] as HTMLElement;
-
-      const numberOfTexts = listItem.getElementsByTagName('span').length;
-      expect(numberOfTexts, `It's expected that listitem as 2 texts`).toBe(2);
-
-      expect(
-        firstItemChild,
-        `It's expected that the display of the listitem is flex`
-      ).toHaveStyle('display: flex');
-
-      expect(
-        firstItemChild,
-        `It's expected that the first child style has flex-direction of the listitem is row`
-      ).toHaveStyle(`flex-direction: column`);
-
-      expect(
-        firstItemChild,
-        `It's expected that the display of the listitem is ${
-          args.fontFamily || 'Satoshi'
-        }`
-      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
-    });
-
-    await step(
-      'Checking if the last item in the list is the radio',
-      async () => {
-        expect(
-          listItemLastChild,
-          'It is expected that the last child is the radio button'
-        ).toBe(radio);
-      }
-    );
   },
 };
 
@@ -724,87 +931,82 @@ export const WithPrefixAndSuffixRadioWithoutDescription: Story = {
       />
     ),
     SuffixIcon: <RadioButton />,
+    onClick: fn(),
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const listItem = canvas.getByRole('listitem');
-    const listItemLastChild = listItem.lastElementChild as HTMLElement;
-    const listItemFirstChild = listItem.firstElementChild
-      ?.firstElementChild as HTMLElement;
-    const lastItemChild = listItem.firstElementChild
-      ?.lastElementChild as HTMLElement;
-    const firstChildTagName = listItemFirstChild.tagName;
-    const lastChildTagName = lastItemChild.tagName;
+    const firstChild = listItem.firstChild?.firstChild as HTMLElement;
+
+    const lastChild = listItem.lastChild as HTMLElement;
+
     const svgElements = listItem.querySelectorAll('svg');
+    const numberOfTexts = listItem.getElementsByTagName('span').length;
     const radio = canvas.getByRole('radioContainer') as HTMLElement;
 
-    await step('Checking if the component is being rendered', async () => {
+    await step('Validating the Tag structure', () => {
       expect(
         listItem,
-        'It is expected that the listitem is being rendered'
+        "It's expected that listitem is rendered"
       ).toBeInTheDocument();
-    });
-
-    await step('Checking component text content', async () => {
-      expect(
-        listItem,
-        `Expect that the component has the title '${args.title}'`
-      ).toHaveTextContent('List item');
 
       expect(
-        firstChildTagName,
+        numberOfTexts,
+        "It's expected that the listitem has 2 text elements"
+      ).toBe(numberOfTexts);
+
+      expect(
+        firstChild.tagName,
         'Expect that the first child of the component is a svg'
       ).toBe('svg');
 
       expect(
-        lastChildTagName,
-        'Expect that the last child of the component is a svg'
-      ).toBe('svg');
+        lastChild,
+        'Expect that the last child of the component is the toggle'
+      ).toBe(radio);
 
-      expect(svgElements, 'Expect that the component has 2 svg').toHaveLength(
-        2
-      );
+      expect(
+        svgElements.length,
+        "It's expected that the listitem has 2 svg element"
+      ).toBe(2);
     });
 
-    await step('Checking the listitem structure', () => {
-      const firstItemChild = listItem.childNodes[0] as HTMLElement;
-
-      const numberOfTexts = listItem.getElementsByTagName('span').length;
-      expect(numberOfTexts, `It's expected that listitem as 1 texts`).toBe(1);
+    await step('Validating the Tag content', () => {
+      const title = listItem.children[1].children[0];
 
       expect(
-        firstItemChild,
-        `It's expected that the display of the listitem is flex`
-      ).toHaveStyle('display: flex');
+        title.tagName,
+        "It's expected that the title text has a tag-name SPAN"
+      ).toBe('SPAN');
 
       expect(
-        firstItemChild,
-        `It's expected that the first child style has flex-direction of the listitem is row`
-      ).toHaveStyle(`flex-direction: row`);
+        title,
+        `It's expected that the title text is ${args.children}`
+      ).toHaveTextContent(args.title);
 
       expect(
-        firstItemChild,
-        `It's expected that the display of the listitem is ${
-          args.fontFamily || 'Satoshi'
-        }`
-      ).toHaveStyle(`font-family: ${args.fontFamily || 'Satoshi'}`);
+        title,
+        "it's expected that the title text font-weight will be 500"
+      ).toHaveStyle('font-weight: 500');
+
+      expect(
+        title,
+        "it's expected that the title text font-size will be 14"
+      ).toHaveStyle('font-size: 14px');
+
+      expect(
+        title,
+        "it's expected that the title text font-family will be Satoshi"
+      ).toHaveStyle('font-family: Satoshi');
     });
 
-    await step('Checking if the radio is being rendered', async () => {
-      expect(
-        radio,
-        'It is expected that the radio is being rendered'
-      ).toBeInTheDocument();
-    });
+    await step('Testing onClick event', async () => {
+      await userEvent.click(listItem);
 
-    await step(
-      'Checking if the last item in the list is the radio',
-      async () => {
-        expect(
-          listItemLastChild,
-          'It is expected that the last child is the radio button'
-        ).toBe(radio);
-      }
-    );
+      expect(
+        args.onClick,
+        'It expects that when the listitem is clicked, the event onClick is called'
+      ).toHaveBeenCalled();
+    });
   },
 };
