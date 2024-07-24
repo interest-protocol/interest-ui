@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { clearAllMocks, expect, fn, userEvent, within } from '@storybook/test';
+import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
 import React from 'react';
 
 import { PlusIcon, SwapIcon } from '../../../../storybook/icons';
@@ -38,105 +38,84 @@ export const Filled: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    let button = canvas.getByRole('button');
-    const computedStyle = getComputedStyle(button);
+    const button = canvas.getByRole('button');
 
-    const color = computedStyle.getPropertyValue('color');
-
-    await step('onClick button test', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-
+    await step('Checking the button structure', async () => {
       expect(
-        args.onClick,
-        'It expect that the click event is called once'
-      ).toHaveBeenCalledOnce();
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
+      expect(
+        button,
+        'it is expected that the button is rendered'
+      ).toBeInTheDocument();
+      expect(
+        button,
+        'It is expected that the button has an internal left spacing of 24px'
+      ).toHaveStyle('padding-left: 24px');
+      expect(
+        button,
+        'It is expected that the button has an internal right spacing of 24px'
+      ).toHaveStyle('padding-right: 24px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
+      );
+      expect(
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only one element'
+      ).toBe(1);
+      expect(
+        button,
+        'It is expected that the button has a background #0053db'
+      ).toHaveStyle('background-color: #0053db');
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #fff'
+        ).toHaveStyle('color: #fff');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
     });
 
-    clearAllMocks();
-
-    await step('Double click button test', async () => {
-      await userEvent.dblClick(canvas.getByRole('button'));
-
-      expect(
-        args.onClick,
-        'It expect that the click event is called twice'
-      ).toHaveBeenCalledTimes(2);
-    });
-
-    clearAllMocks();
-
-    await step('Hover button test', async () => {
-      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
-      await userEvent.pointer({ target: button, offset: 3 });
-
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-
-      const background = computedStyle.getPropertyValue('background');
-
-      expect(
-        background,
-        `It expects that the background contains "linear-gradient(0deg, rgba(255, 255, 255, 0.133), rgba(255, 255, 255, 0.133))"`
-      ).toContain(
-        'linear-gradient(0deg, rgba(255, 255, 255, 0.133), rgba(255, 255, 255, 0.133))'
-      );
-    });
-
-    clearAllMocks();
-
-    await step('Focus button test', async () => {
-      button.focus();
-
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-
-      const background = computedStyle.getPropertyValue('background');
-
-      expect(
-        background,
-        `It expects that the background contains "linear-gradient(0deg, rgba(255, 255, 255, 0.133), rgba(255, 255, 255, 0.133))"`
-      ).toContain(
-        'linear-gradient(0deg, rgba(255, 255, 255, 0.133), rgba(255, 255, 255, 0.133))'
-      );
-    });
-
-    clearAllMocks();
-
-    await step('Button style test', async () => {
-      expect(button, 'It should render the text correctly').toHaveTextContent(
-        'Label'
-      );
-
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-      const backgroundColor =
-        computedStyle.getPropertyValue('background-color');
-
-      expect(
-        backgroundColor,
-        'It expects that the background color is "rgb(0, 83, 219)"'
-      ).toBe('rgb(0, 83, 219)');
-      expect(color, 'The color style should be "rgb(255, 255, 255)"').toBe(
-        'rgb(255, 255, 255)'
-      );
-      expect(button, 'The cursor style should be pointer').toHaveStyle(
-        'cursor: pointer'
-      );
-    });
-
-    clearAllMocks();
-
-    await step('Button args test', async () => {
-      expect(args.variant, 'The argument variant must be "filled"').toBe(
-        'filled'
-      );
-      expect(args.children, 'The argument children must be "Label"').toBe(
-        'Label'
-      );
-      expect(
-        args.disabled,
-        'The argument disabled must be "false"'
-      ).toBeFalsy();
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+      });
     });
   },
 };
@@ -149,110 +128,87 @@ export const FilledWithPrefix: Story = {
     disabled: false,
     onClick: fn(),
   },
-  play: async ({ canvasElement, step, args }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    let button = canvas.getByRole('button');
-    const computedStyle = getComputedStyle(button);
+    const button = canvas.getByRole('button');
 
-    const color = computedStyle.getPropertyValue('color');
-
-    const svgElements = button.querySelectorAll('svg');
-    expect(svgElements).toHaveLength(1);
-
-    const firstChild = button.firstElementChild;
-    const elementTag = firstChild && firstChild.tagName.toLowerCase();
-
-    await step('onClick button test', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-
+    await step('Checking the button structure', async () => {
       expect(
-        args.onClick,
-        'It expect that the click event is called once'
-      ).toHaveBeenCalledOnce();
-    });
-
-    clearAllMocks();
-
-    await step('Double click button test', async () => {
-      await userEvent.dblClick(canvas.getByRole('button'));
-
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
       expect(
-        args.onClick,
-        'It expect that the click event is called twice'
-      ).toHaveBeenCalledTimes(2);
-    });
-
-    clearAllMocks();
-
-    await step('Hover button test', async () => {
-      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
-      await userEvent.pointer({ target: button, offset: 3 });
-
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-
-      const background = computedStyle.getPropertyValue('background');
-
-      expect(
-        background,
-        `It expects that the background contains "linear-gradient(0deg, rgba(255, 255, 255, 0.133), rgba(255, 255, 255, 0.133))"`
-      ).toContain(
-        'linear-gradient(0deg, rgba(255, 255, 255, 0.133), rgba(255, 255, 255, 0.133))'
-      );
-    });
-
-    clearAllMocks();
-
-    await step('Button icon as SVG test', async () => {
-      expect(
-        firstChild,
-        'The first child of the button must be rendered'
+        button,
+        'it is expected that the button is rendered'
       ).toBeInTheDocument();
       expect(
-        firstChild,
-        'The first element of the button must be visible'
-      ).toBeVisible();
-      expect(elementTag, 'The tag of the first child should be an svg').toEqual(
-        'svg'
-      );
-    });
-
-    await step('Button style test', async () => {
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-      const backgroundColor =
-        computedStyle.getPropertyValue('background-color');
-
-      expect(button, 'It should render the text correctly').toHaveTextContent(
-        'Label'
-      );
-
+        button,
+        'It is expected that the button has an internal left spacing of 16px'
+      ).toHaveStyle('padding-left: 16px');
       expect(
-        backgroundColor,
-        'It expects that the background color is "rgb(0, 83, 219)"'
-      ).toBe('rgb(0, 83, 219)');
-
-      expect(color, 'The color style should be "rgb(255, 255, 255)"').toBe(
-        'rgb(255, 255, 255)'
-      );
-
-      expect(button, 'The cursor style should be pointer').toHaveStyle(
-        'cursor: pointer'
-      );
-    });
-
-    await step('Button args test', async () => {
-      expect(args.variant, 'The argument variant must be "filled"').toBe(
-        'filled'
-      );
-      expect(args.children, 'The argument children must be "Label"').toBe(
-        'Label'
+        button,
+        'It is expected that the button has an internal right spacing of 24px'
+      ).toHaveStyle('padding-right: 24px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
       );
       expect(
-        args.disabled,
-        'The argument disabled must be "false"'
-      ).toBeFalsy();
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only two element'
+      ).toBe(2);
+      expect(
+        button,
+        'It is expected that the button has a background #0053db'
+      ).toHaveStyle('background-color: #0053db');
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #fff'
+        ).toHaveStyle('color: #fff');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
+
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+      });
     });
   },
 };
@@ -265,110 +221,87 @@ export const FilledWithSuffix: Story = {
     disabled: false,
     onClick: fn(),
   },
-  play: async ({ canvasElement, step, args }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    let button = canvas.getByRole('button');
-    const computedStyle = getComputedStyle(button);
+    const button = canvas.getByRole('button');
 
-    const color = computedStyle.getPropertyValue('color');
-
-    const svgElements = button.querySelectorAll('svg');
-    expect(svgElements).toHaveLength(1);
-
-    const lastChild = button.lastElementChild;
-    const elementTag = lastChild && lastChild.tagName.toLowerCase();
-
-    await step('onClick button test', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-
+    await step('Checking the button structure', async () => {
       expect(
-        args.onClick,
-        'It expect that the click event is called once'
-      ).toHaveBeenCalledOnce();
-    });
-
-    clearAllMocks();
-
-    await step('Double click button test', async () => {
-      await userEvent.dblClick(canvas.getByRole('button'));
-
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
       expect(
-        args.onClick,
-        'It expect that the click event is called twice'
-      ).toHaveBeenCalledTimes(2);
-    });
-
-    clearAllMocks();
-
-    await step('Hover button test', async () => {
-      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
-      await userEvent.pointer({ target: button, offset: 3 });
-
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-
-      const background = computedStyle.getPropertyValue('background');
-
-      expect(
-        background,
-        `It expects that the background contains "linear-gradient(0deg, rgba(255, 255, 255, 0.133), rgba(255, 255, 255, 0.133))"`
-      ).toContain(
-        'linear-gradient(0deg, rgba(255, 255, 255, 0.133), rgba(255, 255, 255, 0.133))'
-      );
-    });
-
-    clearAllMocks();
-
-    await step('Button icon as SVG test', async () => {
-      expect(
-        lastChild,
-        'The last child of the button must be rendered'
+        button,
+        'it is expected that the button is rendered'
       ).toBeInTheDocument();
       expect(
-        lastChild,
-        'The last element of the button must be visible'
-      ).toBeVisible();
-      expect(elementTag, 'The tag of the last child should be an svg').toEqual(
-        'svg'
-      );
-    });
-
-    await step('Button style test', async () => {
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-      const backgroundColor =
-        computedStyle.getPropertyValue('background-color');
-
-      expect(button, 'It should render the text correctly').toHaveTextContent(
-        'Label'
-      );
-
+        button,
+        'It is expected that the button has an internal left spacing of 24px'
+      ).toHaveStyle('padding-left: 24px');
       expect(
-        backgroundColor,
-        'It expects that the background color is "rgb(0, 83, 219)"'
-      ).toBe('rgb(0, 83, 219)');
-
-      expect(color, 'The color style should be "rgb(255, 255, 255)"').toBe(
-        'rgb(255, 255, 255)'
-      );
-
-      expect(button, 'The cursor style should be pointer').toHaveStyle(
-        'cursor: pointer'
-      );
-    });
-
-    await step('Button args test', async () => {
-      expect(args.variant, 'The argument variant must be "filled"').toBe(
-        'filled'
-      );
-      expect(args.children, 'The argument children must be "Label"').toBe(
-        'Label'
+        button,
+        'It is expected that the button has an internal right spacing of 16px'
+      ).toHaveStyle('padding-right: 16px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
       );
       expect(
-        args.disabled,
-        'The argument disabled must be "false"'
-      ).toBeFalsy();
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only two element'
+      ).toBe(2);
+      expect(
+        button,
+        'It is expected that the button has a background #0053db'
+      ).toHaveStyle('background-color: #0053db');
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #fff'
+        ).toHaveStyle('color: #fff');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
+
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+      });
     });
   },
 };
@@ -385,125 +318,84 @@ export const FilledWithCombined: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    let button = canvas.getByRole('button');
-    const computedStyle = getComputedStyle(button);
-    const color = computedStyle.getPropertyValue('color');
+    const button = canvas.getByRole('button');
 
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElements = button.querySelectorAll('svg');
-    expect(svgElements.length).toBe(2);
-
-    const firstChild = button.firstElementChild as SVGElement;
-    const firstChildTag = firstChild && firstChild.tagName.toLowerCase();
-
-    const lastChild = button.lastElementChild as SVGElement;
-    const lastChildTag = lastChild && lastChild.tagName.toLowerCase();
-
-    await step('onClick button test', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-
+    await step('Checking the button structure', async () => {
       expect(
-        args.onClick,
-        'It expect that the click event is called once'
-      ).toHaveBeenCalledOnce();
-    });
-
-    clearAllMocks();
-
-    await step('Double click button test', async () => {
-      await userEvent.dblClick(canvas.getByRole('button'));
-
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
       expect(
-        args.onClick,
-        'It expect that the click event is called twice'
-      ).toHaveBeenCalledTimes(2);
-    });
-
-    clearAllMocks();
-
-    await step('Hover button test', async () => {
-      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
-      await userEvent.pointer({ target: button, offset: 3 });
-
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-
-      const background = computedStyle.getPropertyValue('background');
-
-      expect(
-        background,
-        `It expects that the background contains "linear-gradient(0deg, rgba(255, 255, 255, 0.133), rgba(255, 255, 255, 0.133))"`
-      ).toContain(
-        'linear-gradient(0deg, rgba(255, 255, 255, 0.133), rgba(255, 255, 255, 0.133))'
-      );
-    });
-
-    clearAllMocks();
-
-    await step('Button icon as SVG test', async () => {
-      expect(
-        firstChild,
-        'The first child of the button must be rendered'
+        button,
+        'it is expected that the button is rendered'
       ).toBeInTheDocument();
       expect(
-        firstChild,
-        'The first element of the button must be visible'
-      ).toBeVisible();
+        button,
+        'It is expected that the button has an internal left spacing of 16px'
+      ).toHaveStyle('padding-left: 16px');
       expect(
-        firstChildTag,
-        'The tag of the first child should be an svg'
-      ).toEqual('svg');
-
+        button,
+        'It is expected that the button has an internal right spacing of 16px'
+      ).toHaveStyle('padding-right: 16px');
       expect(
-        lastChild,
-        'The last child of the button must be rendered'
-      ).toBeInTheDocument();
-
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
       expect(
-        lastChild,
-        'The last element of the button must be visible'
-      ).toBeVisible();
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
+      );
       expect(
-        lastChildTag,
-        'The tag of the last child should be an svg'
-      ).toEqual('svg');
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only three element'
+      ).toBe(3);
+      expect(
+        button,
+        'It is expected that the button has a background #0053db'
+      ).toHaveStyle('background-color: #0053db');
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #fff'
+        ).toHaveStyle('color: #fff');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
     });
 
-    await step('Button style test', async () => {
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-      const backgroundColor =
-        computedStyle.getPropertyValue('background-color');
-
-      expect(button, 'It should render the text correctly').toHaveTextContent(
-        'Label'
-      );
-
-      expect(
-        backgroundColor,
-        'It expects that the background color is "rgb(0, 83, 219)"'
-      ).toBe('rgb(0, 83, 219)');
-
-      expect(color, 'The color style should be "rgb(255, 255, 255)"').toBe(
-        'rgb(255, 255, 255)'
-      );
-
-      expect(button, 'The cursor style should be pointer').toHaveStyle(
-        'cursor: pointer'
-      );
-    });
-
-    await step('Button args test', async () => {
-      expect(args.variant, 'The argument variant must be "filled"').toBe(
-        'filled'
-      );
-      expect(args.children, 'The argument children must be "Label"').toBe(
-        'Label'
-      );
-      expect(
-        args.disabled,
-        'The argument disabled must be "false"'
-      ).toBeFalsy();
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+      });
     });
   },
 };
@@ -515,101 +407,95 @@ export const Outline: Story = {
     disabled: false,
     onClick: fn(),
   },
-  play: async ({ canvasElement, step, args }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    let button = canvas.getByRole('button');
-    const computedStyle = getComputedStyle(button);
-    const color = computedStyle.getPropertyValue('color');
+    const button = canvas.getByRole('button');
 
-    await step('onClick button test', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-
+    await step('Checking the button structure', async () => {
       expect(
-        args.onClick,
-        'It expect that the click event is called once'
-      ).toHaveBeenCalledOnce();
-    });
-
-    clearAllMocks();
-
-    await step('Double click button test', async () => {
-      await userEvent.dblClick(canvas.getByRole('button'));
-
-      expect(
-        args.onClick,
-        'It expect that the click event is called twice'
-      ).toHaveBeenCalledTimes(2);
-    });
-
-    clearAllMocks();
-
-    await step('Hover button test', async () => {
-      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
-      await userEvent.pointer({ target: button, offset: 3 });
-
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-
-      const background = computedStyle.getPropertyValue('background');
-
-      expect(
-        background,
-        `It expects that the background contains "rgba(0, 0, 0, 0)"`
-      ).toContain('rgba(0, 0, 0, 0)');
-
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
       expect(
         button,
-        `It expects that the border color style to be "rgb(0, 83, 219)"`
-      ).toHaveStyle('border-color: rgb(0, 83, 219)');
-
+        'it is expected that the button is rendered'
+      ).toBeInTheDocument();
       expect(
         button,
-        `It expects that the color style to be "rgb(0, 83, 219)"`
-      ).toHaveStyle('color: rgb(0, 83, 219)');
-    });
-
-    clearAllMocks();
-
-    await step('Button style test', async () => {
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-      const backgroundColor =
-        computedStyle.getPropertyValue('background-color');
-
-      expect(button, 'It should render the text correctly').toHaveTextContent(
-        'Label'
-      );
-
+        'It is expected that the button has an internal left spacing of 24px'
+      ).toHaveStyle('padding-left: 24px');
       expect(
-        backgroundColor,
-        'It expects that the background color is "transparent"'
-      ).toBe('rgba(0, 0, 0, 0)');
-
-      expect(color, 'The color style should be "rgb(0, 0, 0)"').toBe(
-        'rgb(0, 0, 0)'
-      );
-
-      expect(button, 'The cursor style should be pointer').toHaveStyle(
-        'cursor: pointer'
-      );
-
-      expect(button, 'The border style should be "1px solid"').toHaveStyle(
-        'border: 1px solid rgb(0, 83, 219)'
-      );
-    });
-
-    await step('Button args test', async () => {
-      expect(args.variant, 'The argument variant msut be "outline"').toBe(
-        'outline'
-      );
-      expect(args.children, 'The argument children must be "Label"').toBe(
-        'Label'
+        button,
+        'It is expected that the button has an internal right spacing of 24px'
+      ).toHaveStyle('padding-right: 24px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
       );
       expect(
-        args.disabled,
-        'The argument disabled must be "false"'
-      ).toBeFalsy();
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button,
+        'It is expected that the button has a border 1px solid #000'
+      ).toHaveStyle('border: 1px solid #000');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only one element'
+      ).toBe(1);
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
+
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+        expect(
+          button,
+          'It is expected that the button has a border 1px solid #000'
+        ).toHaveStyle('border: 1px solid #0053db');
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #0053db');
+      });
     });
   },
 };
@@ -622,93 +508,95 @@ export const OutlineWithPrefix: Story = {
     disabled: false,
     onClick: fn(),
   },
-  play: async ({ canvasElement, step, args }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    let button = canvas.getByRole('button');
-    const computedStyle = getComputedStyle(button);
-    const color = computedStyle.getPropertyValue('color');
-    const svgElements = button.querySelectorAll('svg');
-    expect(svgElements).toHaveLength(1);
+    const button = canvas.getByRole('button');
 
-    const firstChild = button.firstElementChild;
-    const elementTag = firstChild && firstChild.tagName.toLowerCase();
-
-    await step('onClick button test', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-
+    await step('Checking the button structure', async () => {
       expect(
-        args.onClick,
-        'It expect that the click event is called once'
-      ).toHaveBeenCalledOnce();
-    });
-
-    clearAllMocks();
-
-    await step('Double click button test', async () => {
-      await userEvent.dblClick(canvas.getByRole('button'));
-
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
       expect(
-        args.onClick,
-        'It expect that the click event is called twice'
-      ).toHaveBeenCalledTimes(2);
-    });
-
-    clearAllMocks();
-
-    await step('Button icon as SVG test', async () => {
-      expect(
-        firstChild,
-        'The first child of the button must be rendered'
+        button,
+        'it is expected that the button is rendered'
       ).toBeInTheDocument();
       expect(
-        firstChild,
-        'The first element of the button must be visible'
-      ).toBeVisible();
-      expect(elementTag, 'The tag of the first child should be an svg').toEqual(
-        'svg'
-      );
-    });
-
-    await step('Button style test', async () => {
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-      const backgroundColor =
-        computedStyle.getPropertyValue('background-color');
-
-      expect(button, 'It should render the text correctly').toHaveTextContent(
-        'Label'
-      );
-
+        button,
+        'It is expected that the button has an internal left spacing of 16px'
+      ).toHaveStyle('padding-left: 16px');
       expect(
-        backgroundColor,
-        'It expects that the background color is "transparent"'
-      ).toBe('rgba(0, 0, 0, 0)');
-
-      expect(color, 'The color style should be "rgb(0, 0, 0)"').toBe(
-        'rgb(0, 0, 0)'
-      );
-
-      expect(button, 'The cursor style should be pointer').toHaveStyle(
-        'cursor: pointer'
-      );
-
-      expect(button, 'The border style should be "1px solid"').toHaveStyle(
-        'border: 1px solid rgb(0, 83, 219)'
-      );
-    });
-
-    await step('Button args test', async () => {
-      expect(args.variant, 'The argument variant msut be "outline"').toBe(
-        'outline'
-      );
-      expect(args.children, 'The argument children must be "Label"').toBe(
-        'Label'
+        button,
+        'It is expected that the button has an internal right spacing of 24px'
+      ).toHaveStyle('padding-right: 24px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
       );
       expect(
-        args.disabled,
-        'The argument disabled must be "false"'
-      ).toBeFalsy();
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button,
+        'It is expected that the button has a border 1px solid #000'
+      ).toHaveStyle('border: 1px solid #000');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only two element'
+      ).toBe(2);
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
+
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+        expect(
+          button,
+          'It is expected that the button has a border 1px solid #000'
+        ).toHaveStyle('border: 1px solid #0053db');
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #0053db');
+      });
     });
   },
 };
@@ -721,93 +609,95 @@ export const OutlineWithSuffix: Story = {
     disabled: false,
     onClick: fn(),
   },
-  play: async ({ canvasElement, step, args }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    let button = canvas.getByRole('button');
-    const computedStyle = getComputedStyle(button);
-    const color = computedStyle.getPropertyValue('color');
-    const svgElements = button.querySelectorAll('svg');
-    expect(svgElements).toHaveLength(1);
+    const button = canvas.getByRole('button');
 
-    const lastChild = button.lastElementChild;
-    const elementTag = lastChild && lastChild.tagName.toLowerCase();
-
-    await step('onClick button test', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-
+    await step('Checking the button structure', async () => {
       expect(
-        args.onClick,
-        'It expect that the click event is called once'
-      ).toHaveBeenCalledOnce();
-    });
-
-    clearAllMocks();
-
-    await step('Double click button test', async () => {
-      await userEvent.dblClick(canvas.getByRole('button'));
-
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
       expect(
-        args.onClick,
-        'It expect that the click event is called twice'
-      ).toHaveBeenCalledTimes(2);
-    });
-
-    clearAllMocks();
-
-    await step('Button icon as SVG test', async () => {
-      expect(
-        lastChild,
-        'The last child of the button must be rendered'
+        button,
+        'it is expected that the button is rendered'
       ).toBeInTheDocument();
       expect(
-        lastChild,
-        'The last element of the button must be visible'
-      ).toBeVisible();
-      expect(elementTag, 'The tag of the first child should be an svg').toEqual(
-        'svg'
-      );
-    });
-
-    await step('Button style test', async () => {
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-      const backgroundColor =
-        computedStyle.getPropertyValue('background-color');
-
-      expect(button, 'It should render the text correctly').toHaveTextContent(
-        'Label'
-      );
-
+        button,
+        'It is expected that the button has an internal left spacing of 24px'
+      ).toHaveStyle('padding-left: 24px');
       expect(
-        backgroundColor,
-        'It expects that the background color is "transparent"'
-      ).toBe('rgba(0, 0, 0, 0)');
-
-      expect(color, 'The color style should be "rgb(0, 0, 0)"').toBe(
-        'rgb(0, 0, 0)'
-      );
-
-      expect(button, 'The cursor style should be pointer').toHaveStyle(
-        'cursor: pointer'
-      );
-
-      expect(button, 'The border style should be "1px solid"').toHaveStyle(
-        'border: 1px solid rgb(0, 83, 219)'
-      );
-    });
-
-    await step('Button args test', async () => {
-      expect(args.variant, 'The argument variant msut be "outline"').toBe(
-        'outline'
-      );
-      expect(args.children, 'The argument children must be "Label"').toBe(
-        'Label'
+        button,
+        'It is expected that the button has an internal right spacing of 16px'
+      ).toHaveStyle('padding-right: 16px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
       );
       expect(
-        args.disabled,
-        'The argument disabled must be "false"'
-      ).toBeFalsy();
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button,
+        'It is expected that the button has a border 1px solid #000'
+      ).toHaveStyle('border: 1px solid #000');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only two element'
+      ).toBe(2);
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
+
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+        expect(
+          button,
+          'It is expected that the button has a border 1px solid #000'
+        ).toHaveStyle('border: 1px solid #0053db');
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #0053db');
+      });
     });
   },
 };
@@ -821,115 +711,95 @@ export const OutlineWithCombined: Story = {
     disabled: false,
     onClick: fn(),
   },
-  play: async ({ canvasElement, step, args }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    let button = canvas.getByRole('button');
-    const computedStyle = getComputedStyle(button);
-    const color = computedStyle.getPropertyValue('color');
+    const button = canvas.getByRole('button');
 
-    const svgElements = button.querySelectorAll('svg');
-    expect(svgElements.length).toBe(2);
-
-    const firstChild = button.firstElementChild as SVGElement;
-    const firstChildTag = firstChild && firstChild.tagName.toLowerCase();
-
-    const lastChild = button.lastElementChild as SVGElement;
-    const lastChildTag = lastChild && lastChild.tagName.toLowerCase();
-
-    await step('onClick button test', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-
+    await step('Checking the button structure', async () => {
       expect(
-        args.onClick,
-        'It expect that the click event is called once'
-      ).toHaveBeenCalledOnce();
-    });
-
-    clearAllMocks();
-
-    await step('Double click button test', async () => {
-      await userEvent.dblClick(canvas.getByRole('button'));
-
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
       expect(
-        args.onClick,
-        'It expect that the click event is called twice'
-      ).toHaveBeenCalledTimes(2);
-    });
-
-    clearAllMocks();
-
-    await step('Button icon as SVG test', async () => {
-      expect(
-        firstChild,
-        'The first child of the button must be rendered'
+        button,
+        'it is expected that the button is rendered'
       ).toBeInTheDocument();
-
       expect(
-        firstChild,
-        'The first element of the button must be visible'
-      ).toBeVisible();
-
+        button,
+        'It is expected that the button has an internal left spacing of 16px'
+      ).toHaveStyle('padding-left: 16px');
       expect(
-        firstChildTag,
-        'The tag of the first child should be an svg'
-      ).toEqual('svg');
-
+        button,
+        'It is expected that the button has an internal right spacing of 16px'
+      ).toHaveStyle('padding-right: 16px');
       expect(
-        lastChild,
-        'The last child of the button must be rendered'
-      ).toBeInTheDocument();
-
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
       expect(
-        lastChild,
-        'The last element of the button must be visible'
-      ).toBeVisible();
-
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
+      );
       expect(
-        lastChildTag,
-        'The tag of the last child should be an svg'
-      ).toEqual('svg');
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button,
+        'It is expected that the button has a border 1px solid #000'
+      ).toHaveStyle('border: 1px solid #000');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only two element'
+      ).toBe(3);
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
     });
 
-    await step('Button style test', async () => {
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-      const backgroundColor =
-        computedStyle.getPropertyValue('background-color');
-
-      expect(button, 'It should render the text correctly').toHaveTextContent(
-        'Label'
-      );
-
-      expect(
-        backgroundColor,
-        'It expects that the background color is "transparent"'
-      ).toBe('rgba(0, 0, 0, 0)');
-
-      expect(color, 'The color style should be "rgb(0, 0, 0)"').toBe(
-        'rgb(0, 0, 0)'
-      );
-
-      expect(button, 'The cursor style should be pointer').toHaveStyle(
-        'cursor: pointer'
-      );
-
-      expect(button, 'The border style should be "1px solid"').toHaveStyle(
-        'border: 1px solid rgb(0, 83, 219)'
-      );
-    });
-
-    await step('Button args test', async () => {
-      expect(args.variant, 'The argument variant msut be "outline"').toBe(
-        'outline'
-      );
-      expect(args.children, 'The argument children must be "Label"').toBe(
-        'Label'
-      );
-      expect(
-        args.disabled,
-        'The argument disabled must be "false"'
-      ).toBeFalsy();
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+        expect(
+          button,
+          'It is expected that the button has a border 1px solid #000'
+        ).toHaveStyle('border: 1px solid #0053db');
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #0053db');
+      });
     });
   },
 };
@@ -941,95 +811,87 @@ export const Text: Story = {
     disabled: false,
     onClick: fn(),
   },
-  play: async ({ canvasElement, step, args }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    let button = canvas.getByRole('button');
-    const computedStyle = getComputedStyle(button);
-    const color = computedStyle.getPropertyValue('color');
+    const button = canvas.getByRole('button');
 
-    await step('onClick button test', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-
+    await step('Checking the button structure', async () => {
       expect(
-        args.onClick,
-        'It expect that the click event is called once'
-      ).toHaveBeenCalledOnce();
-    });
-
-    clearAllMocks();
-
-    await step('Double click button test', async () => {
-      await userEvent.dblClick(canvas.getByRole('button'));
-
-      expect(
-        args.onClick,
-        'It expect that the click event is called twice'
-      ).toHaveBeenCalledTimes(2);
-    });
-
-    clearAllMocks();
-
-    await step('Hover button test', async () => {
-      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
-      await userEvent.pointer({ target: button, offset: 3 });
-
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-
-      const background = computedStyle.getPropertyValue('background');
-
-      expect(
-        background,
-        `It expects that the background contains "rgba(0, 0, 0, 0)"`
-      ).toContain('rgba(0, 0, 0, 0)');
-
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
       expect(
         button,
-        `It expects that the color style to be "rgb(0, 0, 0)"`
-      ).toHaveStyle('color: rgb(0, 0, 0)');
-    });
-
-    clearAllMocks();
-
-    await step('Button style test', async () => {
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-      const backgroundColor =
-        computedStyle.getPropertyValue('background-color');
-
-      expect(button, 'It should render the text correctly').toHaveTextContent(
-        'Label'
-      );
-
-      expect(
-        backgroundColor,
-        'It expects that the background color to be "rgba(0, 0, 0, 0)"'
-      ).toBe('rgba(0, 0, 0, 0)');
-
-      expect(color, 'The color style should be "rgb(0, 0, 0)"').toBe(
-        'rgb(0, 0, 0)'
-      );
-
-      expect(button, 'The cursor style should be pointer').toHaveStyle(
-        'cursor: pointer'
-      );
-
+        'it is expected that the button is rendered'
+      ).toBeInTheDocument();
       expect(
         button,
-        'The border style should be "0px none rgb(0, 0, 0)"'
-      ).toHaveStyle('border: 0px none rgb(0, 0, 0)');
-    });
-
-    await step('Button args test', async () => {
-      expect(args.variant, 'The argument variant must be "text"').toBe('text');
-      expect(args.children, 'The argument children must be "Label"').toBe(
-        'Label'
+        'It is expected that the button has an internal left spacing of 24px'
+      ).toHaveStyle('padding-left: 24px');
+      expect(
+        button,
+        'It is expected that the button has an internal right spacing of 24px'
+      ).toHaveStyle('padding-right: 24px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
       );
       expect(
-        args.disabled,
-        'The argument disabled must be "false"'
-      ).toBeFalsy();
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only one element'
+      ).toBe(1);
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
+
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+      });
     });
   },
 };
@@ -1042,118 +904,87 @@ export const TextWithPrefix: Story = {
     disabled: false,
     onClick: fn(),
   },
-  play: async ({ canvasElement, step, args }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    let button = canvas.getByRole('button');
-    const computedStyle = getComputedStyle(button);
-    const color = computedStyle.getPropertyValue('color');
+    const button = canvas.getByRole('button');
 
-    const svgElements = button.querySelectorAll('svg');
-    expect(
-      svgElements,
-      'It expects that the button only have one svg'
-    ).toHaveLength(1);
-
-    const firstChild = button.firstElementChild;
-    const elementTag = firstChild && firstChild.tagName.toLowerCase();
-
-    await step('onClick button test', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-
+    await step('Checking the button structure', async () => {
       expect(
-        args.onClick,
-        'It expect that the click event is called once'
-      ).toHaveBeenCalledOnce();
-    });
-
-    clearAllMocks();
-
-    await step('Double click button test', async () => {
-      await userEvent.dblClick(canvas.getByRole('button'));
-
-      expect(
-        args.onClick,
-        'It expect that the click event is called twice'
-      ).toHaveBeenCalledTimes(2);
-    });
-
-    clearAllMocks();
-
-    await step('Hover button test', async () => {
-      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
-      await userEvent.pointer({ target: button, offset: 3 });
-
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-
-      const background = computedStyle.getPropertyValue('background');
-
-      expect(
-        background,
-        `It expects that the background contains "rgba(0, 0, 0, 0)"`
-      ).toContain('rgba(0, 0, 0, 0)');
-
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
       expect(
         button,
-        `It expects that the color style to be "rgb(0, 0, 0)"`
-      ).toHaveStyle('color: rgb(0, 0, 0)');
-    });
-
-    clearAllMocks();
-
-    await step('Button icon as SVG test', async () => {
-      expect(
-        firstChild,
-        'The first child of the button must be rendered'
+        'it is expected that the button is rendered'
       ).toBeInTheDocument();
       expect(
-        firstChild,
-        'The first element of the button must be visible'
-      ).toBeVisible();
-      expect(elementTag, 'The tag of the first child should be an svg').toEqual(
-        'svg'
-      );
-    });
-
-    await step('Button style test', async () => {
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-      const backgroundColor =
-        computedStyle.getPropertyValue('background-color');
-
-      expect(button, 'It should render the text correctly').toHaveTextContent(
-        'Label'
-      );
-
-      expect(
-        backgroundColor,
-        'It expects that the background color to be "rgba(0, 0, 0, 0)"'
-      ).toBe('rgba(0, 0, 0, 0)');
-
-      expect(color, 'The color style should be "rgb(0, 0, 0)"').toBe(
-        'rgb(0, 0, 0)'
-      );
-
-      expect(button, 'The cursor style should be pointer').toHaveStyle(
-        'cursor: pointer'
-      );
-
+        button,
+        'It is expected that the button has an internal left spacing of 16px'
+      ).toHaveStyle('padding-left: 16px');
       expect(
         button,
-        'The border style should be "0px none rgb(0, 0, 0)"'
-      ).toHaveStyle('border: 0px none rgb(0, 0, 0)');
-    });
-
-    await step('Button args test', async () => {
-      expect(args.variant, 'The argument variant must be "text"').toBe('text');
-      expect(args.children, 'The argument children must be "Label"').toBe(
-        'Label'
+        'It is expected that the button has an internal right spacing of 24px'
+      ).toHaveStyle('padding-right: 24px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
       );
       expect(
-        args.disabled,
-        'The argument disabled must be "false"'
-      ).toBeFalsy();
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only one element'
+      ).toBe(2);
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
+
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+      });
     });
   },
 };
@@ -1166,117 +997,87 @@ export const TextWithSuffix: Story = {
     disabled: false,
     onClick: fn(),
   },
-  play: async ({ canvasElement, step, args }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    let button = canvas.getByRole('button');
-    const computedStyle = getComputedStyle(button);
-    const color = computedStyle.getPropertyValue('color');
+    const button = canvas.getByRole('button');
 
-    const svgElements = button.querySelectorAll('svg');
-    expect(
-      svgElements,
-      'It expects that the button only have one svg'
-    ).toHaveLength(1);
-
-    const lastChild = button.lastElementChild;
-    const elementTag = lastChild && lastChild.tagName.toLowerCase();
-
-    await step('onClick button test', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-
+    await step('Checking the button structure', async () => {
       expect(
-        args.onClick,
-        'It expect that the click event is called once'
-      ).toHaveBeenCalledOnce();
-    });
-
-    clearAllMocks();
-
-    await step('Double click button test', async () => {
-      await userEvent.dblClick(canvas.getByRole('button'));
-
-      expect(
-        args.onClick,
-        'It expect that the click event is called twice'
-      ).toHaveBeenCalledTimes(2);
-    });
-    clearAllMocks();
-
-    await step('Hover button test', async () => {
-      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
-      await userEvent.pointer({ target: button, offset: 3 });
-
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-
-      const background = computedStyle.getPropertyValue('background');
-
-      expect(
-        background,
-        `It expects that the background contains "rgba(0, 0, 0, 0)"`
-      ).toContain('rgba(0, 0, 0, 0)');
-
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
       expect(
         button,
-        `It expects that the color style to be "rgb(0, 0, 0)"`
-      ).toHaveStyle('color: rgb(0, 0, 0)');
-    });
-
-    clearAllMocks();
-
-    await step('Button icon as SVG test', async () => {
-      expect(
-        lastChild,
-        'The last child of the button must be rendered'
+        'it is expected that the button is rendered'
       ).toBeInTheDocument();
       expect(
-        lastChild,
-        'The last element of the button must be visible'
-      ).toBeVisible();
-      expect(elementTag, 'The tag of the last child should be an svg').toEqual(
-        'svg'
-      );
-    });
-
-    await step('Button style test', async () => {
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-      const backgroundColor =
-        computedStyle.getPropertyValue('background-color');
-
-      expect(button, 'It should render the text correctly').toHaveTextContent(
-        'Label'
-      );
-
-      expect(
-        backgroundColor,
-        'It expects that the background color to be "rgba(0, 0, 0, 0)"'
-      ).toBe('rgba(0, 0, 0, 0)');
-
-      expect(color, 'The color style should be "rgb(0, 0, 0)"').toBe(
-        'rgb(0, 0, 0)'
-      );
-
-      expect(button, 'The cursor style should be pointer').toHaveStyle(
-        'cursor: pointer'
-      );
-
+        button,
+        'It is expected that the button has an internal left spacing of 24px'
+      ).toHaveStyle('padding-left: 24px');
       expect(
         button,
-        'The border style should be "0px none rgb(0, 0, 0)"'
-      ).toHaveStyle('border: 0px none rgb(0, 0, 0)');
-    });
-
-    await step('Button args test', async () => {
-      expect(args.variant, 'The argument variant must be "text"').toBe('text');
-      expect(args.children, 'The argument children must be "Label"').toBe(
-        'Label'
+        'It is expected that the button has an internal right spacing of 16px'
+      ).toHaveStyle('padding-right: 16px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
       );
       expect(
-        args.disabled,
-        'The argument disabled must be "false"'
-      ).toBeFalsy();
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only one element'
+      ).toBe(2);
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
+
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+      });
     });
   },
 };
@@ -1290,131 +1091,87 @@ export const TextWithCombined: Story = {
     disabled: false,
     onClick: fn(),
   },
-  play: async ({ canvasElement, step, args }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    let button = canvas.getByRole('button');
-    const computedStyle = getComputedStyle(button);
-    const color = computedStyle.getPropertyValue('color');
-    const svgElements = button.querySelectorAll('svg');
-    expect(svgElements.length).toBe(2);
+    const button = canvas.getByRole('button');
 
-    const firstChild = button.firstElementChild as SVGElement;
-    const firstChildTag = firstChild && firstChild.tagName.toLowerCase();
-
-    const lastChild = button.lastElementChild as SVGElement;
-    const lastChildTag = lastChild && lastChild.tagName.toLowerCase();
-
-    await step('onClick button test', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-
+    await step('Checking the button structure', async () => {
       expect(
-        args.onClick,
-        'It expect that the click event is called once'
-      ).toHaveBeenCalledOnce();
-    });
-
-    clearAllMocks();
-
-    await step('Double click button test', async () => {
-      await userEvent.dblClick(canvas.getByRole('button'));
-
-      expect(
-        args.onClick,
-        'It expect that the click event is called twice'
-      ).toHaveBeenCalledTimes(2);
-    });
-    clearAllMocks();
-
-    await step('Hover button test', async () => {
-      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
-      await userEvent.pointer({ target: button, offset: 3 });
-
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-
-      const background = computedStyle.getPropertyValue('background');
-
-      expect(
-        background,
-        `It expects that the background contains "rgba(0, 0, 0, 0)"`
-      ).toContain('rgba(0, 0, 0, 0)');
-
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
       expect(
         button,
-        `It expects that the color style to be "rgb(0, 0, 0)"`
-      ).toHaveStyle('color: rgb(0, 0, 0)');
-    });
-
-    clearAllMocks();
-
-    await step('Button icon as SVG test', async () => {
-      expect(
-        firstChild,
-        'The first child of the button must be rendered'
+        'it is expected that the button is rendered'
       ).toBeInTheDocument();
-      expect(
-        firstChild,
-        'The first element of the button must be visible'
-      ).toBeVisible();
-      expect(
-        firstChildTag,
-        'The tag of the first child should be an svg'
-      ).toEqual('svg');
-
-      expect(
-        lastChild,
-        'The last child of the button must be rendered'
-      ).toBeInTheDocument();
-
-      expect(
-        lastChild,
-        'The last element of the button must be visible'
-      ).toBeVisible();
-      expect(
-        lastChildTag,
-        'The tag of the last child should be an svg'
-      ).toEqual('svg');
-    });
-
-    await step('Button style test', async () => {
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-      const backgroundColor =
-        computedStyle.getPropertyValue('background-color');
-
-      expect(button, 'It should render the text correctly').toHaveTextContent(
-        'Label'
-      );
-
-      expect(
-        backgroundColor,
-        'It expects that the background color to be "rgba(0, 0, 0, 0)"'
-      ).toBe('rgba(0, 0, 0, 0)');
-
-      expect(color, 'The color style should be "rgb(0, 0, 0)"').toBe(
-        'rgb(0, 0, 0)'
-      );
-
-      expect(button, 'The cursor style should be pointer').toHaveStyle(
-        'cursor: pointer'
-      );
-
       expect(
         button,
-        'The border style should be "0px none rgb(0, 0, 0)"'
-      ).toHaveStyle('border: 0px none rgb(0, 0, 0)');
-    });
-
-    await step('Button args test', async () => {
-      expect(args.variant, 'The argument variant must be "text"').toBe('text');
-      expect(args.children, 'The argument children must be "Label"').toBe(
-        'Label'
+        'It is expected that the button has an internal left spacing of 16px'
+      ).toHaveStyle('padding-left: 16px');
+      expect(
+        button,
+        'It is expected that the button has an internal right spacing of 16px'
+      ).toHaveStyle('padding-right: 16px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
       );
       expect(
-        args.disabled,
-        'The argument disabled must be "false"'
-      ).toBeFalsy();
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only one element'
+      ).toBe(3);
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
+
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+      });
     });
   },
 };
@@ -1426,93 +1183,96 @@ export const Tonal: Story = {
     disabled: false,
     onClick: fn(),
   },
-  play: async ({ canvasElement, step, args }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    let button = canvas.getByRole('button');
-    const computedStyle = getComputedStyle(button);
-    const color = computedStyle.getPropertyValue('color');
+    const button = canvas.getByRole('button');
 
-    await step('onClick button test', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-
+    await step('Checking the button structure', async () => {
       expect(
-        args.onClick,
-        'It expect that the click event is called once'
-      ).toHaveBeenCalledOnce();
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
+      expect(
+        button,
+        'it is expected that the button is rendered'
+      ).toBeInTheDocument();
+      expect(
+        button,
+        'It is expected that the button has an internal left spacing of 24px'
+      ).toHaveStyle('padding-left: 24px');
+      expect(
+        button,
+        'It is expected that the button has an internal right spacing of 24px'
+      ).toHaveStyle('padding-right: 24px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
+      );
+      expect(
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only one element'
+      ).toBe(1);
+      expect(
+        button,
+        'It is expected that the button has a background #0053db14'
+      ).toHaveStyle('background-color: #0053db14');
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
     });
 
-    clearAllMocks();
-
-    await step('Double click button test', async () => {
-      await userEvent.dblClick(canvas.getByRole('button'));
-
-      expect(
-        args.onClick,
-        'It expect that the click event is called twice'
-      ).toHaveBeenCalledTimes(2);
-    });
-
-    clearAllMocks();
-
-    await step('Hover button test', async () => {
-      await userEvent.hover(button);
-      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
-
-      const computedStyle = getComputedStyle(button);
-
-      const background = computedStyle.getPropertyValue('background');
-
-      console.log('background', background);
-
-      expect(
-        background,
-        `It expects that the background contains "rgba(0, 83, 219, 0.08)"`
-      ).toContain('rgba(0, 83, 219, 0.08)');
-    });
-
-    clearAllMocks();
-
-    await step('Button style test', async () => {
-      expect(button, 'It should render the text correctly').toHaveTextContent(
-        'Label'
-      );
-
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-      const backgroundColor =
-        computedStyle.getPropertyValue('background-color');
-
-      expect(
-        backgroundColor,
-        'It expects that the background color to be "rgba(0, 83, 219, 0.08)"'
-      ).toBe('rgba(0, 83, 219, 0.08)');
-      expect(color, 'The color style should be "rgb(0, 0, 0)"').toBe(
-        'rgb(0, 0, 0)'
-      );
-      expect(button, 'The cursor style should be pointer').toHaveStyle(
-        'cursor: pointer'
-      );
-    });
-
-    clearAllMocks();
-
-    await step('Button args test', async () => {
-      expect(args.variant, 'The argument variant must be "tonal"').toBe(
-        'tonal'
-      );
-      expect(args.children, 'The argument children must be "Label"').toBe(
-        'Label'
-      );
-      expect(
-        args.disabled,
-        'The argument disabled must be "false"'
-      ).toBeFalsy();
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #0053db'
+        ).toHaveStyle('color: #0053db');
+      });
     });
   },
 };
 
-export const TonalWithSuffix: Story = {
+export const TonalWithPrefix: Story = {
   args: {
     variant: 'tonal',
     children: 'Label',
@@ -1520,111 +1280,91 @@ export const TonalWithSuffix: Story = {
     disabled: false,
     onClick: fn(),
   },
-  play: async ({ canvasElement, step, args }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    let button = canvas.getByRole('button');
-    const computedStyle = getComputedStyle(button);
-    const color = computedStyle.getPropertyValue('color');
+    const button = canvas.getByRole('button');
 
-    const svgElements = button.querySelectorAll('svg');
-    expect(
-      svgElements,
-      'It expects that the button only have one svg'
-    ).toHaveLength(1);
-
-    const lastChild = button.lastElementChild;
-    const elementTag = lastChild && lastChild.tagName.toLowerCase();
-
-    await step('onClick button test', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-
+    await step('Checking the button structure', async () => {
       expect(
-        args.onClick,
-        'It expect that the click event is called once'
-      ).toHaveBeenCalledOnce();
-    });
-
-    clearAllMocks();
-
-    await step('Double click button test', async () => {
-      await userEvent.dblClick(canvas.getByRole('button'));
-
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
       expect(
-        args.onClick,
-        'It expect that the click event is called twice'
-      ).toHaveBeenCalledTimes(2);
-    });
-
-    clearAllMocks();
-
-    await step('Hover button test', async () => {
-      await userEvent.hover(button);
-      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
-
-      const computedStyle = getComputedStyle(button);
-
-      const background = computedStyle.getPropertyValue('background');
-
-      console.log('background', background);
-
-      expect(
-        background,
-        `It expects that the background contains "rgba(0, 83, 219, 0.08)"`
-      ).toContain('rgba(0, 83, 219, 0.08)');
-    });
-
-    clearAllMocks();
-
-    await step('Button icon as SVG test', async () => {
-      expect(
-        lastChild,
-        'The last child of the button must be rendered'
+        button,
+        'it is expected that the button is rendered'
       ).toBeInTheDocument();
       expect(
-        lastChild,
-        'The last element of the button must be visible'
-      ).toBeVisible();
-      expect(elementTag, 'The tag of the last child should be an svg').toEqual(
-        'svg'
-      );
-    });
-
-    await step('Button style test', async () => {
-      expect(button, 'It should render the text correctly').toHaveTextContent(
-        'Label'
-      );
-
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-      const backgroundColor =
-        computedStyle.getPropertyValue('background-color');
-
+        button,
+        'It is expected that the button has an internal left spacing of 16px'
+      ).toHaveStyle('padding-left: 16px');
       expect(
-        backgroundColor,
-        'It expects that the background color to be "rgba(0, 83, 219, 0.08)"'
-      ).toBe('rgba(0, 83, 219, 0.08)');
-      expect(color, 'The color style should be "rgb(0, 0, 0)"').toBe(
-        'rgb(0, 0, 0)'
-      );
-      expect(button, 'The cursor style should be pointer').toHaveStyle(
-        'cursor: pointer'
-      );
-    });
-
-    clearAllMocks();
-
-    await step('Button args test', async () => {
-      expect(args.variant, 'The argument variant must be "tonal"').toBe(
-        'tonal'
-      );
-      expect(args.children, 'The argument children must be "Label"').toBe(
-        'Label'
+        button,
+        'It is expected that the button has an internal right spacing of 24px'
+      ).toHaveStyle('padding-right: 24px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
       );
       expect(
-        args.disabled,
-        'The argument disabled must be "false"'
-      ).toBeFalsy();
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only two element'
+      ).toBe(2);
+      expect(
+        button,
+        'It is expected that the button has a background #0053db14'
+      ).toHaveStyle('background-color: #0053db14');
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
+
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #0053db'
+        ).toHaveStyle('color: #0053db');
+      });
     });
   },
 };
@@ -1638,127 +1378,91 @@ export const TonalWithCombined: Story = {
     disabled: false,
     onClick: fn(),
   },
-  play: async ({ canvasElement, step, args }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    let button = canvas.getByRole('button');
-    const computedStyle = getComputedStyle(button);
-    const color = computedStyle.getPropertyValue('color');
+    const button = canvas.getByRole('button');
 
-    const svgElements = button.querySelectorAll('svg');
-    expect(svgElements.length).toBe(2);
-
-    const firstChild = button.firstElementChild as SVGElement;
-    const firstChildTag = firstChild && firstChild.tagName.toLowerCase();
-
-    const lastChild = button.lastElementChild as SVGElement;
-    const lastChildTag = lastChild && lastChild.tagName.toLowerCase();
-
-    await step('onClick button test', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-
+    await step('Checking the button structure', async () => {
       expect(
-        args.onClick,
-        'It expect that the click event is called once'
-      ).toHaveBeenCalledOnce();
-    });
-
-    clearAllMocks();
-
-    await step('Double click button test', async () => {
-      await userEvent.dblClick(canvas.getByRole('button'));
-
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
       expect(
-        args.onClick,
-        'It expect that the click event is called twice'
-      ).toHaveBeenCalledTimes(2);
-    });
-
-    clearAllMocks();
-
-    await step('Hover button test', async () => {
-      await userEvent.hover(button);
-      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
-
-      const computedStyle = getComputedStyle(button);
-
-      const background = computedStyle.getPropertyValue('background');
-
-      console.log('background', background);
-
-      expect(
-        background,
-        `It expects that the background contains "rgba(0, 83, 219, 0.08)"`
-      ).toContain('rgba(0, 83, 219, 0.08)');
-    });
-
-    await step('Button icon as SVG test', async () => {
-      expect(
-        firstChild,
-        'The first child of the button must be rendered'
+        button,
+        'it is expected that the button is rendered'
       ).toBeInTheDocument();
-
       expect(
-        firstChild,
-        'The first element of the button must be visible'
-      ).toBeVisible();
-
+        button,
+        'It is expected that the button has an internal left spacing of 16px'
+      ).toHaveStyle('padding-left: 16px');
       expect(
-        firstChildTag,
-        'The tag of the first child should be an svg'
-      ).toEqual('svg');
-
+        button,
+        'It is expected that the button has an internal right spacing of 16px'
+      ).toHaveStyle('padding-right: 16px');
       expect(
-        lastChild,
-        'The last child of the button must be rendered'
-      ).toBeInTheDocument();
-
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
       expect(
-        lastChild,
-        'The last element of the button must be visible'
-      ).toBeVisible();
-
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
+      );
       expect(
-        lastChildTag,
-        'The tag of the last child should be an svg'
-      ).toEqual('svg');
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only three element'
+      ).toBe(3);
+      expect(
+        button,
+        'It is expected that the button has a background #0053db14'
+      ).toHaveStyle('background-color: #0053db14');
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
     });
 
-    await step('Button style test', async () => {
-      expect(button, 'It should render the text correctly').toHaveTextContent(
-        'Label'
-      );
-
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-      const backgroundColor =
-        computedStyle.getPropertyValue('background-color');
-
-      expect(
-        backgroundColor,
-        'It expects that the background color to be "rgba(0, 83, 219, 0.08)"'
-      ).toBe('rgba(0, 83, 219, 0.08)');
-      expect(color, 'The color style should be "rgb(0, 0, 0)"').toBe(
-        'rgb(0, 0, 0)'
-      );
-      expect(button, 'The cursor style should be pointer').toHaveStyle(
-        'cursor: pointer'
-      );
-    });
-
-    clearAllMocks();
-
-    await step('Button args test', async () => {
-      expect(args.variant, 'The argument variant must be "tonal"').toBe(
-        'tonal'
-      );
-      expect(args.children, 'The argument children must be "Label"').toBe(
-        'Label'
-      );
-      expect(
-        args.disabled,
-        'The argument disabled must be "false"'
-      ).toBeFalsy();
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #0053db'
+        ).toHaveStyle('color: #0053db');
+      });
     });
   },
 };
@@ -1771,99 +1475,65 @@ export const Icon: Story = {
     isIcon: true,
     onClick: fn(),
   },
-  play: async ({ canvasElement, step, args }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    let button = canvas.getByRole('button');
 
-    const parentChildren = button.childNodes;
-    expect(parentChildren).toHaveLength(1);
+    const button = canvas.getByRole('button');
 
-    const parentOnlyChild = button.firstElementChild;
-
-    const computedStyle = getComputedStyle(button);
-    const color = computedStyle.getPropertyValue('color');
-
-    await step('onClick button test', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-
+    await step('Checking the button structure', async () => {
       expect(
-        args.onClick,
-        'It expect that the click event is called once'
-      ).toHaveBeenCalledOnce();
-    });
-
-    clearAllMocks();
-
-    await step('Double click button test', async () => {
-      await userEvent.dblClick(canvas.getByRole('button'));
-
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
       expect(
-        args.onClick,
-        'It expect that the click event is called twice'
-      ).toHaveBeenCalledTimes(2);
-    });
-
-    clearAllMocks();
-
-    await step('Hover button test', async () => {
-      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
-      await userEvent.pointer({ target: button, offset: 3 });
-
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-
-      const background = computedStyle.getPropertyValue('background');
-
-      expect(
-        background,
-        `It expects that the background contains "linear-gradient(0deg, rgba(255, 255, 255, 0.133), rgba(255, 255, 255, 0.133))"`
-      ).toContain(
-        'linear-gradient(0deg, rgba(255, 255, 255, 0.133), rgba(255, 255, 255, 0.133))'
-      );
-    });
-
-    clearAllMocks();
-
-    await step('Button icon as SVG test', async () => {
-      expect(
-        parentOnlyChild,
-        'The only child of the button must be rendered'
+        button,
+        'it is expected that the button is rendered'
       ).toBeInTheDocument();
       expect(
-        parentOnlyChild,
-        'The only child of the  the button must be visible'
-      ).toBeVisible();
-
+        button,
+        'It is expected that the button has an internal left spacing of 8px'
+      ).toHaveStyle('padding-left: 8px');
       expect(
-        parentOnlyChild?.tagName.trim(),
-        'The tag of the first child should be an svg'
-      ).toBe('svg');
+        button,
+        'It is expected that the button has an internal right spacing of 8px'
+      ).toHaveStyle('padding-right: 8px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
+      );
+      expect(
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: center');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only one element'
+      ).toBe(1);
+      expect(
+        button,
+        'It is expected that the button has a background #0053db'
+      ).toHaveStyle('background-color: #0053db');
     });
 
-    await step('Button style test', async () => {
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-      const backgroundColor =
-        computedStyle.getPropertyValue('background-color');
-
-      expect(
-        backgroundColor,
-        'It expects that the background color is "rgb(0, 83, 219)"'
-      ).toBe('rgb(0, 83, 219)');
-      expect(color, 'The color style should be "rgb(255, 255, 255)"').toBe(
-        'rgb(255, 255, 255)'
-      );
-      expect(button, 'The cursor style should be pointer').toHaveStyle(
-        'cursor: pointer'
-      );
-    });
-
-    clearAllMocks();
-
-    await step('Button args test', async () => {
-      expect(args.variant, 'The argument variant must be "filled"').toBe(
-        'filled'
-      );
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+      });
     });
   },
 };
@@ -1878,100 +1548,80 @@ export const DisabledButton: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    let button = canvas.getByRole('button');
+    const button = canvas.getByRole('button');
 
-    const computedStyle = getComputedStyle(button);
-
-    const opacity = Number(computedStyle.getPropertyValue('opacity'));
-    const color = computedStyle.getPropertyValue('color');
-
-    await step('onClick button test', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-
+    await step('Checking the button structure', async () => {
       expect(
-        args.onClick,
-        'It expect that the click event is called once'
-      ).not.toHaveBeenCalledOnce();
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
+      expect(
+        button,
+        'it is expected that the button is rendered'
+      ).toBeInTheDocument();
+      expect(
+        button,
+        'It is expected that the button has an internal left spacing of 24px'
+      ).toHaveStyle('padding-left: 24px');
+      expect(
+        button,
+        'It is expected that the button has an internal right spacing of 24px'
+      ).toHaveStyle('padding-right: 24px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor not-allowed'
+      ).toHaveStyle('cursor: not-allowed');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
+      );
+      expect(
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button,
+        'It is expected that the button has a background #00000029'
+      ).toHaveStyle('background-color: #00000029');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only one element'
+      ).toBe(1);
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #1b1b1f'
+        ).toHaveStyle('color: #1b1b1f');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
     });
 
-    clearAllMocks();
-
-    await step('Double click button test', async () => {
-      await userEvent.dblClick(canvas.getByRole('button'));
-
-      expect(
-        args.onClick,
-        'It expect that the click event is called twice'
-      ).not.toHaveBeenCalledTimes(2);
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function was not called when the button was clicked'
+        ).not.toHaveBeenCalled();
+      });
     });
-
-    clearAllMocks();
-
-    await step('Hover button test', async () => {
-      await userEvent.pointer({ target: button, keys: '[MouseLeft>]' });
-      await userEvent.pointer({ target: button, offset: 3 });
-
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-
-      const background = computedStyle.getPropertyValue('background');
-
-      expect(
-        background,
-        `It expects that the background contains "rgba(0, 0, 0, 0.16)"`
-      ).toContain('rgba(0, 0, 0, 0.16)');
-
-      expect(button, 'The cursor style should be pointer').toHaveStyle(
-        'cursor: not-allowed'
-      );
-    });
-
-    clearAllMocks();
-
-    await step('Button style test', async () => {
-      button = canvas.getByRole('button');
-      const computedStyle = getComputedStyle(button);
-      const backgroundColor =
-        computedStyle.getPropertyValue('background-color');
-
-      expect(button, 'It should render the text correctly').toHaveTextContent(
-        'Label'
-      );
-
-      expect(
-        backgroundColor,
-        'It expects that the background color is "rgba(0, 0, 0, 0.16)"'
-      ).toBe('rgba(0, 0, 0, 0.16)');
-
-      expect(color, 'The color style should be "rgb(27, 27, 31)"').toBe(
-        'rgb(27, 27, 31)'
-      );
-
-      expect(
-        opacity,
-        'The opacity of the button should be less than 1'
-      ).toBeLessThan(1);
-
-      expect(button, 'The cursor style should be pointer').toHaveStyle(
-        'cursor: not-allowed'
-      );
-    });
-
-    await step('Button args test', async () => {
-      expect(args.variant, 'The argument variant must be "filled"').toBe(
-        'filled'
-      );
-      expect(args.children, 'The argument children must be "Label"').toBe(
-        'Label'
-      );
-      expect(
-        args.disabled,
-        'The argument disabled must be "true"'
-      ).toBeTruthy();
-
-      expect(args.selected, 'The argument selected must be "true"').toBeFalsy();
-    });
-
-    expect(button, 'It expects that the button is disbled').toBeDisabled();
   },
 };

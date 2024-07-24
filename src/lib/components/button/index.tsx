@@ -35,7 +35,7 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
         height="1.5rem"
         alignItems="center"
         position="relative"
-        display="inline-flex"
+        display="flex"
         borderColor={
           props.variant == 'outline' && isFocused ? 'primary' : 'unset'
         }
