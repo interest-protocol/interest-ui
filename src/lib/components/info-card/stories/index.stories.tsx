@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, within } from '@storybook/test';
+import { clearAllMocks, expect, fn, within } from '@storybook/test';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import { MoneySignSVG } from '../../../icons';
@@ -24,19 +25,114 @@ export const Normal: Story = {
     title: 'TVL',
     children: '$52,294.12',
     Icon: <MoneySignSVG maxHeight="1.5rem" maxWidth="1.5rem" width="100%" />,
+    onClick: fn(),
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const infoCard = canvas.getByTestId('infoCardTest');
+    const infoCard = canvas.getByLabelText('info-card');
     const computedStyle = getComputedStyle(infoCard);
     const backgroundColor = computedStyle.getPropertyValue('background-color');
-
+    const numberOfTexts = infoCard.querySelectorAll('p').length;
     const svgElements = infoCard.querySelectorAll('svg');
 
-    expect(svgElements).toHaveLength(1);
-    expect(infoCard).toHaveTextContent('TVL');
-    expect(infoCard).toHaveTextContent('$52,294.12');
-    expect(backgroundColor).toBe('rgb(255, 255, 255)');
+    await step('Checking the info card structure', () => {
+      expect(
+        infoCard,
+        'It expects that the info card is being rendered'
+      ).toBeInTheDocument();
+      expect(
+        infoCard,
+        'It expects that the info card have a min-width of 96px'
+      ).toHaveStyle('min-width: 96px');
+
+      expect(
+        infoCard,
+        'It expects that the info card has a min-width of 428px'
+      ).toHaveStyle('max-width: 428px');
+
+      expect(
+        infoCard,
+        'It expects that the info card has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+
+      expect(
+        infoCard,
+        'It expects that the info card has a display inline-flex'
+      ).toHaveStyle('display: inline-flex');
+
+      expect(
+        infoCard,
+        'It expects that the info card has a flex-direction column'
+      ).toHaveStyle('flex-direction: column');
+
+      expect(
+        infoCard,
+        'It expects that the info card has a padding-left of 16px'
+      ).toHaveStyle('padding-left: 16px');
+
+      expect(
+        infoCard,
+        'It expects that the info card has a padding-right of 16px'
+      ).toHaveStyle('padding-right: 16px');
+
+      expect(
+        infoCard,
+        'It expects that the info card has a padding-top of 24px'
+      ).toHaveStyle('padding-top: 24px');
+
+      expect(
+        infoCard,
+        'It expects that the info card has a padding-bottom of 24px'
+      ).toHaveStyle('padding-bottom: 24px');
+
+      expect(
+        infoCard,
+        'It expects that the info card has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+
+      expect(
+        infoCard,
+        'It expects that the info card has a #000000 color'
+      ).toHaveStyle('color: rgb(27, 27, 31)');
+
+      expect(
+        backgroundColor,
+        'It expects that the info card has a white background'
+      ).toContain('rgb(255, 255, 255)');
+    });
+
+    await step('Checking the info card content', () => {
+      expect(
+        infoCard,
+        `It expects that the info card title is ${args.title}`
+      ).toHaveTextContent('' + args.title);
+
+      expect(
+        infoCard,
+        `It expects that the info card has the value ${args.children}`
+      ).toHaveTextContent('' + args.children);
+
+      expect(
+        numberOfTexts,
+        'It expects that the info card has 2 texts elements'
+      ).toBe(2);
+
+      expect(
+        svgElements,
+        `It expects that the info card has 1 svg`
+      ).toHaveLength(1);
+    });
+
+    clearAllMocks();
+
+    await step('Checking the info card onClick event', async () => {
+      await userEvent.click(infoCard);
+
+      expect(
+        args.onClick,
+        `It expects that the info card on click event is called`
+      ).toHaveBeenCalled();
+    });
   },
 };
 
@@ -45,37 +141,112 @@ export const NormalWithoutIcon: Story = {
     title: 'TVL',
     children: '$52,294.12',
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const infoCard = canvas.getByTestId('infoCardTest');
+    const infoCard = canvas.getByLabelText('info-card');
     const computedStyle = getComputedStyle(infoCard);
     const backgroundColor = computedStyle.getPropertyValue('background-color');
+    const numberOfTexts = infoCard.querySelectorAll('p').length;
     const svgElements = infoCard.querySelectorAll('svg');
 
-    expect(svgElements).toHaveLength(0);
-    expect(backgroundColor).toBe('rgb(255, 255, 255)');
-  },
-};
+    await step('Checking the info card structure', () => {
+      expect(
+        infoCard,
+        'It expects that the info card is being rendered'
+      ).toBeInTheDocument();
 
-export const WithClickEvent: Story = {
-  args: {
-    width: '10rem',
-    title: 'TVL',
-    children: '$52,294.12',
-    onClick: fn(),
-    Icon: <MoneySignSVG maxHeight="1.5rem" maxWidth="1.5rem" width="100%" />,
-  },
-  play: async ({ args, canvasElement }) => {
-    const canvas = within(canvasElement);
-    const infoCard = canvas.getByTestId('infoCardTest');
-    const computedStyle = getComputedStyle(infoCard);
-    const backgroundColor = computedStyle.getPropertyValue('background-color');
+      expect(
+        infoCard,
+        'It expects that the info card have a min-width of 96px'
+      ).toHaveStyle('min-width: 96px');
 
-    infoCard.click();
-    const svgElements = infoCard.querySelectorAll('svg');
+      expect(
+        infoCard,
+        'It expects that the info card has a min-width of 428px'
+      ).toHaveStyle('max-width: 428px');
 
-    expect(svgElements).toHaveLength(1);
-    expect(args.onClick).toHaveBeenCalledOnce();
-    expect(backgroundColor).toBe('rgb(255, 255, 255)');
+      expect(
+        infoCard,
+        'It expects that the info card has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+
+      expect(
+        infoCard,
+        'It expects that the info card has a display inline-flex'
+      ).toHaveStyle('display: inline-flex');
+
+      expect(
+        infoCard,
+        'It expects that the info card has a flex-direction column'
+      ).toHaveStyle('flex-direction: column');
+
+      expect(
+        infoCard,
+        'It expects that the info card has a padding-left of 16px'
+      ).toHaveStyle('padding-left: 16px');
+
+      expect(
+        infoCard,
+        'It expects that the info card has a padding-right of 16px'
+      ).toHaveStyle('padding-right: 16px');
+
+      expect(
+        infoCard,
+        'It expects that the info card has a padding-top of 24px'
+      ).toHaveStyle('padding-top: 24px');
+
+      expect(
+        infoCard,
+        'It expects that the info card has a padding-bottom of 24px'
+      ).toHaveStyle('padding-bottom: 24px');
+
+      expect(
+        infoCard,
+        'It expects that the info card has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+
+      expect(
+        infoCard,
+        'It expects that the info card has a #000000 color'
+      ).toHaveStyle('color: rgb(27, 27, 31)');
+
+      expect(
+        backgroundColor,
+        'It expects that the info card has a white background'
+      ).toContain('rgb(255, 255, 255)');
+    });
+
+    await step('Checking the info card content', () => {
+      expect(
+        infoCard,
+        `It expects that the info card title is ${args.title}`
+      ).toHaveTextContent('' + args.title);
+
+      expect(
+        infoCard,
+        `It expects that the info card has the value ${args.children}`
+      ).toHaveTextContent('' + args.children);
+
+      expect(
+        numberOfTexts,
+        'It expects that the info card has 2 texts elements'
+      ).toBe(2);
+
+      expect(
+        svgElements,
+        `It expects that the info card don't have any svg`
+      ).toHaveLength(0);
+    });
+
+    clearAllMocks();
+
+    await step('Checking the info card onClick event', async () => {
+      await userEvent.click(infoCard);
+
+      expect(
+        args.onClick,
+        `It expects that the info card on click event is called`
+      ).toHaveBeenCalled();
+    });
   },
 };
