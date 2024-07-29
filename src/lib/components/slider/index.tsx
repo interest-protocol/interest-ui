@@ -11,11 +11,11 @@ import { ThumbWrapper } from './thumb-wrapper';
 
 const SliderElement: FC<SliderProps> = ({
   min = 0,
-  step = 1,
+  step,
   onChange,
   max = 100,
   initial = 0,
-  withTooltip,
+  withoutTooltip,
   disabled = false,
   bottomValue = false,
   showZeroValue = false,
@@ -34,14 +34,13 @@ const SliderElement: FC<SliderProps> = ({
     <Range
       max={max}
       min={min}
-      step={step}
+      step={step || undefined}
       values={values}
       disabled={disabled}
       allowOverlap
       onChange={handleChange}
       renderTrack={({ props, children }) => (
         <Box
-          data-testid="slider"
           width="100%"
           display="flex"
           height="2.25rem"
@@ -55,6 +54,8 @@ const SliderElement: FC<SliderProps> = ({
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             ref={props.ref}
+            // eslint-disable-next-line jsx-a11y/aria-role
+            role="sliderLine"
             height=".25rem"
             alignSelf="center"
             background={getTrackBackground({
@@ -80,7 +81,7 @@ const SliderElement: FC<SliderProps> = ({
           <RangeType
             disabled={disabled}
             value={values[props.key]}
-            withTooltip={withTooltip}
+            withoutTooltip={withoutTooltip}
             bottomValue={bottomValue}
             showZeroValue={showZeroValue}
           />
