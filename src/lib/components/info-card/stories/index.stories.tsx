@@ -92,7 +92,7 @@ export const Normal: Story = {
 
       expect(
         infoCard,
-        'It expects that the info card has a #000000 color'
+        'It expects that the info card has a rgb(27, 27, 31) color'
       ).toHaveStyle('color: rgb(27, 27, 31)');
 
       expect(
