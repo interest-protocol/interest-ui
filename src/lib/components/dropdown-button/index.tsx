@@ -113,6 +113,7 @@ export const DropdownButton: FC<PropsWithRef<DropdownButtonProps>> = forwardRef(
         {isOpen && (
           <Motion
             top="3.5rem"
+            aria-label="dropdown"
             zIndex={4}
             overflow="hidden"
             initial="closed"
