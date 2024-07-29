@@ -55,8 +55,7 @@ export const Checkbox: FC<CheckboxProps> = ({
       display="flex"
       alignItems="center"
       cursor={disabled ? 'not-allowed' : 'pointer'}
-      // eslint-disable-next-line jsx-a11y/aria-role
-      role="checkboxWrapper"
+      aria-label="checkboxHolder"
     >
       <Box position="relative" width="1.125rem" height="1.125rem">
         <CheckedButtonElement

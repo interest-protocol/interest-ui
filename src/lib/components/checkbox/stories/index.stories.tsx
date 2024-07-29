@@ -22,7 +22,7 @@ export const Normal: Story = {
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const checkboxWrapper = canvas.getByRole('checkboxWrapper');
+    const checkboxWrapper = canvas.getByLabelText('checkboxHolder');
 
     await step('Checking checkbox wrapper style', async () => {
       expect(
@@ -130,7 +130,7 @@ export const Normal: Story = {
       await step(
         'Checking if the click change the style on component when its checked',
         async () => {
-          const checkboxWrapper = canvas.getByRole('checkboxWrapper');
+          const checkboxWrapper = canvas.getByLabelText('checkboxHolder');
           const checkbox = checkboxWrapper.children[0].children[0];
           expect(
             args.onClick,
@@ -150,7 +150,7 @@ export const Normal: Story = {
       await step(
         'Checking if the click change the style on component when its unchecked',
         async () => {
-          const checkboxWrapper = canvas.getByRole('checkboxWrapper');
+          const checkboxWrapper = canvas.getByLabelText('checkboxHolder');
           const checkbox = checkboxWrapper.children[0].children[0];
           expect(
             args.onClick,
@@ -178,7 +178,7 @@ export const NormalWithoutLabel: Story = {
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const checkboxWrapper = canvas.getByRole('checkboxWrapper');
+    const checkboxWrapper = canvas.getByLabelText('checkboxHolder');
 
     await step('Checking checkbox wrapper style', async () => {
       expect(
@@ -264,7 +264,7 @@ export const NormalWithoutLabel: Story = {
       await step(
         'Checking if the click change the style on component when its checked',
         async () => {
-          const checkboxWrapper = canvas.getByRole('checkboxWrapper');
+          const checkboxWrapper = canvas.getByLabelText('checkboxHolder');
           const checkbox = checkboxWrapper.children[0].children[0];
           expect(
             args.onClick,
@@ -284,7 +284,7 @@ export const NormalWithoutLabel: Story = {
       await step(
         'Checking if the click change the style on component when its unchecked',
         async () => {
-          const checkboxWrapper = canvas.getByRole('checkboxWrapper');
+          const checkboxWrapper = canvas.getByLabelText('checkboxHolder');
           const checkbox = checkboxWrapper.children[0].children[0];
           expect(
             args.onClick,
@@ -314,7 +314,7 @@ export const NormalWithIndeterminate: Story = {
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const checkboxWrapper = canvas.getByRole('checkboxWrapper');
+    const checkboxWrapper = canvas.getByLabelText('checkboxHolder');
 
     await step('Checking checkbox wrapper style', async () => {
       expect(
@@ -421,7 +421,7 @@ export const NormalWithIndeterminate: Story = {
       await step(
         'Checking if the click change the style on component when its checked',
         async () => {
-          const checkboxWrapper = canvas.getByRole('checkboxWrapper');
+          const checkboxWrapper = canvas.getByLabelText('checkboxHolder');
           const checkbox = checkboxWrapper.children[0].children[0];
           expect(
             args.onClick,
@@ -441,7 +441,7 @@ export const NormalWithIndeterminate: Story = {
       await step(
         'Checking if the click change the style on component when its indeterminate',
         async () => {
-          const checkboxWrapper = canvas.getByRole('checkboxWrapper');
+          const checkboxWrapper = canvas.getByLabelText('checkboxHolder');
           const checkbox = checkboxWrapper.children[0].children[0];
           expect(
             args.onClick,
@@ -461,7 +461,7 @@ export const NormalWithIndeterminate: Story = {
       await step(
         'Checking if the click change the style on component when its unchecked',
         async () => {
-          const checkboxWrapper = canvas.getByRole('checkboxWrapper');
+          const checkboxWrapper = canvas.getByLabelText('checkboxHolder');
           const checkbox = checkboxWrapper.children[0].children[0];
           expect(
             args.onClick,
@@ -492,7 +492,7 @@ export const NormalWithIndeterminateAndSupportText: Story = {
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const checkboxWrapper = canvas.getByRole('checkboxWrapper');
+    const checkboxWrapper = canvas.getByLabelText('checkboxHolder');
 
     await step('Checking checkbox wrapper style', async () => {
       expect(
@@ -614,7 +614,7 @@ export const NormalWithIndeterminateAndSupportText: Story = {
       await step(
         'Checking if the click change the style on component when its checked',
         async () => {
-          const checkboxWrapper = canvas.getByRole('checkboxWrapper');
+          const checkboxWrapper = canvas.getByLabelText('checkboxHolder');
           const checkbox = checkboxWrapper.children[0].children[0];
           expect(
             args.onClick,
@@ -634,7 +634,7 @@ export const NormalWithIndeterminateAndSupportText: Story = {
       await step(
         'Checking if the click change the style on component when its indeterminate',
         async () => {
-          const checkboxWrapper = canvas.getByRole('checkboxWrapper');
+          const checkboxWrapper = canvas.getByLabelText('checkboxHolder');
           const checkbox = checkboxWrapper.children[0].children[0];
           expect(
             args.onClick,
@@ -654,7 +654,7 @@ export const NormalWithIndeterminateAndSupportText: Story = {
       await step(
         'Checking if the click change the style on component when its unchecked',
         async () => {
-          const checkboxWrapper = canvas.getByRole('checkboxWrapper');
+          const checkboxWrapper = canvas.getByLabelText('checkboxHolder');
           const checkbox = checkboxWrapper.children[0].children[0];
           expect(
             args.onClick,
@@ -683,7 +683,7 @@ export const NormalDisabled: Story = {
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const checkboxWrapper = canvas.getByRole('checkboxWrapper');
+    const checkboxWrapper = canvas.getByLabelText('checkboxHolder');
 
     await step('Checking checkbox wrapper style', async () => {
       expect(
