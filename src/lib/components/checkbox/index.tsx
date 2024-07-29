@@ -23,11 +23,11 @@ const iconVariants = {
 };
 
 export const Checkbox: FC<CheckboxProps> = ({
+  name,
   label,
   onClick,
-  defaultValue,
-  name,
   disabled,
+  defaultValue,
   supportingText,
   allowIndeterminateValue,
 }) => {
@@ -55,19 +55,8 @@ export const Checkbox: FC<CheckboxProps> = ({
       display="flex"
       alignItems="center"
       cursor={disabled ? 'not-allowed' : 'pointer'}
+      aria-label="checkboxHolder"
     >
-      <Box
-        transition="all 300ms ease-in-out"
-        nHover={{
-          p: disabled ? 'unset' : '0.675rem',
-          bg: disabled
-            ? 'unset'
-            : currentValue == 0
-            ? '#00000014'
-            : `${colors.primary}14`,
-        }}
-        borderRadius="full"
-      />
       <Box position="relative" width="1.125rem" height="1.125rem">
         <CheckedButtonElement
           id={label}
@@ -76,9 +65,9 @@ export const Checkbox: FC<CheckboxProps> = ({
           width="1.125rem"
           height="1.125rem"
           appearance="none"
+          border="2px solid"
           onClick={handleClick}
           borderRadius="0.25rem"
-          border="2px solid"
           cursor={disabled ? 'not-allowed' : 'pointer'}
           nHover={{
             boxShadow: '0 0 .1875rem .3125rem' + colors['onPrimary'] + '1F',
@@ -106,15 +95,15 @@ export const Checkbox: FC<CheckboxProps> = ({
           left="50%"
           htmlFor={label}
           position="absolute"
+          color={colors['onPrimary']}
           transform="translate(-50%, -43%)"
           cursor={disabled ? 'not-allowed' : 'pointer'}
-          color={colors['onPrimary']}
         >
           <Motion
+            height="1rem"
             initial="hidden"
             variants={iconVariants}
             animate={currentValue != 0 ? 'visible' : 'hidden'}
-            height="1rem"
           >
             <Checkmark
               width="100%"
@@ -150,12 +139,12 @@ export const Checkbox: FC<CheckboxProps> = ({
           transition="all 300ms ease-in-out"
         />
       </Box>
-      <LabelElement
-        htmlFor={label}
-        color="onSurface"
-        cursor={disabled ? 'not-allowed' : 'pointer'}
-      >
-        <Box>
+      {label && (
+        <LabelElement
+          htmlFor={label}
+          color="onSurface"
+          cursor={disabled ? 'not-allowed' : 'pointer'}
+        >
           <Typography variant="body" size="large">
             {label}
           </Typography>
@@ -164,8 +153,8 @@ export const Checkbox: FC<CheckboxProps> = ({
               {supportingText}
             </Typography>
           )}
-        </Box>
-      </LabelElement>
+        </LabelElement>
+      )}
     </Box>
   );
 };
