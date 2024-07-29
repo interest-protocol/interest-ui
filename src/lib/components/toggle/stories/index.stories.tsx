@@ -29,7 +29,7 @@ export const Normal: Story = {
   },
   play: async ({ canvasElement, args, step }) => {
     const canvas = within(canvasElement);
-    const toggleWrapper = canvas.getByRole('toggle');
+    const toggleWrapper = canvas.getByRole('checkbox');
 
     await step('Check the structure of the toogle wrapper', async () => {
       expect(
@@ -153,7 +153,7 @@ export const Normal: Story = {
     await step("Check toggle's onChange event", async () => {
       await userEvent.click(toggleWrapper.children[0]);
 
-      const newToggleWrapper = canvas.getByRole('toggle');
+      const newToggleWrapper = canvas.getByRole('checkbox');
       await waitFor(() => {
         expect(
           newToggleWrapper.children[0].children[1],
@@ -178,7 +178,7 @@ export const WithActiveIcon: Story = {
   },
   play: async ({ canvasElement, args, step }) => {
     const canvas = within(canvasElement);
-    const toggleWrapper = canvas.getByRole('toggle');
+    const toggleWrapper = canvas.getByRole('checkbox');
 
     await step('Check the structure of the toogle wrapper', async () => {
       expect(
@@ -302,7 +302,7 @@ export const WithActiveIcon: Story = {
     await step("Check toggle's onChange event", async () => {
       await userEvent.click(toggleWrapper.children[0]);
 
-      const newToggleWrapper = canvas.getByRole('toggle');
+      const newToggleWrapper = canvas.getByRole('checkbox');
       await waitFor(() => {
         expect(
           newToggleWrapper.children[0].children[1],
@@ -329,7 +329,7 @@ export const WithInactiveIcon: Story = {
   },
   play: async ({ canvasElement, args, step }) => {
     const canvas = within(canvasElement);
-    const toggleWrapper = canvas.getByRole('toggle');
+    const toggleWrapper = canvas.getByRole('checkbox');
 
     await step('Check the structure of the toogle wrapper', async () => {
       expect(
@@ -453,7 +453,7 @@ export const WithInactiveIcon: Story = {
     await step("Check toggle's onChange event", async () => {
       await userEvent.click(toggleWrapper.children[0]);
 
-      const newToggleWrapper = canvas.getByRole('toggle');
+      const newToggleWrapper = canvas.getByRole('checkbox');
       await waitFor(() => {
         expect(
           newToggleWrapper.children[0].children[1],
@@ -481,7 +481,7 @@ export const WithActiveAndInactiveIcon: Story = {
   },
   play: async ({ canvasElement, args, step }) => {
     const canvas = within(canvasElement);
-    const toggleWrapper = canvas.getByRole('toggle');
+    const toggleWrapper = canvas.getByRole('checkbox');
 
     await step('Check the structure of the toogle wrapper', async () => {
       expect(
@@ -605,7 +605,7 @@ export const WithActiveAndInactiveIcon: Story = {
     await step("Check toggle's onChange event", async () => {
       await userEvent.click(toggleWrapper.children[0]);
 
-      const newToggleWrapper = canvas.getByRole('toggle');
+      const newToggleWrapper = canvas.getByRole('checkbox');
       await waitFor(() => {
         expect(
           newToggleWrapper.children[0].children[1],
@@ -635,7 +635,7 @@ export const SelectedDisabled: Story = {
   },
   play: async ({ canvasElement, args, step }) => {
     const canvas = within(canvasElement);
-    const toggleWrapper = canvas.getByRole('toggle');
+    const toggleWrapper = canvas.getByRole('checkbox');
 
     await step('Check the structure of the toogle wrapper', async () => {
       expect(
@@ -759,7 +759,7 @@ export const SelectedDisabled: Story = {
     await step("Check toggle's onChange event", async () => {
       await userEvent.click(toggleWrapper.children[0]);
 
-      const newToggleWrapper = canvas.getByRole('toggle');
+      const newToggleWrapper = canvas.getByRole('checkbox');
       await waitFor(() => {
         expect(
           newToggleWrapper.children[0].children[1],
@@ -784,7 +784,7 @@ export const SingleLabel: Story = {
   },
   play: async ({ canvasElement, args, step }) => {
     const canvas = within(canvasElement);
-    const toggleWrapper = canvas.getByRole('toggle');
+    const toggleWrapper = canvas.getByRole('checkbox');
 
     await step('Check the structure of the toogle wrapper', async () => {
       expect(
@@ -944,7 +944,7 @@ export const SingleLabel: Story = {
     await step("Check toggle's onChange event", async () => {
       await userEvent.click(toggleWrapper.children[0]);
 
-      const newToggleWrapper = canvas.getByRole('toggle');
+      const newToggleWrapper = canvas.getByRole('checkbox');
       await waitFor(() => {
         expect(
           newToggleWrapper.children[0].children[1],
@@ -969,7 +969,7 @@ export const DoubleLabel: Story = {
   },
   play: async ({ canvasElement, args, step }) => {
     const canvas = within(canvasElement);
-    const toggleWrapper = canvas.getByRole('toggle');
+    const toggleWrapper = canvas.getByRole('checkbox');
 
     await step('Check the structure of the toogle wrapper', async () => {
       expect(
@@ -1153,7 +1153,7 @@ export const DoubleLabel: Story = {
     await step("Check toggle's onChange event", async () => {
       await userEvent.click(toggleWrapper.children[0]);
 
-      const newToggleWrapper = canvas.getByRole('toggle');
+      const newToggleWrapper = canvas.getByRole('checkbox');
       await waitFor(() => {
         expect(
           newToggleWrapper.children[0].children[1],
