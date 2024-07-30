@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { clearAllMocks, expect, fn, within } from '@storybook/test';
+import { expect, fn, within } from '@storybook/test';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -30,8 +30,6 @@ export const Normal: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const infoCard = canvas.getByLabelText('info-card');
-    const computedStyle = getComputedStyle(infoCard);
-    const backgroundColor = computedStyle.getPropertyValue('background-color');
     const numberOfTexts = infoCard.querySelectorAll('p').length;
     const svgElements = infoCard.querySelectorAll('svg');
 
@@ -96,9 +94,9 @@ export const Normal: Story = {
       ).toHaveStyle('color: rgb(27, 27, 31)');
 
       expect(
-        backgroundColor,
+        infoCard,
         'It expects that the info card has a white background'
-      ).toContain('rgb(255, 255, 255)');
+      ).toHaveStyle('background-color: rgb(255, 255, 255)');
     });
 
     await step('Checking the info card content', () => {
@@ -123,8 +121,6 @@ export const Normal: Story = {
       ).toHaveLength(1);
     });
 
-    clearAllMocks();
-
     await step('Checking the info card onClick event', async () => {
       await userEvent.click(infoCard);
 
@@ -144,8 +140,6 @@ export const NormalWithoutIcon: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const infoCard = canvas.getByLabelText('info-card');
-    const computedStyle = getComputedStyle(infoCard);
-    const backgroundColor = computedStyle.getPropertyValue('background-color');
     const numberOfTexts = infoCard.querySelectorAll('p').length;
     const svgElements = infoCard.querySelectorAll('svg');
 
@@ -211,9 +205,9 @@ export const NormalWithoutIcon: Story = {
       ).toHaveStyle('color: rgb(27, 27, 31)');
 
       expect(
-        backgroundColor,
+        infoCard,
         'It expects that the info card has a white background'
-      ).toContain('rgb(255, 255, 255)');
+      ).toContain('background-color:rgb(255, 255, 255)');
     });
 
     await step('Checking the info card content', () => {
@@ -237,8 +231,6 @@ export const NormalWithoutIcon: Story = {
         `It expects that the info card don't have any svg`
       ).toHaveLength(0);
     });
-
-    clearAllMocks();
 
     await step('Checking the info card onClick event', async () => {
       await userEvent.click(infoCard);
