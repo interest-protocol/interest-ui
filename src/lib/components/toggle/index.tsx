@@ -49,7 +49,7 @@ export const ToggleButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
   };
 
   return (
-    <Box display="flex" flexWrap="wrap" alignItems="center" role="checkbox">
+    <Box display="flex" flexWrap="wrap" alignItems="center" role="switch">
       <LabelElement
         ml="0.375rem"
         display="flex"
