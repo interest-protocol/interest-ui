@@ -37,8 +37,7 @@ export const RadioButton: FC<RadioButtonProps> = ({
       flexWrap="wrap"
       onClick={handleChange}
       cursor={disabled ? 'not-allowed' : 'pointer'}
-      // eslint-disable-next-line jsx-a11y/aria-role
-      role="radioContainer"
+      aria-label="radioWrapper"
     >
       <Motion
         display="flex"
