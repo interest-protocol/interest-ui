@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { clearAllMocks, expect, fn, userEvent, within } from '@storybook/test';
+import { expect, fn, userEvent, within } from '@storybook/test';
 import React from 'react';
 
 import { CircleSVG } from '../../../icons';
@@ -47,9 +47,6 @@ export const WithLabel: Story = {
     const canvas = within(canvasElement);
 
     const button = canvas.getByRole('button');
-    const computedStyle = getComputedStyle(button);
-    const background = computedStyle.getPropertyValue('background');
-    const borderColor = computedStyle.getPropertyValue('border-color');
     const svgElements = button.getElementsByTagName('svg');
     const textElements = button.getElementsByTagName('p');
 
@@ -60,9 +57,9 @@ export const WithLabel: Story = {
       ).toBeInTheDocument();
 
       expect(
-        background,
+        button,
         'It expects that the button background is rgb(255, 255, 255)'
-      ).toContain('rgb(255, 255, 255)');
+      ).toHaveStyle('background-color: rgb(255, 255, 255)');
 
       expect(button, 'It expects that the button height is 40px').toHaveStyle(
         'height: 40px'
@@ -92,9 +89,9 @@ export const WithLabel: Story = {
       ).toHaveStyle('display: flex');
 
       expect(
-        borderColor,
+        button,
         'It expects that the button dont have border-color'
-      ).toBe('rgba(0, 0, 0, 0)');
+      ).toHaveStyle('border-color: rgba(0, 0, 0, 0)');
     });
 
     await step('Checking the button content', () => {
@@ -123,8 +120,6 @@ export const WithLabel: Story = {
         'It expects that the button has one text element'
       ).toHaveLength(1);
     });
-
-    clearAllMocks();
 
     await step('Checking the button click event', async () => {
       await userEvent.click(button);
@@ -183,7 +178,7 @@ export const WithLabel: Story = {
 
       expect(
         dropdown,
-        'It expects that the dropdown shadow is rgba(13, 16, 23, 0.04) 0px 2px 4px -2px, rgba(13, 16, 23, 0.12) 0px 4px 8px -2px'
+        'It expects that the dropdown box-shadow is'
       ).toHaveStyle(
         'box-shadow: rgba(13, 16, 23, 0.04) 0px 2px 4px -2px, rgba(13, 16, 23, 0.12) 0px 4px 8px -2px'
       );
@@ -261,9 +256,6 @@ export const WithLabelRounded: Story = {
     const canvas = within(canvasElement);
 
     const button = canvas.getByRole('button');
-    const computedStyle = getComputedStyle(button);
-    const background = computedStyle.getPropertyValue('background');
-    const borderColor = computedStyle.getPropertyValue('border-color');
     const svgElements = button.getElementsByTagName('svg');
     const textElements = button.getElementsByTagName('p');
 
@@ -274,9 +266,9 @@ export const WithLabelRounded: Story = {
       ).toBeInTheDocument();
 
       expect(
-        background,
+        button,
         'It expects that the button background is rgb(255, 255, 255)'
-      ).toContain('rgb(255, 255, 255)');
+      ).toHaveStyle('background-color: rgb(255, 255, 255)');
 
       expect(button, 'It expects that the button height is 40px').toHaveStyle(
         'height: 40px'
@@ -303,9 +295,9 @@ export const WithLabelRounded: Story = {
       ).toHaveStyle('display: flex');
 
       expect(
-        borderColor,
+        button,
         'It expects that the button dont have border-color'
-      ).toBe('rgba(0, 0, 0, 0)');
+      ).toHaveStyle('border-color:rgba(0, 0, 0, 0)');
     });
 
     await step('Checking the button content', () => {
@@ -335,8 +327,6 @@ export const WithLabelRounded: Story = {
       ).toHaveLength(1);
     });
 
-    clearAllMocks();
-
     await step('Checking the button click event', async () => {
       await userEvent.click(button);
 
@@ -350,13 +340,11 @@ export const WithLabelRounded: Story = {
       await userEvent.click(button);
 
       const dropdown = canvas.getByLabelText('dropdown');
-      const computedStyle = getComputedStyle(dropdown);
-      const background = computedStyle.getPropertyValue('background');
 
       expect(
-        background,
+        dropdown,
         'It expects that the dropdown background is rgb(255, 255, 255)'
-      ).toContain('rgb(255, 255, 255)');
+      ).toHaveStyle('background-color:  rgb(255, 255, 255)');
 
       expect(
         dropdown,
@@ -394,7 +382,7 @@ export const WithLabelRounded: Story = {
 
       expect(
         dropdown,
-        'It expects that the dropdown shadow is rgba(13, 16, 23, 0.04) 0px 2px 4px -2px, rgba(13, 16, 23, 0.12) 0px 4px 8px -2px'
+        'It expects that the dropdown box-shadow is'
       ).toHaveStyle(
         'box-shadow: rgba(13, 16, 23, 0.04) 0px 2px 4px -2px, rgba(13, 16, 23, 0.12) 0px 4px 8px -2px'
       );
@@ -477,10 +465,8 @@ export const WithoutLabelOnlyIcon: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const button = canvas.getByRole('button');
-    const computedStyle = getComputedStyle(button);
-    const background = computedStyle.getPropertyValue('background');
-    const borderColor = computedStyle.getPropertyValue('border-color');
     const svgElements = button.getElementsByTagName('svg');
+
     await step('Checking the button structure', () => {
       expect(
         button,
@@ -488,9 +474,9 @@ export const WithoutLabelOnlyIcon: Story = {
       ).toBeInTheDocument();
 
       expect(
-        background,
+        button,
         'It expects that the button background is rgb(255, 255, 255)'
-      ).toContain('rgb(255, 255, 255)');
+      ).toHaveStyle('background-color: rgb(255, 255, 255)');
 
       expect(button, 'It expects that the button height is 40px').toHaveStyle(
         'height: 40px'
@@ -515,9 +501,9 @@ export const WithoutLabelOnlyIcon: Story = {
       ).toHaveStyle('display: flex');
 
       expect(
-        borderColor,
+        button,
         'It expects that the button dont have border-color'
-      ).toBe('rgba(0, 0, 0, 0)');
+      ).toHaveStyle('border-color: rgba(0, 0, 0, 0)');
     });
 
     await step('Checking the button content', () => {
@@ -537,8 +523,6 @@ export const WithoutLabelOnlyIcon: Story = {
       ).toHaveLength(1);
     });
 
-    clearAllMocks();
-
     await step('Checking the button click event', async () => {
       await userEvent.click(button);
 
@@ -552,13 +536,11 @@ export const WithoutLabelOnlyIcon: Story = {
       await userEvent.click(button);
 
       const dropdown = canvas.getByLabelText('dropdown');
-      const computedStyle = getComputedStyle(dropdown);
-      const background = computedStyle.getPropertyValue('background');
 
       expect(
-        background,
+        dropdown,
         'It expects that the dropdown background is rgb(255, 255, 255)'
-      ).toContain('rgb(255, 255, 255)');
+      ).toHaveStyle('background-color: rgb(255, 255, 255)');
 
       expect(
         dropdown,
@@ -596,7 +578,7 @@ export const WithoutLabelOnlyIcon: Story = {
 
       expect(
         dropdown,
-        'It expects that the dropdown shadow is rgba(13, 16, 23, 0.04) 0px 2px 4px -2px, rgba(13, 16, 23, 0.12) 0px 4px 8px -2px'
+        'It expects that the dropdown box-shadow is'
       ).toHaveStyle(
         'box-shadow: rgba(13, 16, 23, 0.04) 0px 2px 4px -2px, rgba(13, 16, 23, 0.12) 0px 4px 8px -2px'
       );
