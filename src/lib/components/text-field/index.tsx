@@ -75,9 +75,8 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
       <Box
         all="inherit"
         opacity={disabled ? 0.32 : 1}
-        cursor={disabled ? 'not-allowed' : 'normal'}
-        // eslint-disable-next-line jsx-a11y/aria-role
-        role="input"
+        cursor={disabled ? 'not-allowed' : 'default'}
+        aria-label="textfieldHolder"
       >
         {label && (
           <LabelElement htmlFor={id}>
@@ -121,6 +120,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
             flexDirection="column"
             justifyContent="center"
             mr={status ? '0.5rem' : 'unset'}
+            aria-label="input"
           >
             <TextFieldElement
               ref={ref}
