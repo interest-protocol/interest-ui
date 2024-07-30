@@ -40,6 +40,7 @@ export const variants = {
       background: `${colors.primary}14`,
     },
     ':focus': {
+      color: 'white',
       background: colors.primary,
     },
     ':active': {
