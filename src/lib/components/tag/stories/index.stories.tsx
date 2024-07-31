@@ -40,7 +40,7 @@ export const Filled: Story = {
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-    const tag = canvas.getByRole('tag');
+    const tag = canvas.getByLabelText('tag');
 
     await step('Validating the Tag structure', () => {
       expect(tag, "It's expected that the tag is rendered").toBeInTheDocument();
@@ -110,7 +110,7 @@ export const FilledWithPrefix: Story = {
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-    const tag = canvas.getByRole('tag');
+    const tag = canvas.getByLabelText('tag');
 
     await step('Validating the Tag structure', () => {
       expect(tag, "It's expected that the tag is rendered").toBeInTheDocument();
@@ -192,7 +192,7 @@ export const FilledWithCombined: Story = {
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-    const tag = canvas.getByRole('tag');
+    const tag = canvas.getByLabelText('tag');
 
     await step('Validating the Tag structure', () => {
       expect(tag, "It's expected that the tag is rendered").toBeInTheDocument();
@@ -294,7 +294,7 @@ export const Outlined: Story = {
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-    const tag = canvas.getByRole('tag');
+    const tag = canvas.getByLabelText('tag');
 
     await step('Validating the Tag structure', () => {
       expect(tag, "It's expected that the tag is rendered").toBeInTheDocument();
@@ -364,7 +364,7 @@ export const OutlinedWithPrefix: Story = {
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-    const tag = canvas.getByRole('tag');
+    const tag = canvas.getByLabelText('tag');
 
     await step('Validating the Tag structure', () => {
       expect(tag, "It's expected that the tag is rendered").toBeInTheDocument();
@@ -450,7 +450,7 @@ export const OutlinedWithCombined: Story = {
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-    const tag = canvas.getByRole('tag');
+    const tag = canvas.getByLabelText('tag');
 
     await step('Validating the Tag structure', () => {
       expect(tag, "It's expected that the tag is rendered").toBeInTheDocument();
