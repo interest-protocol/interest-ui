@@ -23,7 +23,7 @@ export const Circle: Story = {
   play: async ({ canvasElement, step, args }) => {
     let currentOption = 0;
     const canvas = within(canvasElement);
-    const tabs = canvas.getByRole('tabs');
+    const tabs = canvas.getByRole('tablist');
 
     await step('Check the structure of the Tab Circular', async () => {
       expect(
@@ -64,7 +64,7 @@ export const Circle: Story = {
       currentOption++;
       await fireEvent.click(tabs.children[currentOption]);
 
-      const newTabs = canvas.getByRole('tabs');
+      const newTabs = canvas.getByRole('tablist');
       expect(
         newTabs.children[currentOption].children[0].children.length,
         'It is expected that the selected option has two nodes'
@@ -87,7 +87,7 @@ export const Square: Story = {
   play: async ({ canvasElement, step, args }) => {
     let currentOption = 0;
     const canvas = within(canvasElement);
-    const tabs = canvas.getByRole('tabs');
+    const tabs = canvas.getByRole('tablist');
 
     await step('Check the structure of the Tab Square', async () => {
       expect(
@@ -128,7 +128,7 @@ export const Square: Story = {
       currentOption++;
       await fireEvent.click(tabs.children[currentOption]);
 
-      const newTabs = canvas.getByRole('tabs');
+      const newTabs = canvas.getByRole('tablist');
       expect(
         args.onChangeTab,
         'It is expected that the onChange function has been executed at least once'
