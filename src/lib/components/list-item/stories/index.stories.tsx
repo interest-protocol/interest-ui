@@ -42,11 +42,16 @@ export const Normal: Story = {
     const listItem = canvas.getByRole('listitem');
     const numberOfTexts = listItem.getElementsByTagName('span').length;
 
-    await step('Validating the Tag structure', () => {
+    await step('Validating the list item structure', () => {
       expect(
         listItem,
         "It's expected that listitem is rendered"
       ).toBeInTheDocument();
+
+      expect(
+        listItem,
+        `It's expected that the display of the listitem is flex`
+      ).toHaveStyle('cursor: pointer');
 
       expect(
         listItem.children[0],
@@ -64,7 +69,7 @@ export const Normal: Story = {
       ).toBe(2);
     });
 
-    await step('Validating the Tag content', () => {
+    await step('Validating the list item content', () => {
       const title = listItem.children[0].children[0];
       const description = listItem.children[0].children[1];
 
@@ -141,11 +146,16 @@ export const WithoutDescription: Story = {
     const listItem = canvas.getByRole('listitem');
     const numberOfTexts = listItem.getElementsByTagName('span').length;
 
-    await step('Validating the Tag structure', () => {
+    await step('Validating the list item structure', () => {
       expect(
         listItem,
         "It's expected that listitem is rendered"
       ).toBeInTheDocument();
+
+      expect(
+        listItem,
+        `It's expected that the display of the listitem is flex`
+      ).toHaveStyle('cursor: pointer');
 
       expect(
         listItem.children[0],
@@ -162,7 +172,7 @@ export const WithoutDescription: Story = {
       );
     });
 
-    await step('Validating the Tag content', () => {
+    await step('Validating the list item content', () => {
       const title = listItem.children[0].children[0];
 
       expect(
@@ -218,11 +228,16 @@ export const WithPrefix: Story = {
     const svgElements = listItem.querySelectorAll('svg');
     const numberOfTexts = listItem.getElementsByTagName('span').length;
 
-    await step('Validating the Tag structure', () => {
+    await step('Validating the list item structure', () => {
       expect(
         listItem,
         "It's expected that listitem is rendered"
       ).toBeInTheDocument();
+
+      expect(
+        listItem,
+        `It's expected that the display of the listitem is flex`
+      ).toHaveStyle('cursor: pointer');
 
       expect(
         numberOfTexts,
@@ -240,7 +255,7 @@ export const WithPrefix: Story = {
       ).toBe(1);
     });
 
-    await step('Validating the Tag content', () => {
+    await step('Validating the list item content', () => {
       const title = listItem.children[1].children[0];
       const description = listItem.children[1].children[1];
 
@@ -321,11 +336,16 @@ export const WithPrefixWithoutDescription: Story = {
     const svgElements = listItem.querySelectorAll('svg');
     const numberOfTexts = listItem.getElementsByTagName('span').length;
 
-    await step('Validating the Tag structure', () => {
+    await step('Validating the list item structure', () => {
       expect(
         listItem,
         "It's expected that listitem is rendered"
       ).toBeInTheDocument();
+
+      expect(
+        listItem,
+        `It's expected that the display of the listitem is flex`
+      ).toHaveStyle('cursor: pointer');
 
       expect(
         numberOfTexts,
@@ -343,7 +363,7 @@ export const WithPrefixWithoutDescription: Story = {
       ).toBe(1);
     });
 
-    await step('Validating the Tag content', () => {
+    await step('Validating the list item content', () => {
       const title = listItem.children[1].children[0];
 
       expect(
@@ -398,11 +418,16 @@ export const WithSuffix: Story = {
     const svgElements = listItem.querySelectorAll('svg');
     const numberOfTexts = listItem.getElementsByTagName('span').length;
 
-    await step('Validating the Tag structure', () => {
+    await step('Validating the list item structure', () => {
       expect(
         listItem,
         "It's expected that listitem is rendered"
       ).toBeInTheDocument();
+
+      expect(
+        listItem,
+        `It's expected that the display of the listitem is flex`
+      ).toHaveStyle('cursor: pointer');
 
       expect(
         numberOfTexts,
@@ -420,7 +445,7 @@ export const WithSuffix: Story = {
       ).toBe(1);
     });
 
-    await step('Validating the Tag content', () => {
+    await step('Validating the list item content', () => {
       const title = listItem.children[0].children[0];
       const description = listItem.children[0].children[1];
 
@@ -499,11 +524,16 @@ export const WithSuffixWithoutDescription: Story = {
     const svgElements = listItem.querySelectorAll('svg');
     const numberOfTexts = listItem.getElementsByTagName('span').length;
 
-    await step('Validating the Tag structure', () => {
+    await step('Validating the list item structure', () => {
       expect(
         listItem,
         "It's expected that listitem is rendered"
       ).toBeInTheDocument();
+
+      expect(
+        listItem,
+        `It's expected that the display of the listitem is flex`
+      ).toHaveStyle('cursor: pointer');
 
       expect(
         numberOfTexts,
@@ -565,22 +595,27 @@ export const WithSuffixToggle: Story = {
   args: {
     title: 'List item',
     description: 'Supporting Text',
-    SuffixIcon: <ToggleButton name="toggle" defaultValue={false} />,
+    SuffixIcon: <ToggleButton name="switch" defaultValue={false} />,
     onClick: fn(),
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const listItem = canvas.getByRole('listitem');
     const lastChild = listItem.lastChild as HTMLElement;
-    const toggles = canvas.getAllByRole('toggle');
+    const switches = canvas.getAllByRole('switch');
     const numberOfTexts = listItem.getElementsByTagName('span').length;
-    const toggle = canvas.getByRole('toggle');
+    const switchToggle = canvas.getByRole('switch');
 
-    await step('Validating the Tag structure', () => {
+    await step('Validating the list item structure', () => {
       expect(
         listItem,
         "It's expected that listitem is rendered"
       ).toBeInTheDocument();
+
+      expect(
+        listItem,
+        `It's expected that the display of the listitem is flex`
+      ).toHaveStyle('cursor: pointer');
 
       expect(
         numberOfTexts,
@@ -590,10 +625,10 @@ export const WithSuffixToggle: Story = {
       expect(
         lastChild,
         'Expect that the last child of the component is the toggle'
-      ).toBe(toggle);
+      ).toBe(switchToggle);
 
       expect(
-        toggles.length + numberOfTexts,
+        switches.length + numberOfTexts,
         "It's expected that the listitem has 3 elements"
       ).toBe(3);
     });
@@ -673,15 +708,20 @@ export const WithSuffixToggleWithoutDescription: Story = {
     const canvas = within(canvasElement);
     const listItem = canvas.getByRole('listitem');
     const lastChild = listItem.lastChild as HTMLElement;
-    const toggles = canvas.getAllByRole('toggle');
+    const switches = canvas.getAllByRole('switch');
     const numberOfTexts = listItem.getElementsByTagName('span').length;
-    const toggle = canvas.getByRole('toggle');
+    const switchToggle = canvas.getByRole('switch');
 
-    await step('Validating the Tag structure', () => {
+    await step('Validating the list item structure', () => {
       expect(
         listItem,
         "It's expected that listitem is rendered"
       ).toBeInTheDocument();
+
+      expect(
+        listItem,
+        `It's expected that the display of the listitem is flex`
+      ).toHaveStyle('cursor: pointer');
 
       expect(
         numberOfTexts,
@@ -691,15 +731,15 @@ export const WithSuffixToggleWithoutDescription: Story = {
       expect(
         lastChild,
         'Expect that the last child of the component is the toggle'
-      ).toBe(toggle);
+      ).toBe(switchToggle);
 
       expect(
-        toggles.length + numberOfTexts,
+        switches.length + numberOfTexts,
         "It's expected that the listitem has 2 elements"
       ).toBe(2);
     });
 
-    await step('Validating the Tag content', () => {
+    await step('Validating the list item content', () => {
       const title = listItem.children[0].children[0];
 
       expect(
@@ -751,15 +791,20 @@ export const WithSuffixRadio: Story = {
     const canvas = within(canvasElement);
     const listItem = canvas.getByRole('listitem');
     const lastChild = listItem.lastChild as HTMLElement;
-    const radios = canvas.getAllByRole('radioContainer');
+    const radios = canvas.getAllByLabelText('radioWrapper');
     const numberOfTexts = listItem.getElementsByTagName('span').length;
-    const radio = canvas.getByRole('radioContainer');
+    const radio = canvas.getByLabelText('radioWrapper');
 
-    await step('Validating the Tag structure', () => {
+    await step('Validating the list item structure', () => {
       expect(
         listItem,
         "It's expected that listitem is rendered"
       ).toBeInTheDocument();
+
+      expect(
+        listItem,
+        `It's expected that the display of the listitem is flex`
+      ).toHaveStyle('cursor: pointer');
 
       expect(
         numberOfTexts,
@@ -777,7 +822,7 @@ export const WithSuffixRadio: Story = {
       ).toBe(4);
     });
 
-    await step('Validating the Tag content', () => {
+    await step('Validating the list item content', () => {
       const title = listItem.children[0].children[0];
       const description = listItem.children[0].children[1];
 
@@ -853,15 +898,20 @@ export const WithSuffixRadioWithoutDescription: Story = {
     const canvas = within(canvasElement);
     const listItem = canvas.getByRole('listitem');
     const lastChild = listItem.lastChild as HTMLElement;
-    const radios = canvas.getAllByRole('radioContainer');
+    const radios = canvas.getAllByLabelText('radioWrapper');
     const numberOfTexts = listItem.getElementsByTagName('span').length;
-    const radio = canvas.getByRole('radioContainer');
+    const radio = canvas.getByLabelText('radioWrapper');
 
-    await step('Validating the Tag structure', () => {
+    await step('Validating the list item structure', () => {
       expect(
         listItem,
         "It's expected that listitem is rendered"
       ).toBeInTheDocument();
+
+      expect(
+        listItem,
+        `It's expected that the display of the listitem is flex`
+      ).toHaveStyle('cursor: pointer');
 
       expect(
         numberOfTexts,
@@ -879,7 +929,7 @@ export const WithSuffixRadioWithoutDescription: Story = {
       ).toBe(2);
     });
 
-    await step('Validating the Tag content', () => {
+    await step('Validating the list item content', () => {
       const title = listItem.children[0].children[0];
 
       expect(
@@ -942,13 +992,18 @@ export const WithPrefixAndSuffixRadioWithoutDescription: Story = {
 
     const svgElements = listItem.querySelectorAll('svg');
     const numberOfTexts = listItem.getElementsByTagName('span').length;
-    const radio = canvas.getByRole('radioContainer') as HTMLElement;
+    const radio = canvas.getByLabelText('radioWrapper');
 
-    await step('Validating the Tag structure', () => {
+    await step('Validating the list item structure', () => {
       expect(
         listItem,
         "It's expected that listitem is rendered"
       ).toBeInTheDocument();
+
+      expect(
+        listItem,
+        `It's expected that the display of the listitem is flex`
+      ).toHaveStyle('cursor: pointer');
 
       expect(
         numberOfTexts,
@@ -971,7 +1026,7 @@ export const WithPrefixAndSuffixRadioWithoutDescription: Story = {
       ).toBe(2);
     });
 
-    await step('Validating the Tag content', () => {
+    await step('Validating the list item content', () => {
       const title = listItem.children[1].children[0];
 
       expect(
