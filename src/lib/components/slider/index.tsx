@@ -54,8 +54,7 @@ const SliderElement: FC<SliderProps> = ({
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             ref={props.ref}
-            // eslint-disable-next-line jsx-a11y/aria-role
-            role="sliderLine"
+            aria-label="sliderLine"
             height=".25rem"
             alignSelf="center"
             background={getTrackBackground({
