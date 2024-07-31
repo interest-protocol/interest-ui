@@ -28,6 +28,7 @@ export const Default: Story = {
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
     const textfield = canvas.getByLabelText('textfieldHolder');
+    const textfieldInput = canvas.getByLabelText('input');
 
     await step('Testing textfield holder', async () => {
       expect(textfield, 'To be rendered').toBeInTheDocument();
@@ -43,7 +44,6 @@ export const Default: Story = {
 
     await step('Testing textfield input', async () => {
       const label = textfield.children[0];
-      const textfieldInput = label.children[0].children[0];
       expect(label, 'To be rendered').toBeInTheDocument();
       expect(label, 'Should have display flex').toHaveStyle('display: flex');
       expect(label, 'Should have height of 40px').toHaveStyle('height: 40px');
@@ -56,15 +56,19 @@ export const Default: Story = {
         label,
         'Should have background-color of rgb(0, 0, 0, 0)'
       ).toHaveStyle('background-color: rgb(0, 0, 0, 0)');
-      expect(textfieldInput.tagName, 'Should be an input').toBe('INPUT');
-      expect(textfieldInput, 'Should have font-size of 16px').toHaveStyle(
-        'font-size: 16px'
-      );
-      expect(textfieldInput, 'Should have font-weight of 500').toHaveStyle(
-        'font-weight: 500'
+      expect(textfieldInput.children[0].tagName, 'Should be an input').toBe(
+        'INPUT'
       );
       expect(
-        textfieldInput,
+        textfieldInput.children[0],
+        'Should have font-size of 16px'
+      ).toHaveStyle('font-size: 16px');
+      expect(
+        textfieldInput.children[0],
+        'Should have font-weight of 500'
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        textfieldInput.children[0],
         'Should have border of 0px none rgb(0, 0, 0)'
       ).toHaveStyle('border: 0px none rgb(0, 0, 0)');
     });
@@ -81,6 +85,7 @@ export const WithPrefix: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const textfield = canvas.getByLabelText('textfieldHolder');
+    const textfieldInput = canvas.getByLabelText('input');
 
     await step('Testing textfield holder', async () => {
       expect(textfield, 'To be rendered').toBeInTheDocument();
@@ -96,7 +101,6 @@ export const WithPrefix: Story = {
 
     await step('Testing textfield input', async () => {
       const label = textfield.children[0];
-      const textfieldInput = textfield.children[1].children[1].children[0];
       expect(label, 'To be rendered').toBeInTheDocument();
       expect(label, 'Should have display inline').toHaveStyle(
         'display: inline'
@@ -111,15 +115,19 @@ export const WithPrefix: Story = {
         label,
         'Should have background-color of rgba(0, 0, 0, 0)'
       ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
-      expect(textfieldInput.tagName, 'Should be an input').toBe('INPUT');
-      expect(textfieldInput, 'Should have font-size of 16px').toHaveStyle(
-        'font-size: 16px'
-      );
-      expect(textfieldInput, 'Should have font-weight of 500').toHaveStyle(
-        'font-weight: 500'
+      expect(textfieldInput.children[0].tagName, 'Should be an input').toBe(
+        'INPUT'
       );
       expect(
-        textfieldInput,
+        textfieldInput.children[0],
+        'Should have font-size of 16px'
+      ).toHaveStyle('font-size: 16px');
+      expect(
+        textfieldInput.children[0],
+        'Should have font-weight of 500'
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        textfieldInput.children[0],
         'Should have border of 0px none rgb(0, 0, 0)'
       ).toHaveStyle('border: 0px none rgb(0, 0, 0)');
     });
@@ -173,6 +181,7 @@ export const WithPrefixSuccess: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const textfield = canvas.getByLabelText('textfieldHolder');
+    const textfieldInput = canvas.getByLabelText('input');
 
     await step('Testing textfield holder', async () => {
       expect(textfield, 'To be rendered').toBeInTheDocument();
@@ -188,7 +197,7 @@ export const WithPrefixSuccess: Story = {
 
     await step('Testing textfield input', async () => {
       const label = textfield.children[0];
-      const textfieldInput = textfield.children[1].children[1].children[0];
+
       expect(label, 'To be rendered').toBeInTheDocument();
       expect(label, 'Should have display inline').toHaveStyle(
         'display: inline'
@@ -203,13 +212,17 @@ export const WithPrefixSuccess: Story = {
         label,
         'Should have background-color of rgba(0, 0, 0, 0)'
       ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
-      expect(textfieldInput.tagName, 'Should be an input').toBe('INPUT');
-      expect(textfieldInput, 'Should have font-size of 16px').toHaveStyle(
-        'font-size: 16px'
+      expect(textfieldInput.children[0].tagName, 'Should be an input').toBe(
+        'INPUT'
       );
-      expect(textfieldInput, 'Should have font-weight of 500').toHaveStyle(
-        'font-weight: 500'
-      );
+      expect(
+        textfieldInput.children[0],
+        'Should have font-size of 16px'
+      ).toHaveStyle('font-size: 16px');
+      expect(
+        textfieldInput.children[0],
+        'Should have font-weight of 500'
+      ).toHaveStyle('font-weight: 500');
     });
 
     await step('Testing SVG ', async () => {
@@ -275,7 +288,8 @@ export const WithTopLabel: Story = {
 
     await step('Testing textfield input', async () => {
       const label = textfield.children[0];
-      const textfieldInput = textfield.children[1].children[0].children[0];
+      const textfieldInput = canvas.getByLabelText('input');
+
       expect(label, 'To be rendered').toBeInTheDocument();
       expect(label, 'Should have display inline').toHaveStyle(
         'display: inline'
@@ -290,15 +304,19 @@ export const WithTopLabel: Story = {
         label,
         'Should have background-color of rgba(0, 0, 0, 0)'
       ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
-      expect(textfieldInput.tagName, 'Should be an input').toBe('INPUT');
-      expect(textfieldInput, 'Should have font-size of 16px').toHaveStyle(
-        'font-size: 16px'
-      );
-      expect(textfieldInput, 'Should have font-weight of 500').toHaveStyle(
-        'font-weight: 500'
+      expect(textfieldInput.children[0].tagName, 'Should be an input').toBe(
+        'INPUT'
       );
       expect(
-        textfieldInput,
+        textfieldInput.children[0],
+        'Should have font-size of 16px'
+      ).toHaveStyle('font-size: 16px');
+      expect(
+        textfieldInput.children[0],
+        'Should have font-weight of 500'
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        textfieldInput.children[0],
         'Should have border of 0px none rgb(0, 0, 0)'
       ).toHaveStyle('border: 0px none rgb(0, 0, 0)');
     });
@@ -340,6 +358,7 @@ export const Combined: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const textfield = canvas.getByLabelText('textfieldHolder');
+    const textfieldInput = canvas.getByLabelText('input');
 
     await step('Testing textfield holder', async () => {
       expect(textfield, 'To be rendered').toBeInTheDocument();
@@ -355,7 +374,6 @@ export const Combined: Story = {
 
     await step('Testing textfield input', async () => {
       const label = textfield.children[0];
-      const textfieldInput = textfield.children[1].children[1].children[0];
       expect(label, 'To be rendered').toBeInTheDocument();
       expect(label, 'Should have display inline').toHaveStyle(
         'display: inline'
@@ -370,15 +388,19 @@ export const Combined: Story = {
         label,
         'Should have background-color of rgba(0, 0, 0, 0)'
       ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
-      expect(textfieldInput.tagName, 'Should be an input').toBe('INPUT');
-      expect(textfieldInput, 'Should have font-size of 16px').toHaveStyle(
-        'font-size: 16px'
-      );
-      expect(textfieldInput, 'Should have font-weight of 500').toHaveStyle(
-        'font-weight: 500'
+      expect(textfieldInput.children[0].tagName, 'Should be an input').toBe(
+        'INPUT'
       );
       expect(
-        textfieldInput,
+        textfieldInput.children[0],
+        'Should have font-size of 16px'
+      ).toHaveStyle('font-size: 16px');
+      expect(
+        textfieldInput.children[0],
+        'Should have font-weight of 500'
+      ).toHaveStyle('font-weight: 500');
+      expect(
+        textfieldInput.children[0],
         'Should have border of 0px none rgb(0, 0, 0)'
       ).toHaveStyle('border: 0px none rgb(0, 0, 0)');
     });
@@ -446,7 +468,8 @@ export const Error: Story = {
 
     await step('Testing textfield input', async () => {
       const label = textfield.children[0];
-      const textfieldInput = textfield.children[0].children[0].children[0];
+      const textfieldInput = canvas.getByLabelText('input');
+
       expect(label, 'To be rendered').toBeInTheDocument();
       expect(label, 'Should have display flex').toHaveStyle('display: flex');
       expect(label, 'Should have height of 40px').toHaveStyle('height: 40px');
@@ -459,13 +482,17 @@ export const Error: Story = {
         label,
         'Should have background-color of rgba(0, 0, 0, 0)'
       ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
-      expect(textfieldInput.tagName, 'Should be an input').toBe('INPUT');
-      expect(textfieldInput, 'Should have font-size of 16px').toHaveStyle(
-        'font-size: 16px'
+      expect(textfieldInput.children[0].tagName, 'Should be an input').toBe(
+        'INPUT'
       );
-      expect(textfieldInput, 'Should have font-weight of 500').toHaveStyle(
-        'font-weight: 500'
-      );
+      expect(
+        textfieldInput.children[0],
+        'Should have font-size of 16px'
+      ).toHaveStyle('font-size: 16px');
+      expect(
+        textfieldInput.children[0],
+        'Should have font-weight of 500'
+      ).toHaveStyle('font-weight: 500');
     });
 
     await step('Testing SVG ', async () => {
@@ -532,7 +559,8 @@ export const ErrorCombined: Story = {
 
     await step('Testing textfield input', async () => {
       const label = textfield.children[0];
-      const textfieldInput = textfield.children[1].children[1].children[0];
+      const textfieldInput = canvas.getByLabelText('input');
+
       expect(label, 'To be rendered').toBeInTheDocument();
       expect(label, 'Should have display inline').toHaveStyle(
         'display: inline'
@@ -547,13 +575,17 @@ export const ErrorCombined: Story = {
         label,
         'Should have background-color of rgba(0, 0, 0, 0)'
       ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
-      expect(textfieldInput.tagName, 'Should be an input').toBe('INPUT');
-      expect(textfieldInput, 'Should have font-size of 16px').toHaveStyle(
-        'font-size: 16px'
+      expect(textfieldInput.children[0].tagName, 'Should be an input').toBe(
+        'INPUT'
       );
-      expect(textfieldInput, 'Should have font-weight of 500').toHaveStyle(
-        'font-weight: 500'
-      );
+      expect(
+        textfieldInput.children[0],
+        'Should have font-size of 16px'
+      ).toHaveStyle('font-size: 16px');
+      expect(
+        textfieldInput.children[0],
+        'Should have font-weight of 500'
+      ).toHaveStyle('font-weight: 500');
     });
 
     await step('Testing SVG ', async () => {
@@ -612,6 +644,7 @@ export const ErrorCombinedWithWrapper: Story = {
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const textfield = canvas.getByLabelText('textfieldHolder');
+    const textfieldInput = canvas.getByLabelText('input');
 
     await step('Testing textfield holder', async () => {
       expect(textfield, 'To be rendered').toBeInTheDocument();
@@ -627,7 +660,6 @@ export const ErrorCombinedWithWrapper: Story = {
 
     await step('Testing textfield input', async () => {
       const label = textfield.children[0];
-      const textfieldInput = textfield.children[1].children[1].children[0];
       expect(label, 'To be rendered').toBeInTheDocument();
       expect(label, 'Should have display block').toHaveStyle('display: block');
       expect(label, 'Should have height of 20px').toHaveStyle('height: 20px');
@@ -640,13 +672,17 @@ export const ErrorCombinedWithWrapper: Story = {
         label,
         'Should have background-color of rgba(0, 0, 0, 0)'
       ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
-      expect(textfieldInput.tagName, 'Should be an input').toBe('INPUT');
-      expect(textfieldInput, 'Should have font-size of 16px').toHaveStyle(
-        'font-size: 16px'
+      expect(textfieldInput.children[0].tagName, 'Should be an input').toBe(
+        'INPUT'
       );
-      expect(textfieldInput, 'Should have font-weight of 500').toHaveStyle(
-        'font-weight: 500'
-      );
+      expect(
+        textfieldInput.children[0],
+        'Should have font-size of 16px'
+      ).toHaveStyle('font-size: 16px');
+      expect(
+        textfieldInput.children[0],
+        'Should have font-weight of 500'
+      ).toHaveStyle('font-weight: 500');
     });
 
     await step('Testing SVG ', async () => {
@@ -696,6 +732,7 @@ export const Disabled: Story = {
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
     const textfield = canvas.getByLabelText('textfieldHolder');
+    const textfieldInput = canvas.getByLabelText('input');
 
     await step('Testing textfield holder', async () => {
       expect(textfield, 'To be rendered').toBeInTheDocument();
@@ -713,7 +750,6 @@ export const Disabled: Story = {
 
     await step('Testing textfield input', async () => {
       const label = textfield.children[0];
-      const textfieldInput = textfield.children[0].children[0];
       expect(label, 'To be rendered').toBeInTheDocument();
       expect(label, 'Should have display flex').toHaveStyle('display: flex');
       expect(label, 'Should have height of 40px').toHaveStyle('height: 40px');
@@ -725,12 +761,14 @@ export const Disabled: Story = {
       expect(textfieldInput.children[0].tagName, 'Should be an input').toBe(
         'INPUT'
       );
-      expect(textfieldInput, 'Should have font-size of 16px').toHaveStyle(
-        'font-size: 16px'
-      );
-      expect(textfieldInput, 'Should have font-weight of 400').toHaveStyle(
-        'font-weight: 400'
-      );
+      expect(
+        textfieldInput.children[0],
+        'Should have font-size of 16px'
+      ).toHaveStyle('font-size: 16px');
+      expect(
+        textfieldInput.children[0],
+        'Should have font-weight of 500'
+      ).toHaveStyle('font-weight: 500');
     });
   },
 };
