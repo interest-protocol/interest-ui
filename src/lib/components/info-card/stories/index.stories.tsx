@@ -207,7 +207,7 @@ export const NormalWithoutIcon: Story = {
       expect(
         infoCard,
         'It expects that the info card has a white background'
-      ).toContain('background-color:rgb(255, 255, 255)');
+      ).toHaveStyle('background-color:rgb(255, 255, 255)');
     });
 
     await step('Checking the info card content', () => {
