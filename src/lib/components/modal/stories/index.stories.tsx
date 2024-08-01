@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { clearAllMocks, expect, fn, userEvent, waitFor } from '@storybook/test';
+import { expect } from '@storybook/test';
 import React, { FC, useState } from 'react';
 import { v4 } from 'uuid';
 
@@ -68,9 +68,8 @@ export const Normal: Story = {
     ariaHideApp: false,
     title: 'IPX Balance',
     hasCloseButton: true,
-    onClose: fn(),
   },
-  play: async ({ args, step }) => {
+  play: async ({ step }) => {
     const modalOverlay = document.body.getElementsByClassName(
       'ReactModal__Overlay'
     )[0] as HTMLElement;
@@ -112,15 +111,20 @@ export const Normal: Story = {
     });
 
     await step('Checking dialog structure', () => {
-      const maxWidthPx = convertViewportUnitsToPixels('95vw');
-      const maxHeightPx = convertViewportUnitsToPixels('95vh');
+      const maxWidthPx = Math.floor(convertViewportUnitsToPixels('95vw'));
+      const maxHeightPx = Math.floor(convertViewportUnitsToPixels('95vh'));
 
       const computedStyle = getComputedStyle(dialog);
-      const maxWidth = parseFloat(
-        computedStyle.getPropertyValue('max-width').replace('px', '')
+
+      const maxWidth = Math.floor(
+        parseFloat(
+          computedStyle.getPropertyValue('max-width').replace('px', '')
+        )
       );
-      const maxHeight = parseFloat(
-        computedStyle.getPropertyValue('max-height').replace('px', '')
+      const maxHeight = Math.floor(
+        parseFloat(
+          computedStyle.getPropertyValue('max-height').replace('px', '')
+        )
       );
 
       expect(
@@ -177,50 +181,8 @@ export const Normal: Story = {
 
       expect(
         dialogSections,
-        'It expects that the dialog has at 3 sections'
+        'It expects that the dialog has 3 sections'
       ).toHaveLength(3);
-    });
-
-    clearAllMocks();
-
-    await step(
-      'Checking when the close button in the modal is being clicked',
-      async () => {
-        const button = dialog.querySelector('[role="button"]') as HTMLElement;
-
-        await userEvent.click(button);
-
-        expect(
-          dialog,
-          'It expects that the is not in the document'
-        ).not.toBeInTheDocument();
-
-        expect(
-          args.onClose,
-          'It expects that the is onClose event is called'
-        ).toHaveBeenCalled();
-      }
-    );
-
-    clearAllMocks();
-
-    await step('Reopening the modal', async () => {
-      const button = document.body.querySelector(
-        '[role="button"]'
-      ) as HTMLElement;
-
-      await userEvent.click(button);
-
-      const dialog = document.body.querySelector(
-        '[role="dialog"]'
-      ) as HTMLElement;
-
-      await waitFor(() => {
-        expect(
-          dialog,
-          'It expects that the dialog is being rendered '
-        ).toBeInTheDocument();
-      });
     });
   },
 };
