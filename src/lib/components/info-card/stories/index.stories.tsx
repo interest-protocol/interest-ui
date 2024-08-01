@@ -31,7 +31,9 @@ export const Normal: Story = {
     const canvas = within(canvasElement);
     const infoCard = canvas.getByLabelText('info-card');
     const numberOfTexts = infoCard.querySelectorAll('p').length;
-    const svgElements = infoCard.querySelectorAll('svg');
+    const infoCardHeader = infoCard.firstChild && infoCard.firstChild;
+
+    const svgElements = (infoCardHeader as HTMLElement).querySelectorAll('svg');
 
     await step('Checking the info card structure', () => {
       expect(
@@ -117,7 +119,7 @@ export const Normal: Story = {
 
       expect(
         svgElements,
-        `It expects that the info card has 1 svg`
+        `It expects that the info card header has 1 svg`
       ).toHaveLength(1);
     });
 
@@ -141,7 +143,9 @@ export const NormalWithoutIcon: Story = {
     const canvas = within(canvasElement);
     const infoCard = canvas.getByLabelText('info-card');
     const numberOfTexts = infoCard.querySelectorAll('p').length;
-    const svgElements = infoCard.querySelectorAll('svg');
+    const infoCardHeader = infoCard.firstChild && infoCard.firstChild;
+
+    const svgElements = (infoCardHeader as HTMLElement).querySelectorAll('svg');
 
     await step('Checking the info card structure', () => {
       expect(
@@ -228,7 +232,7 @@ export const NormalWithoutIcon: Story = {
 
       expect(
         svgElements,
-        `It expects that the info card don't have any svg`
+        `It expects that the info card header don't have any svg`
       ).toHaveLength(0);
     });
 

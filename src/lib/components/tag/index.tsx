@@ -39,8 +39,7 @@ export const Tag: FC<PropsWithChildren<TagProps>> = ({
       transition: { duration: 0.005, ease: easeInOut },
     }}
     {...props}
-    // eslint-disable-next-line jsx-a11y/aria-role
-    role="tag"
+    aria-label="tag"
   >
     {PrefixIcon}
     <Typography
