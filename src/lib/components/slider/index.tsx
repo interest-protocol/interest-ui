@@ -52,8 +52,8 @@ const SliderElement: FC<SliderProps> = ({
           <Box
             width="100%"
             ref={props.ref}
-            aria-label="sliderLine"
-            height=".25rem"
+            aria-label="slider-line"
+            height="0.25rem"
             alignSelf="center"
             background={getTrackBackground({
               max: max,
