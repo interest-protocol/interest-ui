@@ -77,10 +77,9 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
 
     return (
       <Box
-        // eslint-disable-next-line jsx-a11y/aria-role
-        role="token-field"
+        aria-label="input"
         opacity={disabled ? 0.32 : 1}
-        cursor={disabled ? 'not-allowed' : 'normal'}
+        cursor={disabled ? 'not-allowed' : 'default'}
       >
         {Label && (
           <LabelElement htmlFor={id}>
@@ -149,7 +148,6 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
             <TokenFieldElement
               ref={ref}
               id={id}
-              data-test-id="token-field-input"
               all="unset"
               type="text"
               width="100%"
