@@ -7,10 +7,14 @@ export const rgbToHex = (rgb: string): string => {
     : rgb;
 };
 
-export const convertREMtoPX = (currentValue: string): string => {
-  if (typeof currentValue !== 'string' || !currentValue.endsWith('rem'))
-    return '0px';
-
-  const remValue = parseFloat(currentValue.replace('rem', '').trim());
-  return `${isNaN(remValue) ? '0' : remValue * 16}px`;
+export const convertREMtoPX = (value: number): number => {
+  if (value === 0) return 0;
+  if (typeof value !== 'number' || isNaN(value)) {
+    throw new Error('Invalid value form REM. It must be a number');
+  }
+  if (value <= 0) {
+    throw new Error('It must be a positive number');
+  }
+  const remValue = value * 16;
+  return remValue;
 };

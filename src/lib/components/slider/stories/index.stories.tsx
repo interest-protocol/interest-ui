@@ -57,7 +57,7 @@ export const Default: Story = {
 
       expect(
         sliderLine,
-        `It's expected that slider has the height of ${convertREMtoPX('0.25')}`
+        `It's expected that slider has the height of ${convertREMtoPX(0.25)}px`
       ).toHaveStyle('height: 4px');
 
       expect(
@@ -88,8 +88,8 @@ export const Default: Story = {
 
       expect(
         typography,
-        `It's expected that the slider text don't have the inital text "${args.initial}"`
-      ).not.toHaveTextContent('' + args.initial);
+        `It's expected that the slider text don't have the initial text "${args.initial}"`
+      ).not.toHaveTextContent(String(args.initial));
 
       expect(
         typography,
@@ -179,7 +179,7 @@ export const DefaultInterval: Story = {
 
       expect(
         sliderLine,
-        `It's expected that slider has the height of ${convertREMtoPX('0.25')}`
+        `It's expected that slider has the height of ${convertREMtoPX(0.25)}px`
       ).toHaveStyle('height: 4px');
     });
 
@@ -220,7 +220,7 @@ export const DefaultInterval: Story = {
       expect(
         slider1,
         `It is expected that the first slider has not the tooltip with value ${firstRange}`
-      ).not.toHaveTextContent('' + firstRange);
+      ).not.toHaveTextContent(String(firstRange));
 
       expect(
         slider2,
@@ -281,7 +281,7 @@ export const InTheMiddleWithoutTooltip: Story = {
 
       expect(
         sliderLine,
-        `It's expected that slider has the height of ${convertREMtoPX('0.25')}`
+        `It's expected that slider has the height of ${convertREMtoPX(0.25)}px`
       ).toHaveStyle('height: 4px');
 
       expect(
@@ -308,7 +308,7 @@ export const InTheMiddleWithoutTooltip: Story = {
       expect(
         typography,
         `It's expected that the slider text don't have the inital text "${args.initial}"`
-      ).not.toHaveTextContent('' + args.initial);
+      ).not.toHaveTextContent(String(args.initial));
     });
 
     await step('Checking interactions with the slider', async () => {
@@ -350,7 +350,7 @@ export const InTheEndWithoutTooltip: Story = {
 
       expect(
         sliderLine,
-        `It's expected that slider has the height of ${convertREMtoPX('0.25')}`
+        `It's expected that slider has the height of ${convertREMtoPX(0.25)}px`
       ).toHaveStyle('height: 4px');
 
       expect(
@@ -377,7 +377,7 @@ export const InTheEndWithoutTooltip: Story = {
       expect(
         typography,
         `It's expected that the slider text don't have the inital text "${args.initial}"`
-      ).not.toHaveTextContent('' + args.initial);
+      ).not.toHaveTextContent(String(args.initial));
     });
 
     await step('Checking interactions with the slider', async () => {
@@ -419,7 +419,7 @@ export const InTheMiddleWithTooltip: Story = {
 
       expect(
         sliderLine,
-        `It's expected that slider has the height of ${convertREMtoPX('0.25')}`
+        `It's expected that slider has the height of ${convertREMtoPX(0.25)}px`
       ).toHaveStyle('height: 4px');
 
       expect(
@@ -498,7 +498,7 @@ export const InTheEndWithTooltip: Story = {
 
       expect(
         sliderLine,
-        `It's expected that slider has the height of ${convertREMtoPX('0.25')}`
+        `It's expected that slider has the height of ${convertREMtoPX(0.25)}px`
       ).toHaveStyle('height: 4px');
 
       expect(
