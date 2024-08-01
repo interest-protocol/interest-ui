@@ -43,30 +43,121 @@ export const FilledWithToken: Story = {
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
 
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = tokenField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
+    await step('Testing token field holder', async () => {
+      expect(tokenFieldHolder, 'Should have opacity of 1').toHaveStyle(
+        'opacity: 1'
+      );
+      expect(tokenFieldHolder, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+      expect(
+        tokenFieldHolder,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(tokenFieldHolder, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
     });
 
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
+    await step('Testing token field label', async () => {
+      const label = tokenFieldHolder.children[0];
+      expect(label, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        label,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(label, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
+      expect(label, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(label, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(label, 'Should have border of 0px none rgb(0, 0, 0)').toHaveStyle(
+        'border: 0px none rgb(0, 0, 0)'
+      );
+    });
+
+    // check how many svg are in the token field. In this case, can only be one in it
+    await step('Testing token field icon', async () => {
+      const svgElement = tokenFieldHolder.querySelectorAll('svg');
+      const svg =
+        tokenFieldHolder.children[1].children[0].children[0].children[0];
+      expect(svgElement, 'Should have 1 SVG as icon').toHaveLength(1);
+      expect(svg, 'Should have width of 40px').toHaveStyle('width: 40px');
+      expect(svg, 'Should have max-width of 40px').toHaveStyle(
+        'max-width: 40px'
+      );
+      expect(svg, 'Should have max-height of 40px').toHaveStyle(
+        'max-height: 40px'
+      );
+    });
+
+    await step('Testing token name', async () => {
+      const tokenName =
+        tokenFieldHolder.children[1].children[0].children[0].children[1];
+      expect(tokenName, 'Should have color of rgb(27, 27 ,31)').toHaveStyle(
+        'color: rgb(27, 27 ,31)'
+      );
+      expect(tokenName, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(tokenName, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(
+        tokenName,
+        'Should have text content of Token Name'
+      ).toHaveTextContent('Token Name');
+    });
+
+    await step('Testing token field input', async () => {
+      const tokenFieldInput =
+        tokenFieldHolder.children[1].children[1].children[0];
+      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
+        'font-size: 22px'
+      );
+      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+    });
+
+    await step('Testing token field max button', async () => {
+      const maxButton = tokenFieldHolder.children[1].children[2].children[0];
+      await userEvent.click(canvas.getByRole('button'));
+      expect(maxButton, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        maxButton,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(maxButton, 'Should have color of rgb(0, 83, 219)').toHaveStyle(
+        'color: rgb(0, 83, 219)'
+      );
+    });
+
+    await step('Testing supporting text', async () => {
+      const supportingText = tokenFieldHolder.children[2];
+      expect(supportingText, 'Should have color of rgb(0, 0, 0)').toHaveStyle(
+        'color: rgb(0, 0, 0)'
+      );
+      expect(supportingText, 'Should have font-size of 12px').toHaveStyle(
+        'font-size: 12px'
+      );
+      expect(supportingText, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(
+        supportingText,
+        'Should have text content of Supporting text'
+      ).toHaveTextContent('Supporting text');
+    });
   },
 };
 
@@ -81,33 +172,123 @@ export const FilledWithTokenWithoutLabel: Story = {
     tokenName: 'Token Name',
     supportingText: 'Supporting text',
   },
-  play: async ({ args, canvasElement, step }) => {
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
 
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = tokenField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
+    await step('Testing token field holder', async () => {
+      expect(tokenFieldHolder, 'Should have opacity of 1').toHaveStyle(
+        'opacity: 1'
+      );
+      expect(tokenFieldHolder, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+      expect(
+        tokenFieldHolder,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(tokenFieldHolder, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
     });
 
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(args.isNotDefaultLabel).toBeTruthy();
-    expect(tokenField).toHaveTextContent('Label');
+    await step('Testing token field label', async () => {
+      const label = tokenFieldHolder.children[0];
+      expect(label, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        label,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(label, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
+      expect(label, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(label, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(label, 'Should have border of 0px none rgb(0, 0, 0)').toHaveStyle(
+        'border: 0px none rgb(0, 0, 0)'
+      );
+    });
+
+    // check how many svg are in the token field. In this case, can only be one in it
+    await step('Testing token field icon', async () => {
+      const svgElement = tokenFieldHolder.querySelectorAll('svg');
+      const svg =
+        tokenFieldHolder.children[1].children[0].children[0].children[0];
+      expect(svgElement, 'Should have 1 SVG as icon').toHaveLength(1);
+      expect(svg, 'Should have width of 40px').toHaveStyle('width: 40px');
+      expect(svg, 'Should have max-width of 40px').toHaveStyle(
+        'max-width: 40px'
+      );
+      expect(svg, 'Should have max-height of 40px').toHaveStyle(
+        'max-height: 40px'
+      );
+    });
+
+    await step('Testing token name', async () => {
+      const tokenName =
+        tokenFieldHolder.children[1].children[0].children[0].children[1];
+      expect(tokenName, 'Should have color of rgb(27, 27 ,31)').toHaveStyle(
+        'color: rgb(27, 27 ,31)'
+      );
+      expect(tokenName, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(tokenName, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(
+        tokenName,
+        'Should have text content of Token Name'
+      ).toHaveTextContent('Token Name');
+    });
+
+    await step('Testing token field input', async () => {
+      const tokenFieldInput =
+        tokenFieldHolder.children[1].children[1].children[0];
+      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
+        'font-size: 22px'
+      );
+      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+    });
+
+    await step('Testing token field max button', async () => {
+      const maxButton = tokenFieldHolder.children[1].children[2].children[0];
+      await userEvent.click(canvas.getByRole('button'));
+      expect(maxButton, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        maxButton,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(maxButton, 'Should have color of rgb(0, 83, 219)').toHaveStyle(
+        'color: rgb(0, 83, 219)'
+      );
+    });
+
+    await step('Testing supporting text', async () => {
+      const supportingText = tokenFieldHolder.children[2];
+      expect(supportingText, 'Should have color of rgb(0, 0, 0)').toHaveStyle(
+        'color: rgb(0, 0, 0)'
+      );
+      expect(supportingText, 'Should have font-size of 12px').toHaveStyle(
+        'font-size: 12px'
+      );
+      expect(supportingText, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(
+        supportingText,
+        'Should have text content of Supporting text'
+      ).toHaveTextContent('Supporting text');
+    });
   },
 };
 
@@ -123,30 +304,121 @@ export const FilledWithLabelToTheLeft: Story = {
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
 
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = tokenField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
+    await step('Testing token field holder', async () => {
+      expect(tokenFieldHolder, 'Should have opacity of 1').toHaveStyle(
+        'opacity: 1'
+      );
+      expect(tokenFieldHolder, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+      expect(
+        tokenFieldHolder,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(tokenFieldHolder, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
     });
 
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
+    await step('Testing token field label', async () => {
+      const label = tokenFieldHolder.children[0];
+      expect(label, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        label,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(label, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
+      expect(label, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(label, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(label, 'Should have border of 0px none rgb(0, 0, 0)').toHaveStyle(
+        'border: 0px none rgb(0, 0, 0)'
+      );
+    });
+
+    // check how many svg are in the token field. In this case, can only be one in it
+    await step('Testing token field icon', async () => {
+      const svgElement = tokenFieldHolder.querySelectorAll('svg');
+      const svg =
+        tokenFieldHolder.children[1].children[0].children[0].children[0];
+      expect(svgElement, 'Should have 1 SVG as icon').toHaveLength(1);
+      expect(svg, 'Should have width of 40px').toHaveStyle('width: 40px');
+      expect(svg, 'Should have max-width of 40px').toHaveStyle(
+        'max-width: 40px'
+      );
+      expect(svg, 'Should have max-height of 40px').toHaveStyle(
+        'max-height: 40px'
+      );
+    });
+
+    await step('Testing token name', async () => {
+      const tokenName =
+        tokenFieldHolder.children[1].children[0].children[0].children[1];
+      expect(tokenName, 'Should have color of rgb(27, 27 ,31)').toHaveStyle(
+        'color: rgb(27, 27 ,31)'
+      );
+      expect(tokenName, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(tokenName, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(
+        tokenName,
+        'Should have text content of Token Name'
+      ).toHaveTextContent('Token Name');
+    });
+
+    await step('Testing token field input', async () => {
+      const tokenFieldInput =
+        tokenFieldHolder.children[1].children[1].children[0];
+      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
+        'font-size: 22px'
+      );
+      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+    });
+
+    await step('Testing token field max button', async () => {
+      const maxButton = tokenFieldHolder.children[1].children[2].children[0];
+      await userEvent.click(canvas.getByRole('button'));
+      expect(maxButton, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        maxButton,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(maxButton, 'Should have color of rgb(0, 83, 219)').toHaveStyle(
+        'color: rgb(0, 83, 219)'
+      );
+    });
+
+    await step('Testing supporting text', async () => {
+      const supportingText = tokenFieldHolder.children[2];
+      expect(supportingText, 'Should have color of rgb(0, 0, 0)').toHaveStyle(
+        'color: rgb(0, 0, 0)'
+      );
+      expect(supportingText, 'Should have font-size of 12px').toHaveStyle(
+        'font-size: 12px'
+      );
+      expect(supportingText, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(
+        supportingText,
+        'Should have text content of Supporting text'
+      ).toHaveTextContent('Supporting text');
+    });
   },
 };
 
@@ -160,33 +432,106 @@ export const FilledWithTokenError: Story = {
     labelPosition: 'right',
     tokenName: 'Token Name',
   },
-  play: async ({ args, canvasElement, step }) => {
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
 
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = tokenField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
+    await step('Testing token field holder', async () => {
+      expect(tokenFieldHolder, 'Should have opacity of 1').toHaveStyle(
+        'opacity: 1'
+      );
+      expect(tokenFieldHolder, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+      expect(
+        tokenFieldHolder,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(tokenFieldHolder, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
     });
 
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
-    expect(args.status).toBe('error');
+    await step('Testing token field label', async () => {
+      const label = tokenFieldHolder.children[0];
+      expect(label, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        label,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(label, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
+      expect(label, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(label, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(label, 'Should have border of 0px none rgb(0, 0, 0)').toHaveStyle(
+        'border: 0px none rgb(0, 0, 0)'
+      );
+    });
+
+    // check how many svg are in the token field. In this case, can only be one in it
+    await step('Testing token field icon', async () => {
+      const svgElement = tokenFieldHolder.querySelectorAll('svg');
+      const svg =
+        tokenFieldHolder.children[1].children[0].children[0].children[0];
+      expect(svgElement, 'Should have 1 SVG as icon').toHaveLength(1);
+      expect(svg, 'Should have width of 40px').toHaveStyle('width: 40px');
+      expect(svg, 'Should have max-width of 40px').toHaveStyle(
+        'max-width: 40px'
+      );
+      expect(svg, 'Should have max-height of 40px').toHaveStyle(
+        'max-height: 40px'
+      );
+    });
+
+    await step('Testing token name', async () => {
+      const tokenName =
+        tokenFieldHolder.children[1].children[0].children[0].children[1];
+      expect(tokenName, 'Should have color of rgb(27, 27 ,31)').toHaveStyle(
+        'color: rgb(27, 27 ,31)'
+      );
+      expect(tokenName, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(tokenName, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(
+        tokenName,
+        'Should have text content of Token Name'
+      ).toHaveTextContent('Token Name');
+    });
+
+    await step('Testing token field input', async () => {
+      const tokenFieldInput =
+        tokenFieldHolder.children[1].children[1].children[0];
+      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
+        'font-size: 22px'
+      );
+      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+    });
+
+    await step('Testing token field max button', async () => {
+      const maxButton = tokenFieldHolder.children[1].children[2].children[0];
+      await userEvent.click(canvas.getByRole('button'));
+      expect(maxButton, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        maxButton,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(maxButton, 'Should have color of rgb(0, 83, 219)').toHaveStyle(
+        'color: rgb(0, 83, 219)'
+      );
+    });
   },
 };
 
@@ -201,33 +546,124 @@ export const FilledWithTokenDisabled: Story = {
     tokenName: 'Token Name',
     supportingText: 'Supporting text',
   },
-  play: async ({ args, canvasElement, step }) => {
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
 
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = tokenField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
+    await step('Testing token field holder', async () => {
+      expect(tokenFieldHolder, 'Should have opacity of 0.32').toHaveStyle(
+        'opacity: 0.32'
+      );
+      expect(tokenFieldHolder, 'Should have cursor not-allowed').toHaveStyle(
+        'cursor: not-allowed'
+      );
+      expect(
+        tokenFieldHolder,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(tokenFieldHolder, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
     });
 
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
-    expect(args.disabled).toBeTruthy();
+    await step('Testing token field label', async () => {
+      const label = tokenFieldHolder.children[0];
+      expect(label, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        label,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(label, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
+      expect(label, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(label, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(label, 'Should have border of 0px none rgb(0, 0, 0)').toHaveStyle(
+        'border: 0px none rgb(0, 0, 0)'
+      );
+    });
+
+    // check how many svg are in the token field. In this case, can only be one in it
+    await step('Testing token field icon', async () => {
+      const svgElement = tokenFieldHolder.querySelectorAll('svg');
+      const svg =
+        tokenFieldHolder.children[1].children[0].children[0].children[0];
+      expect(svgElement, 'Should have 1 SVG as icon').toHaveLength(1);
+      expect(svg, 'Should have width of 40px').toHaveStyle('width: 40px');
+      expect(svg, 'Should have max-width of 40px').toHaveStyle(
+        'max-width: 40px'
+      );
+      expect(svg, 'Should have max-height of 40px').toHaveStyle(
+        'max-height: 40px'
+      );
+    });
+
+    await step('Testing token name', async () => {
+      const tokenName =
+        tokenFieldHolder.children[1].children[0].children[0].children[1];
+      expect(tokenName, 'Should have color of rgb(27, 27 ,31)').toHaveStyle(
+        'color: rgb(27, 27 ,31)'
+      );
+      expect(tokenName, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(tokenName, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(
+        tokenName,
+        'Should have text content of Token Name'
+      ).toHaveTextContent('Token Name');
+    });
+
+    await step('Testing token field input', async () => {
+      const tokenFieldInput =
+        tokenFieldHolder.children[1].children[1].children[0];
+      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
+        'font-size: 22px'
+      );
+      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(tokenFieldInput, 'Should have cursor not-allowed').toHaveStyle(
+        'cursor: not-allowed'
+      );
+    });
+
+    await step('Testing token field max button', async () => {
+      const maxButton = tokenFieldHolder.children[1].children[2].children[0];
+      await userEvent.click(canvas.getByRole('button'));
+      expect(maxButton, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        maxButton,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(maxButton, 'Should have color of rgb(118, 118, 122)').toHaveStyle(
+        'color: rgb(118, 118, 122)'
+      );
+    });
+
+    await step('Testing supporting text', async () => {
+      const supportingText = tokenFieldHolder.children[2];
+      expect(
+        supportingText,
+        'Should have color of rgb(27, 27, 31)'
+      ).toHaveStyle('color: rgb(27, 27, 31)');
+      expect(supportingText, 'Should have font-size of 12px').toHaveStyle(
+        'font-size: 12px'
+      );
+      expect(supportingText, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(
+        supportingText,
+        'Should have text content of Supporting text'
+      ).toHaveTextContent('Supporting text');
+    });
   },
 };
 
@@ -242,26 +678,106 @@ export const FilledWithoutTokenIcon: Story = {
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
 
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
+    await step('Testing token field holder', async () => {
+      expect(tokenFieldHolder, 'Should have opacity of 1').toHaveStyle(
+        'opacity: 1'
+      );
+      expect(tokenFieldHolder, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+      expect(
+        tokenFieldHolder,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(tokenFieldHolder, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
     });
 
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
+    await step('Testing token field label', async () => {
+      const label = tokenFieldHolder.children[0];
+      expect(label, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        label,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(label, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
+      expect(label, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(label, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(label, 'Should have border of 0px none rgb(0, 0, 0)').toHaveStyle(
+        'border: 0px none rgb(0, 0, 0)'
+      );
+    });
+
+    await step('Testing token name', async () => {
+      const tokenName =
+        tokenFieldHolder.children[1].children[0].children[0].children[0];
+      expect(tokenName, 'Should have color of rgb(27, 27 ,31)').toHaveStyle(
+        'color: rgb(27, 27 ,31)'
+      );
+      expect(tokenName, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(tokenName, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(
+        tokenName,
+        'Should have text content of Token Name'
+      ).toHaveTextContent('Token Name');
+    });
+
+    await step('Testing token field input', async () => {
+      const tokenFieldInput =
+        tokenFieldHolder.children[1].children[1].children[0];
+      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
+        'font-size: 22px'
+      );
+      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+    });
+
+    await step('Testing token field max button', async () => {
+      const maxButton = tokenFieldHolder.children[1].children[2].children[0];
+      await userEvent.click(canvas.getByRole('button'));
+      expect(maxButton, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        maxButton,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(maxButton, 'Should have color of rgb(0, 83, 219)').toHaveStyle(
+        'color: rgb(0, 83, 219)'
+      );
+    });
+
+    await step('Testing supporting text', async () => {
+      const supportingText = tokenFieldHolder.children[2];
+      expect(supportingText, 'Should have color of rgb(0, 0, 0)').toHaveStyle(
+        'color: rgb(0, 0, 0)'
+      );
+      expect(supportingText, 'Should have font-size of 12px').toHaveStyle(
+        'font-size: 12px'
+      );
+      expect(supportingText, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(
+        supportingText,
+        'Should have text content of Supporting text'
+      ).toHaveTextContent('Supporting text');
+    });
   },
 };
 
@@ -274,29 +790,87 @@ export const FilledWithoutTokenIconError: Story = {
     labelPosition: 'right',
     tokenName: 'Token Name',
   },
-  play: async ({ args, canvasElement, step }) => {
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
 
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
+    await step('Testing token field holder', async () => {
+      expect(tokenFieldHolder, 'Should have opacity of 1').toHaveStyle(
+        'opacity: 1'
+      );
+      expect(tokenFieldHolder, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+      expect(
+        tokenFieldHolder,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(tokenFieldHolder, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
     });
 
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(args.status).toBe('error');
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
+    await step('Testing token field label', async () => {
+      const label = tokenFieldHolder.children[0];
+      expect(label, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        label,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(label, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
+      expect(label, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(label, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+    });
+
+    await step('Testing token name', async () => {
+      const tokenName = tokenFieldHolder.children[1].children[0].children[0];
+      expect(tokenName, 'Should have color of rgb(27, 27 ,31)').toHaveStyle(
+        'color: rgb(27, 27 ,31)'
+      );
+      expect(tokenName, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(tokenName, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(
+        tokenName,
+        'Should have text content of Token Name'
+      ).toHaveTextContent('Token Name');
+    });
+
+    await step('Testing token field input', async () => {
+      const tokenFieldInput =
+        tokenFieldHolder.children[1].children[1].children[0];
+      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
+        'font-size: 22px'
+      );
+      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+    });
+
+    await step('Testing token field max button', async () => {
+      const maxButton = tokenFieldHolder.children[1].children[2].children[0];
+      await userEvent.click(canvas.getByRole('button'));
+      expect(maxButton, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        maxButton,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(maxButton, 'Should have color of rgb(0, 83, 219)').toHaveStyle(
+        'color: rgb(0, 83, 219)'
+      );
+    });
   },
 };
 
@@ -310,29 +884,108 @@ export const FilledWithoutTokenIconDisabled: Story = {
     tokenName: 'Token Name',
     supportingText: 'Supporting text',
   },
-  play: async ({ args, canvasElement, step }) => {
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
 
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
+    await step('Testing token field holder', async () => {
+      expect(tokenFieldHolder, 'Should have opacity of 0.32').toHaveStyle(
+        'opacity: 0.32'
+      );
+      expect(tokenFieldHolder, 'Should have cursor not-allowed').toHaveStyle(
+        'cursor: not-allowed'
+      );
+      expect(
+        tokenFieldHolder,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(tokenFieldHolder, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
     });
 
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(args.disabled).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
+    await step('Testing token field label', async () => {
+      const label = tokenFieldHolder.children[0];
+      expect(label, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        label,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(label, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
+      expect(label, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(label, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(label, 'Should have border of 0px none rgb(0, 0, 0)').toHaveStyle(
+        'border: 0px none rgb(0, 0, 0)'
+      );
+    });
+
+    await step('Testing token name', async () => {
+      const tokenName = tokenFieldHolder.children[1].children[0].children[0];
+      expect(tokenName, 'Should have color of rgb(27, 27 ,31)').toHaveStyle(
+        'color: rgb(27, 27 ,31)'
+      );
+      expect(tokenName, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(tokenName, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(
+        tokenName,
+        'Should have text content of Token Name'
+      ).toHaveTextContent('Token Name');
+    });
+
+    await step('Testing token field input', async () => {
+      const tokenFieldInput =
+        tokenFieldHolder.children[1].children[1].children[0];
+      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
+        'font-size: 22px'
+      );
+      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(tokenFieldInput, 'Should have cursor not-allowed').toHaveStyle(
+        'cursor: not-allowed'
+      );
+    });
+
+    await step('Testing token field max button', async () => {
+      const maxButton = tokenFieldHolder.children[1].children[2].children[0];
+      await userEvent.click(canvas.getByRole('button'));
+      expect(maxButton, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        maxButton,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(maxButton, 'Should have color of rgb(118, 118, 122)').toHaveStyle(
+        'color: rgb(118, 118, 122)'
+      );
+    });
+
+    await step('Testing supporting text', async () => {
+      const supportingText = tokenFieldHolder.children[2];
+      expect(
+        supportingText,
+        'Should have color of rgb(27, 27, 31)'
+      ).toHaveStyle('color: rgb(27, 27, 31)');
+      expect(supportingText, 'Should have font-size of 12px').toHaveStyle(
+        'font-size: 12px'
+      );
+      expect(supportingText, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(
+        supportingText,
+        'Should have text content of Supporting text'
+      ).toHaveTextContent('Supporting text');
+    });
   },
 };
 
@@ -349,30 +1002,106 @@ export const OutlineWithToken: Story = {
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
 
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = tokenField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
+    await step('Testing token field holder', async () => {
+      expect(tokenFieldHolder, 'Should have opacity of 1').toHaveStyle(
+        'opacity: 1'
+      );
+      expect(tokenFieldHolder, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+      expect(
+        tokenFieldHolder,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(tokenFieldHolder, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
     });
 
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
+    await step('Testing token field label', async () => {
+      const label = tokenFieldHolder.children[0];
+      expect(label, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        label,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(label, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
+      expect(label, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(label, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(label, 'Should have border of 0px none rgb(0, 0, 0)').toHaveStyle(
+        'border: 0px none rgb(0, 0, 0)'
+      );
+    });
+
+    await step('Testing token name', async () => {
+      const tokenName =
+        tokenFieldHolder.children[1].children[0].children[0].children[1];
+      expect(tokenName, 'Should have color of rgb(27, 27 ,31)').toHaveStyle(
+        'color: rgb(27, 27 ,31)'
+      );
+      expect(tokenName, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(tokenName, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(
+        tokenName,
+        'Should have text content of Token Name'
+      ).toHaveTextContent('Token Name');
+    });
+
+    await step('Testing token field input', async () => {
+      const tokenFieldInput =
+        tokenFieldHolder.children[1].children[1].children[0];
+      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
+        'font-size: 22px'
+      );
+      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+    });
+
+    await step('Testing token field max button', async () => {
+      const maxButton = tokenFieldHolder.children[1].children[2].children[0];
+      await userEvent.click(canvas.getByRole('button'));
+      expect(maxButton, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        maxButton,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(maxButton, 'Should have color of rgb(0, 83, 219)').toHaveStyle(
+        'color: rgb(0, 83, 219)'
+      );
+    });
+
+    await step('Testing supporting text', async () => {
+      const supportingText = tokenFieldHolder.children[2];
+      expect(supportingText, 'Should have color of rgb(0, 0, 0)').toHaveStyle(
+        'color: rgb(0, 0, 0)'
+      );
+      expect(supportingText, 'Should have font-size of 12px').toHaveStyle(
+        'font-size: 12px'
+      );
+      expect(supportingText, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(
+        supportingText,
+        'Should have text content of Supporting text'
+      ).toHaveTextContent('Supporting text');
+    });
   },
 };
 
@@ -389,30 +1118,122 @@ export const OutlineWithLabelToTheLeft: Story = {
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
 
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = tokenField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
+    await step('Testing token field holder', async () => {
+      expect(tokenFieldHolder, 'Should have opacity of 1').toHaveStyle(
+        'opacity: 1'
+      );
+      expect(tokenFieldHolder, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+      expect(
+        tokenFieldHolder,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(tokenFieldHolder, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
     });
 
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
+    await step('Testing token field label', async () => {
+      const label = tokenFieldHolder.children[0];
+      expect(label, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        label,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(label, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
+      expect(label, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(label, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(label, 'Should have border of 0px none rgb(0, 0, 0)').toHaveStyle(
+        'border: 0px none rgb(0, 0, 0)'
+      );
+    });
+
+    // check how many svg are in the token field. In this case, can only be one in it
+    await step('Testing token field icon', async () => {
+      const svgElement = tokenFieldHolder.querySelectorAll('svg');
+      const svg =
+        tokenFieldHolder.children[1].children[0].children[0].children[0];
+      expect(svgElement, 'Should have 1 SVG as icon').toHaveLength(1);
+      expect(svg, 'Should have width of 40px').toHaveStyle('width: 40px');
+      expect(svg, 'Should have max-width of 40px').toHaveStyle(
+        'max-width: 40px'
+      );
+      expect(svg, 'Should have max-height of 40px').toHaveStyle(
+        'max-height: 40px'
+      );
+    });
+
+    await step('Testing token name', async () => {
+      const tokenName =
+        tokenFieldHolder.children[1].children[0].children[0].children[1];
+      expect(tokenName, 'Should have color of rgb(27, 27 ,31)').toHaveStyle(
+        'color: rgb(27, 27 ,31)'
+      );
+      expect(tokenName, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(tokenName, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(
+        tokenName,
+        'Should have text content of Token Name'
+      ).toHaveTextContent('Token Name');
+    });
+
+    await step('Testing token field input', async () => {
+      const tokenFieldInput =
+        tokenFieldHolder.children[1].children[1].children[0];
+
+      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
+        'font-size: 22px'
+      );
+      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+    });
+
+    await step('Testing token field max button', async () => {
+      const maxButton = tokenFieldHolder.children[1].children[2].children[0];
+      await userEvent.click(canvas.getByRole('button'));
+      expect(maxButton, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        maxButton,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(maxButton, 'Should have color of rgb(0, 83, 219)').toHaveStyle(
+        'color: rgb(0, 83, 219)'
+      );
+    });
+
+    await step('Testing supporting text', async () => {
+      const supportingText = tokenFieldHolder.children[2];
+      expect(supportingText, 'Should have color of rgb(0, 0, 0)').toHaveStyle(
+        'color: rgb(0, 0, 0)'
+      );
+      expect(supportingText, 'Should have font-size of 12px').toHaveStyle(
+        'font-size: 12px'
+      );
+      expect(supportingText, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(
+        supportingText,
+        'Should have text content of Supporting text'
+      ).toHaveTextContent('Supporting text');
+    });
   },
 };
 
@@ -428,33 +1249,125 @@ export const OutlineWithTokenError: Story = {
     tokenName: 'Token Name',
     supportingText: 'Supporting text',
   },
-  play: async ({ args, canvasElement, step }) => {
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
 
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = tokenField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
+    await step('Testing token field holder', async () => {
+      expect(tokenFieldHolder, 'Should have opacity of 1').toHaveStyle(
+        'opacity: 1'
+      );
+      expect(tokenFieldHolder, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+      expect(
+        tokenFieldHolder,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(tokenFieldHolder, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
     });
 
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(args.status).toBe('error');
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
+    await step('Testing token field label', async () => {
+      const label = tokenFieldHolder.children[0];
+      expect(label, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        label,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(label, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
+      expect(label, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(label, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(label, 'Should have border of 0px none rgb(0, 0, 0)').toHaveStyle(
+        'border: 0px none rgb(0, 0, 0)'
+      );
+    });
+
+    // check how many svg are in the token field. In this case, can only be one in it
+    await step('Testing token field icon', async () => {
+      const svgElement = tokenFieldHolder.querySelectorAll('svg');
+      const svg =
+        tokenFieldHolder.children[1].children[0].children[0].children[0];
+      expect(svgElement, 'Should have 1 SVG as icon').toHaveLength(1);
+      expect(svg, 'Should have width of 40px').toHaveStyle('width: 40px');
+      expect(svg, 'Should have max-width of 40px').toHaveStyle(
+        'max-width: 40px'
+      );
+      expect(svg, 'Should have max-height of 40px').toHaveStyle(
+        'max-height: 40px'
+      );
+    });
+
+    await step('Testing token name', async () => {
+      const tokenName =
+        tokenFieldHolder.children[1].children[0].children[0].children[1];
+      expect(tokenName, 'Should have color of rgb(27, 27 ,31)').toHaveStyle(
+        'color: rgb(27, 27 ,31)'
+      );
+      expect(tokenName, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(tokenName, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(
+        tokenName,
+        'Should have text content of Token Name'
+      ).toHaveTextContent('Token Name');
+    });
+
+    await step('Testing token field input', async () => {
+      const tokenFieldInput =
+        tokenFieldHolder.children[1].children[1].children[0];
+      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
+        'font-size: 22px'
+      );
+      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+    });
+
+    await step('Testing token field max button', async () => {
+      const maxButton = tokenFieldHolder.children[1].children[2].children[0];
+      await userEvent.click(canvas.getByRole('button'));
+      expect(maxButton, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        maxButton,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(maxButton, 'Should have color of rgb(0, 83, 219)').toHaveStyle(
+        'color: rgb(0, 83, 219)'
+      );
+    });
+
+    await step('Testing supporting text', async () => {
+      const supportingText = tokenFieldHolder.children[2];
+
+      expect(
+        supportingText,
+        'Should have color of rgb(229, 62, 62)'
+      ).toHaveStyle('color: rgb(229, 62, 62)');
+      expect(supportingText, 'Should have font-size of 12px').toHaveStyle(
+        'font-size: 12px'
+      );
+      expect(supportingText, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(
+        supportingText,
+        'Should have text content of Supporting text'
+      ).toHaveTextContent('Supporting text');
+    });
   },
 };
 
@@ -470,33 +1383,108 @@ export const OutlineWithTokenDisabled: Story = {
     tokenName: 'Token Name',
     supportingText: 'Supporting text',
   },
-  play: async ({ args, canvasElement, step }) => {
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
 
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = tokenField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
+    await step('Testing token field holder', async () => {
+      expect(tokenFieldHolder, 'Should have opacity of 0.32').toHaveStyle(
+        'opacity: 0.32'
+      );
+      expect(tokenFieldHolder, 'Should have cursor not-allowed').toHaveStyle(
+        'cursor: not-allowed'
+      );
+      expect(
+        tokenFieldHolder,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(tokenFieldHolder, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
     });
 
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
-    expect(args.disabled).toBeTruthy();
+    await step('Testing token field label', async () => {
+      const label = tokenFieldHolder.children[0];
+      expect(label, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        label,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(label, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
+      expect(label, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(label, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(label, 'Should have border of 0px none rgb(0, 0, 0)').toHaveStyle(
+        'border: 0px none rgb(0, 0, 0)'
+      );
+    });
+
+    await step('Testing token name', async () => {
+      const tokenName = tokenFieldHolder.children[1].children[0].children[0];
+      expect(tokenName, 'Should have color of rgb(27, 27 ,31)').toHaveStyle(
+        'color: rgb(27, 27 ,31)'
+      );
+      expect(tokenName, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(tokenName, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(
+        tokenName,
+        'Should have text content of Token Name'
+      ).toHaveTextContent('Token Name');
+    });
+
+    await step('Testing token field input', async () => {
+      const tokenFieldInput =
+        tokenFieldHolder.children[1].children[1].children[0];
+      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
+        'font-size: 22px'
+      );
+      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(tokenFieldInput, 'Should have cursor not-allowed').toHaveStyle(
+        'cursor: not-allowed'
+      );
+    });
+
+    await step('Testing token field max button', async () => {
+      const maxButton = tokenFieldHolder.children[1].children[2].children[0];
+      await userEvent.click(canvas.getByRole('button'));
+      expect(maxButton, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        maxButton,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(maxButton, 'Should have color of rgb(118, 118, 122)').toHaveStyle(
+        'color: rgb(118, 118, 122)'
+      );
+    });
+
+    await step('Testing supporting text', async () => {
+      const supportingText = tokenFieldHolder.children[2];
+      expect(
+        supportingText,
+        'Should have color of rgb(27, 27, 31)'
+      ).toHaveStyle('color: rgb(27, 27, 31)');
+      expect(supportingText, 'Should have font-size of 12px').toHaveStyle(
+        'font-size: 12px'
+      );
+      expect(supportingText, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(
+        supportingText,
+        'Should have text content of Supporting text'
+      ).toHaveTextContent('Supporting text');
+    });
   },
 };
 
@@ -512,26 +1500,106 @@ export const OutlineWithoutTokenIcon: Story = {
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
 
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
+    await step('Testing token field holder', async () => {
+      expect(tokenFieldHolder, 'Should have opacity of 1').toHaveStyle(
+        'opacity: 1'
+      );
+      expect(tokenFieldHolder, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+      expect(
+        tokenFieldHolder,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(tokenFieldHolder, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
     });
 
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
+    await step('Testing token field label', async () => {
+      const label = tokenFieldHolder.children[0];
+      expect(label, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        label,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(label, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
+      expect(label, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(label, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(label, 'Should have border of 0px none rgb(0, 0, 0)').toHaveStyle(
+        'border: 0px none rgb(0, 0, 0)'
+      );
+    });
+
+    await step('Testing token name', async () => {
+      const tokenName =
+        tokenFieldHolder.children[1].children[0].children[0].children[0];
+      expect(tokenName, 'Should have color of rgb(27, 27 ,31)').toHaveStyle(
+        'color: rgb(27, 27 ,31)'
+      );
+      expect(tokenName, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(tokenName, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(
+        tokenName,
+        'Should have text content of Token Name'
+      ).toHaveTextContent('Token Name');
+    });
+
+    await step('Testing token field input', async () => {
+      const tokenFieldInput =
+        tokenFieldHolder.children[1].children[1].children[0];
+      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
+        'font-size: 22px'
+      );
+      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+    });
+
+    await step('Testing token field max button', async () => {
+      const maxButton = tokenFieldHolder.children[1].children[2].children[0];
+      await userEvent.click(canvas.getByRole('button'));
+      expect(maxButton, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        maxButton,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(maxButton, 'Should have color of rgb(0, 83, 219)').toHaveStyle(
+        'color: rgb(0, 83, 219)'
+      );
+    });
+
+    await step('Testing supporting text', async () => {
+      const supportingText = tokenFieldHolder.children[2];
+      expect(supportingText, 'Should have color of rgb(0, 0, 0)').toHaveStyle(
+        'color: rgb(0, 0, 0)'
+      );
+      expect(supportingText, 'Should have font-size of 12px').toHaveStyle(
+        'font-size: 12px'
+      );
+      expect(supportingText, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(
+        supportingText,
+        'Should have text content of Supporting text'
+      ).toHaveTextContent('Supporting text');
+    });
   },
 };
 
@@ -546,29 +1614,109 @@ export const OutlineWithoutTokenIconError: Story = {
     tokenName: 'Token Name',
     supportingText: 'Supporting text',
   },
-  play: async ({ args, canvasElement, step }) => {
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
 
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
+    await step('Testing token field holder', async () => {
+      expect(tokenFieldHolder, 'Should have opacity of 1').toHaveStyle(
+        'opacity: 1'
+      );
+      expect(tokenFieldHolder, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+      expect(
+        tokenFieldHolder,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(tokenFieldHolder, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
     });
 
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
-    expect(args.status).toBe('error');
+    await step('Testing token field label', async () => {
+      const label = tokenFieldHolder.children[0];
+      expect(label, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        label,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(label, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
+      expect(label, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(label, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(label, 'Should have border of 0px none rgb(0, 0, 0)').toHaveStyle(
+        'border: 0px none rgb(0, 0, 0)'
+      );
+    });
+
+    await step('Testing token name', async () => {
+      const tokenName =
+        tokenFieldHolder.children[1].children[0].children[0].children[0];
+      expect(tokenName, 'Should have color of rgb(27, 27 ,31)').toHaveStyle(
+        'color: rgb(27, 27 ,31)'
+      );
+      expect(tokenName, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(tokenName, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(
+        tokenName,
+        'Should have text content of Token Name'
+      ).toHaveTextContent('Token Name');
+    });
+
+    await step('Testing token field input', async () => {
+      const tokenFieldInput =
+        tokenFieldHolder.children[1].children[1].children[0];
+      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
+        'font-size: 22px'
+      );
+      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+    });
+
+    await step('Testing token field max button', async () => {
+      const maxButton = tokenFieldHolder.children[1].children[2].children[0];
+      await userEvent.click(canvas.getByRole('button'));
+      expect(maxButton, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        maxButton,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(maxButton, 'Should have color of rgb(0, 83, 219)').toHaveStyle(
+        'color: rgb(0, 83, 219)'
+      );
+    });
+
+    await step('Testing supporting text', async () => {
+      const supportingText = tokenFieldHolder.children[2];
+      expect(
+        supportingText,
+        'Should have color of rgb(229, 62, 62)'
+      ).toHaveStyle('color: rgb(229, 62, 62)');
+      expect(supportingText, 'Should have font-size of 12px').toHaveStyle(
+        'font-size: 12px'
+      );
+      expect(supportingText, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(
+        supportingText,
+        'Should have text content of Supporting text'
+      ).toHaveTextContent('Supporting text');
+    });
   },
 };
 
@@ -583,28 +1731,107 @@ export const OutlineWithoutTokenIconDisabled: Story = {
     tokenName: 'Token Name',
     supportingText: 'Supporting text',
   },
-  play: async ({ args, canvasElement, step }) => {
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
 
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
+    await step('Testing token field holder', async () => {
+      expect(tokenFieldHolder, 'Should have opacity of 0.32').toHaveStyle(
+        'opacity: 0.32'
+      );
+      expect(tokenFieldHolder, 'Should have cursor not-allowed').toHaveStyle(
+        'cursor: not-allowed'
+      );
+      expect(
+        tokenFieldHolder,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(tokenFieldHolder, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
     });
 
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
-    expect(args.disabled).toBeTruthy();
+    await step('Testing token field label', async () => {
+      const label = tokenFieldHolder.children[0];
+      expect(label, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        label,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(label, 'Should have color of #000000').toHaveStyle(
+        'color: #000000'
+      );
+      expect(label, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(label, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(label, 'Should have border of 0px none rgb(0, 0, 0)').toHaveStyle(
+        'border: 0px none rgb(0, 0, 0)'
+      );
+    });
+
+    await step('Testing token name', async () => {
+      const tokenName = tokenFieldHolder.children[1].children[0].children[0];
+      expect(tokenName, 'Should have color of rgb(27, 27 ,31)').toHaveStyle(
+        'color: rgb(27, 27 ,31)'
+      );
+      expect(tokenName, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(tokenName, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(
+        tokenName,
+        'Should have text content of Token Name'
+      ).toHaveTextContent('Token Name');
+    });
+
+    await step('Testing token field input', async () => {
+      const tokenFieldInput =
+        tokenFieldHolder.children[1].children[1].children[0];
+      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
+        'font-size: 22px'
+      );
+      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(tokenFieldInput, 'Should have cursor not-allowed').toHaveStyle(
+        'cursor: not-allowed'
+      );
+    });
+
+    await step('Testing token field max button', async () => {
+      const maxButton = tokenFieldHolder.children[1].children[2].children[0];
+      await userEvent.click(canvas.getByRole('button'));
+      expect(maxButton, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        maxButton,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(maxButton, 'Should have color of rgb(118, 118, 122)').toHaveStyle(
+        'color: rgb(118, 118, 122)'
+      );
+    });
+
+    await step('Testing supporting text', async () => {
+      const supportingText = tokenFieldHolder.children[2];
+      expect(
+        supportingText,
+        'Should have color of rgb(27, 27, 31)'
+      ).toHaveStyle('color: rgb(27, 27, 31)');
+      expect(supportingText, 'Should have font-size of 12px').toHaveStyle(
+        'font-size: 12px'
+      );
+      expect(supportingText, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(
+        supportingText,
+        'Should have text content of Supporting text'
+      ).toHaveTextContent('Supporting text');
+    });
   },
 };
