@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, userEvent, within } from '@storybook/test';
+import { expect, waitFor, within } from '@storybook/test';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { v4 } from 'uuid';
 
@@ -43,21 +44,43 @@ export const Normal: Story = {
       />,
     ],
   },
-
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const list = canvas.getByRole('list');
-    const arrowRightIcon = canvas.getByRole('arrow-right-icon');
 
-    await userEvent.hover(canvas.getByRole('list'));
-    await userEvent.click(canvas.getByRole('list'));
-    await userEvent.click(canvas.getByRole('arrow-right-icon'));
+    await step('Initial validations in the list', async () => {
+      expect(
+        list,
+        'It is expected that the element will be rendered'
+      ).toBeInTheDocument();
+      expect(
+        list.children[0].textContent,
+        `it is expected that the list has the title ${args.title}`
+      ).toBe(args.title);
+      expect(
+        list.children,
+        'it is expected that the list has two elements inside'
+      ).toHaveLength(2);
+      const listbox = list.children[1];
+      expect(
+        listbox,
+        'It is expected that the list options are not visible'
+      ).toHaveStyle('display: none');
+    });
 
-    const listItems = args.items;
-
-    expect(list).toBeTruthy();
-    expect(arrowRightIcon).toBeTruthy();
-    expect(args.title).toBe('List Title');
-    expect(listItems).toHaveLength(3);
+    await step('List option validations', async () => {
+      await userEvent.click(list);
+      await waitFor(() => {
+        const listbox = canvas.getByRole('listbox');
+        expect(
+          listbox,
+          'it is expected that the options will be rendered'
+        ).toBeInTheDocument();
+        expect(
+          listbox.children,
+          'it is expected that the options have the same amount available'
+        ).toHaveLength(args.items.length);
+      });
+    });
   },
 };
