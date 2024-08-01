@@ -49,36 +49,26 @@ export const Normal: Story = {
     const list = canvas.getByRole('list');
 
     await step('Initial validations in the list', async () => {
-      expect(
-        list,
-        'It is expected that the element will be rendered'
-      ).toBeInTheDocument();
+      expect(list, 'Should be rendered').toBeInTheDocument();
       expect(
         list.children[0].textContent,
-        `it is expected that the list has the title ${args.title}`
+        'should be the text to be shown in the list'
       ).toBe(args.title);
-      expect(
-        list.children,
-        'it is expected that the list has two elements inside'
-      ).toHaveLength(2);
+      expect(list.children, 'has only two elements').toHaveLength(2);
       const listbox = list.children[1];
-      expect(
-        listbox,
-        'It is expected that the list options are not visible'
-      ).toHaveStyle('display: none');
+      expect(listbox, 'is not visible when the list is not opened').toHaveStyle(
+        'display: none'
+      );
     });
 
     await step('List option validations', async () => {
       await userEvent.click(list);
       await waitFor(() => {
         const listbox = canvas.getByRole('listbox');
-        expect(
-          listbox,
-          'it is expected that the options will be rendered'
-        ).toBeInTheDocument();
+        expect(listbox, 'Should be rendered').toBeInTheDocument();
         expect(
           listbox.children,
-          'it is expected that the options have the same amount available'
+          `has the same quantity (${args.items.length}) that was passed in args`
         ).toHaveLength(args.items.length);
       });
     });
