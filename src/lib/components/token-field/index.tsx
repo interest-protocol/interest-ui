@@ -155,8 +155,6 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
               lineHeight="l"
               fontWeight="500"
               disabled={disabled}
-              // eslint-disable-next-line jsx-a11y/no-autofocus
-              autoFocus={focus}
               onBlur={handleBlur}
               onFocus={handleFocus}
               onChange={handleChange}

@@ -51,8 +51,6 @@ const SliderElement: FC<SliderProps> = ({
         >
           <Box
             width="100%"
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
             ref={props.ref}
             aria-label="sliderLine"
             height=".25rem"

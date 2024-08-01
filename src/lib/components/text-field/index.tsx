@@ -132,8 +132,6 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
               lineHeight="m"
               fontWeight="500"
               disabled={disabled}
-              // eslint-disable-next-line jsx-a11y/no-autofocus
-              autoFocus={focus}
               onBlur={handleBlur}
               onFocus={handleFocus}
               onChange={handleChange}
