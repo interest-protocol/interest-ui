@@ -40,6 +40,7 @@ export const ModalHeader: FC<StandardizedWithCloseButton | Standardized> = ({
       {hasButton && (
         <Box ml="auto" gridColumn="3/4">
           <Button
+            role="button"
             isIcon
             variant="filled"
             color="onSurface"

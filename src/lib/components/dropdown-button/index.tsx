@@ -2,7 +2,6 @@ import stylin from '@stylin.js/react';
 import React, {
   FC,
   forwardRef,
-  MouseEventHandler,
   PropsWithRef,
   RefAttributes,
   useEffect,
@@ -47,72 +46,72 @@ export const DropdownButton: FC<PropsWithRef<DropdownButtonProps>> = forwardRef(
 
     const BoxRef = useClickOutsideListenerRef<HTMLDivElement>(closeDropdown);
 
-    const handleDropdown: MouseEventHandler<HTMLInputElement> = () => {
+    const handleDropdown = () => {
       setIsOpen(!isOpen);
       !selected && setIsFocused(true);
       props.onClick?.();
     };
 
     return (
-      <Box
-        id={BOX_ID}
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        ref={BoxRef}
-        position="relative"
-      >
-        <DropdownButtonElement
-          gap="xs"
-          ref={ref}
-          display="flex"
-          height="2.5rem"
-          cursor="pointer"
-          alignItems="center"
-          bg="lowestContainer"
-          p={label ? 'xs' : '0'}
-          pr={label ? 'm' : '0'}
-          onClick={handleDropdown}
-          border={isFocused ? '4px solid' : '0'}
-          borderRadius={label ? 'full' : 'xs'}
-          width={label ? 'fit-content' : '2.5rem'}
-          justifyContent={label ? 'unset' : 'center'}
-          onBlur={() => setIsFocused(selected || false)}
-          transition="background-color 300ms ease-in-out"
-          borderColor={isFocused ? colors.primary + '14' : 'transparent'}
-          nActive={{ bg: colors.primary + '14', color: colors.onSurface }}
-          nHover={{ bg: !isFocused ? colors.primary + '14' : 'transparent' }}
-          {...props}
-        >
-          <Box
-            width="1.5rem"
-            justifyContent="center"
-            alignItems="center"
+      <Box id={BOX_ID} ref={BoxRef} position="relative">
+        <Box onClick={handleDropdown}>
+          <DropdownButtonElement
+            gap="xs"
+            ref={ref}
             display="flex"
+            height="2.5rem"
+            cursor="pointer"
+            alignItems="center"
+            bg="lowestContainer"
+            p={label ? 'xs' : '0'}
+            pr={label ? 'm' : '0'}
+            pl={label ? (Icon ? 'xs' : 'm') : 'unset'}
+            border={isFocused ? '4px solid' : '0'}
+            borderRadius={label ? 'full' : 'xs'}
+            width={label ? 'fit-content' : '2.5rem'}
+            justifyContent={label ? 'unset' : 'center'}
+            onBlur={() => setIsFocused(selected || false)}
+            transition="background-color 300ms ease-in-out"
+            borderColor={isFocused ? colors.primary + '14' : 'transparent'}
+            nActive={{ bg: colors.primary + '14', color: colors.onSurface }}
+            nHover={{ bg: !isFocused ? colors.primary + '14' : 'transparent' }}
+            {...props}
           >
-            {Icon}
-          </Box>
-          {label && (
-            <>
-              <Typography variant="label" size="large" color="onSurface">
-                {label}
-              </Typography>
-              <Box width="fit-content" alignItems="center" display="flex">
-                <ArrowBottomSecondarySVG
-                  maxWidth="1.5rem"
-                  maxHeight="1.5rem"
-                  width="100%"
-                />
+            {Icon && (
+              <Box
+                width="1.5rem"
+                justifyContent="center"
+                alignItems="center"
+                display="flex"
+              >
+                {Icon}
               </Box>
-            </>
-          )}
-        </DropdownButtonElement>
+            )}
+            {label && (
+              <>
+                <Typography variant="label" size="large" color="onSurface">
+                  {label}
+                </Typography>
+                <Box width="fit-content" alignItems="center" display="flex">
+                  <ArrowBottomSecondarySVG
+                    maxWidth="1.5rem"
+                    maxHeight="1.5rem"
+                    width="100%"
+                  />
+                </Box>
+              </>
+            )}
+          </DropdownButtonElement>
+        </Box>
+
         {isOpen && (
           <Motion
             top="3.5rem"
+            aria-label="dropdown"
             zIndex={4}
             overflow="hidden"
             initial="closed"
-            borderRadius="s"
+            borderRadius={props.borderRadius || 's'}
             width="fit-content"
             border="1px solid"
             position="absolute"
@@ -132,11 +131,16 @@ export const DropdownButton: FC<PropsWithRef<DropdownButtonProps>> = forwardRef(
             )}
             {items.map((item) => (
               <ListItem
+                pr="m"
                 key={v4()}
                 title={item.title}
                 disabled={item.disabled}
                 SuffixIcon={item.SuffixIcon}
-                PrefixIcon={<Box width="1.5rem">{item.PrefixIcon}</Box>}
+                pl={item.PrefixIcon ? 'xs' : 'm'}
+                cursor={item.disabled ? 'not-allowed' : 'pointer'}
+                PrefixIcon={
+                  item.PrefixIcon && <Box width="1.5rem">{item.PrefixIcon}</Box>
+                }
               />
             ))}
           </Motion>

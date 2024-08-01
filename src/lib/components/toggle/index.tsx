@@ -43,20 +43,13 @@ export const ToggleButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
   const Icon = toggler ? activeIcon : inactiveIcon;
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    if (disabled) return;
     onChange?.(event);
     setToggler(not);
   };
 
   return (
-    <Box
-      fontSize="s"
-      display="flex"
-      flexWrap="wrap"
-      fontWeight="300"
-      color="onSurface"
-      alignItems="center"
-      textTransform="capitalize"
-    >
+    <Box display="flex" flexWrap="wrap" alignItems="center" role="switch">
       <LabelElement
         ml="0.375rem"
         display="flex"
@@ -117,11 +110,11 @@ export const ToggleButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
         </Box>
       </LabelElement>
       <Box display="flex" ml="xs" flexDirection="column">
-        <Typography as="p" variant="body" size="large">
+        <Typography as="label" variant="body" size="large">
           {labels?.label}
         </Typography>
         <Typography
-          as="label"
+          as="p"
           size="small"
           variant="body"
           color={`${colors['onSurface']}B8`}

@@ -30,3 +30,18 @@ export const hasCloseButton = (
 
   return false;
 };
+
+export const convertViewportUnitsToPixels = (value: string) => {
+  const viewportWidth = window.innerWidth;
+  const viewportHeight = window.innerHeight;
+
+  if (value.endsWith('vw')) {
+    const vw = parseFloat(value);
+    return (vw / 100) * viewportWidth;
+  } else if (value.endsWith('vh')) {
+    const vh = parseFloat(value);
+    return (vh / 100) * viewportHeight;
+  } else {
+    throw new Error('Value must end with "vw" or "vh"');
+  }
+};

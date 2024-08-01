@@ -19,6 +19,7 @@ export const TooltipWrapper: FC<
       onMouseLeave={() => {
         setToggle(false);
       }}
+      aria-label="tooltipContainer"
     >
       {children}
       {toggle && (
@@ -28,6 +29,7 @@ export const TooltipWrapper: FC<
           animate={{
             opacity: 1,
           }}
+          role="tooltip"
           position="absolute"
           borderRadius=".25rem"
           transform={`translate(${

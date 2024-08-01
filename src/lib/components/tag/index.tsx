@@ -5,6 +5,7 @@ import React, { FC, PropsWithChildren } from 'react';
 import { Box, Typography } from '../../elements';
 import { TimesSVG } from '../../icons';
 import { TagElementProps, TagProps } from './tag.types';
+import { getSizePadding } from './tag.utils';
 
 const TagElement = stylin<TagElementProps>('button')(
   variant({
@@ -21,54 +22,48 @@ export const Tag: FC<PropsWithChildren<TagProps>> = ({
   PrefixIcon,
   size = 'large',
   ...props
-}) => {
-  return (
-    <MotionTag
-      {...(props.variant === 'filled' || props.variant === 'outline'
-        ? {
-            py:
-              size === 'large' ? '2xs' : size === 'medium' ? '2xs' : '.125rem',
-            px:
-              size === 'large' ? '2xs' : size === 'medium' ? '2xs' : '.125rem',
-          }
-        : {})}
-      whileTap={{
-        scale: props.disabled ? 1 : 0.97,
-        transition: { duration: 0.005, ease: easeInOut },
-      }}
-      whileHover={{
-        scale: props.disabled ? 1 : 1.05,
-        transition: { duration: 0.005, ease: easeInOut },
-      }}
-      {...props}
+}) => (
+  <MotionTag
+    {...(props.variant === 'filled' || props.variant === 'outline'
+      ? {
+          px: getSizePadding(size),
+          py: getSizePadding(size),
+        }
+      : {})}
+    whileTap={{
+      scale: props.disabled ? 1 : 0.97,
+      transition: { duration: 0.005, ease: easeInOut },
+    }}
+    whileHover={{
+      scale: props.disabled ? 1 : 1.05,
+      transition: { duration: 0.005, ease: easeInOut },
+    }}
+    {...props}
+    aria-label="tag"
+  >
+    {PrefixIcon}
+    <Typography
+      as="p"
+      variant="body"
+      size={size}
+      pr={!onClose ? '0.625rem' : 'unset'}
+      pl={!PrefixIcon ? '0.625rem' : 'unset'}
     >
-      {PrefixIcon}
-      <Typography
-        as="p"
-        variant="body"
-        size={size}
-        pr={!onClose ? '.625rem' : 'unset'}
-        pl={!PrefixIcon ? '.625rem' : 'unset'}
-        px={!PrefixIcon && !onClose ? '.625rem' : 'untset'}
+      {children}
+    </Typography>
+    {onClose && (
+      <Box
+        display="flex"
+        width="1.125rem"
+        height="1.125rem"
+        onClick={onClose}
+        alignItems="center"
+        justifyContent="center"
       >
-        {children}
-      </Typography>
-      {onClose && (
-        <Box
-          px="xs"
-          py="2xs"
-          display="flex"
-          width="1.9rem"
-          height="1.9rem"
-          onClick={onClose}
-          alignItems="center"
-          justifyContent="center"
-        >
-          <TimesSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />
-        </Box>
-      )}
-    </MotionTag>
-  );
-};
+        <TimesSVG maxWidth="1.125rem" maxHeight="1.125rem" width="100%" />
+      </Box>
+    )}
+  </MotionTag>
+);
 
 export * from './tag.types';

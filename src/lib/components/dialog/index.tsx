@@ -28,6 +28,7 @@ export const Dialog: FC<DialogProps> = ({
       justifyContent="center"
       boxShadow="dropShadow.2xl"
       backgroundColor="lowestContainer"
+      role="dialog"
     >
       <Box
         display="flex"
@@ -106,14 +107,14 @@ export const Dialog: FC<DialogProps> = ({
               ? secondaryButton
               : !!(secondaryButton as IDialogButton).label && (
                   <Button
-                    marginRight="s"
-                    justifyContent="center"
                     flex="1"
+                    marginRight="s"
                     variant="outline"
-                    onClick={(secondaryButton as IDialogButton).onClick}
-                    borderColor="outlineVariant"
                     borderRadius="xs"
                     color={COLOR_MAP.info}
+                    justifyContent="center"
+                    borderColor="outlineVariant"
+                    onClick={(secondaryButton as IDialogButton).onClick}
                   >
                     {(secondaryButton as IDialogButton).label}
                   </Button>
