@@ -60,6 +60,11 @@ export const Top: Story = {
 
       expect(
         tooltipContainer,
+        'It is expected that the tooltipContainer has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+
+      expect(
+        tooltipContainer,
         'It is expected that the tooltipContainer has a background rgba(0, 0, 0, 0)'
       ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
 
@@ -86,10 +91,12 @@ export const Top: Story = {
         firstChild,
         "it's expected that the tag text font-weight will be 500"
       ).toHaveStyle('font-weight: 500');
+
       expect(
         firstChild,
         "it's expected that the tag text font-size will be 14px"
       ).toHaveStyle('font-size: 14px');
+
       expect(
         firstChild,
         "it's expected that the tag text font-family will be Satoshi"
@@ -138,7 +145,7 @@ export const Top: Story = {
 
           expect(
             firstChild.tagName,
-            "It's expected that the tooltipContainer text has a tag-name P"
+            "It's expected that the tooltip text has a tag-name P"
           ).toBe('P');
 
           expect(
@@ -150,6 +157,7 @@ export const Top: Story = {
             firstChild,
             "it's expected that the tooltip text font-weight will be 500"
           ).toHaveStyle('font-weight: 500');
+
           expect(
             firstChild,
             "it's expected that the tooltip text font-size will be 14px"
@@ -182,6 +190,11 @@ export const Left: Story = {
         tooltipContainer,
         'It should be render in document'
       ).toBeInTheDocument();
+
+      expect(
+        tooltipContainer,
+        'It is expected that the tooltipContainer has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
 
       expect(
         tooltipContainer,
@@ -263,7 +276,7 @@ export const Left: Story = {
 
           expect(
             firstChild.tagName,
-            "It's expected that the tooltipContainer text has a tag-name P"
+            "It's expected that the tooltip text has a tag-name P"
           ).toBe('P');
 
           expect(
@@ -307,6 +320,11 @@ export const Right: Story = {
         tooltipContainer,
         'It should be render in document'
       ).toBeInTheDocument();
+
+      expect(
+        tooltipContainer,
+        'It is expected that the tooltipContainer has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
 
       expect(
         tooltipContainer,
@@ -388,7 +406,7 @@ export const Right: Story = {
 
           expect(
             firstChild.tagName,
-            "It's expected that the tooltipContainer text has a tag-name P"
+            "It's expected that the tooltip text has a tag-name P"
           ).toBe('P');
 
           expect(
@@ -432,6 +450,11 @@ export const Bottom: Story = {
         tooltipContainer,
         'It should be render in document'
       ).toBeInTheDocument();
+
+      expect(
+        tooltipContainer,
+        'It is expected that the tooltipContainer has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
 
       expect(
         tooltipContainer,
@@ -513,7 +536,7 @@ export const Bottom: Story = {
 
           expect(
             firstChild.tagName,
-            "It's expected that the tooltipContainer text has a tag-name P"
+            "It's expected that the tooltip text has a tag-name P"
           ).toBe('P');
 
           expect(
