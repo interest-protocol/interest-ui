@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, userEvent, within } from '@storybook/test';
+import { expect, waitFor, within } from '@storybook/test';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { v4 } from 'uuid';
 
@@ -43,21 +44,33 @@ export const Normal: Story = {
       />,
     ],
   },
-
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const list = canvas.getByRole('list');
-    const arrowRightIcon = canvas.getByRole('arrow-right-icon');
 
-    await userEvent.hover(canvas.getByRole('list'));
-    await userEvent.click(canvas.getByRole('list'));
-    await userEvent.click(canvas.getByRole('arrow-right-icon'));
+    await step('Initial validations in the list', async () => {
+      expect(list, 'Should be rendered').toBeInTheDocument();
+      expect(
+        list.children[0].textContent,
+        'should be the text to be shown in the list'
+      ).toBe(args.title);
+      expect(list.children, 'has only two elements').toHaveLength(2);
+      const listbox = list.children[1];
+      expect(listbox, 'is not visible when the list is not opened').toHaveStyle(
+        'display: none'
+      );
+    });
 
-    const listItems = args.items;
-
-    expect(list).toBeTruthy();
-    expect(arrowRightIcon).toBeTruthy();
-    expect(args.title).toBe('List Title');
-    expect(listItems).toHaveLength(3);
+    await step('List option validations', async () => {
+      await userEvent.click(list);
+      await waitFor(() => {
+        const listbox = canvas.getByRole('listbox');
+        expect(listbox, 'Should be rendered').toBeInTheDocument();
+        expect(
+          listbox.children,
+          `has the same quantity (${args.items.length}) that was passed in args`
+        ).toHaveLength(args.items.length);
+      });
+    });
   },
 };
