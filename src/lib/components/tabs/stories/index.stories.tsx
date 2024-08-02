@@ -47,6 +47,22 @@ export const Circle: Story = {
           tabs.childNodes[currentOption].textContent,
           `It is expected that the selected option will be option "${args.items[currentOption]}"`
         ).toBe(args.items[currentOption]);
+        expect(
+          tabs.childNodes[currentOption],
+          'It is expected that the font-family of the selected item will be Satoshi'
+        ).toHaveStyle('font-family: Satoshi');
+        expect(
+          tabs.childNodes[currentOption],
+          'It is expected that the font-size of the selected item will be 16px'
+        ).toHaveStyle('font-size: 16px');
+        expect(
+          tabs.childNodes[currentOption],
+          'It is expected that the font-weight of the selected item will be 400'
+        ).toHaveStyle('font-weight: 400');
+        expect(
+          tabs.childNodes[currentOption],
+          'It is expected that the colour of the selected item will be black'
+        ).toHaveStyle('color: #000');
         const tabItemWrapperSelected =
           tabs.children[currentOption].children[0].childNodes[1];
         expect(
@@ -111,6 +127,23 @@ export const Square: Story = {
           tabs.childNodes[currentOption].textContent,
           `It is expected that the selected option will be option "${args.items[currentOption]}"`
         ).toBe(args.items[currentOption]);
+
+        expect(
+          tabs.childNodes[currentOption],
+          'It is expected that the font-family of the selected item will be Satoshi'
+        ).toHaveStyle('font-family: Satoshi');
+        expect(
+          tabs.childNodes[currentOption],
+          'It is expected that the font-size of the selected item will be 16px'
+        ).toHaveStyle('font-size: 16px');
+        expect(
+          tabs.childNodes[currentOption],
+          'It is expected that the font-weight of the selected item will be 400'
+        ).toHaveStyle('font-weight: 400');
+        expect(
+          tabs.childNodes[currentOption],
+          'It is expected that the colour of the selected item will be black'
+        ).toHaveStyle('color: #000');
         const tabItemWrapperSelected =
           tabs.children[currentOption].children[0].childNodes[1];
         expect(
