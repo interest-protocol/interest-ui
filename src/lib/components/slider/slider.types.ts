@@ -12,7 +12,7 @@ export interface SliderProps {
   step?: number;
   disabled?: boolean;
   bottomValue?: boolean;
-  withTooltip?: boolean;
+  withoutTooltip?: boolean;
   showZeroValue?: boolean;
   onChange: (value: number) => void;
   initial?: number | [number, number];
@@ -27,6 +27,6 @@ export interface RangeTypeProps {
   value: number;
   disabled?: boolean;
   bottomValue?: boolean;
-  withTooltip?: boolean;
+  withoutTooltip?: boolean;
   showZeroValue?: boolean;
 }
