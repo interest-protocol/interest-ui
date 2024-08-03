@@ -1,15 +1,36 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent, within } from '@storybook/test';
-import React from 'react';
+import React, { FC } from 'react';
+import { v4 } from 'uuid';
 
+import { Box } from '../../../elements';
 import { CircleSVG } from '../../../icons';
-import { RadioButton } from '../../radio-button';
-import { ToggleButton } from '../../toggle';
-import { DropdownButton } from '..';
+import { ListItem, ListItemProps } from '../../list-item';
+import { DropdownButton, DropdownButtonProps } from '..';
+import { itemsList1 } from '../dropdown-button.data';
 
-const meta: Meta<typeof DropdownButton> = {
+const Dropdown: FC<DropdownButtonProps> = ({ ...props }) => (
+  <DropdownButton {...props}>
+    {itemsList1.map((item: ListItemProps) => (
+      <ListItem
+        pr="m"
+        key={v4()}
+        title={item.title}
+        disabled={item && item.disabled}
+        SuffixIcon={item.SuffixIcon}
+        pl={item.PrefixIcon ? 'xs' : 'm'}
+        cursor={item.disabled ? 'not-allowed' : 'pointer'}
+        PrefixIcon={
+          item.PrefixIcon && <Box width="1.5rem">{item.PrefixIcon}</Box>
+        }
+      />
+    ))}
+  </DropdownButton>
+);
+
+const meta: Meta<typeof Dropdown> = {
   title: 'DropdownButton',
-  component: DropdownButton,
+  component: Dropdown,
   argTypes: {
     label: {
       defaultValue: 'Label',
@@ -24,22 +45,12 @@ const meta: Meta<typeof DropdownButton> = {
 
 export default meta;
 
-type Story = StoryObj<typeof DropdownButton>;
+type Story = StoryObj<typeof Dropdown>;
 
 export const WithLabel: Story = {
   args: {
     label: 'Label',
     disabled: false,
-    items: [
-      {
-        SuffixIcon: <RadioButton defaultValue={false} />,
-        title: 'Option 1',
-      },
-      {
-        SuffixIcon: <RadioButton defaultValue={false} />,
-        title: 'Option 2',
-      },
-    ],
     borderRadius: 'xs',
     onClick: fn(),
   },
@@ -228,29 +239,7 @@ export const WithLabelRounded: Story = {
     disabled: false,
     title: 'Title',
     Icon: <CircleSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />,
-    items: [
-      {
-        PrefixIcon: (
-          <CircleSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />
-        ),
-        SuffixIcon: <ToggleButton name="toggle" defaultValue={false} />,
-        title: 'List item',
-      },
-      {
-        PrefixIcon: (
-          <CircleSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />
-        ),
-        SuffixIcon: <ToggleButton name="toggle" defaultValue={true} />,
-        title: 'List item',
-      },
-      {
-        PrefixIcon: (
-          <CircleSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />
-        ),
-        SuffixIcon: <ToggleButton name="toggle" defaultValue={false} />,
-        title: 'List item',
-      },
-    ],
+    onClick: fn(),
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
@@ -357,8 +346,8 @@ export const WithLabelRounded: Story = {
 
       expect(
         dropdown,
-        'It expects that the dropdown height is 223px'
-      ).toHaveStyle('height: 223px');
+        'It expects that the dropdown height is 167px'
+      ).toHaveStyle('height: 167px');
 
       expect(
         dropdown,
@@ -394,7 +383,6 @@ export const WithLabelRounded: Story = {
       const firstChild = dropdown.childNodes[1];
       const middleChild = dropdown.childNodes[2];
       const lastChild = dropdown.childNodes[3];
-      const toggles = dropdown.querySelectorAll('[name="toggle"]');
 
       const firstChildLength = firstChild
         ? dropdown.childNodes[1].childNodes.length
@@ -409,8 +397,8 @@ export const WithLabelRounded: Story = {
 
       expect(
         firstChildLength + middleChildLength + lastChildLength,
-        'It expects that the dropdown has 9 elements'
-      ).toBe(9);
+        'It expects that the dropdown has 4 elements'
+      ).toBe(4);
 
       expect(
         dropdown,
@@ -420,17 +408,17 @@ export const WithLabelRounded: Story = {
       expect(
         dropdown,
         `It expects that the dropdown first child has the title Option 1`
-      ).toHaveTextContent('List item');
+      ).toHaveTextContent('Option 1');
+
+      expect(
+        dropdown,
+        `It expects that the dropdown first child has the title Option 2`
+      ).toHaveTextContent('Option 2');
 
       expect(
         textElements,
-        'It expects that the dropdown has 3 text elements'
-      ).toHaveLength(3);
-
-      expect(
-        toggles,
-        'It expects that the dropdown has 3 toggle elements'
-      ).toHaveLength(3);
+        'It expects that the dropdown has 2 text elements'
+      ).toHaveLength(2);
     });
   },
 };
@@ -438,29 +426,7 @@ export const WithLabelRounded: Story = {
 export const WithoutLabelOnlyIcon: Story = {
   args: {
     Icon: <CircleSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />,
-    items: [
-      {
-        PrefixIcon: (
-          <CircleSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />
-        ),
-        SuffixIcon: <ToggleButton name="toggle" defaultValue={false} />,
-        title: 'List item',
-      },
-      {
-        PrefixIcon: (
-          <CircleSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />
-        ),
-        SuffixIcon: <ToggleButton name="toggle" defaultValue={true} />,
-        title: 'List item',
-      },
-      {
-        PrefixIcon: (
-          <CircleSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />
-        ),
-        SuffixIcon: <ToggleButton name="toggle" defaultValue={false} />,
-        title: 'List item',
-      },
-    ],
+    onClick: fn(),
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
@@ -553,8 +519,8 @@ export const WithoutLabelOnlyIcon: Story = {
 
       expect(
         dropdown,
-        'It expects that the dropdown height is 170px'
-      ).toHaveStyle('height: 170px');
+        'It expects that the dropdown height is 114px'
+      ).toHaveStyle('height: 114px');
 
       expect(
         dropdown,
@@ -588,8 +554,6 @@ export const WithoutLabelOnlyIcon: Story = {
       const dropdown = canvas.getByLabelText('dropdown');
       const textElements = dropdown.getElementsByTagName('span');
 
-      const toggles = dropdown.querySelectorAll('[name="toggle"]');
-
       const firstChildLength =
         (dropdown.firstChild && dropdown.firstChild.childNodes.length) || 0;
       const middleChildLength = dropdown.childNodes[1].childNodes.length || 0;
@@ -598,23 +562,23 @@ export const WithoutLabelOnlyIcon: Story = {
 
       expect(
         firstChildLength + middleChildLength + lastChildLength,
-        'It expects that the dropdown has 9 elements'
-      ).toBe(9);
+        'It expects that the dropdown has 6 elements'
+      ).toBe(6);
 
       expect(
         dropdown,
         `It expects that the dropdown first child has the title Option 1`
-      ).toHaveTextContent('List item');
+      ).toHaveTextContent('Option 1');
+
+      expect(
+        dropdown,
+        `It expects that the dropdown first child has the title Option 2`
+      ).toHaveTextContent('Option 2');
 
       expect(
         textElements,
-        'It expects that the dropdown has 3 text elements'
-      ).toHaveLength(3);
-
-      expect(
-        toggles,
-        'It expects that the dropdown has 3 toggle elements'
-      ).toHaveLength(3);
+        'It expects that the dropdown has 2 text elements'
+      ).toHaveLength(2);
     });
   },
 };
