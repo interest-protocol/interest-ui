@@ -20,8 +20,6 @@ export const Typography = forwardRef<
   return (
     <TypographyElement
       variant={variant}
-      // eslint-disable-next-line jsx-a11y/aria-role
-      role="text"
       {...getSizeStyle(variant, size)}
       {...props}
       ref={ref}
