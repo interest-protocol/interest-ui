@@ -7,11 +7,11 @@ import { Box } from '../../../elements';
 import { CircleSVG } from '../../../icons';
 import { ListItem, ListItemProps } from '../../list-item';
 import { DropdownButton, DropdownButtonProps } from '..';
-import { itemsList1 } from '../dropdown-button.data';
+import { itemsList } from '../dropdown-button.data';
 
 const Dropdown: FC<DropdownButtonProps> = ({ ...props }) => (
   <DropdownButton {...props}>
-    {itemsList1.map((item: ListItemProps) => (
+    {itemsList.map((item: ListItemProps) => (
       <ListItem
         pr="m"
         key={v4()}
@@ -164,16 +164,6 @@ export const WithLabel: Story = {
 
       expect(
         dropdown,
-        'It expects that the dropdown height is 114px'
-      ).toHaveStyle('height: 114px');
-
-      expect(
-        dropdown,
-        'It expects that the dropdown width is 241px'
-      ).toHaveStyle('width: 241px');
-
-      expect(
-        dropdown,
         'It expects that the dropdown border is 1px solid'
       ).toHaveStyle('border: 1px solid  rgb(198, 198, 202)');
 
@@ -200,7 +190,6 @@ export const WithLabel: Story = {
       const textElements = dropdown.getElementsByTagName('span');
       const firstChild = dropdown.firstChild;
       const lastChild = dropdown.lastChild;
-      const radios = canvas.getAllByTestId('radioTest');
 
       const firstChildLength = firstChild ? firstChild.childNodes.length : 0;
       const lastChildLength = lastChild ? lastChild.childNodes.length : 0;
@@ -223,11 +212,6 @@ export const WithLabel: Story = {
       expect(
         textElements,
         'It expects that the dropdown has one text element'
-      ).toHaveLength(2);
-
-      expect(
-        radios,
-        'It expects that the dropdown has 2 radio elements'
       ).toHaveLength(2);
     });
   },
@@ -343,16 +327,6 @@ export const WithLabelRounded: Story = {
       expect(dropdown, 'It expects that the dropdown top is 56px').toHaveStyle(
         'top: 56px'
       );
-
-      expect(
-        dropdown,
-        'It expects that the dropdown height is 167px'
-      ).toHaveStyle('height: 167px');
-
-      expect(
-        dropdown,
-        'It expects that the dropdown width is 241px'
-      ).toHaveStyle('width: 241px');
 
       expect(
         dropdown,

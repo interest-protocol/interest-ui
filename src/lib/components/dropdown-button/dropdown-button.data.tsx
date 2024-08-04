@@ -3,7 +3,7 @@ import React from 'react';
 import { ListItemProps } from '../list-item';
 import { RadioButton } from '../radio-button';
 
-export const itemsList1: ListItemProps[] = [
+export const itemsList: ListItemProps[] = [
   {
     title: 'Option 1',
     SuffixIcon: <RadioButton defaultValue={false} />,
