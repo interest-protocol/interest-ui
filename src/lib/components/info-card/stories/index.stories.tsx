@@ -143,8 +143,6 @@ export const NormalWithoutIcon: Story = {
     const numberOfTexts = infoCard.querySelectorAll('p').length;
     const infoCardHeader = infoCard.firstChild && infoCard.firstChild;
 
-    const svgElements = (infoCardHeader as HTMLElement).querySelectorAll('svg');
-
     await step('Checking the info card structure', () => {
       expect(
         infoCard,
@@ -230,8 +228,8 @@ export const NormalWithoutIcon: Story = {
 
       expect(
         infoCardHeader?.childNodes,
-        `It is expected that the header will have two elements`
-      ).toHaveLength(2);
+        `It is expected that the header will have one elements`
+      ).toHaveLength(1);
     });
 
     await step('Checking the info card onClick event', async () => {
