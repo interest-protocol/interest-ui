@@ -48,6 +48,7 @@ export const InfoCard: FC<PropsWithChildren<InfoCardProps>> = ({
             borderRadius="50%"
             alignItems="center"
             justifyContent="center"
+            aria-label="info-card-icon"
           >
             {Icon}
           </Box>

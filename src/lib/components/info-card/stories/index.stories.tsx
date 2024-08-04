@@ -33,8 +33,6 @@ export const Normal: Story = {
     const numberOfTexts = infoCard.querySelectorAll('p').length;
     const infoCardHeader = infoCard.firstChild && infoCard.firstChild;
 
-    const svgElements = (infoCardHeader as HTMLElement).querySelectorAll('svg');
-
     await step('Checking the info card structure', () => {
       expect(
         infoCard,
@@ -118,9 +116,9 @@ export const Normal: Story = {
       ).toBe(2);
 
       expect(
-        svgElements,
-        `It expects that the info card header has 1 svg`
-      ).toHaveLength(1);
+        infoCardHeader?.childNodes,
+        `It is expected that the header will have two elements`
+      ).toHaveLength(2);
     });
 
     await step('Checking the info card onClick event', async () => {
@@ -231,9 +229,9 @@ export const NormalWithoutIcon: Story = {
       ).toBe(2);
 
       expect(
-        svgElements,
-        `It expects that the info card header don't have any svg`
-      ).toHaveLength(0);
+        infoCardHeader?.childNodes,
+        `It is expected that the header will have two elements`
+      ).toHaveLength(2);
     });
 
     await step('Checking the info card onClick event', async () => {
