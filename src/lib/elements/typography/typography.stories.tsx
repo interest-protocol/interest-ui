@@ -35,15 +35,15 @@ export const DisplayLarge: Story = {
 
     const color = computedStyle.getPropertyValue('color');
     const fontFamily = computedStyle.getPropertyValue('font-family');
-    const fontSize = computedStyle.getPropertyValue('font-size');
 
     expect(typography.tagName, 'It should render in the h1 tag').toBe('H1');
     expect(typography.textContent, 'It should render the text correctly').toBe(
       'Display large'
     );
-    expect(fontSize, 'The font-size of the rendered text must be 57px').toBe(
-      '57.008px'
-    );
+    expect(
+      typography,
+      'The font-size of the rendered text must be 57px'
+    ).toHaveStyle('font-size: 57.008px');
     expect(
       fontFamily,
       'It should render the text with the font-family Proto'
@@ -97,10 +97,10 @@ export const DisplaySmall: Story = {
     variant: 'display',
     children: 'Display small',
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByText('Display small');
+    const typography = canvas.getByText(`${args.children}`);
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -132,10 +132,10 @@ export const headlineLarge: Story = {
     variant: 'headline',
     children: 'Headline Large',
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByText('Headline Large');
+    const typography = canvas.getByText(`${args.children}`);
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -167,10 +167,10 @@ export const headlineMedium: Story = {
     variant: 'headline',
     children: 'Headline Medium',
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByText('Headline Medium');
+    const typography = canvas.getByText(`${args.children}`);
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -202,10 +202,10 @@ export const headlineSmall: Story = {
     variant: 'headline',
     children: 'Headline Small',
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByText('Headline Small');
+    const typography = canvas.getByText(`${args.children}`);
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -237,10 +237,10 @@ export const titleLarge: Story = {
     variant: 'title',
     children: 'Title Large',
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByText('Title Large');
+    const typography = canvas.getByText(`${args.children}`);
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -272,10 +272,10 @@ export const titleMedium: Story = {
     variant: 'title',
     children: 'Title Medium',
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByText('Title Medium');
+    const typography = canvas.getByText(`${args.children}`);
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -307,10 +307,10 @@ export const titleSmall: Story = {
     variant: 'title',
     children: 'Title Small',
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByText('Title Small');
+    const typography = canvas.getByText(`${args.children}`);
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -342,10 +342,10 @@ export const bodyLarge: Story = {
     variant: 'body',
     children: 'Body Large',
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByText('Body Large');
+    const typography = canvas.getByText(`${args.children}`);
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -377,10 +377,10 @@ export const bodyMedium: Story = {
     variant: 'body',
     children: 'Body Medium',
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByText('Body Medium');
+    const typography = canvas.getByText(`${args.children}`);
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -412,10 +412,10 @@ export const bodySmall: Story = {
     variant: 'body',
     children: 'Body Small',
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByText('Body Small');
+    const typography = canvas.getByText(`${args.children}`);
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -447,10 +447,10 @@ export const labelLarge: Story = {
     variant: 'label',
     children: 'Label Large',
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByText('Label Large');
+    const typography = canvas.getByText(`${args.children}`);
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -484,10 +484,10 @@ export const labelMedium: Story = {
     variant: 'label',
     children: 'Label Medium',
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByText('Label Medium');
+    const typography = canvas.getByText(`${args.children}`);
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
@@ -521,10 +521,10 @@ export const labelSmall: Story = {
     variant: 'label',
     children: 'Label Small',
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
 
-    const typography = canvas.getByText('Label Small');
+    const typography = canvas.getByText(`${args.children}`);
     const computedStyle = getComputedStyle(typography);
 
     const color = computedStyle.getPropertyValue('color');
