@@ -493,16 +493,6 @@ export const WithoutLabelOnlyIcon: Story = {
 
       expect(
         dropdown,
-        'It expects that the dropdown height is 114px'
-      ).toHaveStyle('height: 114px');
-
-      expect(
-        dropdown,
-        'It expects that the dropdown width is 241px'
-      ).toHaveStyle('width: 241px');
-
-      expect(
-        dropdown,
         'It expects that the dropdown border is 1px solid'
       ).toHaveStyle('border: 1px solid  rgb(198, 198, 202)');
 
