@@ -37,10 +37,11 @@ export const Filled: Story = {
     children: 'Label',
     variant: 'filled',
     onClose: undefined,
+    onClick: fn(),
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-    const tag = canvas.getByLabelText('tag');
+    const tag = canvas.getByRole('button');
 
     await step('Validating the Tag structure', () => {
       expect(tag, "It's expected that the tag is rendered").toBeInTheDocument();
@@ -93,6 +94,14 @@ export const Filled: Story = {
         "it's expected that the text of the tag has a padding-right of 10px"
       ).toHaveStyle('padding-right: 10px');
     });
+
+    await step("Validating the tag's click", async () => {
+      await userEvent.click(tag);
+      expect(
+        args.onClick,
+        "It's expected that the onClose button will only be called once after the click"
+      ).toHaveBeenCalledOnce();
+    });
   },
 };
 
@@ -107,10 +116,11 @@ export const FilledWithPrefix: Story = {
     variant: 'filled',
     PrefixIcon: ErrorSvg,
     onClose: undefined,
+    onClick: fn(),
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-    const tag = canvas.getByLabelText('tag');
+    const tag = canvas.getByRole('button');
 
     await step('Validating the Tag structure', () => {
       expect(tag, "It's expected that the tag is rendered").toBeInTheDocument();
@@ -179,6 +189,14 @@ export const FilledWithPrefix: Story = {
         "it's expected that the text of the tag has a padding-right of 10px"
       ).toHaveStyle('padding-right: 10px');
     });
+
+    await step("Validating the tag's click", async () => {
+      await userEvent.click(tag);
+      expect(
+        args.onClick,
+        "It's expected that the onClose button will only be called once after the click"
+      ).toHaveBeenCalledOnce();
+    });
   },
 };
 
@@ -189,10 +207,11 @@ export const FilledWithCombined: Story = {
     variant: 'filled',
     PrefixIcon: ErrorSvg,
     onClose: fn(),
+    onClick: fn(),
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-    const tag = canvas.getByLabelText('tag');
+    const tag = canvas.getByRole('button');
 
     await step('Validating the Tag structure', () => {
       expect(tag, "It's expected that the tag is rendered").toBeInTheDocument();
@@ -258,6 +277,18 @@ export const FilledWithCombined: Story = {
       ).toHaveStyle('font-family: Satoshi');
     });
 
+    await step("Validating the tag's click", async () => {
+      await userEvent.click(tag);
+      expect(
+        args.onClick,
+        "It's expected that the onClose button will only be called once after the click"
+      ).toHaveBeenCalledOnce();
+      expect(
+        args.onClose,
+        "It's expected that the onClose button will not be called once after the click on the tag"
+      ).not.toHaveBeenCalledOnce();
+    });
+
     await step("Validating the tag's close button", async () => {
       const CloseIcon = tag.children[2];
       await userEvent.click(CloseIcon);
@@ -291,10 +322,11 @@ export const Outlined: Story = {
     children: 'Label',
     variant: 'outline',
     onClose: undefined,
+    onClick: fn(),
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-    const tag = canvas.getByLabelText('tag');
+    const tag = canvas.getByRole('button');
 
     await step('Validating the Tag structure', () => {
       expect(tag, "It's expected that the tag is rendered").toBeInTheDocument();
@@ -351,6 +383,14 @@ export const Outlined: Story = {
         "it's expected that the text of the tag has a padding-right of 10px"
       ).toHaveStyle('padding-right: 10px');
     });
+
+    await step("Validating the tag's click", async () => {
+      await userEvent.click(tag);
+      expect(
+        args.onClick,
+        "It's expected that the onClose button will only be called once after the click"
+      ).toHaveBeenCalledOnce();
+    });
   },
 };
 
@@ -360,11 +400,12 @@ export const OutlinedWithPrefix: Story = {
     children: 'Label',
     variant: 'outline',
     onClose: undefined,
+    onClick: fn(),
     PrefixIcon: ErrorSvg,
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-    const tag = canvas.getByLabelText('tag');
+    const tag = canvas.getByRole('button');
 
     await step('Validating the Tag structure', () => {
       expect(tag, "It's expected that the tag is rendered").toBeInTheDocument();
@@ -437,6 +478,14 @@ export const OutlinedWithPrefix: Story = {
         "it's expected that the text of the tag has a padding-right of 10px"
       ).toHaveStyle('padding-right: 10px');
     });
+
+    await step("Validating the tag's click", async () => {
+      await userEvent.click(tag);
+      expect(
+        args.onClick,
+        "It's expected that the onClose button will only be called once after the click"
+      ).toHaveBeenCalledOnce();
+    });
   },
 };
 
@@ -447,10 +496,11 @@ export const OutlinedWithCombined: Story = {
     variant: 'outline',
     PrefixIcon: ErrorSvg,
     onClose: fn(),
+    onClick: fn(),
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-    const tag = canvas.getByLabelText('tag');
+    const tag = canvas.getByRole('button');
 
     await step('Validating the Tag structure', () => {
       expect(tag, "It's expected that the tag is rendered").toBeInTheDocument();
@@ -518,6 +568,18 @@ export const OutlinedWithCombined: Story = {
         typography,
         "it's expected that the tag text font-family will be Satoshi"
       ).toHaveStyle('font-family: Satoshi');
+    });
+
+    await step("Validating the tag's click", async () => {
+      await userEvent.click(tag);
+      expect(
+        args.onClick,
+        "It's expected that the onClose button will only be called once after the click"
+      ).toHaveBeenCalledOnce();
+      expect(
+        args.onClose,
+        "It's expected that the onClose button will not be called once after the click on the tag"
+      ).not.toHaveBeenCalledOnce();
     });
 
     await step("Validating the tag's close button", async () => {
