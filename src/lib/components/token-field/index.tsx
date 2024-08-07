@@ -7,7 +7,10 @@ import React, {
   PropsWithRef,
   RefAttributes,
   startTransition,
+  useCallback,
+  useEffect,
   useId,
+  useRef,
   useState,
 } from 'react';
 
@@ -20,6 +23,7 @@ const TokenFieldElement = stylin<
 >('input')();
 const LabelElement = stylin<LabelElementProps>('label')();
 
+let render = 0;
 export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
   (
     {
@@ -42,7 +46,8 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
   ) => {
     const { colors } = useTheme() as Theme;
     const [focus, setFocus] = useState(false);
-    const [value, setValue] = useState<string>();
+    const [value, setValue] = useState<string>('');
+    const valueRef = useRef(value);
     const id = useId();
 
     const statusColor = focus || status === 'none' ? 'onSurface' : status;
@@ -70,10 +75,20 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
       onBlur?.(e);
     };
 
+    console.log('Rendered >>', render++);
     const changeValue = (input: string) => setValue(input);
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
-      changeValue(e.target.value);
+    const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+      valueRef.current = e.target.value;
+
+      setValue((prevValue) => (prevValue !== value ? value : prevValue));
+      changeValue(value);
+      console.log('Value ref', valueRef);
+    }, []);
+
+    useEffect(() => {
+      console.log('Value >>', value);
+    }, [value]);
 
     return (
       <Box
