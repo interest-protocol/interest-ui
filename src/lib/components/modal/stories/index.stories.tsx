@@ -14,7 +14,7 @@ const Modal: FC<ModalProps> = (args) => {
 
   return (
     <>
-      <Button onClick={() => setIsOpen(true)} role="button" variant="filled">
+      <Button onClick={() => setIsOpen(true)} variant="filled">
         Open Modal
       </Button>
       <IUIModal
