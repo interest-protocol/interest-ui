@@ -4,6 +4,7 @@ import React, { FC, PropsWithChildren } from 'react';
 
 import { Box, Typography } from '../../../elements';
 import { TooltipProps, TooltipWrapper } from '..';
+import { isDarkTheme } from '../tooltip.utils';
 
 const Tooltip: FC<PropsWithChildren<TooltipProps>> = (args) => {
   return (
@@ -107,6 +108,10 @@ export const Top: Story = {
       await waitFor(async () => {
         await userEvent.hover(tooltipContainer);
         const tooltip = canvas.getByRole('tooltip');
+        const computedStyle = getComputedStyle(tooltip);
+        const borderStyle = computedStyle.getPropertyValue('border');
+
+        const isDarkMode = isDarkTheme();
 
         await step('Validating the tooltip structure', () => {
           expect(
@@ -114,10 +119,17 @@ export const Top: Story = {
             'It should be render in document'
           ).toBeInTheDocument();
 
-          expect(
-            tooltip,
-            'It is expected that the tooltip has a background rgb(27, 27, 31)'
-          ).toHaveStyle('background-color: rgb(27, 27, 31)');
+          if (!isDarkMode) {
+            expect(
+              tooltip,
+              'It is expected that the tooltip has a background rgb(27, 27, 31)'
+            ).toHaveStyle('background-color: rgb(27, 27, 31)');
+          } else {
+            expect(
+              tooltip,
+              'It is expected that the tooltip has a background rgb(226, 226, 230)'
+            ).toHaveStyle('background-color: rgb(226, 226, 230)');
+          }
 
           expect(
             tooltip,
@@ -127,7 +139,7 @@ export const Top: Story = {
           expect(
             tooltip,
             'It is expected that the tooltip has a right -27.9062px'
-          ).toHaveStyle('right: -27.9062px');
+          ).toHaveStyle('right: -29.9062px');
 
           expect(
             tooltip,
@@ -137,7 +149,24 @@ export const Top: Story = {
           expect(
             tooltip,
             'It is expected that the tooltip has a bottom -16px'
-          ).toHaveStyle('bottom: -16px');
+          ).toHaveStyle('bottom: -18px');
+
+          expect(
+            borderStyle,
+            'It is expected that the tooltip has a border of 1px solid'
+          ).toContain('1px solid');
+
+          if (!isDarkMode) {
+            expect(
+              tooltip,
+              'It is expected that the tooltip has a border color of rgb(27, 27, 31)'
+            ).toHaveStyle('border-color: rgb(27, 27, 31)');
+          } else {
+            expect(
+              tooltip,
+              'It is expected that the tooltip has a border color of rgb(226, 226, 230)'
+            ).toHaveStyle('border-color: rgb(226, 226, 230)');
+          }
         });
 
         await step('Validating the Tooltip content', () => {
@@ -238,6 +267,10 @@ export const Left: Story = {
       await waitFor(async () => {
         await userEvent.hover(tooltipContainer);
         const tooltip = canvas.getByRole('tooltip');
+        const computedStyle = getComputedStyle(tooltip);
+        const borderStyle = computedStyle.getPropertyValue('border');
+
+        const isDarkMode = isDarkTheme();
 
         await step('Validating the tooltip structure', () => {
           expect(
@@ -245,30 +278,54 @@ export const Left: Story = {
             'It should be render in document'
           ).toBeInTheDocument();
 
-          expect(
-            tooltip,
-            'It is expected that the tooltip has a background rgb(27, 27, 31)'
-          ).toHaveStyle('background-color: rgb(27, 27, 31)');
+          if (!isDarkMode) {
+            expect(
+              tooltip,
+              'It is expected that the tooltip has a background rgb(27, 27, 31)'
+            ).toHaveStyle('background-color: rgb(27, 27, 31)');
+          } else {
+            expect(
+              tooltip,
+              'It is expected that the tooltip has a background rgb(226, 226, 230)'
+            ).toHaveStyle('background-color: rgb(226, 226, 230)');
+          }
 
           expect(
             tooltip,
-            'It is expected that the tooltip has a top 10px'
+            'It is expected that the tooltip has a top 0px'
           ).toHaveStyle('top: 10px');
 
           expect(
             tooltip,
-            'It is expected that the tooltip has a right 2.5625px'
-          ).toHaveStyle('right: 2.5625px');
+            'It is expected that the tooltip has a right -27.9062px'
+          ).toHaveStyle('right: 0.5625px');
 
           expect(
             tooltip,
-            'It is expected that the tooltip has a left 0px'
+            'It is expected that the tooltip has a right 30.4688px'
           ).toHaveStyle('left: 0px');
 
           expect(
             tooltip,
-            'It is expected that the tooltip has a right -26px'
-          ).toHaveStyle('bottom: -26px');
+            'It is expected that the tooltip has a bottom -16px'
+          ).toHaveStyle('bottom: -28px');
+
+          expect(
+            borderStyle,
+            'It is expected that the tooltip has a border of 1px solid'
+          ).toContain('1px solid');
+
+          if (!isDarkMode) {
+            expect(
+              tooltip,
+              'It is expected that the tooltip has a border color of rgb(27, 27, 31)'
+            ).toHaveStyle('border-color: rgb(27, 27, 31)');
+          } else {
+            expect(
+              tooltip,
+              'It is expected that the tooltip has a border color of rgb(226, 226, 230)'
+            ).toHaveStyle('border-color: rgb(226, 226, 230)');
+          }
         });
 
         await step('Validating the Tooltip content', () => {
@@ -368,6 +425,10 @@ export const Right: Story = {
       await waitFor(async () => {
         await userEvent.hover(tooltipContainer);
         const tooltip = canvas.getByRole('tooltip');
+        const computedStyle = getComputedStyle(tooltip);
+        const borderStyle = computedStyle.getPropertyValue('border');
+
+        const isDarkMode = isDarkTheme();
 
         await step('Validating the tooltip structure', () => {
           expect(
@@ -375,30 +436,54 @@ export const Right: Story = {
             'It should be render in document'
           ).toBeInTheDocument();
 
-          expect(
-            tooltip,
-            'It is expected that the tooltip has a background rgb(27, 27, 31)'
-          ).toHaveStyle('background-color: rgb(27, 27, 31)');
+          if (!isDarkMode) {
+            expect(
+              tooltip,
+              'It is expected that the tooltip has a background rgb(27, 27, 31)'
+            ).toHaveStyle('background-color: rgb(27, 27, 31)');
+          } else {
+            expect(
+              tooltip,
+              'It is expected that the tooltip has a background rgb(226, 226, 230)'
+            ).toHaveStyle('background-color: rgb(226, 226, 230)');
+          }
 
           expect(
             tooltip,
-            'It is expected that the tooltip has a top 10px'
+            'It is expected that the tooltip has a top 0px'
           ).toHaveStyle('top: 10px');
 
           expect(
             tooltip,
-            'It is expected that the tooltip has a right 0px'
+            'It is expected that the tooltip has a right -27.9062px'
           ).toHaveStyle('right: 0px');
 
           expect(
             tooltip,
-            'It is expected that the tooltip has a left 2.5625px'
-          ).toHaveStyle('left: 2.5625px');
+            'It is expected that the tooltip has a right 30.4688px'
+          ).toHaveStyle('left: 0.5625px');
 
           expect(
             tooltip,
-            'It is expected that the tooltip has a right -26px'
-          ).toHaveStyle('bottom: -26px');
+            'It is expected that the tooltip has a bottom -16px'
+          ).toHaveStyle('bottom: -28px');
+
+          expect(
+            borderStyle,
+            'It is expected that the tooltip has a border of 1px solid'
+          ).toContain('1px solid');
+
+          if (!isDarkMode) {
+            expect(
+              tooltip,
+              'It is expected that the tooltip has a border color of rgb(27, 27, 31)'
+            ).toHaveStyle('border-color: rgb(27, 27, 31)');
+          } else {
+            expect(
+              tooltip,
+              'It is expected that the tooltip has a border color of rgb(226, 226, 230)'
+            ).toHaveStyle('border-color: rgb(226, 226, 230)');
+          }
         });
 
         await step('Validating the Tooltip content', () => {
@@ -498,6 +583,10 @@ export const Bottom: Story = {
       await waitFor(async () => {
         await userEvent.hover(tooltipContainer);
         const tooltip = canvas.getByRole('tooltip');
+        const computedStyle = getComputedStyle(tooltip);
+        const borderStyle = computedStyle.getPropertyValue('border');
+
+        const isDarkMode = isDarkTheme();
 
         await step('Validating the tooltip structure', () => {
           expect(
@@ -505,30 +594,54 @@ export const Bottom: Story = {
             'It should be render in document'
           ).toBeInTheDocument();
 
-          expect(
-            tooltip,
-            'It is expected that the tooltip has a background rgb(27, 27, 31)'
-          ).toHaveStyle('background-color: rgb(27, 27, 31)');
+          if (!isDarkMode) {
+            expect(
+              tooltip,
+              'It is expected that the tooltip has a background rgb(27, 27, 31)'
+            ).toHaveStyle('background-color: rgb(27, 27, 31)');
+          } else {
+            expect(
+              tooltip,
+              'It is expected that the tooltip has a background rgb(226, 226, 230)'
+            ).toHaveStyle('background-color: rgb(226, 226, 230)');
+          }
 
           expect(
             tooltip,
-            'It is expected that the tooltip has a top -16px'
-          ).toHaveStyle('top: -16px');
+            'It is expected that the tooltip has a top 0px'
+          ).toHaveStyle('top: -18px');
 
           expect(
             tooltip,
             'It is expected that the tooltip has a right -27.9062px'
-          ).toHaveStyle('right: -27.9062px');
+          ).toHaveStyle('right: -29.9062px;');
 
           expect(
             tooltip,
-            'It is expected that the tooltip has a left 30.4688px'
+            'It is expected that the tooltip has a right 30.4688px'
           ).toHaveStyle('left: 30.4688px');
 
           expect(
             tooltip,
-            'It is expected that the tooltip has a right 0px'
+            'It is expected that the tooltip has a bottom -16px'
           ).toHaveStyle('bottom: 0px');
+
+          expect(
+            borderStyle,
+            'It is expected that the tooltip has a border of 1px solid'
+          ).toContain('1px solid');
+
+          if (!isDarkMode) {
+            expect(
+              tooltip,
+              'It is expected that the tooltip has a border color of rgb(27, 27, 31)'
+            ).toHaveStyle('border-color: rgb(27, 27, 31)');
+          } else {
+            expect(
+              tooltip,
+              'It is expected that the tooltip has a border color of rgb(226, 226, 230)'
+            ).toHaveStyle('border-color: rgb(226, 226, 230)');
+          }
         });
 
         await step('Validating the Tooltip content', () => {

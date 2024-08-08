@@ -30,8 +30,10 @@ export const TooltipWrapper: FC<
             opacity: 1,
           }}
           role="tooltip"
+          border="1px solid"
           position="absolute"
           borderRadius=".25rem"
+          borderColor="onSurface"
           transform={`translate(${
             tooltipPosition === 'top' || tooltipPosition === 'bottom'
               ? '-50%'
