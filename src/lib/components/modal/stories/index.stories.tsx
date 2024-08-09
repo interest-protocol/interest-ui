@@ -1,5 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { expect } from '@storybook/test';
+import {
+  clearAllMocks,
+  expect,
+  fn,
+  userEvent,
+  waitFor,
+  within,
+} from '@storybook/test';
 import React, { FC, useState } from 'react';
 import { v4 } from 'uuid';
 
@@ -68,8 +75,9 @@ export const Normal: Story = {
     ariaHideApp: false,
     title: 'IPX Balance',
     hasCloseButton: true,
+    onClose: fn(),
   },
-  play: async ({ step }) => {
+  play: async ({ args, step, canvasElement }) => {
     const modalOverlay = document.body.getElementsByClassName(
       'ReactModal__Overlay'
     )[0] as HTMLElement;
@@ -78,7 +86,8 @@ export const Normal: Story = {
       '[role="dialog"]'
     ) as HTMLElement;
 
-    const buttonCounter = dialog.getElementsByTagName('button');
+    const buttons = dialog.getElementsByTagName('button');
+    const buttonsCounter = buttons.length;
     const dialogSections = dialog.firstChild?.firstChild?.childNodes;
 
     await step('Checking modal overlay structure', () => {
@@ -175,7 +184,7 @@ export const Normal: Story = {
       ).toHaveTextContent('Footer');
 
       expect(
-        buttonCounter.length,
+        buttonsCounter,
         'It expects that the dialog has at least one button'
       ).toBeGreaterThanOrEqual(1);
 
@@ -183,6 +192,42 @@ export const Normal: Story = {
         dialogSections,
         'It expects that the dialog has 3 sections'
       ).toHaveLength(3);
+    });
+
+    clearAllMocks();
+
+    await step(
+      'Checking when the close button in the modal is being clicked',
+      async () => {
+        const button = buttons[0];
+
+        await userEvent.click(button);
+
+        expect(
+          args.onClose,
+          'It expects that the is onClose event is called'
+        ).toHaveBeenCalled();
+      }
+    );
+
+    clearAllMocks();
+
+    await step('Reopening the modal', async () => {
+      const canvas = within(canvasElement);
+      const button = canvas.getByText('Open Modal');
+
+      await userEvent.click(button);
+
+      const dialog = document.body.querySelector(
+        '[role="dialog"]'
+      ) as HTMLElement;
+
+      await waitFor(() => {
+        expect(
+          dialog,
+          'It expects that the dialog is being rendered '
+        ).toBeInTheDocument();
+      });
     });
   },
 };
