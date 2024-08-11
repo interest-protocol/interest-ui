@@ -1,6 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, within } from '@storybook/test';
-import userEvent from '@testing-library/user-event';
+import { expect, fn, userEvent, within } from '@storybook/test';
 import React from 'react';
 
 import { TokenSVG } from '../../../icons';
@@ -119,31 +118,6 @@ export const FilledWithToken: Story = {
       ).toHaveTextContent('Token Name');
     });
 
-    await step('Testing token field input', async () => {
-      const tokenFieldInput =
-        tokenFieldHolder.children[1].children[1].children[0];
-      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
-        'font-size: 22px'
-      );
-      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
-        'font-weight: 500'
-      );
-      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
-        'cursor: auto'
-      );
-      expect(tokenFieldInput, 'Should have a placeholder').toHaveAttribute(
-        'placeholder'
-      );
-
-      const placeholderValue = tokenFieldInput.getAttribute('placeholder');
-      expect(placeholderValue, 'Should have placeholder of Input').toBe(
-        'Input'
-      );
-      await step("Should insert 'SUI COINS' text in input", async () => {
-        await userEvent.type(tokenFieldInput, 'SUI COINS');
-      });
-    });
-
     await step('Testing token field max button', async () => {
       const maxButton = tokenFieldHolder.children[1].children[2].children[0];
       await userEvent.click(canvas.getByRole('button'));
@@ -176,6 +150,34 @@ export const FilledWithToken: Story = {
         supportingText,
         'Should have text content of Supporting text'
       ).toHaveTextContent('Supporting text');
+    });
+
+    await step('Testing token field input', async () => {
+      const tokenFieldInput =
+        tokenFieldHolder.children[1].children[1].children[0];
+      const suiCoins = 'SUI COINS';
+      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
+        'font-size: 22px'
+      );
+      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+      expect(tokenFieldInput, 'Should have a placeholder').toHaveAttribute(
+        'placeholder'
+      );
+
+      const placeholderValue = tokenFieldInput.getAttribute('placeholder');
+      expect(placeholderValue, 'Should have placeholder of Input').toBe(
+        'Input'
+      );
+      await step("Should insert 'SUI COINS' text in input", async () => {
+        await userEvent.type(tokenFieldInput, suiCoins, {
+          delay: 100,
+        });
+      });
     });
   },
 };
@@ -269,31 +271,6 @@ export const FilledWithTokenWithoutLabel: Story = {
       ).toHaveTextContent('Token Name');
     });
 
-    await step('Testing token field input', async () => {
-      const tokenFieldInput =
-        tokenFieldHolder.children[1].children[1].children[0];
-      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
-        'font-size: 22px'
-      );
-      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
-        'font-weight: 500'
-      );
-      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
-        'cursor: auto'
-      );
-      expect(tokenFieldInput, 'Should have a placeholder').toHaveAttribute(
-        'placeholder'
-      );
-
-      const placeholderValue = tokenFieldInput.getAttribute('placeholder');
-      expect(placeholderValue, 'Should have placeholder of Input').toBe(
-        'Input'
-      );
-      await step("Should insert 'SUI COINS' text in input", async () => {
-        await userEvent.type(tokenFieldInput, 'SUI COINS');
-      });
-    });
-
     await step('Testing token field max button', async () => {
       const maxButton = tokenFieldHolder.children[1].children[2].children[0];
       await userEvent.click(canvas.getByRole('button'));
@@ -324,6 +301,33 @@ export const FilledWithTokenWithoutLabel: Story = {
         supportingText,
         'Should have text content of Supporting text'
       ).toHaveTextContent('Supporting text');
+    });
+    await step('Testing token field input', async () => {
+      const tokenFieldInput =
+        tokenFieldHolder.children[1].children[1].children[0];
+      const suiCoins = 'SUI COINS';
+      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
+        'font-size: 22px'
+      );
+      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+      expect(tokenFieldInput, 'Should have a placeholder').toHaveAttribute(
+        'placeholder'
+      );
+
+      const placeholderValue = tokenFieldInput.getAttribute('placeholder');
+      expect(placeholderValue, 'Should have placeholder of Input').toBe(
+        'Input'
+      );
+      await step("Should insert 'SUI COINS' text in input", async () => {
+        await userEvent.type(tokenFieldInput, suiCoins, {
+          delay: 100,
+        });
+      });
     });
   },
 };
@@ -416,31 +420,6 @@ export const FilledWithLabelToTheLeft: Story = {
       ).toHaveTextContent('Token Name');
     });
 
-    await step('Testing token field input', async () => {
-      const tokenFieldInput =
-        tokenFieldHolder.children[1].children[1].children[0];
-      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
-        'font-size: 22px'
-      );
-      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
-        'font-weight: 500'
-      );
-      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
-        'cursor: auto'
-      );
-      expect(tokenFieldInput, 'Should have a placeholder').toHaveAttribute(
-        'placeholder'
-      );
-
-      const placeholderValue = tokenFieldInput.getAttribute('placeholder');
-      expect(placeholderValue, 'Should have placeholder of Input').toBe(
-        'Input'
-      );
-      await step("Should insert 'SUI COINS' text in input", async () => {
-        await userEvent.type(tokenFieldInput, 'SUI COINS');
-      });
-    });
-
     await step('Testing token field max button', async () => {
       const maxButton = tokenFieldHolder.children[1].children[2].children[0];
       await userEvent.click(canvas.getByRole('button'));
@@ -471,6 +450,34 @@ export const FilledWithLabelToTheLeft: Story = {
         supportingText,
         'Should have text content of Supporting text'
       ).toHaveTextContent('Supporting text');
+    });
+
+    await step('Testing token field input', async () => {
+      const tokenFieldInput =
+        tokenFieldHolder.children[1].children[1].children[0];
+      const suiCoins = 'SUI COINS';
+      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
+        'font-size: 22px'
+      );
+      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+      expect(tokenFieldInput, 'Should have a placeholder').toHaveAttribute(
+        'placeholder'
+      );
+
+      const placeholderValue = tokenFieldInput.getAttribute('placeholder');
+      expect(placeholderValue, 'Should have placeholder of Input').toBe(
+        'Input'
+      );
+      await step("Should insert 'SUI COINS' text in input", async () => {
+        await userEvent.type(tokenFieldInput, suiCoins, {
+          delay: 100,
+        });
+      });
     });
   },
 };
@@ -563,9 +570,25 @@ export const FilledWithTokenError: Story = {
       ).toHaveTextContent('Token Name');
     });
 
+    await step('Testing token field max button', async () => {
+      const maxButton = tokenFieldHolder.children[1].children[2].children[0];
+      await userEvent.click(canvas.getByRole('button'));
+      expect(maxButton, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        maxButton,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(maxButton, 'Should have color of rgb(0, 83, 219)').toHaveStyle(
+        'color: rgb(0, 83, 219)'
+      );
+      await userEvent.click(maxButton);
+      expect(args.handleMax, 'Should have been called').toHaveBeenCalled();
+    });
+
     await step('Testing token field input', async () => {
       const tokenFieldInput =
         tokenFieldHolder.children[1].children[1].children[0];
+      const suiCoins = 'SUI COINS';
       expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
         'font-size: 22px'
       );
@@ -584,23 +607,10 @@ export const FilledWithTokenError: Story = {
         'Input'
       );
       await step("Should insert 'SUI COINS' text in input", async () => {
-        await userEvent.type(tokenFieldInput, 'SUI COINS');
+        await userEvent.type(tokenFieldInput, suiCoins, {
+          delay: 100,
+        });
       });
-    });
-
-    await step('Testing token field max button', async () => {
-      const maxButton = tokenFieldHolder.children[1].children[2].children[0];
-      await userEvent.click(canvas.getByRole('button'));
-      expect(maxButton, 'Should have opacity of 1').toHaveStyle('opacity: 1');
-      expect(
-        maxButton,
-        'Should have background-color of rgba(0, 0, 0, 0)'
-      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
-      expect(maxButton, 'Should have color of rgb(0, 83, 219)').toHaveStyle(
-        'color: rgb(0, 83, 219)'
-      );
-      await userEvent.click(maxButton);
-      expect(args.handleMax, 'Should have been called').toHaveBeenCalled();
     });
   },
 };
@@ -817,31 +827,6 @@ export const FilledWithoutTokenIcon: Story = {
       ).toHaveTextContent('Token Name');
     });
 
-    await step('Testing token field input', async () => {
-      const tokenFieldInput =
-        tokenFieldHolder.children[1].children[1].children[0];
-      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
-        'font-size: 22px'
-      );
-      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
-        'font-weight: 500'
-      );
-      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
-        'cursor: auto'
-      );
-      expect(tokenFieldInput, 'Should have a placeholder').toHaveAttribute(
-        'placeholder'
-      );
-
-      const placeholderValue = tokenFieldInput.getAttribute('placeholder');
-      expect(placeholderValue, 'Should have placeholder of Input').toBe(
-        'Input'
-      );
-      await step("Should insert 'SUI COINS' text in input", async () => {
-        await userEvent.type(tokenFieldInput, 'SUI COINS');
-      });
-    });
-
     await step('Testing token field max button', async () => {
       const maxButton = tokenFieldHolder.children[1].children[2].children[0];
       await userEvent.click(canvas.getByRole('button'));
@@ -872,6 +857,34 @@ export const FilledWithoutTokenIcon: Story = {
         supportingText,
         'Should have text content of Supporting text'
       ).toHaveTextContent('Supporting text');
+    });
+
+    await step('Testing token field input', async () => {
+      const tokenFieldInput =
+        tokenFieldHolder.children[1].children[1].children[0];
+      const suiCoins = 'SUI COINS';
+      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
+        'font-size: 22px'
+      );
+      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+      expect(tokenFieldInput, 'Should have a placeholder').toHaveAttribute(
+        'placeholder'
+      );
+
+      const placeholderValue = tokenFieldInput.getAttribute('placeholder');
+      expect(placeholderValue, 'Should have placeholder of Input').toBe(
+        'Input'
+      );
+      await step("Should insert 'SUI COINS' text in input", async () => {
+        await userEvent.type(tokenFieldInput, suiCoins, {
+          delay: 100,
+        });
+      });
     });
   },
 };
@@ -941,9 +954,25 @@ export const FilledWithoutTokenIconError: Story = {
       ).toHaveTextContent('Token Name');
     });
 
+    await step('Testing token field max button', async () => {
+      const maxButton = tokenFieldHolder.children[1].children[2].children[0];
+      await userEvent.click(canvas.getByRole('button'));
+      expect(maxButton, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        maxButton,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+      expect(maxButton, 'Should have color of rgb(0, 83, 219)').toHaveStyle(
+        'color: rgb(0, 83, 219)'
+      );
+      await userEvent.click(maxButton);
+      expect(args.handleMax, 'Should have been called').toHaveBeenCalled();
+    });
+
     await step('Testing token field input', async () => {
       const tokenFieldInput =
         tokenFieldHolder.children[1].children[1].children[0];
+      const suiCoins = 'SUI COINS';
       expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
         'font-size: 22px'
       );
@@ -962,23 +991,10 @@ export const FilledWithoutTokenIconError: Story = {
         'Input'
       );
       await step("Should insert 'SUI COINS' text in input", async () => {
-        await userEvent.type(tokenFieldInput, 'SUI COINS');
+        await userEvent.type(tokenFieldInput, suiCoins, {
+          delay: 100,
+        });
       });
-    });
-
-    await step('Testing token field max button', async () => {
-      const maxButton = tokenFieldHolder.children[1].children[2].children[0];
-      await userEvent.click(canvas.getByRole('button'));
-      expect(maxButton, 'Should have opacity of 1').toHaveStyle('opacity: 1');
-      expect(
-        maxButton,
-        'Should have background-color of rgba(0, 0, 0, 0)'
-      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
-      expect(maxButton, 'Should have color of rgb(0, 83, 219)').toHaveStyle(
-        'color: rgb(0, 83, 219)'
-      );
-      await userEvent.click(maxButton);
-      expect(args.handleMax, 'Should have been called').toHaveBeenCalled();
     });
   },
 };
@@ -1183,31 +1199,6 @@ export const OutlineWithToken: Story = {
       ).toHaveTextContent('Token Name');
     });
 
-    await step('Testing token field input', async () => {
-      const tokenFieldInput =
-        tokenFieldHolder.children[1].children[1].children[0];
-      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
-        'font-size: 22px'
-      );
-      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
-        'font-weight: 500'
-      );
-      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
-        'cursor: auto'
-      );
-      expect(tokenFieldInput, 'Should have a placeholder').toHaveAttribute(
-        'placeholder'
-      );
-
-      const placeholderValue = tokenFieldInput.getAttribute('placeholder');
-      expect(placeholderValue, 'Should have placeholder of Input').toBe(
-        'Input'
-      );
-      await step("Should insert 'SUI COINS' text in input", async () => {
-        await userEvent.type(tokenFieldInput, 'SUI COINS');
-      });
-    });
-
     await step('Testing token field max button', async () => {
       const maxButton = tokenFieldHolder.children[1].children[2].children[0];
       await userEvent.click(canvas.getByRole('button'));
@@ -1238,6 +1229,34 @@ export const OutlineWithToken: Story = {
         supportingText,
         'Should have text content of Supporting text'
       ).toHaveTextContent('Supporting text');
+    });
+
+    await step('Testing token field input', async () => {
+      const tokenFieldInput =
+        tokenFieldHolder.children[1].children[1].children[0];
+      const suiCoins = 'SUI COINS';
+      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
+        'font-size: 22px'
+      );
+      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+      expect(tokenFieldInput, 'Should have a placeholder').toHaveAttribute(
+        'placeholder'
+      );
+
+      const placeholderValue = tokenFieldInput.getAttribute('placeholder');
+      expect(placeholderValue, 'Should have placeholder of Input').toBe(
+        'Input'
+      );
+      await step("Should insert 'SUI COINS' text in input", async () => {
+        await userEvent.type(tokenFieldInput, suiCoins, {
+          delay: 100,
+        });
+      });
     });
   },
 };
@@ -1331,32 +1350,6 @@ export const OutlineWithLabelToTheLeft: Story = {
       ).toHaveTextContent('Token Name');
     });
 
-    await step('Testing token field input', async () => {
-      const tokenFieldInput =
-        tokenFieldHolder.children[1].children[1].children[0];
-
-      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
-        'font-size: 22px'
-      );
-      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
-        'font-weight: 500'
-      );
-      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
-        'cursor: auto'
-      );
-      expect(tokenFieldInput, 'Should have a placeholder').toHaveAttribute(
-        'placeholder'
-      );
-
-      const placeholderValue = tokenFieldInput.getAttribute('placeholder');
-      expect(placeholderValue, 'Should have placeholder of Input').toBe(
-        'Input'
-      );
-      await step("Should insert 'SUI COINS' text in input", async () => {
-        await userEvent.type(tokenFieldInput, 'SUI COINS');
-      });
-    });
-
     await step('Testing token field max button', async () => {
       const maxButton = tokenFieldHolder.children[1].children[2].children[0];
       await userEvent.click(canvas.getByRole('button'));
@@ -1387,6 +1380,34 @@ export const OutlineWithLabelToTheLeft: Story = {
         supportingText,
         'Should have text content of Supporting text'
       ).toHaveTextContent('Supporting text');
+    });
+
+    await step('Testing token field input', async () => {
+      const tokenFieldInput =
+        tokenFieldHolder.children[1].children[1].children[0];
+      const suiCoins = 'SUI COINS';
+      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
+        'font-size: 22px'
+      );
+      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+      expect(tokenFieldInput, 'Should have a placeholder').toHaveAttribute(
+        'placeholder'
+      );
+
+      const placeholderValue = tokenFieldInput.getAttribute('placeholder');
+      expect(placeholderValue, 'Should have placeholder of Input').toBe(
+        'Input'
+      );
+      await step("Should insert 'SUI COINS' text in input", async () => {
+        await userEvent.type(tokenFieldInput, suiCoins, {
+          delay: 100,
+        });
+      });
     });
   },
 };
@@ -1481,31 +1502,6 @@ export const OutlineWithTokenError: Story = {
       ).toHaveTextContent('Token Name');
     });
 
-    await step('Testing token field input', async () => {
-      const tokenFieldInput =
-        tokenFieldHolder.children[1].children[1].children[0];
-      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
-        'font-size: 22px'
-      );
-      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
-        'font-weight: 500'
-      );
-      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
-        'cursor: auto'
-      );
-      expect(tokenFieldInput, 'Should have a placeholder').toHaveAttribute(
-        'placeholder'
-      );
-
-      const placeholderValue = tokenFieldInput.getAttribute('placeholder');
-      expect(placeholderValue, 'Should have placeholder of Input').toBe(
-        'Input'
-      );
-      await step("Should insert 'SUI COINS' text in input", async () => {
-        await userEvent.type(tokenFieldInput, 'SUI COINS');
-      });
-    });
-
     await step('Testing token field max button', async () => {
       const maxButton = tokenFieldHolder.children[1].children[2].children[0];
       await userEvent.click(canvas.getByRole('button'));
@@ -1538,6 +1534,34 @@ export const OutlineWithTokenError: Story = {
         supportingText,
         'Should have text content of Supporting text'
       ).toHaveTextContent('Supporting text');
+    });
+
+    await step('Testing token field input', async () => {
+      const tokenFieldInput =
+        tokenFieldHolder.children[1].children[1].children[0];
+      const suiCoins = 'SUI COINS';
+      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
+        'font-size: 22px'
+      );
+      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+      expect(tokenFieldInput, 'Should have a placeholder').toHaveAttribute(
+        'placeholder'
+      );
+
+      const placeholderValue = tokenFieldInput.getAttribute('placeholder');
+      expect(placeholderValue, 'Should have placeholder of Input').toBe(
+        'Input'
+      );
+      await step("Should insert 'SUI COINS' text in input", async () => {
+        await userEvent.type(tokenFieldInput, suiCoins, {
+          delay: 100,
+        });
+      });
     });
   },
 };
@@ -1743,31 +1767,6 @@ export const OutlineWithoutTokenIcon: Story = {
       ).toHaveTextContent('Token Name');
     });
 
-    await step('Testing token field input', async () => {
-      const tokenFieldInput =
-        tokenFieldHolder.children[1].children[1].children[0];
-      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
-        'font-size: 22px'
-      );
-      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
-        'font-weight: 500'
-      );
-      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
-        'cursor: auto'
-      );
-      expect(tokenFieldInput, 'Should have a placeholder').toHaveAttribute(
-        'placeholder'
-      );
-
-      const placeholderValue = tokenFieldInput.getAttribute('placeholder');
-      expect(placeholderValue, 'Should have placeholder of Input').toBe(
-        'Input'
-      );
-      await step("Should insert 'SUI COINS' text in input", async () => {
-        await userEvent.type(tokenFieldInput, 'SUI COINS');
-      });
-    });
-
     await step('Testing token field max button', async () => {
       const maxButton = tokenFieldHolder.children[1].children[2].children[0];
       await userEvent.click(canvas.getByRole('button'));
@@ -1797,6 +1796,34 @@ export const OutlineWithoutTokenIcon: Story = {
         supportingText,
         'Should have text content of Supporting text'
       ).toHaveTextContent('Supporting text');
+    });
+
+    await step('Testing token field input', async () => {
+      const tokenFieldInput =
+        tokenFieldHolder.children[1].children[1].children[0];
+      const suiCoins = 'SUI COINS';
+      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
+        'font-size: 22px'
+      );
+      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+      expect(tokenFieldInput, 'Should have a placeholder').toHaveAttribute(
+        'placeholder'
+      );
+
+      const placeholderValue = tokenFieldInput.getAttribute('placeholder');
+      expect(placeholderValue, 'Should have placeholder of Input').toBe(
+        'Input'
+      );
+      await step("Should insert 'SUI COINS' text in input", async () => {
+        await userEvent.type(tokenFieldInput, suiCoins, {
+          delay: 100,
+        });
+      });
     });
   },
 };
@@ -1875,31 +1902,6 @@ export const OutlineWithoutTokenIconError: Story = {
       ).toHaveTextContent('Token Name');
     });
 
-    await step('Testing token field input', async () => {
-      const tokenFieldInput =
-        tokenFieldHolder.children[1].children[1].children[0];
-      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
-        'font-size: 22px'
-      );
-      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
-        'font-weight: 500'
-      );
-      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
-        'cursor: auto'
-      );
-      expect(tokenFieldInput, 'Should have a placeholder').toHaveAttribute(
-        'placeholder'
-      );
-
-      const placeholderValue = tokenFieldInput.getAttribute('placeholder');
-      expect(placeholderValue, 'Should have placeholder of Input').toBe(
-        'Input'
-      );
-      await step("Should insert 'SUI COINS' text in input", async () => {
-        await userEvent.type(tokenFieldInput, 'SUI COINS');
-      });
-    });
-
     await step('Testing token field max button', async () => {
       const maxButton = tokenFieldHolder.children[1].children[2].children[0];
       await userEvent.click(canvas.getByRole('button'));
@@ -1930,6 +1932,34 @@ export const OutlineWithoutTokenIconError: Story = {
         supportingText,
         'Should have text content of Supporting text'
       ).toHaveTextContent('Supporting text');
+    });
+
+    await step('Testing token field input', async () => {
+      const tokenFieldInput =
+        tokenFieldHolder.children[1].children[1].children[0];
+      const suiCoins = 'SUI COINS';
+      expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
+        'font-size: 22px'
+      );
+      expect(tokenFieldInput, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(tokenFieldInput, 'Should have cursor auto').toHaveStyle(
+        'cursor: auto'
+      );
+      expect(tokenFieldInput, 'Should have a placeholder').toHaveAttribute(
+        'placeholder'
+      );
+
+      const placeholderValue = tokenFieldInput.getAttribute('placeholder');
+      expect(placeholderValue, 'Should have placeholder of Input').toBe(
+        'Input'
+      );
+      await step("Should insert 'SUI COINS' text in input", async () => {
+        await userEvent.type(tokenFieldInput, suiCoins, {
+          delay: 100,
+        });
+      });
     });
   },
 };

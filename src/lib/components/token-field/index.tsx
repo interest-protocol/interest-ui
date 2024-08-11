@@ -23,7 +23,6 @@ const TokenFieldElement = stylin<
 >('input')();
 const LabelElement = stylin<LabelElementProps>('label')();
 
-let render = 0;
 export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
   (
     {
@@ -75,7 +74,6 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
       onBlur?.(e);
     };
 
-    console.log('Rendered >>', render++);
     const changeValue = (input: string) => setValue(input);
 
     const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -83,7 +81,6 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
 
       setValue((prevValue) => (prevValue !== value ? value : prevValue));
       changeValue(value);
-      console.log('Value ref', valueRef);
     }, []);
 
     useEffect(() => {
