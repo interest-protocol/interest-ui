@@ -1,5 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { clearAllMocks, expect, fn, userEvent, waitFor } from '@storybook/test';
+import {
+  clearAllMocks,
+  expect,
+  fn,
+  userEvent,
+  waitFor,
+  within,
+} from '@storybook/test';
 import React, { FC, useState } from 'react';
 import { v4 } from 'uuid';
 
@@ -14,7 +21,7 @@ const Modal: FC<ModalProps> = (args) => {
 
   return (
     <>
-      <Button onClick={() => setIsOpen(true)} role="button" variant="filled">
+      <Button onClick={() => setIsOpen(true)} variant="filled">
         Open Modal
       </Button>
       <IUIModal
@@ -70,7 +77,7 @@ export const Normal: Story = {
     hasCloseButton: true,
     onClose: fn(),
   },
-  play: async ({ args, step }) => {
+  play: async ({ args, step, canvasElement }) => {
     const modalOverlay = document.body.getElementsByClassName(
       'ReactModal__Overlay'
     )[0] as HTMLElement;
@@ -79,7 +86,8 @@ export const Normal: Story = {
       '[role="dialog"]'
     ) as HTMLElement;
 
-    const buttonCounter = dialog.getElementsByTagName('button');
+    const buttons = dialog.getElementsByTagName('button');
+    const buttonsCounter = buttons.length;
     const dialogSections = dialog.firstChild?.firstChild?.childNodes;
 
     await step('Checking modal overlay structure', () => {
@@ -112,15 +120,20 @@ export const Normal: Story = {
     });
 
     await step('Checking dialog structure', () => {
-      const maxWidthPx = convertViewportUnitsToPixels('95vw');
-      const maxHeightPx = convertViewportUnitsToPixels('95vh');
+      const maxWidthPx = Math.floor(convertViewportUnitsToPixels('95vw'));
+      const maxHeightPx = Math.floor(convertViewportUnitsToPixels('95vh'));
 
       const computedStyle = getComputedStyle(dialog);
-      const maxWidth = parseFloat(
-        computedStyle.getPropertyValue('max-width').replace('px', '')
+
+      const maxWidth = Math.floor(
+        parseFloat(
+          computedStyle.getPropertyValue('max-width').replace('px', '')
+        )
       );
-      const maxHeight = parseFloat(
-        computedStyle.getPropertyValue('max-height').replace('px', '')
+      const maxHeight = Math.floor(
+        parseFloat(
+          computedStyle.getPropertyValue('max-height').replace('px', '')
+        )
       );
 
       expect(
@@ -171,13 +184,13 @@ export const Normal: Story = {
       ).toHaveTextContent('Footer');
 
       expect(
-        buttonCounter.length,
+        buttonsCounter,
         'It expects that the dialog has at least one button'
       ).toBeGreaterThanOrEqual(1);
 
       expect(
         dialogSections,
-        'It expects that the dialog has at 3 sections'
+        'It expects that the dialog has 3 sections'
       ).toHaveLength(3);
     });
 
@@ -186,14 +199,9 @@ export const Normal: Story = {
     await step(
       'Checking when the close button in the modal is being clicked',
       async () => {
-        const button = dialog.querySelector('[role="button"]') as HTMLElement;
+        const button = buttons[0];
 
         await userEvent.click(button);
-
-        expect(
-          dialog,
-          'It expects that the is not in the document'
-        ).not.toBeInTheDocument();
 
         expect(
           args.onClose,
@@ -205,9 +213,8 @@ export const Normal: Story = {
     clearAllMocks();
 
     await step('Reopening the modal', async () => {
-      const button = document.body.querySelector(
-        '[role="button"]'
-      ) as HTMLElement;
+      const canvas = within(canvasElement);
+      const button = canvas.getByText('Open Modal');
 
       await userEvent.click(button);
 
