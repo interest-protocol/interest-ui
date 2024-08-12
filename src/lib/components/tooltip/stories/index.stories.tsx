@@ -159,13 +159,13 @@ export const Top: Story = {
           if (!isDarkMode) {
             expect(
               tooltip,
-              'It is expected that the tooltip has a border color of rgb(27, 27, 31)'
-            ).toHaveStyle('border-color: rgb(27, 27, 31)');
+              'It is expected that the tooltip has a background rgb(198, 198, 202)'
+            ).toHaveStyle('border-color: rgb(198, 198, 202)');
           } else {
             expect(
               tooltip,
-              'It is expected that the tooltip has a border color of rgb(226, 226, 230)'
-            ).toHaveStyle('border-color: rgb(226, 226, 230)');
+              'It is expected that the tooltip has a background rgb(70, 70, 74)'
+            ).toHaveStyle('border-color: rgb(70, 70, 74)');
           }
         });
 
@@ -318,13 +318,13 @@ export const Left: Story = {
           if (!isDarkMode) {
             expect(
               tooltip,
-              'It is expected that the tooltip has a border color of rgb(27, 27, 31)'
-            ).toHaveStyle('border-color: rgb(27, 27, 31)');
+              'It is expected that the tooltip has a background rgb(198, 198, 202)'
+            ).toHaveStyle('border-color: rgb(198, 198, 202)');
           } else {
             expect(
               tooltip,
-              'It is expected that the tooltip has a border color of rgb(226, 226, 230)'
-            ).toHaveStyle('border-color: rgb(226, 226, 230)');
+              'It is expected that the tooltip has a background rgb(70, 70, 74)'
+            ).toHaveStyle('border-color: rgb(70, 70, 74)');
           }
         });
 
@@ -476,13 +476,13 @@ export const Right: Story = {
           if (!isDarkMode) {
             expect(
               tooltip,
-              'It is expected that the tooltip has a border color of rgb(27, 27, 31)'
-            ).toHaveStyle('border-color: rgb(27, 27, 31)');
+              'It is expected that the tooltip has a background rgb(198, 198, 202)'
+            ).toHaveStyle('border-color: rgb(198, 198, 202)');
           } else {
             expect(
               tooltip,
-              'It is expected that the tooltip has a border color of rgb(226, 226, 230)'
-            ).toHaveStyle('border-color: rgb(226, 226, 230)');
+              'It is expected that the tooltip has a background rgb(70, 70, 74)'
+            ).toHaveStyle('border-color: rgb(70, 70, 74)');
           }
         });
 
@@ -634,13 +634,13 @@ export const Bottom: Story = {
           if (!isDarkMode) {
             expect(
               tooltip,
-              'It is expected that the tooltip has a border color of rgb(27, 27, 31)'
-            ).toHaveStyle('border-color: rgb(27, 27, 31)');
+              'It is expected that the tooltip has a background rgb(198, 198, 202)'
+            ).toHaveStyle('border-color: rgb(198, 198, 202)');
           } else {
             expect(
               tooltip,
-              'It is expected that the tooltip has a border color of rgb(226, 226, 230)'
-            ).toHaveStyle('border-color: rgb(226, 226, 230)');
+              'It is expected that the tooltip has a background rgb(70, 70, 74)'
+            ).toHaveStyle('border-color: rgb(70, 70, 74)');
           }
         });
 

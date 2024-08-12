@@ -33,7 +33,7 @@ export const TooltipWrapper: FC<
           border="1px solid"
           position="absolute"
           borderRadius=".25rem"
-          borderColor="onSurface"
+          borderColor="outlineVariant"
           transform={`translate(${
             tooltipPosition === 'top' || tooltipPosition === 'bottom'
               ? '-50%'
