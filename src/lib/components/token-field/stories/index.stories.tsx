@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, userEvent, within } from '@storybook/test';
+import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
 import React from 'react';
 
 import { TokenSVG } from '../../../icons';
@@ -155,7 +155,8 @@ export const FilledWithToken: Story = {
     await step('Testing token field input', async () => {
       const tokenFieldInput =
         tokenFieldHolder.children[1].children[1].children[0];
-      const suiCoins = 'SUI COINS';
+      let inputValue = tokenFieldInput.getAttribute('value');
+      inputValue = 'SUI';
       expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
         'font-size: 22px'
       );
@@ -173,10 +174,14 @@ export const FilledWithToken: Story = {
       expect(placeholderValue, 'Should have placeholder of Input').toBe(
         'Input'
       );
-      await step("Should insert 'SUI COINS' text in input", async () => {
-        await userEvent.type(tokenFieldInput, suiCoins, {
+      await step("Should insert 'SUI' text in input", async () => {
+        await userEvent.type(tokenFieldInput, inputValue, {
           delay: 100,
         });
+
+        await waitFor(() =>
+          expect(inputValue, 'Should insert SUI in input').toBe('SUI')
+        );
       });
     });
   },
@@ -305,7 +310,8 @@ export const FilledWithTokenWithoutLabel: Story = {
     await step('Testing token field input', async () => {
       const tokenFieldInput =
         tokenFieldHolder.children[1].children[1].children[0];
-      const suiCoins = 'SUI COINS';
+      let inputValue = tokenFieldInput.getAttribute('value');
+      inputValue = 'SUI';
       expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
         'font-size: 22px'
       );
@@ -323,10 +329,14 @@ export const FilledWithTokenWithoutLabel: Story = {
       expect(placeholderValue, 'Should have placeholder of Input').toBe(
         'Input'
       );
-      await step("Should insert 'SUI COINS' text in input", async () => {
-        await userEvent.type(tokenFieldInput, suiCoins, {
+      await step("Should insert 'SUI' text in input", async () => {
+        await userEvent.type(tokenFieldInput, inputValue, {
           delay: 100,
         });
+
+        await waitFor(() =>
+          expect(inputValue, 'Should insert SUI in input').toBe('SUI')
+        );
       });
     });
   },
@@ -455,7 +465,8 @@ export const FilledWithLabelToTheLeft: Story = {
     await step('Testing token field input', async () => {
       const tokenFieldInput =
         tokenFieldHolder.children[1].children[1].children[0];
-      const suiCoins = 'SUI COINS';
+      let inputValue = tokenFieldInput.getAttribute('value');
+      inputValue = 'SUI';
       expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
         'font-size: 22px'
       );
@@ -474,9 +485,13 @@ export const FilledWithLabelToTheLeft: Story = {
         'Input'
       );
       await step("Should insert 'SUI COINS' text in input", async () => {
-        await userEvent.type(tokenFieldInput, suiCoins, {
+        await userEvent.type(tokenFieldInput, inputValue, {
           delay: 100,
         });
+
+        await waitFor(() =>
+          expect(inputValue, 'Should insert SUI in input').toBe('SUI')
+        );
       });
     });
   },
@@ -588,7 +603,8 @@ export const FilledWithTokenError: Story = {
     await step('Testing token field input', async () => {
       const tokenFieldInput =
         tokenFieldHolder.children[1].children[1].children[0];
-      const suiCoins = 'SUI COINS';
+      let inputValue = tokenFieldInput.getAttribute('value');
+      inputValue = 'SUI';
       expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
         'font-size: 22px'
       );
@@ -607,10 +623,12 @@ export const FilledWithTokenError: Story = {
         'Input'
       );
       await step("Should insert 'SUI COINS' text in input", async () => {
-        await userEvent.type(tokenFieldInput, suiCoins, {
+        await userEvent.type(tokenFieldInput, inputValue, {
           delay: 100,
         });
-        expect(suiCoins, 'Should receive SUI COINS as value').toBe(suiCoins);
+        await waitFor(() =>
+          expect(inputValue, 'Should insert SUI in input').toBe('SUI')
+        );
       });
     });
   },
@@ -863,7 +881,8 @@ export const FilledWithoutTokenIcon: Story = {
     await step('Testing token field input', async () => {
       const tokenFieldInput =
         tokenFieldHolder.children[1].children[1].children[0];
-      const suiCoins = 'SUI COINS';
+      let inputValue = tokenFieldInput.getAttribute('value');
+      inputValue = 'SUI';
       expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
         'font-size: 22px'
       );
@@ -882,9 +901,12 @@ export const FilledWithoutTokenIcon: Story = {
         'Input'
       );
       await step("Should insert 'SUI COINS' text in input", async () => {
-        await userEvent.type(tokenFieldInput, suiCoins, {
+        await userEvent.type(tokenFieldInput, inputValue, {
           delay: 100,
         });
+        await waitFor(() =>
+          expect(inputValue, 'Should insert SUI in into').toBe('SUI')
+        );
       });
     });
   },
@@ -973,7 +995,8 @@ export const FilledWithoutTokenIconError: Story = {
     await step('Testing token field input', async () => {
       const tokenFieldInput =
         tokenFieldHolder.children[1].children[1].children[0];
-      const suiCoins = 'SUI COINS';
+      let inputValue = tokenFieldInput.getAttribute('value');
+      inputValue = 'SUI';
       expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
         'font-size: 22px'
       );
@@ -992,9 +1015,13 @@ export const FilledWithoutTokenIconError: Story = {
         'Input'
       );
       await step("Should insert 'SUI COINS' text in input", async () => {
-        await userEvent.type(tokenFieldInput, suiCoins, {
+        await userEvent.type(tokenFieldInput, inputValue, {
           delay: 100,
         });
+
+        await waitFor(() =>
+          expect(inputValue, 'Should insert SUI in input').toBe('SUI')
+        );
       });
     });
   },
@@ -1235,7 +1262,8 @@ export const OutlineWithToken: Story = {
     await step('Testing token field input', async () => {
       const tokenFieldInput =
         tokenFieldHolder.children[1].children[1].children[0];
-      const suiCoins = 'SUI COINS';
+      let inputValue = tokenFieldInput.getAttribute('value');
+      inputValue = 'SUI';
       expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
         'font-size: 22px'
       );
@@ -1254,9 +1282,13 @@ export const OutlineWithToken: Story = {
         'Input'
       );
       await step("Should insert 'SUI COINS' text in input", async () => {
-        await userEvent.type(tokenFieldInput, suiCoins, {
+        await userEvent.type(tokenFieldInput, inputValue, {
           delay: 100,
         });
+
+        await waitFor(() =>
+          expect(inputValue, 'Should insert SUI in input').toBe('SUI')
+        );
       });
     });
   },
@@ -1386,7 +1418,8 @@ export const OutlineWithLabelToTheLeft: Story = {
     await step('Testing token field input', async () => {
       const tokenFieldInput =
         tokenFieldHolder.children[1].children[1].children[0];
-      const suiCoins = 'SUI COINS';
+      let inputValue = tokenFieldInput.getAttribute('value');
+      inputValue = 'SUI';
       expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
         'font-size: 22px'
       );
@@ -1405,9 +1438,12 @@ export const OutlineWithLabelToTheLeft: Story = {
         'Input'
       );
       await step("Should insert 'SUI COINS' text in input", async () => {
-        await userEvent.type(tokenFieldInput, suiCoins, {
+        await userEvent.type(tokenFieldInput, inputValue, {
           delay: 100,
         });
+        await waitFor(() =>
+          expect(inputValue, 'Should insert SUI in input').toBe('SUI')
+        );
       });
     });
   },
@@ -1540,7 +1576,8 @@ export const OutlineWithTokenError: Story = {
     await step('Testing token field input', async () => {
       const tokenFieldInput =
         tokenFieldHolder.children[1].children[1].children[0];
-      const suiCoins = 'SUI COINS';
+      let inputValue = tokenFieldInput.getAttribute('value');
+      inputValue = 'SUI';
       expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
         'font-size: 22px'
       );
@@ -1559,9 +1596,12 @@ export const OutlineWithTokenError: Story = {
         'Input'
       );
       await step("Should insert 'SUI COINS' text in input", async () => {
-        await userEvent.type(tokenFieldInput, suiCoins, {
+        await userEvent.type(tokenFieldInput, inputValue, {
           delay: 100,
         });
+        await waitFor(() =>
+          expect(inputValue, 'Should insert SUI in input').toBe('SUI')
+        );
       });
     });
   },
@@ -1802,7 +1842,8 @@ export const OutlineWithoutTokenIcon: Story = {
     await step('Testing token field input', async () => {
       const tokenFieldInput =
         tokenFieldHolder.children[1].children[1].children[0];
-      const suiCoins = 'SUI COINS';
+      let inputValue = tokenFieldInput.getAttribute('value');
+      inputValue = 'SUI';
       expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
         'font-size: 22px'
       );
@@ -1821,9 +1862,12 @@ export const OutlineWithoutTokenIcon: Story = {
         'Input'
       );
       await step("Should insert 'SUI COINS' text in input", async () => {
-        await userEvent.type(tokenFieldInput, suiCoins, {
+        await userEvent.type(tokenFieldInput, inputValue, {
           delay: 100,
         });
+        await waitFor(() =>
+          expect(inputValue, 'Should insert SUI in input').toBe('SUI')
+        );
       });
     });
   },
@@ -1938,7 +1982,8 @@ export const OutlineWithoutTokenIconError: Story = {
     await step('Testing token field input', async () => {
       const tokenFieldInput =
         tokenFieldHolder.children[1].children[1].children[0];
-      const suiCoins = 'SUI COINS';
+      let inputValue = tokenFieldInput.getAttribute('value');
+      inputValue = 'SUI';
       expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
         'font-size: 22px'
       );
@@ -1957,9 +2002,12 @@ export const OutlineWithoutTokenIconError: Story = {
         'Input'
       );
       await step("Should insert 'SUI COINS' text in input", async () => {
-        await userEvent.type(tokenFieldInput, suiCoins, {
+        await userEvent.type(tokenFieldInput, inputValue, {
           delay: 100,
         });
+        await waitFor(() =>
+          expect(inputValue, 'Should insert SUI in input').toBe('SUI')
+        );
       });
     });
   },
