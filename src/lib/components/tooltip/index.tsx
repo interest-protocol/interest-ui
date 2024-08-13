@@ -1,12 +1,15 @@
 import { FC, PropsWithChildren, useState } from 'react';
 import React from 'react';
 
-import { Box, Motion, MotionProps } from '../../elements';
+import { Box, Motion } from '../../elements';
 import { TooltipProps } from './tooltip.types';
 
-export const TooltipWrapper: FC<
-  PropsWithChildren<TooltipProps & MotionProps>
-> = ({ children, tooltipContent, tooltipPosition, ...props }) => {
+export const TooltipWrapper: FC<PropsWithChildren<TooltipProps>> = ({
+  children,
+  tooltipContent,
+  tooltipPosition,
+  ...props
+}) => {
   const [toggle, setToggle] = useState(false);
 
   return (
@@ -30,10 +33,8 @@ export const TooltipWrapper: FC<
             opacity: 1,
           }}
           role="tooltip"
-          border="1px solid"
           position="absolute"
           borderRadius=".25rem"
-          borderColor="outlineVariant"
           transform={`translate(${
             tooltipPosition === 'top' || tooltipPosition === 'bottom'
               ? '-50%'
@@ -71,6 +72,27 @@ export const TooltipWrapper: FC<
         >
           <Box p=".5rem">{tooltipContent}</Box>
           <Box
+            borderLeft={
+              tooltipPosition === 'bottom' || tooltipPosition === 'right'
+                ? props.border
+                : 'unset'
+            }
+            borderBottom={
+              tooltipPosition === 'top' || tooltipPosition === 'right'
+                ? props.border
+                : 'unset'
+            }
+            borderRight={
+              tooltipPosition === 'top' || tooltipPosition === 'left'
+                ? props.border
+                : 'unset'
+            }
+            borderTop={
+              tooltipPosition === 'bottom' || tooltipPosition === 'left'
+                ? props.border
+                : 'unset'
+            }
+            borderColor={props.borderColor}
             ml={
               tooltipPosition === 'top' || tooltipPosition === 'bottom'
                 ? '50%'
@@ -81,16 +103,16 @@ export const TooltipWrapper: FC<
             height=".375rem"
             top={
               tooltipPosition === 'bottom'
-                ? '-.1875rem'
+                ? '-.2343rem'
                 : tooltipPosition === 'left' || tooltipPosition === 'right'
                 ? '50%'
                 : 'unset'
             }
-            left={tooltipPosition === 'right' ? '-.1875rem' : 'unset'}
-            right={tooltipPosition === 'left' ? '-.1875rem' : 'unset'}
+            left={tooltipPosition === 'right' ? '-.2343rem' : 'unset'}
+            right={tooltipPosition === 'left' ? '-.2343rem' : 'unset'}
             bottom={
               tooltipPosition === 'top'
-                ? '-.1875rem'
+                ? '-.2343rem'
                 : tooltipPosition === 'left' || tooltipPosition === 'right'
                 ? '0'
                 : 'unset'
