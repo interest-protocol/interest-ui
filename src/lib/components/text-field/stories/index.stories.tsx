@@ -317,7 +317,7 @@ export const WithPrefixSuccess: Story = {
       expect(placeholderValue, 'Should have placeholder of Input').toBe(
         '0.123'
       );
-      await step("Should insert '0.123' text in input", async () => {
+      await step("Should insert '123' text in input", async () => {
         await userEvent.type(inputField, inputValue, {
           delay: 100,
         });
@@ -426,11 +426,11 @@ export const WithTopLabel: Story = {
       expect(placeholderValue, 'Should have placeholder of Input').toBe(
         '0.123'
       );
-      await step("Should insert '0.123' text in input", async () => {
+      await step("Should insert '123' text in input", async () => {
         await userEvent.type(inputField, inputValue, {
           delay: 100,
         });
-        expect(inputValue, 'Should receive 0.123 as value').toBe('123');
+        expect(inputValue, 'Should receive 123 as value').toBe('123');
       });
     });
   },
@@ -546,11 +546,11 @@ export const Combined: Story = {
       expect(placeholderValue, 'Should have placeholder of Input').toBe(
         '0.123'
       );
-      await step("Should insert '0.123' text in input", async () => {
+      await step("Should insert '123' text in input", async () => {
         await userEvent.type(inputField, inputValue, {
           delay: 100,
         });
-        expect(inputValue, 'Should receive 0.123 as value').toBe('123');
+        expect(inputValue, 'Should receive 123 as value').toBe('123');
       });
     });
   },
@@ -660,11 +660,11 @@ export const Error: Story = {
       expect(placeholderValue, 'Should have placeholder of Input').toBe(
         '0.123'
       );
-      await step("Should insert '0.123' text in input", async () => {
+      await step("Should insert '123' text in input", async () => {
         await userEvent.type(inputField, inputValue, {
           delay: 100,
         });
-        expect(inputValue, 'Should receive 0.123 as value').toBe('123');
+        expect(inputValue, 'Should receive 123 as value').toBe('123');
       });
     });
   },
@@ -780,11 +780,11 @@ export const ErrorCombined: Story = {
       expect(placeholderValue, 'Should have placeholder of Input').toBe(
         '0.123'
       );
-      await step("Should insert '0.123' text in input", async () => {
+      await step("Should insert '123' text in input", async () => {
         await userEvent.type(inputField, inputValue, {
           delay: 100,
         });
-        expect(inputValue, 'Should receive 0.123 as value').toBe('123');
+        expect(inputValue, 'Should receive 123 as value').toBe('123');
       });
     });
   },
@@ -902,11 +902,11 @@ export const ErrorCombinedWithWrapper: Story = {
       expect(placeholderValue, 'Should have placeholder of Input').toBe(
         '0.123'
       );
-      await step("Should insert '0.123' text in input", async () => {
+      await step("Should insert '123' text in input", async () => {
         await userEvent.type(inputField, inputValue, {
           delay: 100,
         });
-        expect(inputValue, 'Should receive 0.123 as value').toBe('123');
+        expect(inputValue, 'Should receive 123 as value').toBe('123');
       });
     });
   },
