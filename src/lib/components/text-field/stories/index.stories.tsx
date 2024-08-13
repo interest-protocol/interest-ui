@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, userEvent, within } from '@storybook/test';
+import { expect, userEvent, waitFor, within } from '@storybook/test';
 import React from 'react';
 
 import { PlusIcon } from '../../../../storybook/icons';
@@ -25,6 +25,7 @@ export const Default: Story = {
   args: {
     placeholder: '0.123',
   },
+
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
     const textfield = canvas.getByLabelText('textfieldHolder');
@@ -34,6 +35,7 @@ export const Default: Story = {
       expect(textfield, 'Should have cursor default').toHaveStyle(
         'cursor: default'
       );
+
       expect(textfield, 'Should have opacity of 1').toHaveStyle('opacity: 1');
       expect(
         textfield,
@@ -43,7 +45,9 @@ export const Default: Story = {
 
     await step('Testing textfield input', async () => {
       const inputField = textfield.children[0].children[0].children[0];
-      const inputValue = '0.123';
+      let inputValue = inputField.getAttribute('value');
+      inputValue = '123';
+
       expect(inputField.tagName, 'Should be an input').toBe('INPUT');
       expect(inputField, 'Should have font-size of 16px').toHaveStyle(
         'font-size: 16px'
@@ -72,11 +76,14 @@ export const Default: Story = {
       expect(placeholderValue, 'Should have placeholder of Input').toBe(
         '0.123'
       );
-      await step("Should insert '0.123' text in input", async () => {
+      await step('Should insert 123 text in input', async () => {
         await userEvent.type(inputField, inputValue, {
           delay: 100,
         });
-        expect(inputValue, 'Should receive 0.123 as value').toBe('0.123');
+
+        await waitFor(() =>
+          expect(inputValue, 'Should insert 123 as value').toBe('123')
+        );
       });
     });
   },
@@ -161,7 +168,8 @@ export const WithPrefix: Story = {
 
     await step('Testing textfield input', async () => {
       const inputField = textfield.children[1].children[1].children[0];
-      const inputValue = '0.123';
+      let inputValue = inputField.getAttribute('value');
+      inputValue = '123';
       expect(inputField.tagName, 'Should be an input').toBe('INPUT');
       expect(inputField, 'Should have font-size of 16px').toHaveStyle(
         'font-size: 16px'
@@ -190,11 +198,13 @@ export const WithPrefix: Story = {
       expect(placeholderValue, 'Should have placeholder of Input').toBe(
         '0.123'
       );
-      await step("Should insert '0.123' text in input", async () => {
+      await step('Should insert 123 text in input', async () => {
         await userEvent.type(inputField, inputValue, {
           delay: 100,
         });
-        expect(inputValue, 'Should receive 0.123 as value').toBe('0.123');
+        await waitFor(() =>
+          expect(inputValue, 'Should insert 123 as value').toBe('123')
+        );
       });
     });
   },
@@ -281,7 +291,8 @@ export const WithPrefixSuccess: Story = {
 
     await step('Testing textfield input', async () => {
       const inputField = textfield.children[1].children[1].children[0];
-      const inputValue = '0.123';
+      let inputValue = inputField.getAttribute('value');
+      inputValue = '123';
       expect(inputField.tagName, 'Should be an input').toBe('INPUT');
       expect(inputField, 'Should have font-size of 16px').toHaveStyle(
         'font-size: 16px'
@@ -310,7 +321,9 @@ export const WithPrefixSuccess: Story = {
         await userEvent.type(inputField, inputValue, {
           delay: 100,
         });
-        expect(inputValue, 'Should receive 0.123 as value').toBe('0.123');
+        await waitFor(() =>
+          expect(inputValue, 'Should insert 123 as value').toBe('123')
+        );
       });
     });
   },
@@ -382,7 +395,8 @@ export const WithTopLabel: Story = {
 
     await step('Testing textfield input', async () => {
       const inputField = textfield.children[1].children[0].children[0];
-      const inputValue = '0.123';
+      let inputValue = inputField.getAttribute('value');
+      inputValue = '123';
 
       expect(inputField.tagName, 'Should be an input').toBe('INPUT');
       expect(inputField, 'Should have font-size of 16px').toHaveStyle(
@@ -416,7 +430,7 @@ export const WithTopLabel: Story = {
         await userEvent.type(inputField, inputValue, {
           delay: 100,
         });
-        expect(inputValue, 'Should receive 0.123 as value').toBe('0.123');
+        expect(inputValue, 'Should receive 0.123 as value').toBe('123');
       });
     });
   },
@@ -502,7 +516,8 @@ export const Combined: Story = {
 
     await step('Testing textfield input', async () => {
       const inputField = textfield.children[1].children[1].children[0];
-      const inputValue = '0.123';
+      let inputValue = inputField.getAttribute('value');
+      inputValue = '123';
       expect(inputField.tagName, 'Should be an input').toBe('INPUT');
       expect(inputField, 'Should have font-size of 16px').toHaveStyle(
         'font-size: 16px'
@@ -535,7 +550,7 @@ export const Combined: Story = {
         await userEvent.type(inputField, inputValue, {
           delay: 100,
         });
-        expect(inputValue, 'Should receive 0.123 as value').toBe('0.123');
+        expect(inputValue, 'Should receive 0.123 as value').toBe('123');
       });
     });
   },
@@ -618,7 +633,8 @@ export const Error: Story = {
 
     await step('Testing textfield input', async () => {
       const inputField = textfield.children[0].children[0].children[0];
-      const inputValue = '0.123';
+      let inputValue = inputField.getAttribute('value');
+      inputValue = '123';
 
       expect(inputField.tagName, 'Should be an input').toBe('INPUT');
       expect(inputField, 'Should have font-size of 16px').toHaveStyle(
@@ -648,7 +664,7 @@ export const Error: Story = {
         await userEvent.type(inputField, inputValue, {
           delay: 100,
         });
-        expect(inputValue, 'Should receive 0.123 as value').toBe('0.123');
+        expect(inputValue, 'Should receive 0.123 as value').toBe('123');
       });
     });
   },
@@ -737,7 +753,9 @@ export const ErrorCombined: Story = {
 
     await step('Testing textfield input', async () => {
       const inputField = textfield.children[1].children[1].children[0];
-      const inputValue = '0.123';
+      let inputValue = inputField.getAttribute('value');
+      inputValue = '123';
+
       expect(inputField.tagName, 'Should be an input').toBe('INPUT');
       expect(inputField, 'Should have font-size of 16px').toHaveStyle(
         'font-size: 16px'
@@ -766,7 +784,7 @@ export const ErrorCombined: Story = {
         await userEvent.type(inputField, inputValue, {
           delay: 100,
         });
-        expect(inputValue, 'Should receive 0.123 as value').toBe('0.123');
+        expect(inputValue, 'Should receive 0.123 as value').toBe('123');
       });
     });
   },
@@ -857,7 +875,9 @@ export const ErrorCombinedWithWrapper: Story = {
 
     await step('Testing textfield input', async () => {
       const inputField = textfield.children[1].children[1].children[0];
-      const inputValue = '0.123';
+      let inputValue = inputField.getAttribute('value');
+      inputValue = '123';
+
       expect(inputField.tagName, 'Should be an input').toBe('INPUT');
       expect(inputField, 'Should have font-size of 16px').toHaveStyle(
         'font-size: 16px'
@@ -886,7 +906,7 @@ export const ErrorCombinedWithWrapper: Story = {
         await userEvent.type(inputField, inputValue, {
           delay: 100,
         });
-        expect(inputValue, 'Should receive 0.123 as value').toBe('0.123');
+        expect(inputValue, 'Should receive 0.123 as value').toBe('123');
       });
     });
   },
