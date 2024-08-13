@@ -610,6 +610,7 @@ export const FilledWithTokenError: Story = {
         await userEvent.type(tokenFieldInput, suiCoins, {
           delay: 100,
         });
+        expect(suiCoins, 'Should receive SUI COINS as value').toBe(suiCoins);
       });
     });
   },
