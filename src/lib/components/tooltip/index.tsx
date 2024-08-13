@@ -5,7 +5,9 @@ import { Box, Motion } from '../../elements';
 import { TooltipProps } from './tooltip.types';
 
 export const TooltipWrapper: FC<PropsWithChildren<TooltipProps>> = ({
+  border,
   children,
+  borderColor,
   tooltipContent,
   tooltipPosition,
   ...props
@@ -74,25 +76,25 @@ export const TooltipWrapper: FC<PropsWithChildren<TooltipProps>> = ({
           <Box
             borderLeft={
               tooltipPosition === 'bottom' || tooltipPosition === 'right'
-                ? props.border
+                ? border
                 : 'unset'
             }
             borderBottom={
               tooltipPosition === 'top' || tooltipPosition === 'right'
-                ? props.border
+                ? border
                 : 'unset'
             }
             borderRight={
               tooltipPosition === 'top' || tooltipPosition === 'left'
-                ? props.border
+                ? border
                 : 'unset'
             }
             borderTop={
               tooltipPosition === 'bottom' || tooltipPosition === 'left'
-                ? props.border
+                ? border
                 : 'unset'
             }
-            borderColor={props.borderColor}
+            borderColor={borderColor}
             ml={
               tooltipPosition === 'top' || tooltipPosition === 'bottom'
                 ? '50%'
