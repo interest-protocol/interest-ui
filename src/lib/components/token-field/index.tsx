@@ -7,7 +7,9 @@ import React, {
   PropsWithRef,
   RefAttributes,
   startTransition,
+  useCallback,
   useId,
+  useRef,
   useState,
 } from 'react';
 
@@ -43,7 +45,7 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
   ) => {
     const { colors } = useTheme() as Theme;
     const [focus, setFocus] = useState(false);
-    const [value, setValue] = useState<string>();
+    const valueRef = useRef<string>();
     const id = useId();
 
     const statusColor = focus || status === 'none' ? 'onSurface' : status;
@@ -73,11 +75,12 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
       onBlur?.(e);
     };
 
-    const changeValue = (input: string) => setValue(input);
-
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-      changeValue(e.target.value);
-    };
+    const handleChange = useCallback(
+      (e: ChangeEvent<HTMLInputElement>) => {
+        valueRef.current = e.target.value;
+      },
+      [valueRef.current]
+    );
 
     return (
       <Box
@@ -163,7 +166,7 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
               onFocus={handleFocus}
               onChange={handleChange}
               color={statusColor}
-              defaultValue={value || props.defaultValue}
+              defaultValue={valueRef.current || props.defaultValue}
               nPlaceholder={{
                 color: '#6F6F73',
               }}
