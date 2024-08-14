@@ -22,7 +22,6 @@ const TokenFieldElement = stylin<
 >('input')();
 const LabelElement = stylin<LabelElementProps>('label')();
 
-let render = 0;
 export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
   (
     {
@@ -60,8 +59,6 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
       if (hasStatus)
         return '1px solid ' + colors[status as 'error' | 'success'];
     };
-
-    console.log('Render >>', render++);
 
     const handleFocus = (e: FocusEvent<HTMLInputElement, Element>) => {
       if (!focus) startTransition(() => setFocus(true));
