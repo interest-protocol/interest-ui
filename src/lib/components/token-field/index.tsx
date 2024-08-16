@@ -81,7 +81,7 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
 
     return (
       <Box
-        aria-label="token-field-holder"
+        aria-label="tokenFieldHolder"
         opacity={disabled ? 0.32 : 1}
         cursor={disabled ? 'not-allowed' : 'auto'}
       >

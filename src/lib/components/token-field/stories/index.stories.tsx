@@ -43,7 +43,7 @@ export const FilledWithToken: Story = {
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
+    const tokenFieldHolder = canvas.getByLabelText('tokenFieldHolder');
 
     await step('Testing token field holder', async () => {
       expect(tokenFieldHolder, 'Should have opacity of 1').toHaveStyle(
@@ -155,8 +155,8 @@ export const FilledWithToken: Story = {
     await step('Testing token field input', async () => {
       const tokenFieldInput =
         tokenFieldHolder.children[1].children[1].children[0];
-      let inputValue = tokenFieldInput.getAttribute('value');
-      inputValue = 'SUI';
+      console.log('Token filed holder >> ', tokenFieldInput);
+      const inputValue = 'SUI';
       expect(tokenFieldInput, 'Should have font-size of 22px').toHaveStyle(
         'font-size: 22px'
       );
@@ -174,14 +174,13 @@ export const FilledWithToken: Story = {
       expect(placeholderValue, 'Should have placeholder of Input').toBe(
         'Input'
       );
-      await step("Should insert 'SUI' text in input", async () => {
-        await userEvent.type(tokenFieldInput, inputValue, {
-          delay: 100,
-        });
-
-        await waitFor(() =>
-          expect(inputValue, 'Should insert SUI in input').toBe('SUI')
-        );
+      await waitFor(() => {
+        const newInput = canvas.getByLabelText('tokenFieldInput');
+        const newInputField = newInput.children[1].children[1].children[0];
+        expect(
+          newInputField.getAttribute('value'),
+          'Should insert SUI as value'
+        ).toBe(inputValue);
       });
     });
   },
@@ -201,7 +200,7 @@ export const FilledWithTokenWithoutLabel: Story = {
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
+    const tokenFieldHolder = canvas.getByLabelText('tokenFieldHolder');
 
     await step('Testing token field holder', async () => {
       expect(tokenFieldHolder, 'Should have opacity of 1').toHaveStyle(
@@ -355,7 +354,7 @@ export const FilledWithLabelToTheLeft: Story = {
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
+    const tokenFieldHolder = canvas.getByLabelText('tokenFieldHolder');
 
     await step('Testing token field holder', async () => {
       expect(tokenFieldHolder, 'Should have opacity of 1').toHaveStyle(
@@ -510,7 +509,7 @@ export const FilledWithTokenError: Story = {
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
+    const tokenFieldHolder = canvas.getByLabelText('tokenFieldHolder');
 
     await step('Testing token field holder', async () => {
       expect(tokenFieldHolder, 'Should have opacity of 1').toHaveStyle(
@@ -647,7 +646,7 @@ export const FilledWithTokenDisabled: Story = {
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
+    const tokenFieldHolder = canvas.getByLabelText('tokenFieldHolder');
 
     await step('Testing token field holder', async () => {
       expect(tokenFieldHolder, 'Should have opacity of 0.32').toHaveStyle(
@@ -786,7 +785,7 @@ export const FilledWithoutTokenIcon: Story = {
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
+    const tokenFieldHolder = canvas.getByLabelText('tokenFieldHolder');
 
     await step('Testing token field holder', async () => {
       expect(tokenFieldHolder, 'Should have opacity of 1').toHaveStyle(
@@ -924,7 +923,7 @@ export const FilledWithoutTokenIconError: Story = {
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
+    const tokenFieldHolder = canvas.getByLabelText('tokenFieldHolder');
 
     await step('Testing token field holder', async () => {
       expect(tokenFieldHolder, 'Should have opacity of 1').toHaveStyle(
@@ -1039,7 +1038,7 @@ export const FilledWithoutTokenIconDisabled: Story = {
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
+    const tokenFieldHolder = canvas.getByLabelText('tokenFieldHolder');
 
     await step('Testing token field holder', async () => {
       expect(tokenFieldHolder, 'Should have opacity of 0.32').toHaveStyle(
@@ -1167,7 +1166,7 @@ export const OutlineWithToken: Story = {
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
+    const tokenFieldHolder = canvas.getByLabelText('tokenFieldHolder');
 
     await step('Testing token field holder', async () => {
       expect(tokenFieldHolder, 'Should have opacity of 1').toHaveStyle(
@@ -1308,7 +1307,7 @@ export const OutlineWithLabelToTheLeft: Story = {
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
+    const tokenFieldHolder = canvas.getByLabelText('tokenFieldHolder');
 
     await step('Testing token field holder', async () => {
       expect(tokenFieldHolder, 'Should have opacity of 1').toHaveStyle(
@@ -1464,7 +1463,7 @@ export const OutlineWithTokenError: Story = {
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
+    const tokenFieldHolder = canvas.getByLabelText('tokenFieldHolder');
 
     await step('Testing token field holder', async () => {
       expect(tokenFieldHolder, 'Should have opacity of 1').toHaveStyle(
@@ -1621,7 +1620,7 @@ export const OutlineWithTokenDisabled: Story = {
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
+    const tokenFieldHolder = canvas.getByLabelText('tokenFieldHolder');
 
     await step('Testing token field holder', async () => {
       expect(tokenFieldHolder, 'Should have opacity of 0.32').toHaveStyle(
@@ -1748,7 +1747,7 @@ export const OutlineWithoutTokenIcon: Story = {
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
+    const tokenFieldHolder = canvas.getByLabelText('tokenFieldHolder');
 
     await step('Testing token field holder', async () => {
       expect(tokenFieldHolder, 'Should have opacity of 1').toHaveStyle(
@@ -1887,7 +1886,7 @@ export const OutlineWithoutTokenIconError: Story = {
   },
   play: async ({ canvasElement, step, args }) => {
     const canvas = within(canvasElement);
-    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
+    const tokenFieldHolder = canvas.getByLabelText('tokenFieldHolder');
 
     await step('Testing token field holder', async () => {
       expect(tokenFieldHolder, 'Should have opacity of 1').toHaveStyle(
@@ -2026,7 +2025,7 @@ export const OutlineWithoutTokenIconDisabled: Story = {
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const tokenFieldHolder = canvas.getByLabelText('token-field-holder');
+    const tokenFieldHolder = canvas.getByLabelText('tokenFieldHolder');
 
     await step('Testing token field holder', async () => {
       expect(tokenFieldHolder, 'Should have opacity of 0.32').toHaveStyle(
