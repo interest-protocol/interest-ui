@@ -45,8 +45,7 @@ export const Default: Story = {
 
     await step('Testing textfield input', async () => {
       const inputField = textfield.children[0].children[0].children[0];
-      let inputValue = inputField.getAttribute('value');
-      inputValue = '123';
+      const inputValue = '123';
 
       expect(inputField.tagName, 'Should be an input').toBe('INPUT');
       expect(inputField, 'Should have font-size of 16px').toHaveStyle(
@@ -81,9 +80,14 @@ export const Default: Story = {
           delay: 100,
         });
 
-        await waitFor(() =>
-          expect(inputValue, 'Should insert 123 as value').toBe('123')
-        );
+        await waitFor(() => {
+          const newInput = canvas.getByLabelText('textfieldHolder');
+          const newInputField = newInput.children[0].children[0].children[0];
+          expect(
+            newInputField.getAttribute('value'),
+            'Should insert 123 as value'
+          ).toBe(inputValue);
+        });
       });
     });
   },
@@ -168,8 +172,7 @@ export const WithPrefix: Story = {
 
     await step('Testing textfield input', async () => {
       const inputField = textfield.children[1].children[1].children[0];
-      let inputValue = inputField.getAttribute('value');
-      inputValue = '123';
+      const inputValue = '123';
       expect(inputField.tagName, 'Should be an input').toBe('INPUT');
       expect(inputField, 'Should have font-size of 16px').toHaveStyle(
         'font-size: 16px'
@@ -198,13 +201,20 @@ export const WithPrefix: Story = {
       expect(placeholderValue, 'Should have placeholder of Input').toBe(
         '0.123'
       );
+
       await step('Should insert 123 text in input', async () => {
         await userEvent.type(inputField, inputValue, {
           delay: 100,
         });
-        await waitFor(() =>
-          expect(inputValue, 'Should insert 123 as value').toBe('123')
-        );
+
+        await waitFor(() => {
+          const newInput = canvas.getByLabelText('textfieldHolder');
+          const newInputField = newInput.children[1].children[1].children[0];
+          expect(
+            newInputField.getAttribute('value'),
+            'Should insert 123 as value'
+          ).toBe(inputValue);
+        });
       });
     });
   },
@@ -291,8 +301,7 @@ export const WithPrefixSuccess: Story = {
 
     await step('Testing textfield input', async () => {
       const inputField = textfield.children[1].children[1].children[0];
-      let inputValue = inputField.getAttribute('value');
-      inputValue = '123';
+      const inputValue = '123';
       expect(inputField.tagName, 'Should be an input').toBe('INPUT');
       expect(inputField, 'Should have font-size of 16px').toHaveStyle(
         'font-size: 16px'
@@ -317,13 +326,20 @@ export const WithPrefixSuccess: Story = {
       expect(placeholderValue, 'Should have placeholder of Input').toBe(
         '0.123'
       );
-      await step("Should insert '123' text in input", async () => {
+
+      await step('Should insert 123 text in input', async () => {
         await userEvent.type(inputField, inputValue, {
           delay: 100,
         });
-        await waitFor(() =>
-          expect(inputValue, 'Should insert 123 as value').toBe('123')
-        );
+
+        await waitFor(() => {
+          const newInput = canvas.getByLabelText('textfieldHolder');
+          const newInputField = newInput.children[0].children[0].children[0];
+          expect(
+            newInputField.getAttribute('value'),
+            'Should insert 123 as value'
+          ).toBe(inputValue);
+        });
       });
     });
   },
@@ -395,8 +411,7 @@ export const WithTopLabel: Story = {
 
     await step('Testing textfield input', async () => {
       const inputField = textfield.children[1].children[0].children[0];
-      let inputValue = inputField.getAttribute('value');
-      inputValue = '123';
+      const inputValue = '123';
 
       expect(inputField.tagName, 'Should be an input').toBe('INPUT');
       expect(inputField, 'Should have font-size of 16px').toHaveStyle(
@@ -426,11 +441,19 @@ export const WithTopLabel: Story = {
       expect(placeholderValue, 'Should have placeholder of Input').toBe(
         '0.123'
       );
-      await step("Should insert '123' text in input", async () => {
+      await step('Should insert 123 text in input', async () => {
         await userEvent.type(inputField, inputValue, {
           delay: 100,
         });
-        expect(inputValue, 'Should receive 123 as value').toBe('123');
+
+        await waitFor(() => {
+          const newInput = canvas.getByLabelText('textfieldHolder');
+          const newInputField = newInput.children[1].children[0].children[0];
+          expect(
+            newInputField.getAttribute('value'),
+            'Should insert 123 as value'
+          ).toBe(inputValue);
+        });
       });
     });
   },
@@ -516,8 +539,7 @@ export const Combined: Story = {
 
     await step('Testing textfield input', async () => {
       const inputField = textfield.children[1].children[1].children[0];
-      let inputValue = inputField.getAttribute('value');
-      inputValue = '123';
+      const inputValue = '123';
       expect(inputField.tagName, 'Should be an input').toBe('INPUT');
       expect(inputField, 'Should have font-size of 16px').toHaveStyle(
         'font-size: 16px'
@@ -546,11 +568,19 @@ export const Combined: Story = {
       expect(placeholderValue, 'Should have placeholder of Input').toBe(
         '0.123'
       );
-      await step("Should insert '123' text in input", async () => {
+      await step('Should insert 123 text in input', async () => {
         await userEvent.type(inputField, inputValue, {
           delay: 100,
         });
-        expect(inputValue, 'Should receive 123 as value').toBe('123');
+
+        await waitFor(() => {
+          const newInput = canvas.getByLabelText('textfieldHolder');
+          const newInputField = newInput.children[1].children[1].children[0];
+          expect(
+            newInputField.getAttribute('value'),
+            'Should insert 123 as value'
+          ).toBe(inputValue);
+        });
       });
     });
   },
@@ -633,8 +663,7 @@ export const Error: Story = {
 
     await step('Testing textfield input', async () => {
       const inputField = textfield.children[0].children[0].children[0];
-      let inputValue = inputField.getAttribute('value');
-      inputValue = '123';
+      const inputValue = '123';
 
       expect(inputField.tagName, 'Should be an input').toBe('INPUT');
       expect(inputField, 'Should have font-size of 16px').toHaveStyle(
@@ -660,11 +689,19 @@ export const Error: Story = {
       expect(placeholderValue, 'Should have placeholder of Input').toBe(
         '0.123'
       );
-      await step("Should insert '123' text in input", async () => {
+      await step('Should insert 123 text in input', async () => {
         await userEvent.type(inputField, inputValue, {
           delay: 100,
         });
-        expect(inputValue, 'Should receive 123 as value').toBe('123');
+
+        await waitFor(() => {
+          const newInput = canvas.getByLabelText('textfieldHolder');
+          const newInputField = newInput.children[0].children[0].children[0];
+          expect(
+            newInputField.getAttribute('value'),
+            'Should insert 123 as value'
+          ).toBe(inputValue);
+        });
       });
     });
   },
@@ -753,8 +790,7 @@ export const ErrorCombined: Story = {
 
     await step('Testing textfield input', async () => {
       const inputField = textfield.children[1].children[1].children[0];
-      let inputValue = inputField.getAttribute('value');
-      inputValue = '123';
+      const inputValue = '123';
 
       expect(inputField.tagName, 'Should be an input').toBe('INPUT');
       expect(inputField, 'Should have font-size of 16px').toHaveStyle(
@@ -780,11 +816,19 @@ export const ErrorCombined: Story = {
       expect(placeholderValue, 'Should have placeholder of Input').toBe(
         '0.123'
       );
-      await step("Should insert '123' text in input", async () => {
+      await step('Should insert 123 text in input', async () => {
         await userEvent.type(inputField, inputValue, {
           delay: 100,
         });
-        expect(inputValue, 'Should receive 123 as value').toBe('123');
+
+        await waitFor(() => {
+          const newInput = canvas.getByLabelText('textfieldHolder');
+          const newInputField = newInput.children[1].children[1].children[0];
+          expect(
+            newInputField.getAttribute('value'),
+            'Should insert 123 as value'
+          ).toBe(inputValue);
+        });
       });
     });
   },
@@ -875,8 +919,7 @@ export const ErrorCombinedWithWrapper: Story = {
 
     await step('Testing textfield input', async () => {
       const inputField = textfield.children[1].children[1].children[0];
-      let inputValue = inputField.getAttribute('value');
-      inputValue = '123';
+      const inputValue = '123';
 
       expect(inputField.tagName, 'Should be an input').toBe('INPUT');
       expect(inputField, 'Should have font-size of 16px').toHaveStyle(
@@ -902,11 +945,19 @@ export const ErrorCombinedWithWrapper: Story = {
       expect(placeholderValue, 'Should have placeholder of Input').toBe(
         '0.123'
       );
-      await step("Should insert '123' text in input", async () => {
+      await step('Should insert 123 text in input', async () => {
         await userEvent.type(inputField, inputValue, {
           delay: 100,
         });
-        expect(inputValue, 'Should receive 123 as value').toBe('123');
+
+        await waitFor(() => {
+          const newInput = canvas.getByLabelText('textfieldHolder');
+          const newInputField = newInput.children[1].children[1].children[0];
+          expect(
+            newInputField.getAttribute('value'),
+            'Should insert 123 as value'
+          ).toBe(inputValue);
+        });
       });
     });
   },
