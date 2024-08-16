@@ -19,6 +19,8 @@ const meta: Meta<typeof TextField> = {
 
 export default meta;
 
+const INPUT_VALUE = '123';
+
 type Story = StoryObj<typeof TextField>;
 
 export const Default: Story = {
@@ -45,7 +47,6 @@ export const Default: Story = {
 
     await step('Testing textfield input', async () => {
       const inputField = textfield.children[0].children[0].children[0];
-      const inputValue = '123';
 
       expect(inputField.tagName, 'Should be an input').toBe('INPUT');
       expect(inputField, 'Should have font-size of 16px').toHaveStyle(
@@ -76,7 +77,7 @@ export const Default: Story = {
         '0.123'
       );
       await step('Should insert 123 text in input', async () => {
-        await userEvent.type(inputField, inputValue, {
+        await userEvent.type(inputField, INPUT_VALUE, {
           delay: 100,
         });
 
@@ -86,7 +87,7 @@ export const Default: Story = {
           expect(
             newInputField.getAttribute('value'),
             'Should insert 123 as value'
-          ).toBe(inputValue);
+          ).toBe(INPUT_VALUE);
         });
       });
     });
@@ -172,7 +173,6 @@ export const WithPrefix: Story = {
 
     await step('Testing textfield input', async () => {
       const inputField = textfield.children[1].children[1].children[0];
-      const inputValue = '123';
       expect(inputField.tagName, 'Should be an input').toBe('INPUT');
       expect(inputField, 'Should have font-size of 16px').toHaveStyle(
         'font-size: 16px'
@@ -203,7 +203,7 @@ export const WithPrefix: Story = {
       );
 
       await step('Should insert 123 text in input', async () => {
-        await userEvent.type(inputField, inputValue, {
+        await userEvent.type(inputField, INPUT_VALUE, {
           delay: 100,
         });
 
@@ -213,7 +213,7 @@ export const WithPrefix: Story = {
           expect(
             newInputField.getAttribute('value'),
             'Should insert 123 as value'
-          ).toBe(inputValue);
+          ).toBe(INPUT_VALUE);
         });
       });
     });
@@ -301,7 +301,6 @@ export const WithPrefixSuccess: Story = {
 
     await step('Testing textfield input', async () => {
       const inputField = textfield.children[1].children[1].children[0];
-      const inputValue = '123';
       expect(inputField.tagName, 'Should be an input').toBe('INPUT');
       expect(inputField, 'Should have font-size of 16px').toHaveStyle(
         'font-size: 16px'
@@ -328,17 +327,18 @@ export const WithPrefixSuccess: Story = {
       );
 
       await step('Should insert 123 text in input', async () => {
-        await userEvent.type(inputField, inputValue, {
+        await userEvent.type(inputField, INPUT_VALUE, {
           delay: 100,
         });
 
         await waitFor(() => {
           const newInput = canvas.getByLabelText('textfieldHolder');
-          const newInputField = newInput.children[0].children[0].children[0];
+          const newInputField = newInput.children[1].children[1].children[0];
+          console.log('New input field >>', newInputField);
           expect(
             newInputField.getAttribute('value'),
             'Should insert 123 as value'
-          ).toBe(inputValue);
+          ).toBe(INPUT_VALUE);
         });
       });
     });
@@ -411,7 +411,6 @@ export const WithTopLabel: Story = {
 
     await step('Testing textfield input', async () => {
       const inputField = textfield.children[1].children[0].children[0];
-      const inputValue = '123';
 
       expect(inputField.tagName, 'Should be an input').toBe('INPUT');
       expect(inputField, 'Should have font-size of 16px').toHaveStyle(
@@ -442,7 +441,7 @@ export const WithTopLabel: Story = {
         '0.123'
       );
       await step('Should insert 123 text in input', async () => {
-        await userEvent.type(inputField, inputValue, {
+        await userEvent.type(inputField, INPUT_VALUE, {
           delay: 100,
         });
 
@@ -452,7 +451,7 @@ export const WithTopLabel: Story = {
           expect(
             newInputField.getAttribute('value'),
             'Should insert 123 as value'
-          ).toBe(inputValue);
+          ).toBe(INPUT_VALUE);
         });
       });
     });
@@ -539,7 +538,7 @@ export const Combined: Story = {
 
     await step('Testing textfield input', async () => {
       const inputField = textfield.children[1].children[1].children[0];
-      const inputValue = '123';
+
       expect(inputField.tagName, 'Should be an input').toBe('INPUT');
       expect(inputField, 'Should have font-size of 16px').toHaveStyle(
         'font-size: 16px'
@@ -569,7 +568,7 @@ export const Combined: Story = {
         '0.123'
       );
       await step('Should insert 123 text in input', async () => {
-        await userEvent.type(inputField, inputValue, {
+        await userEvent.type(inputField, INPUT_VALUE, {
           delay: 100,
         });
 
@@ -579,7 +578,7 @@ export const Combined: Story = {
           expect(
             newInputField.getAttribute('value'),
             'Should insert 123 as value'
-          ).toBe(inputValue);
+          ).toBe(INPUT_VALUE);
         });
       });
     });
@@ -663,7 +662,6 @@ export const Error: Story = {
 
     await step('Testing textfield input', async () => {
       const inputField = textfield.children[0].children[0].children[0];
-      const inputValue = '123';
 
       expect(inputField.tagName, 'Should be an input').toBe('INPUT');
       expect(inputField, 'Should have font-size of 16px').toHaveStyle(
@@ -690,7 +688,7 @@ export const Error: Story = {
         '0.123'
       );
       await step('Should insert 123 text in input', async () => {
-        await userEvent.type(inputField, inputValue, {
+        await userEvent.type(inputField, INPUT_VALUE, {
           delay: 100,
         });
 
@@ -700,7 +698,7 @@ export const Error: Story = {
           expect(
             newInputField.getAttribute('value'),
             'Should insert 123 as value'
-          ).toBe(inputValue);
+          ).toBe(INPUT_VALUE);
         });
       });
     });
@@ -790,7 +788,6 @@ export const ErrorCombined: Story = {
 
     await step('Testing textfield input', async () => {
       const inputField = textfield.children[1].children[1].children[0];
-      const inputValue = '123';
 
       expect(inputField.tagName, 'Should be an input').toBe('INPUT');
       expect(inputField, 'Should have font-size of 16px').toHaveStyle(
@@ -817,7 +814,7 @@ export const ErrorCombined: Story = {
         '0.123'
       );
       await step('Should insert 123 text in input', async () => {
-        await userEvent.type(inputField, inputValue, {
+        await userEvent.type(inputField, INPUT_VALUE, {
           delay: 100,
         });
 
@@ -827,7 +824,7 @@ export const ErrorCombined: Story = {
           expect(
             newInputField.getAttribute('value'),
             'Should insert 123 as value'
-          ).toBe(inputValue);
+          ).toBe(INPUT_VALUE);
         });
       });
     });
@@ -919,7 +916,6 @@ export const ErrorCombinedWithWrapper: Story = {
 
     await step('Testing textfield input', async () => {
       const inputField = textfield.children[1].children[1].children[0];
-      const inputValue = '123';
 
       expect(inputField.tagName, 'Should be an input').toBe('INPUT');
       expect(inputField, 'Should have font-size of 16px').toHaveStyle(
@@ -946,7 +942,7 @@ export const ErrorCombinedWithWrapper: Story = {
         '0.123'
       );
       await step('Should insert 123 text in input', async () => {
-        await userEvent.type(inputField, inputValue, {
+        await userEvent.type(inputField, INPUT_VALUE, {
           delay: 100,
         });
 
@@ -956,7 +952,7 @@ export const ErrorCombinedWithWrapper: Story = {
           expect(
             newInputField.getAttribute('value'),
             'Should insert 123 as value'
-          ).toBe(inputValue);
+          ).toBe(INPUT_VALUE);
         });
       });
     });
