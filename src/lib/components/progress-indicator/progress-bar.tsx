@@ -1,34 +1,54 @@
 import { useTheme } from '@emotion/react';
-import stylin from '@stylin.js/react';
 import React, { FC, PropsWithChildren } from 'react';
 
+import { Box } from '../../elements';
 import { Theme } from '../../theme';
-import {
-  ProgressElementProps,
-  ProgressItemProps,
-} from './progress-indicator.types';
-import { getProgressBarColor } from './progress-indicator.utils';
-
-const ProgressBarElement = stylin<ProgressElementProps>('progress')();
+import { ProgressItemProps } from './progress-indicator.types';
+import { getProgressColor } from './progress-indicator.utils';
 
 export const ProgressBar: FC<PropsWithChildren<ProgressItemProps>> = ({
+  size,
   value,
+  status,
+  variant,
+  ...props
 }) => {
   const { colors } = useTheme() as Theme;
 
   return (
-    <ProgressBarElement
-      max="100"
+    <Box
       width="100%"
-      value={value}
-      height="0.25rem"
-      appearance="none"
-      nWebkitProgressBar={{
-        backgroundColor: 'surface.surfaceVariant',
-      }}
-      nWebkitProgressValue={{
-        background: getProgressBarColor(value, colors),
-      }}
-    />
+      role="progressbar"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={value}
+      height={size || '1rem'}
+      {...(variant == 'bar'
+        ? {
+            backgroundColor: 'highContainer',
+          }
+        : {
+            backgroundColor: 'primary',
+            borderWidth: `${size ? size / 10 : 3}px`,
+            borderStyle: 'solid',
+            borderColor: 'primary',
+            borderRadius: '999px',
+          })}
+      {...props}
+    >
+      <Box
+        width={`${value}%`}
+        {...(variant == 'bar'
+          ? {
+              background: getProgressColor(colors, status),
+              height: '1rem',
+            }
+          : {
+              background: 'container',
+              borderRadius: '999px',
+              height: '100%',
+            })}
+      />
+    </Box>
   );
 };

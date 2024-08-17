@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, userEvent, within } from '@storybook/test';
+import { expect, within } from '@storybook/test';
 
 import { ProgressIndicator } from '..';
 
@@ -9,7 +9,12 @@ const meta: Meta<typeof ProgressIndicator> = {
   argTypes: {
     variant: {
       defaultValue: 'bar',
-      options: ['bar', 'circle', 'loading'],
+      options: ['special-bar', 'bar', 'circle', 'loading'],
+      control: { type: 'radio' },
+    },
+    status: {
+      defaultValue: 'normal',
+      options: ['normal', 'success', 'warning', 'danger'],
       control: { type: 'radio' },
     },
     value: {
@@ -25,28 +30,88 @@ export default meta;
 
 type Story = StoryObj<typeof ProgressIndicator>;
 
-export const NormalBar: Story = {
+export const SpecialBar: Story = {
   args: {
-    value: 25,
+    value: 45,
+    size: 80,
+    variant: 'special-bar',
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const progressBar = canvas.getByRole('progressbar');
 
-    const progressIndicator = canvas.getByRole('progressIndicator');
-    const computedStyle = getComputedStyle(progressIndicator);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('progressIndicator'));
+    await step('Check the Special Progress Bar Style', async () => {
+      expect(progressBar, 'Should be rendered').toBeInTheDocument();
+      expect(progressBar, 'Should have the specific height').toHaveStyle(
+        `height: ${args.size}px`
+      );
+      expect(
+        progressBar,
+        'Should have the background-color #0053DB'
+      ).toHaveStyle(`background-color: #0053DB`);
+      expect(progressBar, 'Should have the border-radius 999px').toHaveStyle(
+        `border-radius: 999px`
+      );
+      expect(progressBar, 'Should have the specific border style').toHaveStyle(
+        `border: 4px solid #0053DB`
+      );
+      await step('Check the Special Progress Value', async () => {
+        const progressValue = progressBar.children[0];
+        expect(
+          progressValue.getAttribute('height'),
+          'Special Progress Value should be specific height'
+        ).toBe(`100%`);
+        expect(
+          progressValue.getAttribute('width'),
+          `Special Progress Value Width should be ${args.value}%`
+        ).toBe(`${args.value}%`);
+        expect(
+          progressValue,
+          'Should have the background-color #EDEDF1'
+        ).toHaveStyle(`background-color: #EDEDF1`);
+        expect(
+          progressValue,
+          'Should have the border-radius 999px'
+        ).toHaveStyle(`border-radius: 999px`);
+      });
     });
+  },
+};
 
-    await step('Check property value and args', () => {
-      expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
-      expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
-      expect(color.trim()).toBe('rgb(0, 0, 0)');
-      expect(args.value).toBe(25);
+export const NormalBar: Story = {
+  args: {
+    value: 45,
+    variant: 'bar',
+    status: 'normal',
+  },
+  play: async ({ args, canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    const progressBar = canvas.getByRole('progressbar');
+
+    await step('Check the Normal Progress Bar Style', async () => {
+      expect(progressBar, 'Should be rendered').toBeInTheDocument();
+      expect(progressBar, 'Should have the specific height').toHaveStyle(
+        `height: 16px`
+      );
+      expect(
+        progressBar,
+        'Should have the background-color #E7E7EC'
+      ).toHaveStyle(`background-color: #E7E7EC`);
+      await step('Check the Normal Progress Value', async () => {
+        const progressValue = progressBar.children[0];
+        expect(
+          progressValue.getAttribute('height'),
+          'Normal Progress Value should be specific height'
+        ).toBe('1rem');
+        expect(
+          progressValue.getAttribute('width'),
+          `Special Progress Value Width should be ${args.value}%`
+        ).toBe(`${args.value}%`);
+        expect(
+          progressValue,
+          'Should have the background-color #0053DB'
+        ).toHaveStyle(`background-color: #0053DB`);
+      });
     });
   },
 };
@@ -54,24 +119,37 @@ export const NormalBar: Story = {
 export const WarningBar: Story = {
   args: {
     value: 75,
+    variant: 'bar',
+    status: 'warning',
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const progressBar = canvas.getByRole('progressbar');
 
-    const progressIndicator = canvas.getByRole('progressIndicator');
-    const computedStyle = getComputedStyle(progressIndicator);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('progressIndicator'));
-    });
-
-    await step('Check property value and args', () => {
-      expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
-      expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
-      expect(color.trim()).toBe('rgb(0, 0, 0)');
-      expect(args.value).toBe(75);
+    await step('Check the Warning Progress Bar Style', async () => {
+      expect(progressBar, 'Should be rendered').toBeInTheDocument();
+      expect(progressBar, 'Should have the specific height').toHaveStyle(
+        `height: 16px`
+      );
+      expect(
+        progressBar,
+        'Should have the background-color #E7E7EC'
+      ).toHaveStyle(`background-color: #E7E7EC`);
+      await step('Check the Warning Progress Value', async () => {
+        const progressValue = progressBar.children[0];
+        expect(
+          progressValue.getAttribute('height'),
+          'Normal Progress Value should be specific height'
+        ).toBe('1rem');
+        expect(
+          progressValue.getAttribute('width'),
+          `Special Progress Value Width should be ${args.value}%`
+        ).toBe(`${args.value}%`);
+        expect(
+          progressValue,
+          'Should have the background-color #D87706'
+        ).toHaveStyle(`background-color: #D87706`);
+      });
     });
   },
 };
@@ -79,24 +157,37 @@ export const WarningBar: Story = {
 export const DangerousBar: Story = {
   args: {
     value: 95,
+    variant: 'bar',
+    status: 'danger',
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const progressBar = canvas.getByRole('progressbar');
 
-    const progressIndicator = canvas.getByRole('progressIndicator');
-    const computedStyle = getComputedStyle(progressIndicator);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('progressIndicator'));
-    });
-
-    await step('Check property value and args', () => {
-      expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
-      expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
-      expect(color.trim()).toBe('rgb(0, 0, 0)');
-      expect(args.value).toBe(95);
+    await step('Check the Dangerous Progress Bar Style', async () => {
+      expect(progressBar, 'Should be rendered').toBeInTheDocument();
+      expect(progressBar, 'Should have the specific height').toHaveStyle(
+        `height: 16px`
+      );
+      expect(
+        progressBar,
+        'Should have the background-color #E7E7EC'
+      ).toHaveStyle(`background-color: #E7E7EC`);
+      await step('Check the Normal Progress Value', async () => {
+        const progressValue = progressBar.children[0];
+        expect(
+          progressValue.getAttribute('height'),
+          'Normal Progress Value should be specific height'
+        ).toBe('1rem');
+        expect(
+          progressValue.getAttribute('width'),
+          `Special Progress Value Width should be ${args.value}%`
+        ).toBe(`${args.value}%`);
+        expect(
+          progressValue,
+          'Should have the background-color #E53E3E'
+        ).toHaveStyle(`background-color: #E53E3E`);
+      });
     });
   },
 };
@@ -106,23 +197,36 @@ export const Circle: Story = {
     variant: 'circle',
     value: 25,
   },
-  play: async ({ args, canvasElement, step }) => {
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const progressIndicator = canvas.getByRole('progressIndicator');
-    const computedStyle = getComputedStyle(progressIndicator);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('progressIndicator'));
-    });
+    const progressCircle = canvas.getByRole('progressbar');
 
-    await step('Check property value and args', () => {
-      expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
-      expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
-      expect(color.trim()).toBe('rgb(0, 0, 0)');
-      expect(args.value).toBe(25);
+    await step('Check the Progress Circle Style', async () => {
+      expect(progressCircle, 'Should be rendered').toBeInTheDocument();
+      expect(
+        progressCircle.childNodes.length,
+        'Should be two element inside'
+      ).toBe(2);
+      await step('Check the Progress Circle Path', async () => {
+        const circlePath = progressCircle.children[0];
+        expect(circlePath, 'Should be rendered').toBeInTheDocument();
+        expect(circlePath.tagName, 'Should be svg tag').toBe('svg');
+      });
+      await step('Check the Progress Circle Line', async () => {
+        const lineFilled = progressCircle.children[1];
+        expect(lineFilled, 'Should be rendered').toBeInTheDocument();
+        expect(lineFilled, 'Should be specific width').toHaveStyle(
+          `width: 50px`
+        );
+        expect(lineFilled, 'Should be specific height').toHaveStyle(
+          `height: 50px`
+        );
+        expect(
+          lineFilled.hasAttribute('clip-path'),
+          'Should be a clip-path attribute'
+        ).toBeTruthy();
+      });
     });
   },
 };
@@ -133,23 +237,36 @@ export const BigCircle: Story = {
     value: 50,
     size: 80,
   },
-  play: async ({ args, canvasElement, step }) => {
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const progressIndicator = canvas.getByRole('progressIndicator');
-    const computedStyle = getComputedStyle(progressIndicator);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('progressIndicator'));
-    });
+    const progressCircle = canvas.getByRole('progressbar');
 
-    await step('Check property value and args', () => {
-      expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
-      expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
-      expect(color.trim()).toBe('rgb(0, 0, 0)');
-      expect(args.value).toBe(50);
+    await step('Check the Progress Circle Style', async () => {
+      expect(progressCircle, 'Should be rendered').toBeInTheDocument();
+      expect(
+        progressCircle.childNodes.length,
+        'Should be two element inside'
+      ).toBe(2);
+      await step('Check the Progress Circle Path', async () => {
+        const circlePath = progressCircle.children[0];
+        expect(circlePath, 'Should be rendered').toBeInTheDocument();
+        expect(circlePath.tagName, 'Should be svg tag').toBe('svg');
+      });
+      await step('Check the Progress Circle Line', async () => {
+        const lineFilled = progressCircle.children[1];
+        expect(lineFilled, 'Should be rendered').toBeInTheDocument();
+        expect(lineFilled, 'Should be specific width').toHaveStyle(
+          `width: 80px`
+        );
+        expect(lineFilled, 'Should be specific height').toHaveStyle(
+          `height: 80px`
+        );
+        expect(
+          lineFilled.hasAttribute('clip-path'),
+          'Should be a clip-path attribute'
+        ).toBeTruthy();
+      });
     });
   },
 };
@@ -161,19 +278,33 @@ export const LoadingCircle: Story = {
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    const progressIndicator = canvas.getByRole('progressIndicator');
-    const computedStyle = getComputedStyle(progressIndicator);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('progressIndicator'));
-    });
+    const progressCircle = canvas.getByRole('progressbar');
 
-    await step('Check property value and args', () => {
-      expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
-      expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
-      expect(color.trim()).toBe('rgb(0, 0, 0)');
+    await step('Check the Progress Circle Style', async () => {
+      expect(progressCircle, 'Should be rendered').toBeInTheDocument();
+      expect(
+        progressCircle.childNodes.length,
+        'Should be two element inside'
+      ).toBe(2);
+      await step('Check the Progress Circle Path', async () => {
+        const circlePath = progressCircle.children[0];
+        expect(circlePath, 'Should be rendered').toBeInTheDocument();
+        expect(circlePath.tagName, 'Should be svg tag').toBe('svg');
+      });
+      await step('Check the Progress Circle Line', async () => {
+        const lineFilled = progressCircle.children[1];
+        expect(lineFilled, 'Should be rendered').toBeInTheDocument();
+        expect(lineFilled, 'Should be specific width').toHaveStyle(
+          `width: 50px`
+        );
+        expect(lineFilled, 'Should be specific height').toHaveStyle(
+          `height: 50px`
+        );
+        expect(
+          lineFilled.hasAttribute('clip-path'),
+          'Should be a clip-path attribute'
+        ).toBeTruthy();
+      });
     });
   },
 };
