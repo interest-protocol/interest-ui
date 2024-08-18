@@ -136,18 +136,18 @@ export const Top: Story = {
 
           expect(
             tooltip,
-            'It is expected that the tooltip has a right -27.9062px'
-          ).toHaveStyle('right: -27.9062px');
+            'It is expected that the tooltip has a right -39.6328px'
+          ).toHaveStyle('right: -39.6328px');
 
           expect(
             tooltip,
-            'It is expected that the tooltip has a right 30.4688px'
-          ).toHaveStyle('left: 30.4688px');
+            'It is expected that the tooltip has a right 18.7422px'
+          ).toHaveStyle('left: 18.7422px');
 
           expect(
             tooltip,
-            'It is expected that the tooltip has a bottom -16px'
-          ).toHaveStyle('bottom: -16px');
+            'It is expected that the tooltip has a bottom 4px'
+          ).toHaveStyle('bottom: 4px');
         });
 
         await step('Validating the Tooltip content', () => {
@@ -271,13 +271,13 @@ export const Left: Story = {
 
           expect(
             tooltip,
-            'It is expected that the tooltip has a top 10px'
-          ).toHaveStyle('top: 10px');
+            'It is expected that the tooltip has a top 20px'
+          ).toHaveStyle('top: 20px');
 
           expect(
             tooltip,
-            'It is expected that the tooltip has a right 2.5625px'
-          ).toHaveStyle('right: 2.5625px');
+            'It is expected that the tooltip has a right -20.8906px'
+          ).toHaveStyle('right: -20.8906px');
 
           expect(
             tooltip,
@@ -286,8 +286,8 @@ export const Left: Story = {
 
           expect(
             tooltip,
-            'It is expected that the tooltip has a bottom -26px'
-          ).toHaveStyle('bottom: -26px');
+            'It is expected that the tooltip has a bottom -16px'
+          ).toHaveStyle('bottom: -16px');
         });
 
         await step('Validating the Tooltip content', () => {
@@ -410,8 +410,8 @@ export const Right: Story = {
 
           expect(
             tooltip,
-            'It is expected that the tooltip has a top 10px'
-          ).toHaveStyle('top: 10px');
+            'It is expected that the tooltip has a top 20px'
+          ).toHaveStyle('top: 20px');
 
           expect(
             tooltip,
@@ -420,13 +420,13 @@ export const Right: Story = {
 
           expect(
             tooltip,
-            'It is expected that the tooltip has a right 2.5625px'
-          ).toHaveStyle('left: 2.5625px');
+            'It is expected that the tooltip has a right -20.8906px'
+          ).toHaveStyle('left: -20.8906px');
 
           expect(
             tooltip,
-            'It is expected that the tooltip has a bottom -26px'
-          ).toHaveStyle('bottom: -26px');
+            'It is expected that the tooltip has a bottom -16px'
+          ).toHaveStyle('bottom: -16px');
         });
 
         await step('Validating the Tooltip content', () => {
@@ -549,18 +549,18 @@ export const Bottom: Story = {
 
           expect(
             tooltip,
-            'It is expected that the tooltip has a top -16px'
-          ).toHaveStyle('top: -16px');
+            'It is expected that the tooltip has a top 4px'
+          ).toHaveStyle('top: 4px');
 
           expect(
             tooltip,
-            'It is expected that the tooltip has a right -27.9062px'
-          ).toHaveStyle('right: -27.9062px');
+            'It is expected that the tooltip has a right -39.6328px'
+          ).toHaveStyle('right: -39.6328px');
 
           expect(
             tooltip,
-            'It is expected that the tooltip has a right 30.4688px'
-          ).toHaveStyle('left: 30.4688px');
+            'It is expected that the tooltip has a right 18.7422px'
+          ).toHaveStyle('left: 18.7422px');
 
           expect(
             tooltip,
@@ -693,8 +693,8 @@ export const WithBorder: Story = {
           if (args.tooltipPosition === 'top') {
             expect(
               tooltip,
-              'It is expected that the tooltip has a right -29.9062px'
-            ).toHaveStyle('right: -29.9062px');
+              'It is expected that the tooltip has a right -41.6328px'
+            ).toHaveStyle('right: -41.6328px');
 
             expect(
               tooltip,
@@ -703,28 +703,28 @@ export const WithBorder: Story = {
 
             expect(
               tooltip,
-              'It is expected that the tooltip has a right 30.4688px'
-            ).toHaveStyle('left: 30.4688px');
+              'It is expected that the tooltip has a right 18.7422px'
+            ).toHaveStyle('left: 18.7422px');
 
             expect(
               tooltip,
-              'It is expected that the tooltip has a bottom -18px'
-            ).toHaveStyle('bottom: -18px');
+              'It is expected that the tooltip has a bottom 2px'
+            ).toHaveStyle('bottom: 2px');
           } else if (args.tooltipPosition === 'bottom') {
             expect(
               tooltip,
-              'It is expected that the tooltip has a right -29.9062px'
-            ).toHaveStyle('right: -29.9062px');
+              'It is expected that the tooltip has a right -41.6328px'
+            ).toHaveStyle('right: -41.6328px');
 
             expect(
               tooltip,
-              'It is expected that the tooltip has a top -18px'
-            ).toHaveStyle('top: -18px');
+              'It is expected that the tooltip has a top 2px'
+            ).toHaveStyle('top: 2px');
 
             expect(
               tooltip,
-              'It is expected that the tooltip has a right 30.4688px'
-            ).toHaveStyle('left: 30.4688px');
+              'It is expected that the tooltip has a right 18.7422px'
+            ).toHaveStyle('left: 18.7422px');
 
             expect(
               tooltip,
@@ -738,28 +738,28 @@ export const WithBorder: Story = {
 
             expect(
               tooltip,
-              'It is expected that the tooltip has a top 10px'
-            ).toHaveStyle('top: 10px');
+              'It is expected that the tooltip has a top 20px'
+            ).toHaveStyle('top: 20px');
 
             expect(
               tooltip,
-              'It is expected that the tooltip has a right 0.5625px'
-            ).toHaveStyle('left: 0.5625px');
+              'It is expected that the tooltip has a right -22.8906px'
+            ).toHaveStyle('left: -22.8906px');
 
             expect(
               tooltip,
-              'It is expected that the tooltip has a bottom -28px'
-            ).toHaveStyle('bottom: -28px');
+              'It is expected that the tooltip has a bottom -18px'
+            ).toHaveStyle('bottom: -18px');
           } else if (args.tooltipPosition === 'left') {
             expect(
               tooltip,
-              'It is expected that the tooltip has a right 0.5625px'
-            ).toHaveStyle('right: 0.5625px');
+              'It is expected that the tooltip has a right -22.8906px'
+            ).toHaveStyle('right: -22.8906px');
 
             expect(
               tooltip,
-              'It is expected that the tooltip has a top 10px'
-            ).toHaveStyle('top: 10px');
+              'It is expected that the tooltip has a top 20px'
+            ).toHaveStyle('top: 20px');
 
             expect(
               tooltip,
@@ -768,19 +768,18 @@ export const WithBorder: Story = {
 
             expect(
               tooltip,
-              'It is expected that the tooltip has a bottom -28px'
-            ).toHaveStyle('bottom: -28px');
-
-            expect(
-              borderStyle,
-              'It is expected that the tooltip has a border of 1px solid'
-            ).toContain('1px solid');
-
-            expect(
-              tooltip,
-              'It is expected that the tooltip has a colorof rgb(118, 118, 122)'
-            ).toHaveStyle('border-color: rgb(118, 118, 122)');
+              'It is expected that the tooltip has a bottom -18px'
+            ).toHaveStyle('bottom: -18px');
           }
+          expect(
+            borderStyle,
+            'It is expected that the tooltip has a border of 1px solid'
+          ).toContain('1px solid');
+
+          expect(
+            tooltip,
+            'It is expected that the tooltip has a colorof rgb(118, 118, 122)'
+          ).toHaveStyle('border-color: rgb(118, 118, 122)');
         });
 
         await step('Validating the Tooltip content', () => {
