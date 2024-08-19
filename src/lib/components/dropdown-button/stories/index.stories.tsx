@@ -8,6 +8,7 @@ import { CircleSVG } from '../../../icons';
 import { ListItem, ListItemProps } from '../../list-item';
 import { DropdownButton, DropdownButtonProps } from '..';
 import { itemsList } from '../dropdown-button.data';
+import { isDarkTheme } from '../dropdown-button.utils';
 
 const Dropdown: FC<DropdownButtonProps> = ({ ...props }) => (
   <DropdownButton {...props} containerProps={{ borderRadius: 's' }}>
@@ -56,6 +57,7 @@ export const WithLabel: Story = {
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const isDark = isDarkTheme();
 
     const button = canvas.getByRole('button');
     const svgElements = button.getElementsByTagName('svg');
@@ -67,10 +69,21 @@ export const WithLabel: Story = {
         'It expects that the button is being rendered'
       ).toBeInTheDocument();
 
-      expect(
-        button,
-        'It expects that the button background is rgb(255, 255, 255)'
-      ).toHaveStyle('background-color: rgb(255, 255, 255)');
+      if (!isDark) {
+        expect(
+          button,
+          'It expects that the button background is rgb(255, 255, 255)'
+        ).toHaveStyle('background-color: rgb(255, 255, 255)');
+      } else {
+        expect(
+          button,
+          'It expects that the button background is background-color: rgb(13, 13, 17)'
+        ).toHaveStyle('background-color: rgb(13, 13, 17)');
+      }
+
+      expect(button, 'It expects that the button height is 40px').toHaveStyle(
+        'height: 40px'
+      );
 
       expect(button, 'It expects that the button height is 40px').toHaveStyle(
         'height: 40px'
@@ -146,13 +159,18 @@ export const WithLabel: Story = {
       await userEvent.click(button);
 
       const dropdown = canvas.getByLabelText('dropdown');
-      const computedStyle = getComputedStyle(dropdown);
-      const background = computedStyle.getPropertyValue('background');
 
-      expect(
-        background,
-        'It expects that the dropdown background is rgb(255, 255, 255)'
-      ).toContain('rgb(255, 255, 255)');
+      if (!isDark) {
+        expect(
+          dropdown,
+          'It expects that the dropdown background is rgb(255, 255, 255)'
+        ).toHaveStyle('background-color: rgb(255, 255, 255)');
+      } else {
+        expect(
+          dropdown,
+          'It expects that the dropdown background is background-color: rgb(13, 13, 17)'
+        ).toHaveStyle('background-color: rgb(13, 13, 17)');
+      }
 
       expect(
         dropdown,
@@ -163,15 +181,17 @@ export const WithLabel: Story = {
         'top: 56px'
       );
 
-      expect(
-        dropdown,
-        'It expects that the dropdown border is 1px solid'
-      ).toHaveStyle('border: 1px solid  rgb(198, 198, 202)');
-
-      expect(
-        dropdown,
-        'It expects that the dropdown border-color is rgb(198, 198, 202)'
-      ).toHaveStyle('border-color: rgb(198, 198, 202)');
+      if (!isDark) {
+        expect(
+          dropdown,
+          'It expects that the dropdown border is 1px solid rgb(198, 198, 202)'
+        ).toHaveStyle('border: 1px solid rgb(198, 198, 202)');
+      } else {
+        expect(
+          dropdown,
+          'It expects that the dropdown border-color is 1px solid rgb(70, 70, 74)'
+        ).toHaveStyle('border: 1px solid  rgb(70, 70, 74)');
+      }
 
       expect(
         dropdown,
@@ -231,6 +251,7 @@ export const WithLabelRounded: Story = {
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const isDark = isDarkTheme();
 
     const button = canvas.getByRole('button');
     const svgElements = button.getElementsByTagName('svg');
@@ -242,10 +263,17 @@ export const WithLabelRounded: Story = {
         'It expects that the button is being rendered'
       ).toBeInTheDocument();
 
-      expect(
-        button,
-        'It expects that the button background is rgb(255, 255, 255)'
-      ).toHaveStyle('background-color: rgb(255, 255, 255)');
+      if (!isDark) {
+        expect(
+          button,
+          'It expects that the button background is rgb(255, 255, 255)'
+        ).toHaveStyle('background-color: rgb(255, 255, 255)');
+      } else {
+        expect(
+          button,
+          'It expects that the button background is background-color: rgb(13, 13, 17)'
+        ).toHaveStyle('background-color: rgb(13, 13, 17)');
+      }
 
       expect(button, 'It expects that the button height is 40px').toHaveStyle(
         'height: 40px'
@@ -318,10 +346,17 @@ export const WithLabelRounded: Story = {
 
       const dropdown = canvas.getByLabelText('dropdown');
 
-      expect(
-        dropdown,
-        'It expects that the dropdown background is rgb(255, 255, 255)'
-      ).toHaveStyle('background-color:  rgb(255, 255, 255)');
+      if (!isDark) {
+        expect(
+          dropdown,
+          'It expects that the dropdown background is rgb(255, 255, 255)'
+        ).toHaveStyle('background-color: rgb(255, 255, 255)');
+      } else {
+        expect(
+          dropdown,
+          'It expects that the dropdown background is background-color: rgb(13, 13, 17)'
+        ).toHaveStyle('background-color: rgb(13, 13, 17)');
+      }
 
       expect(
         dropdown,
@@ -332,15 +367,17 @@ export const WithLabelRounded: Story = {
         'top: 56px'
       );
 
-      expect(
-        dropdown,
-        'It expects that the dropdown border is 1px solid'
-      ).toHaveStyle('border: 1px solid  rgb(198, 198, 202)');
-
-      expect(
-        dropdown,
-        'It expects that the dropdown border-color is rgb(198, 198, 202)'
-      ).toHaveStyle('border-color: rgb(198, 198, 202)');
+      if (!isDark) {
+        expect(
+          dropdown,
+          'It expects that the dropdown border is 1px solid rgb(198, 198, 202)'
+        ).toHaveStyle('border: 1px solid rgb(198, 198, 202)');
+      } else {
+        expect(
+          dropdown,
+          'It expects that the dropdown border-color is 1px solid rgb(70, 70, 74)'
+        ).toHaveStyle('border: 1px solid  rgb(70, 70, 74)');
+      }
 
       expect(
         dropdown,
@@ -400,16 +437,25 @@ export const WithoutLabelOnlyIcon: Story = {
     const button = canvas.getByRole('button');
     const svgElements = button.getElementsByTagName('svg');
 
+    const isDark = isDarkTheme();
+
     await step('Checking the button structure', () => {
       expect(
         button,
         'It expects that the button is being rendered'
       ).toBeInTheDocument();
 
-      expect(
-        button,
-        'It expects that the button background is rgb(255, 255, 255)'
-      ).toHaveStyle('background-color: rgb(255, 255, 255)');
+      if (!isDark) {
+        expect(
+          button,
+          'It expects that the button background is rgb(255, 255, 255)'
+        ).toHaveStyle('background-color: rgb(255, 255, 255)');
+      } else {
+        expect(
+          button,
+          'It expects that the button background is background-color: rgb(13, 13, 17)'
+        ).toHaveStyle('background-color: rgb(13, 13, 17)');
+      }
 
       expect(button, 'It expects that the button height is 40px').toHaveStyle(
         'height: 40px'
@@ -471,10 +517,17 @@ export const WithoutLabelOnlyIcon: Story = {
 
       const dropdown = canvas.getByLabelText('dropdown');
 
-      expect(
-        dropdown,
-        'It expects that the dropdown background is rgb(255, 255, 255)'
-      ).toHaveStyle('background-color: rgb(255, 255, 255)');
+      if (!isDark) {
+        expect(
+          dropdown,
+          'It expects that the dropdown background is rgb(255, 255, 255)'
+        ).toHaveStyle('background-color: rgb(255, 255, 255)');
+      } else {
+        expect(
+          dropdown,
+          'It expects that the dropdown background is background-color: rgb(13, 13, 17)'
+        ).toHaveStyle('background-color: rgb(13, 13, 17)');
+      }
 
       expect(
         dropdown,
@@ -485,15 +538,17 @@ export const WithoutLabelOnlyIcon: Story = {
         'top: 56px'
       );
 
-      expect(
-        dropdown,
-        'It expects that the dropdown border is 1px solid'
-      ).toHaveStyle('border: 1px solid  rgb(198, 198, 202)');
-
-      expect(
-        dropdown,
-        'It expects that the dropdown border-color is rgb(198, 198, 202)'
-      ).toHaveStyle('border-color: rgb(198, 198, 202)');
+      if (!isDark) {
+        expect(
+          dropdown,
+          'It expects that the dropdown border is 1px solid rgb(198, 198, 202)'
+        ).toHaveStyle('border: 1px solid rgb(198, 198, 202)');
+      } else {
+        expect(
+          dropdown,
+          'It expects that the dropdown border-color is 1px solid rgb(70, 70, 74)'
+        ).toHaveStyle('border: 1px solid  rgb(70, 70, 74)');
+      }
 
       expect(
         dropdown,

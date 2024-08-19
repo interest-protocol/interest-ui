@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, userEvent, within } from '@storybook/test';
+import { clearAllMocks, expect, fn, userEvent, within } from '@storybook/test';
 
 import { Slider } from '..';
 import { convertREMtoPX } from '../slider.utils';
@@ -44,7 +44,7 @@ export const Default: Story = {
     const canvas = within(canvasElement);
 
     const slider = canvas.getByRole('slider');
-    const sliderLine = canvas.getByLabelText('sliderLine');
+    const sliderLine = canvas.getByLabelText('slider-line');
     const computedStyle = getComputedStyle(sliderLine);
     const sliderLineBackground = computedStyle.getPropertyValue('background');
     const tooltip = canvas.getByRole('tooltip');
@@ -107,6 +107,8 @@ export const Default: Story = {
       ).toBe('P');
     });
 
+    clearAllMocks();
+
     await step('Checking interactions with the slider', async () => {
       await userEvent.pointer({ target: slider, keys: '[MouseLeft>]' });
       await userEvent.pointer({ target: slider, offset: 100 });
@@ -118,6 +120,12 @@ export const Default: Story = {
         'It should call the function onChange when the slider is dragged'
       ).toHaveBeenCalled();
     });
+
+    clearAllMocks();
+
+    await userEvent.pointer({ target: undefined });
+
+    await userEvent.unhover(slider);
   },
 };
 
@@ -137,7 +145,7 @@ export const DefaultInterval: Story = {
     const sliders = canvas.getAllByRole('slider');
     const slider1 = sliders[0];
     const slider2 = sliders[1];
-    const sliderLine = canvas.getByLabelText('sliderLine');
+    const sliderLine = canvas.getByLabelText('slider-line');
     const computedStyle = getComputedStyle(sliderLine);
     const sliderLineBackground = computedStyle.getPropertyValue('background');
 
@@ -269,7 +277,7 @@ export const InTheMiddleWithoutTooltip: Story = {
     const canvas = within(canvasElement);
 
     const slider = canvas.getByRole('slider');
-    const sliderLine = canvas.getByLabelText('sliderLine');
+    const sliderLine = canvas.getByLabelText('slider-line');
     const computedStyle = getComputedStyle(sliderLine);
     const sliderLineBackground = computedStyle.getPropertyValue('background');
 
@@ -338,7 +346,7 @@ export const InTheEndWithoutTooltip: Story = {
     const canvas = within(canvasElement);
 
     const slider = canvas.getByRole('slider');
-    const sliderLine = canvas.getByLabelText('sliderLine');
+    const sliderLine = canvas.getByLabelText('slider-line');
     const computedStyle = getComputedStyle(sliderLine);
     const sliderLineBackground = computedStyle.getPropertyValue('background');
 
@@ -407,7 +415,7 @@ export const InTheMiddleWithTooltip: Story = {
     const canvas = within(canvasElement);
 
     const slider = canvas.getByRole('slider');
-    const sliderLine = canvas.getByLabelText('sliderLine');
+    const sliderLine = canvas.getByLabelText('slider-line');
     const computedStyle = getComputedStyle(sliderLine);
     const sliderLineBackground = computedStyle.getPropertyValue('background');
 
@@ -486,7 +494,7 @@ export const InTheEndWithTooltip: Story = {
     const canvas = within(canvasElement);
 
     const slider = canvas.getByRole('slider');
-    const sliderLine = canvas.getByLabelText('sliderLine');
+    const sliderLine = canvas.getByLabelText('slider-line');
     const computedStyle = getComputedStyle(sliderLine);
     const sliderLineBackground = computedStyle.getPropertyValue('background');
 
