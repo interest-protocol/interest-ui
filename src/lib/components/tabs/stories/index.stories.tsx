@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, waitFor, within } from '@storybook/test';
+import { expect, fireEvent, fn, within } from '@storybook/test';
 
 import { Tabs } from '..';
 
@@ -17,18 +17,78 @@ export const Circle: Story = {
   args: {
     items: ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
     type: 'circle',
+    onChangeTab: fn(),
     width: '',
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step, args }) => {
+    let currentOption = 0;
     const canvas = within(canvasElement);
+    const tabs = canvas.getByRole('tablist');
 
-    const tabs = canvas.getByTestId('tabsTest');
+    await step('Check the structure of the Tab Circular', async () => {
+      expect(
+        tabs,
+        'It is expected that the tab has a full border-radius'
+      ).toHaveStyle('border-radius: 159984px');
+      expect(
+        tabs,
+        'It is expected that the tab has a background #00000014'
+      ).toHaveStyle('background-color: #00000014');
+      expect(
+        tabs.childNodes.length,
+        `It is expected that the tab has ${args.items.length} tabItems`
+      ).toBe(args.items.length);
+    });
 
-    await waitFor(() => {
-      const computedStyle = getComputedStyle(tabs);
-      const borderRadius = computedStyle.getPropertyValue('border-radius');
+    await step(
+      'Check that the selected option is correctly applied ',
+      async () => {
+        expect(
+          tabs.childNodes[currentOption].textContent,
+          `It is expected that the selected option will be option "${args.items[currentOption]}"`
+        ).toBe(args.items[currentOption]);
+        expect(
+          tabs.childNodes[currentOption],
+          'It is expected that the font-family of the selected item will be Satoshi'
+        ).toHaveStyle('font-family: Satoshi');
+        expect(
+          tabs.childNodes[currentOption],
+          'It is expected that the font-size of the selected item will be 16px'
+        ).toHaveStyle('font-size: 16px');
+        expect(
+          tabs.childNodes[currentOption],
+          'It is expected that the font-weight of the selected item will be 400'
+        ).toHaveStyle('font-weight: 400');
+        expect(
+          tabs.childNodes[currentOption],
+          'It is expected that the colour of the selected item will be black'
+        ).toHaveStyle('color: #000');
+        const tabItemWrapperSelected =
+          tabs.children[currentOption].children[0].childNodes[1];
+        expect(
+          tabItemWrapperSelected,
+          'It is expected that the selected option has a wrapper with "background-color #fff" over it'
+        ).toHaveStyle('background-color: #fff');
+        expect(
+          tabItemWrapperSelected,
+          'It is expected that the selected option has a wrapper with "border-radius: full" over it'
+        ).toHaveStyle('border-radius: 159984px');
+      }
+    );
 
-      expect(borderRadius).toBe('159984px');
+    await step('Check navigation between options', async () => {
+      currentOption++;
+      await fireEvent.click(tabs.children[currentOption]);
+
+      const newTabs = canvas.getByRole('tablist');
+      expect(
+        newTabs.children[currentOption].children[0].children.length,
+        'It is expected that the selected option has two nodes'
+      ).toBe(2);
+      expect(
+        args.onChangeTab,
+        'It is expected that the onChange function has been executed at least once'
+      ).toHaveBeenCalledOnce();
     });
   },
 };
@@ -37,40 +97,79 @@ export const Square: Story = {
   args: {
     items: ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
     type: 'square',
+    onChangeTab: fn(),
     width: '',
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, step, args }) => {
+    let currentOption = 0;
     const canvas = within(canvasElement);
+    const tabs = canvas.getByRole('tablist');
 
-    const tabs = canvas.getByTestId('tabsTest');
-
-    await waitFor(() => {
-      const computedStyle = getComputedStyle(tabs);
-      const borderRadius = computedStyle.getPropertyValue('border-radius');
-
-      expect(borderRadius).toBe('10px');
+    await step('Check the structure of the Tab Square', async () => {
+      expect(
+        tabs,
+        'It is expected that the tab has a full border-radius'
+      ).toHaveStyle('border-radius: 10px');
+      expect(
+        tabs,
+        'It is expected that the tab has a background #00000014'
+      ).toHaveStyle('background-color: #00000014');
+      expect(
+        tabs.childNodes.length,
+        `It is expected that the tab has ${args.items.length} tabItems`
+      ).toBe(args.items.length);
     });
-  },
-};
 
-export const ChangeTabAction: Story = {
-  args: {
-    items: ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
-    type: 'circle',
-    onChangeTab: fn(),
-  },
-  play: async ({ args, canvasElement }) => {
-    const canvas = within(canvasElement);
+    await step(
+      'Check that the selected option is correctly applied ',
+      async () => {
+        expect(
+          tabs.childNodes[currentOption].textContent,
+          `It is expected that the selected option will be option "${args.items[currentOption]}"`
+        ).toBe(args.items[currentOption]);
 
-    const tabs = canvas.getByTestId('tabsTest');
-    const tabItems = tabs.childNodes;
-    expect(tabItems).toHaveLength(4);
+        expect(
+          tabs.childNodes[currentOption],
+          'It is expected that the font-family of the selected item will be Satoshi'
+        ).toHaveStyle('font-family: Satoshi');
+        expect(
+          tabs.childNodes[currentOption],
+          'It is expected that the font-size of the selected item will be 16px'
+        ).toHaveStyle('font-size: 16px');
+        expect(
+          tabs.childNodes[currentOption],
+          'It is expected that the font-weight of the selected item will be 400'
+        ).toHaveStyle('font-weight: 400');
+        expect(
+          tabs.childNodes[currentOption],
+          'It is expected that the colour of the selected item will be black'
+        ).toHaveStyle('color: #000');
+        const tabItemWrapperSelected =
+          tabs.children[currentOption].children[0].childNodes[1];
+        expect(
+          tabItemWrapperSelected,
+          'It is expected that the selected option has a wrapper with "background-colour #fff" over it'
+        ).toHaveStyle('background-color: #fff');
+        expect(
+          tabItemWrapperSelected,
+          'It is expected that the selected option has a wrapper with "border-radius: full" over it'
+        ).toHaveStyle('border-radius: 8px');
+      }
+    );
 
-    const lastChild = tabs.lastElementChild as HTMLElement;
+    await step('Check navigation between options', async () => {
+      currentOption++;
+      await fireEvent.click(tabs.children[currentOption]);
 
-    lastChild.click();
-
-    expect(args.onChangeTab).toHaveBeenCalledOnce();
-    expect(args.onChangeTab).toHaveBeenLastCalledWith(tabItems.length - 1);
+      const newTabs = canvas.getByRole('tablist');
+      expect(
+        args.onChangeTab,
+        'It is expected that the onChange function has been executed at least once'
+      ).toHaveBeenCalledOnce();
+      expect(
+        newTabs.children[currentOption].children[0].children.length,
+        'It is expected that the selected option has two nodes'
+      ).toBe(2);
+    });
   },
 };

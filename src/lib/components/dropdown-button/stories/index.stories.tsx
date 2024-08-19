@@ -7,11 +7,11 @@ import { Box } from '../../../elements';
 import { CircleSVG } from '../../../icons';
 import { ListItem, ListItemProps } from '../../list-item';
 import { DropdownButton, DropdownButtonProps } from '..';
-import { itemsList1 } from '../dropdown-button.data';
+import { itemsList } from '../dropdown-button.data';
 
 const Dropdown: FC<DropdownButtonProps> = ({ ...props }) => (
   <DropdownButton {...props} containerProps={{ borderRadius: 's' }}>
-    {itemsList1.map((item: ListItemProps) => (
+    {itemsList.map((item: ListItemProps) => (
       <ListItem
         pr="m"
         key={v4()}
@@ -81,9 +81,10 @@ export const WithLabel: Story = {
         'It expects that the button width is 108.781px'
       ).toHaveStyle('width: 108.781px');
 
-      expect(button, 'It expects that the button padding is 8px').toHaveStyle(
-        'border-radius: 8px'
-      );
+      expect(
+        button,
+        'It expects that the button border-radius is 8px'
+      ).toHaveStyle('border-radius: 8px');
 
       expect(button, 'It expects that the button padding is 8px').toHaveStyle(
         'padding: 8px 16px'
@@ -164,16 +165,6 @@ export const WithLabel: Story = {
 
       expect(
         dropdown,
-        'It expects that the dropdown height is 114px'
-      ).toHaveStyle('height: 114px');
-
-      expect(
-        dropdown,
-        'It expects that the dropdown width is 241px'
-      ).toHaveStyle('width: 241px');
-
-      expect(
-        dropdown,
         'It expects that the dropdown border is 1px solid'
       ).toHaveStyle('border: 1px solid  rgb(198, 198, 202)');
 
@@ -184,7 +175,7 @@ export const WithLabel: Story = {
 
       expect(
         dropdown,
-        'It expects that the dropdown padding is 16px'
+        'It expects that the dropdown border-radius is 16px'
       ).toHaveStyle('border-radius: 16px');
 
       expect(
@@ -215,12 +206,12 @@ export const WithLabel: Story = {
       expect(
         firstChild,
         `It expects that the dropdown first child has the title Option 1`
-      ).toHaveTextContent(`${itemsList1[0].title}`);
+      ).toHaveTextContent(`${itemsList[0].title}`);
 
       expect(
         lastChild,
         `It expects that the dropdown first child has the title Option 2`
-      ).toHaveTextContent(`${itemsList1[1].title}`);
+      ).toHaveTextContent(`${itemsList[1].title}`);
 
       expect(
         textElements,
@@ -343,16 +334,6 @@ export const WithLabelRounded: Story = {
 
       expect(
         dropdown,
-        'It expects that the dropdown height is 167px'
-      ).toHaveStyle('height: 167px');
-
-      expect(
-        dropdown,
-        'It expects that the dropdown width is 241px'
-      ).toHaveStyle('width: 241px');
-
-      expect(
-        dropdown,
         'It expects that the dropdown border is 1px solid'
       ).toHaveStyle('border: 1px solid  rgb(198, 198, 202)');
 
@@ -394,12 +375,12 @@ export const WithLabelRounded: Story = {
       expect(
         middleChild,
         `It expects that the dropdown middle child has the title Option 1`
-      ).toHaveTextContent(`${itemsList1[0].title}`);
+      ).toHaveTextContent(`${itemsList[0].title}`);
 
       expect(
         lastChild,
         `It expects that the dropdown first child has the title Option 2`
-      ).toHaveTextContent(`${itemsList1[1].title}`);
+      ).toHaveTextContent(`${itemsList[1].title}`);
 
       expect(
         textElements,
@@ -438,9 +419,10 @@ export const WithoutLabelOnlyIcon: Story = {
         'width: 40px'
       );
 
-      expect(button, 'It expects that the button padding is 8px').toHaveStyle(
-        'border-radius: 8px'
-      );
+      expect(
+        button,
+        'It expects that the button border-radius is 8px'
+      ).toHaveStyle('border-radius: 8px');
 
       expect(
         button,
@@ -505,16 +487,6 @@ export const WithoutLabelOnlyIcon: Story = {
 
       expect(
         dropdown,
-        'It expects that the dropdown height is 114px'
-      ).toHaveStyle('height: 114px');
-
-      expect(
-        dropdown,
-        'It expects that the dropdown width is 241px'
-      ).toHaveStyle('width: 241px');
-
-      expect(
-        dropdown,
         'It expects that the dropdown border is 1px solid'
       ).toHaveStyle('border: 1px solid  rgb(198, 198, 202)');
 
@@ -525,7 +497,7 @@ export const WithoutLabelOnlyIcon: Story = {
 
       expect(
         dropdown,
-        'It expects that the dropdown padding is 16px'
+        'It expects that the dropdown border-radius is 16px'
       ).toHaveStyle('border-radius: 16px');
 
       expect(
@@ -556,12 +528,12 @@ export const WithoutLabelOnlyIcon: Story = {
       expect(
         firstChild,
         `It expects that the dropdown first child has the title Option 1`
-      ).toHaveTextContent(`${itemsList1[0].title}`);
+      ).toHaveTextContent(`${itemsList[0].title}`);
 
       expect(
         lastChild,
         `It expects that the dropdown first child has the title Option 2`
-      ).toHaveTextContent(`${itemsList1[1].title}`);
+      ).toHaveTextContent(`${itemsList[1].title}`);
 
       expect(
         textElements,

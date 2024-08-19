@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, waitFor, within } from '@storybook/test';
+import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
 import React from 'react';
 
 import { PlusIcon, SwapIcon } from '../../../../storybook/icons';
@@ -33,20 +33,90 @@ export const Filled: Story = {
     variant: 'filled',
     children: 'Label',
     disabled: false,
+    onClick: fn(),
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
     const button = canvas.getByRole('button');
-    const computedStyle = getComputedStyle(button);
 
-    const background = computedStyle.getPropertyValue('background');
+    await step('Checking the button structure', async () => {
+      expect(
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
+      expect(
+        button,
+        'it is expected that the button is rendered'
+      ).toBeInTheDocument();
+      expect(
+        button,
+        'It is expected that the button has an internal left spacing of 24px'
+      ).toHaveStyle('padding-left: 24px');
+      expect(
+        button,
+        'It is expected that the button has an internal right spacing of 24px'
+      ).toHaveStyle('padding-right: 24px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
+      );
+      expect(
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only one element'
+      ).toBe(1);
+      expect(
+        button,
+        'It is expected that the button has a background #0053db'
+      ).toHaveStyle('background-color: #0053db');
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #fff'
+        ).toHaveStyle('color: #fff');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
 
-    // check if the label is being render
-    expect(button).toHaveTextContent('Label');
-
-    //check if has a valid background
-    expect(background.trim()).toBeTruthy();
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+      });
+    });
   },
 };
 
@@ -56,23 +126,90 @@ export const FilledWithPrefix: Story = {
     children: 'Label',
     PrefixIcon: <PlusIcon />,
     disabled: false,
+    onClick: fn(),
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
     const button = canvas.getByRole('button');
 
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElements = button.querySelectorAll('svg');
-    expect(svgElements).toHaveLength(1);
+    await step('Checking the button structure', async () => {
+      expect(
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
+      expect(
+        button,
+        'it is expected that the button is rendered'
+      ).toBeInTheDocument();
+      expect(
+        button,
+        'It is expected that the button has an internal left spacing of 16px'
+      ).toHaveStyle('padding-left: 16px');
+      expect(
+        button,
+        'It is expected that the button has an internal right spacing of 24px'
+      ).toHaveStyle('padding-right: 24px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
+      );
+      expect(
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only two element'
+      ).toBe(2);
+      expect(
+        button,
+        'It is expected that the button has a background #0053db'
+      ).toHaveStyle('background-color: #0053db');
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #fff'
+        ).toHaveStyle('color: #fff');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
 
-    const firstChild = button.firstElementChild;
-    const elementTag = firstChild && firstChild.tagName.toLowerCase();
-
-    // check if the first child in the button is an svg and if it is in the document
-    expect(firstChild).toBeInTheDocument();
-    expect(firstChild).toBeVisible();
-    expect(elementTag).toEqual('svg');
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+      });
+    });
   },
 };
 
@@ -82,23 +219,90 @@ export const FilledWithSuffix: Story = {
     children: 'Label',
     SuffixIcon: <PlusIcon />,
     disabled: false,
+    onClick: fn(),
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
     const button = canvas.getByRole('button');
 
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElements = button.querySelectorAll('svg');
-    expect(svgElements).toHaveLength(1);
+    await step('Checking the button structure', async () => {
+      expect(
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
+      expect(
+        button,
+        'it is expected that the button is rendered'
+      ).toBeInTheDocument();
+      expect(
+        button,
+        'It is expected that the button has an internal left spacing of 24px'
+      ).toHaveStyle('padding-left: 24px');
+      expect(
+        button,
+        'It is expected that the button has an internal right spacing of 16px'
+      ).toHaveStyle('padding-right: 16px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
+      );
+      expect(
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only two element'
+      ).toBe(2);
+      expect(
+        button,
+        'It is expected that the button has a background #0053db'
+      ).toHaveStyle('background-color: #0053db');
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #fff'
+        ).toHaveStyle('color: #fff');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
 
-    const lastChild = button.lastElementChild;
-    const elementTag = lastChild && lastChild.tagName.toLowerCase();
-
-    // check if the last child in the button is an svg and if it is in the document
-    expect(lastChild).toBeInTheDocument();
-    expect(lastChild).toBeVisible();
-    expect(elementTag).toEqual('svg');
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+      });
+    });
   },
 };
 
@@ -109,30 +313,90 @@ export const FilledWithCombined: Story = {
     PrefixIcon: <PlusIcon />,
     SuffixIcon: <PlusIcon />,
     disabled: false,
+    onClick: fn(),
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
     const button = canvas.getByRole('button');
 
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElements = button.querySelectorAll('svg');
-    expect(svgElements.length).toBe(2);
+    await step('Checking the button structure', async () => {
+      expect(
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
+      expect(
+        button,
+        'it is expected that the button is rendered'
+      ).toBeInTheDocument();
+      expect(
+        button,
+        'It is expected that the button has an internal left spacing of 16px'
+      ).toHaveStyle('padding-left: 16px');
+      expect(
+        button,
+        'It is expected that the button has an internal right spacing of 16px'
+      ).toHaveStyle('padding-right: 16px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
+      );
+      expect(
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only three element'
+      ).toBe(3);
+      expect(
+        button,
+        'It is expected that the button has a background #0053db'
+      ).toHaveStyle('background-color: #0053db');
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #fff'
+        ).toHaveStyle('color: #fff');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
 
-    const firstChild = button.firstElementChild as SVGElement;
-    const firstChildTag = firstChild && firstChild.tagName.toLowerCase();
-
-    const lastChild = button.lastElementChild as SVGElement;
-    const lastChildTag = lastChild && lastChild.tagName.toLowerCase();
-
-    // check if the last and the first chiold in the button, are visibles
-    expect(lastChild).toBeInTheDocument();
-    expect(lastChild).toBeVisible();
-    expect(lastChildTag).toEqual('svg');
-
-    expect(firstChild).toBeInTheDocument();
-    expect(firstChild).toBeVisible();
-    expect(firstChildTag).toEqual('svg');
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+      });
+    });
   },
 };
 
@@ -141,6 +405,98 @@ export const Outline: Story = {
     variant: 'outline',
     children: 'Label',
     disabled: false,
+    onClick: fn(),
+  },
+  play: async ({ args, canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    const button = canvas.getByRole('button');
+
+    await step('Checking the button structure', async () => {
+      expect(
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
+      expect(
+        button,
+        'it is expected that the button is rendered'
+      ).toBeInTheDocument();
+      expect(
+        button,
+        'It is expected that the button has an internal left spacing of 24px'
+      ).toHaveStyle('padding-left: 24px');
+      expect(
+        button,
+        'It is expected that the button has an internal right spacing of 24px'
+      ).toHaveStyle('padding-right: 24px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
+      );
+      expect(
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button,
+        'It is expected that the button has a border 1px solid #000'
+      ).toHaveStyle('border: 1px solid #000');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only one element'
+      ).toBe(1);
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
+
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+        expect(
+          button,
+          'It is expected that the button has a border 1px solid #000'
+        ).toHaveStyle('border: 1px solid #0053db');
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #0053db');
+      });
+    });
   },
 };
 
@@ -150,6 +506,98 @@ export const OutlineWithPrefix: Story = {
     children: 'Label',
     PrefixIcon: <PlusIcon />,
     disabled: false,
+    onClick: fn(),
+  },
+  play: async ({ args, canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    const button = canvas.getByRole('button');
+
+    await step('Checking the button structure', async () => {
+      expect(
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
+      expect(
+        button,
+        'it is expected that the button is rendered'
+      ).toBeInTheDocument();
+      expect(
+        button,
+        'It is expected that the button has an internal left spacing of 16px'
+      ).toHaveStyle('padding-left: 16px');
+      expect(
+        button,
+        'It is expected that the button has an internal right spacing of 24px'
+      ).toHaveStyle('padding-right: 24px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
+      );
+      expect(
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button,
+        'It is expected that the button has a border 1px solid #000'
+      ).toHaveStyle('border: 1px solid #000');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only two element'
+      ).toBe(2);
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
+
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+        expect(
+          button,
+          'It is expected that the button has a border 1px solid #000'
+        ).toHaveStyle('border: 1px solid #0053db');
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #0053db');
+      });
+    });
   },
 };
 
@@ -159,6 +607,98 @@ export const OutlineWithSuffix: Story = {
     children: 'Label',
     SuffixIcon: <PlusIcon />,
     disabled: false,
+    onClick: fn(),
+  },
+  play: async ({ args, canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    const button = canvas.getByRole('button');
+
+    await step('Checking the button structure', async () => {
+      expect(
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
+      expect(
+        button,
+        'it is expected that the button is rendered'
+      ).toBeInTheDocument();
+      expect(
+        button,
+        'It is expected that the button has an internal left spacing of 24px'
+      ).toHaveStyle('padding-left: 24px');
+      expect(
+        button,
+        'It is expected that the button has an internal right spacing of 16px'
+      ).toHaveStyle('padding-right: 16px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
+      );
+      expect(
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button,
+        'It is expected that the button has a border 1px solid #000'
+      ).toHaveStyle('border: 1px solid #000');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only two element'
+      ).toBe(2);
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
+
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+        expect(
+          button,
+          'It is expected that the button has a border 1px solid #000'
+        ).toHaveStyle('border: 1px solid #0053db');
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #0053db');
+      });
+    });
   },
 };
 
@@ -169,6 +709,98 @@ export const OutlineWithCombined: Story = {
     PrefixIcon: <PlusIcon />,
     SuffixIcon: <PlusIcon />,
     disabled: false,
+    onClick: fn(),
+  },
+  play: async ({ args, canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    const button = canvas.getByRole('button');
+
+    await step('Checking the button structure', async () => {
+      expect(
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
+      expect(
+        button,
+        'it is expected that the button is rendered'
+      ).toBeInTheDocument();
+      expect(
+        button,
+        'It is expected that the button has an internal left spacing of 16px'
+      ).toHaveStyle('padding-left: 16px');
+      expect(
+        button,
+        'It is expected that the button has an internal right spacing of 16px'
+      ).toHaveStyle('padding-right: 16px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
+      );
+      expect(
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button,
+        'It is expected that the button has a border 1px solid #000'
+      ).toHaveStyle('border: 1px solid #000');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only two element'
+      ).toBe(3);
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
+
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+        expect(
+          button,
+          'It is expected that the button has a border 1px solid #000'
+        ).toHaveStyle('border: 1px solid #0053db');
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #0053db');
+      });
+    });
   },
 };
 
@@ -177,6 +809,90 @@ export const Text: Story = {
     variant: 'text',
     children: 'Label',
     disabled: false,
+    onClick: fn(),
+  },
+  play: async ({ args, canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    const button = canvas.getByRole('button');
+
+    await step('Checking the button structure', async () => {
+      expect(
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
+      expect(
+        button,
+        'it is expected that the button is rendered'
+      ).toBeInTheDocument();
+      expect(
+        button,
+        'It is expected that the button has an internal left spacing of 24px'
+      ).toHaveStyle('padding-left: 24px');
+      expect(
+        button,
+        'It is expected that the button has an internal right spacing of 24px'
+      ).toHaveStyle('padding-right: 24px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
+      );
+      expect(
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only one element'
+      ).toBe(1);
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
+
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+      });
+    });
   },
 };
 
@@ -186,6 +902,90 @@ export const TextWithPrefix: Story = {
     children: 'Label',
     PrefixIcon: <PlusIcon />,
     disabled: false,
+    onClick: fn(),
+  },
+  play: async ({ args, canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    const button = canvas.getByRole('button');
+
+    await step('Checking the button structure', async () => {
+      expect(
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
+      expect(
+        button,
+        'it is expected that the button is rendered'
+      ).toBeInTheDocument();
+      expect(
+        button,
+        'It is expected that the button has an internal left spacing of 16px'
+      ).toHaveStyle('padding-left: 16px');
+      expect(
+        button,
+        'It is expected that the button has an internal right spacing of 24px'
+      ).toHaveStyle('padding-right: 24px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
+      );
+      expect(
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only one element'
+      ).toBe(2);
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
+
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+      });
+    });
   },
 };
 
@@ -195,6 +995,90 @@ export const TextWithSuffix: Story = {
     children: 'Label',
     SuffixIcon: <PlusIcon />,
     disabled: false,
+    onClick: fn(),
+  },
+  play: async ({ args, canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    const button = canvas.getByRole('button');
+
+    await step('Checking the button structure', async () => {
+      expect(
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
+      expect(
+        button,
+        'it is expected that the button is rendered'
+      ).toBeInTheDocument();
+      expect(
+        button,
+        'It is expected that the button has an internal left spacing of 24px'
+      ).toHaveStyle('padding-left: 24px');
+      expect(
+        button,
+        'It is expected that the button has an internal right spacing of 16px'
+      ).toHaveStyle('padding-right: 16px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
+      );
+      expect(
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only one element'
+      ).toBe(2);
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
+
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+      });
+    });
   },
 };
 
@@ -205,16 +1089,90 @@ export const TextWithCombined: Story = {
     PrefixIcon: <PlusIcon />,
     SuffixIcon: <PlusIcon />,
     disabled: false,
+    onClick: fn(),
   },
-};
+  play: async ({ args, canvasElement, step }) => {
+    const canvas = within(canvasElement);
 
-export const SmallTextWithCombined: Story = {
-  args: {
-    variant: 'text',
-    children: 'Label',
-    PrefixIcon: <PlusIcon />,
-    SuffixIcon: <PlusIcon />,
-    disabled: false,
+    const button = canvas.getByRole('button');
+
+    await step('Checking the button structure', async () => {
+      expect(
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
+      expect(
+        button,
+        'it is expected that the button is rendered'
+      ).toBeInTheDocument();
+      expect(
+        button,
+        'It is expected that the button has an internal left spacing of 16px'
+      ).toHaveStyle('padding-left: 16px');
+      expect(
+        button,
+        'It is expected that the button has an internal right spacing of 16px'
+      ).toHaveStyle('padding-right: 16px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
+      );
+      expect(
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only one element'
+      ).toBe(3);
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
+
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+      });
+    });
   },
 };
 
@@ -223,15 +1181,191 @@ export const Tonal: Story = {
     variant: 'tonal',
     children: 'Label',
     disabled: false,
+    onClick: fn(),
+  },
+  play: async ({ args, canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    const button = canvas.getByRole('button');
+
+    await step('Checking the button structure', async () => {
+      expect(
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
+      expect(
+        button,
+        'it is expected that the button is rendered'
+      ).toBeInTheDocument();
+      expect(
+        button,
+        'It is expected that the button has an internal left spacing of 24px'
+      ).toHaveStyle('padding-left: 24px');
+      expect(
+        button,
+        'It is expected that the button has an internal right spacing of 24px'
+      ).toHaveStyle('padding-right: 24px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
+      );
+      expect(
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only one element'
+      ).toBe(1);
+      expect(
+        button,
+        'It is expected that the button has a background #0053db14'
+      ).toHaveStyle('background-color: #0053db14');
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
+
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #0053db'
+        ).toHaveStyle('color: #0053db');
+      });
+    });
   },
 };
 
-export const TonalWithSuffix: Story = {
+export const TonalWithPrefix: Story = {
   args: {
     variant: 'tonal',
     children: 'Label',
     PrefixIcon: <PlusIcon />,
     disabled: false,
+    onClick: fn(),
+  },
+  play: async ({ args, canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    const button = canvas.getByRole('button');
+
+    await step('Checking the button structure', async () => {
+      expect(
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
+      expect(
+        button,
+        'it is expected that the button is rendered'
+      ).toBeInTheDocument();
+      expect(
+        button,
+        'It is expected that the button has an internal left spacing of 16px'
+      ).toHaveStyle('padding-left: 16px');
+      expect(
+        button,
+        'It is expected that the button has an internal right spacing of 24px'
+      ).toHaveStyle('padding-right: 24px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
+      );
+      expect(
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only two element'
+      ).toBe(2);
+      expect(
+        button,
+        'It is expected that the button has a background #0053db14'
+      ).toHaveStyle('background-color: #0053db14');
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
+
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #0053db'
+        ).toHaveStyle('color: #0053db');
+      });
+    });
   },
 };
 
@@ -242,6 +1376,94 @@ export const TonalWithCombined: Story = {
     PrefixIcon: <PlusIcon />,
     SuffixIcon: <PlusIcon />,
     disabled: false,
+    onClick: fn(),
+  },
+  play: async ({ args, canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    const button = canvas.getByRole('button');
+
+    await step('Checking the button structure', async () => {
+      expect(
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
+      expect(
+        button,
+        'it is expected that the button is rendered'
+      ).toBeInTheDocument();
+      expect(
+        button,
+        'It is expected that the button has an internal left spacing of 16px'
+      ).toHaveStyle('padding-left: 16px');
+      expect(
+        button,
+        'It is expected that the button has an internal right spacing of 16px'
+      ).toHaveStyle('padding-right: 16px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
+      );
+      expect(
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only three element'
+      ).toBe(3);
+      expect(
+        button,
+        'It is expected that the button has a background #0053db14'
+      ).toHaveStyle('background-color: #0053db14');
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #000'
+        ).toHaveStyle('color: #000');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
+
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+        expect(
+          button,
+          'It is expected that the button will have a transparent blue border when clicked'
+        ).toHaveStyle('box-shadow: 0 0 0 4px #0053db29');
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #0053db'
+        ).toHaveStyle('color: #0053db');
+      });
+    });
   },
 };
 
@@ -251,39 +1473,68 @@ export const Icon: Story = {
     children: <SwapIcon />,
     disabled: false,
     isIcon: true,
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const button = canvas.getByRole('button');
-
-    const parentChildrens = button.childNodes;
-    expect(parentChildrens).toHaveLength(1);
-
-    const parentOnlyChild = button.firstElementChild;
-
-    expect(parentOnlyChild?.tagName.trim()).toBe('svg');
-  },
-};
-
-export const ButtonWithAction: Story = {
-  args: {
-    variant: 'outline',
-    children: 'Press here',
-    disabled: false,
-    selected: false,
     onClick: fn(),
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
+
     const button = canvas.getByRole('button');
 
-    //click on button
-    await step('click on button', () => {
-      button.click();
+    await step('Checking the button structure', async () => {
+      expect(
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
+      expect(
+        button,
+        'it is expected that the button is rendered'
+      ).toBeInTheDocument();
+      expect(
+        button,
+        'It is expected that the button has an internal left spacing of 8px'
+      ).toHaveStyle('padding-left: 8px');
+      expect(
+        button,
+        'It is expected that the button has an internal right spacing of 8px'
+      ).toHaveStyle('padding-right: 8px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor pointer'
+      ).toHaveStyle('cursor: pointer');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
+      );
+      expect(
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: center');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only one element'
+      ).toBe(1);
+      expect(
+        button,
+        'It is expected that the button has a background #0053db'
+      ).toHaveStyle('background-color: #0053db');
     });
 
-    //expect the event to be called only once, because the button was click only one time
-    await waitFor(() => expect(args.onClick).toHaveBeenCalledOnce());
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function has been called when the button has been clicked'
+        ).toHaveBeenCalled();
+      });
+    });
   },
 };
 
@@ -294,23 +1545,83 @@ export const DisabledButton: Story = {
     disabled: true,
     onClick: fn(),
   },
-  play: async ({ args, canvasElement }) => {
+  play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
 
     const button = canvas.getByRole('button');
 
-    const computedStyle = getComputedStyle(button);
+    await step('Checking the button structure', async () => {
+      expect(
+        button.tagName,
+        'It is expected that the button is an html BUTTON element'
+      ).toBe('BUTTON');
+      expect(
+        button,
+        'it is expected that the button is rendered'
+      ).toBeInTheDocument();
+      expect(
+        button,
+        'It is expected that the button has an internal left spacing of 24px'
+      ).toHaveStyle('padding-left: 24px');
+      expect(
+        button,
+        'It is expected that the button has an internal right spacing of 24px'
+      ).toHaveStyle('padding-right: 24px');
+      expect(
+        button,
+        'It is expected that the button has a border-radius of 8px'
+      ).toHaveStyle('border-radius: 8px');
+      expect(
+        button,
+        'It is expected that the button has a cursor not-allowed'
+      ).toHaveStyle('cursor: not-allowed');
+      expect(button, 'It is expected that the button is flex').toHaveStyle(
+        'display: flex'
+      );
+      expect(
+        button,
+        'It is expected that the button has justify-content space-between'
+      ).toHaveStyle('justify-content: space-between');
+      expect(
+        button,
+        'It is expected that the button will not have a blue border'
+      ).toHaveStyle('box-shadow: none');
+      expect(
+        button,
+        'It is expected that the button has a background #00000029'
+      ).toHaveStyle('background-color: #00000029');
+      expect(
+        button.childNodes.length,
+        'It is expected that the button has only one element'
+      ).toBe(1);
+      expect(
+        button.textContent,
+        `It is expected that the button has the text ${args.children} as content`
+      ).toBe(args.children);
+      await step('Checking the font styles', async () => {
+        expect(
+          button,
+          'It is expected that the text on the button will be coloured #1b1b1f'
+        ).toHaveStyle('color: #1b1b1f');
+        expect(
+          button,
+          'It is expected that the text on the button will have a font size of 14px'
+        ).toHaveStyle('font-size: 14px');
+        expect(
+          button,
+          'It is expected that the text on the button will have the font-family Proto'
+        ).toHaveStyle('font-family: Proto');
+      });
+    });
 
-    const cursor = computedStyle.getPropertyValue('cursor');
-    const opacity = Number(computedStyle.getPropertyValue('opacity'));
-
-    button.click();
-
-    expect(button).toBeDisabled();
-    expect(cursor).toBe('not-allowed');
-    expect(opacity).toBeLessThan(1);
-
-    //expect the event to not be called, because the button is disabled
-    await waitFor(() => expect(args.onClick).toHaveBeenCalledTimes(0));
+    await step('Checking the click event', async () => {
+      await userEvent.click(button);
+      await waitFor(() => {
+        expect(
+          args.onClick,
+          'It is expected that the function was not called when the button was clicked'
+        ).not.toHaveBeenCalled();
+      });
+    });
   },
 };

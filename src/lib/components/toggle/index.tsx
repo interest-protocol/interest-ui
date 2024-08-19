@@ -49,13 +49,7 @@ export const ToggleButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
   };
 
   return (
-    <Box
-      display="flex"
-      flexWrap="wrap"
-      alignItems="center"
-      // eslint-disable-next-line jsx-a11y/aria-role
-      role="toggle"
-    >
+    <Box display="flex" flexWrap="wrap" alignItems="center" role="switch">
       <LabelElement
         ml="0.375rem"
         display="flex"
@@ -116,7 +110,7 @@ export const ToggleButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
         </Box>
       </LabelElement>
       <Box display="flex" ml="xs" flexDirection="column">
-        <Typography as="p" variant="body" size="large">
+        <Typography as="label" variant="body" size="large">
           {labels?.label}
         </Typography>
         <Typography
