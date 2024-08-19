@@ -7,14 +7,23 @@ import { ProgressCircle } from './progress-circle';
 
 export const ProgressIndicator: FC<
   PropsWithChildren<ProgressIndicatorProps>
-> = ({ size, value, variant, ...props }) => {
-  if (variant === 'bar') return <ProgressBar value={value ?? 0} {...props} />;
+> = ({ size, value, status, variant, ...props }) => {
+  if (variant === 'bar' || variant === 'special-bar')
+    return (
+      <ProgressBar
+        value={value ?? 0}
+        variant={variant}
+        status={status}
+        size={size}
+        {...props}
+      />
+    );
 
   return (
-    // eslint-disable-next-line jsx-a11y/aria-role
-    <Box role="progressIndicator">
+    <Box role="progressbar" aria-label="circle">
       <ProgressCircle
         size={size}
+        status={status}
         value={variant === 'loading' ? -1 : value ?? 0}
         {...props}
       />
