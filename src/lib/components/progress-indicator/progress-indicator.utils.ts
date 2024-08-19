@@ -1,8 +1,12 @@
 import { Theme } from '../../theme';
+import { ProgressStatus } from './progress-indicator.types';
 
-export const getProgressBarColor = (value: number, colors: Theme['colors']) => {
-  if (value <= 50) return colors.success;
-  if (value <= 75) return colors.warning;
-  if (value <= 100) return colors.error;
-  return 'transparent';
+export const getProgressColor = (
+  colors: Theme['colors'],
+  status?: ProgressStatus
+) => {
+  if (status == 'success') return colors.success;
+  if (status == 'warning') return colors.warning;
+  if (status == 'danger') return colors.error;
+  return colors.primary;
 };

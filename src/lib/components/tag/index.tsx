@@ -21,6 +21,7 @@ export const Tag: FC<PropsWithChildren<TagProps>> = ({
   children,
   PrefixIcon,
   size = 'large',
+  onClick,
   ...props
 }) => (
   <MotionTag
@@ -38,14 +39,16 @@ export const Tag: FC<PropsWithChildren<TagProps>> = ({
       scale: props.disabled ? 1 : 1.05,
       transition: { duration: 0.005, ease: easeInOut },
     }}
+    onClick={onClick}
     {...props}
-    aria-label="tag"
+    aria-labelledby="tag-title"
   >
     {PrefixIcon}
     <Typography
       as="p"
-      variant="body"
       size={size}
+      variant="body"
+      id="tag-title"
       pr={!onClose ? '0.625rem' : 'unset'}
       pl={!PrefixIcon ? '0.625rem' : 'unset'}
     >
@@ -56,7 +59,10 @@ export const Tag: FC<PropsWithChildren<TagProps>> = ({
         display="flex"
         width="1.125rem"
         height="1.125rem"
-        onClick={onClose}
+        onClick={(e) => {
+          onClose();
+          e.stopPropagation();
+        }}
         alignItems="center"
         justifyContent="center"
       >

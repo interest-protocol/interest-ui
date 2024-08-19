@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, userEvent, within } from '@storybook/test';
+import { expect, userEvent, waitFor, within } from '@storybook/test';
 import React from 'react';
 
 import { PlusIcon } from '../../../../storybook/icons';
@@ -19,35 +19,77 @@ const meta: Meta<typeof TextField> = {
 
 export default meta;
 
+const INPUT_VALUE = '123';
+
 type Story = StoryObj<typeof TextField>;
 
 export const Default: Story = {
   args: {
     placeholder: '0.123',
   },
-  play: async ({ args, canvasElement, step }) => {
+
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const textfield = canvas.getByLabelText('textfieldHolder');
 
-    const textField = canvas.getByRole('input');
-    const computedStyle = getComputedStyle(textField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
+    await step('Testing textfield holder', async () => {
+      expect(textfield, 'To be rendered').toBeInTheDocument();
+      expect(textfield, 'Should have cursor default').toHaveStyle(
+        'cursor: default'
+      );
 
-    const inputElement = textField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('input'));
+      expect(textfield, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        textfield,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
     });
 
-    await step('Check property value and args', () => {
-      expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
-      expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
-      expect(color.trim()).toBe('rgb(0, 0, 0)');
-      expect(textAlignment).toBe('start');
-      expect(args.placeholder).toBe('0.123');
+    await step('Testing textfield input', async () => {
+      const inputField = textfield.children[0].children[0].children[0];
+
+      expect(inputField.tagName, 'Should be an input').toBe('INPUT');
+      expect(inputField, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(inputField, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(
+        inputField,
+        'Should have border of 0px none rgb(0, 0, 0)'
+      ).toHaveStyle('border: 0px none rgb(0, 0, 0)');
+      expect(inputField, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(inputField, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(inputField, 'Should have cursor default').toHaveStyle(
+        'cursor: default'
+      );
+      expect(inputField, 'Should have a placeholder').toHaveAttribute(
+        'placeholder'
+      );
+
+      const placeholderValue = inputField.getAttribute('placeholder');
+      expect(placeholderValue, 'Should have placeholder of Input').toBe(
+        '0.123'
+      );
+      await step('Should insert 123 text in input', async () => {
+        await userEvent.type(inputField, INPUT_VALUE, {
+          delay: 100,
+        });
+
+        await waitFor(() => {
+          const newInput = canvas.getByLabelText('textfieldHolder');
+          const newInputField = newInput.children[0].children[0].children[0];
+          expect(
+            newInputField.getAttribute('value'),
+            'Should insert 123 as value'
+          ).toBe(INPUT_VALUE);
+        });
+      });
     });
   },
 };
@@ -61,37 +103,124 @@ export const WithPrefix: Story = {
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const textfield = canvas.getByLabelText('textfieldHolder');
 
-    const textField = canvas.getByRole('input');
-    const computedStyle = getComputedStyle(textField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = textField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
-
-    const inputElement = textField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('input'));
+    await step('Testing textfield holder', async () => {
+      expect(textfield, 'To be rendered').toBeInTheDocument();
+      expect(textfield, 'Should have cursor default').toHaveStyle(
+        'cursor: default'
+      );
+      expect(textfield, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        textfield,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
     });
 
-    await step('Check Property value and args', () => {
-      expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
-      expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
-      expect(color.trim()).toBe('rgb(0, 0, 0)');
-      expect(textAlignment).toBe('start');
+    await step('Testing SVG ', async () => {
+      const svgHolder = textfield.children[1].children[0];
+      expect(svgHolder, 'Should have display flex').toHaveStyle(
+        'display: flex'
+      );
+      const svgElements = svgHolder.querySelectorAll('svg');
+      expect(svgElements, 'Should have 1 svg').toHaveLength(1);
+
+      const svg = svgHolder.children[0].tagName.toLowerCase();
+      expect(svg, 'Should have svg element').toEqual('svg');
+    });
+
+    await step('Testing Supporting text', async () => {
+      const supportingText = textfield.children[2];
+
+      expect(supportingText, 'Should have font-size of 12px').toHaveStyle(
+        'font-size: 12px'
+      );
+      expect(supportingText, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(
+        supportingText,
+        'Should display Supporting text'
+      ).toHaveTextContent('Supporting text');
+      expect(supportingText, 'Should have color of rgb(0, 0, 0)').toHaveStyle(
+        'color: rgb(0, 0, 0)'
+      );
+    });
+
+    await step('Testing args', () => {
       expect(args.placeholder).toBe('0.123');
-      expect(textField).toHaveTextContent('Label');
+      expect(args.supportingText).toBe('Supporting text');
+      expect(args.label).toBe('Label');
+    });
+
+    await step('Testing label', async () => {
+      const label = textfield.children[0];
+      expect(label, 'To be rendered').toBeInTheDocument();
+      expect(label, 'Should have display inline').toHaveStyle(
+        'display: inline'
+      );
+      expect(label, 'Should have height of auto').toHaveStyle('height: auto');
+      expect(label, 'Should have color of rgb(0, 0, 0)').toHaveStyle(
+        'color: rgb(0, 0, 0)'
+      );
+      expect(label, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(label.childNodes.length, 'Should have 1 element as child').toBe(1);
+      expect(
+        label,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+    });
+
+    await step('Testing textfield input', async () => {
+      const inputField = textfield.children[1].children[1].children[0];
+      expect(inputField.tagName, 'Should be an input').toBe('INPUT');
+      expect(inputField, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(inputField, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(
+        inputField,
+        'Should have border of 0px none rgb(0, 0, 0)'
+      ).toHaveStyle('border: 0px none rgb(0, 0, 0)');
+      expect(inputField, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(inputField, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(inputField, 'Should have cursor default').toHaveStyle(
+        'cursor: default'
+      );
+      expect(inputField, 'Should have a placeholder').toHaveAttribute(
+        'placeholder'
+      );
+
+      const placeholderValue = inputField.getAttribute('placeholder');
+      expect(placeholderValue, 'Should have placeholder of Input').toBe(
+        '0.123'
+      );
+
+      await step('Should insert 123 text in input', async () => {
+        await userEvent.type(inputField, INPUT_VALUE, {
+          delay: 100,
+        });
+
+        await waitFor(() => {
+          const newInput = canvas.getByLabelText('textfieldHolder');
+          const newInputField = newInput.children[1].children[1].children[0];
+          expect(
+            newInputField.getAttribute('value'),
+            'Should insert 123 as value'
+          ).toBe(INPUT_VALUE);
+        });
+      });
     });
   },
 };
 
-export const WithPrefixSucess: Story = {
+export const WithPrefixSuccess: Story = {
   args: {
     label: 'Label',
     status: 'success',
@@ -101,72 +230,117 @@ export const WithPrefixSucess: Story = {
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const textfield = canvas.getByLabelText('textfieldHolder');
 
-    const textField = canvas.getByRole('input');
-    const computedStyle = getComputedStyle(textField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = textField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
-
-    const inputElement = textField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('input'));
+    await step('Testing textfield holder', async () => {
+      expect(textfield, 'To be rendered').toBeInTheDocument();
+      expect(textfield, 'Should have cursor default').toHaveStyle(
+        'cursor: default'
+      );
+      expect(textfield, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        textfield,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
     });
 
-    await step('Check Property value and args', () => {
-      expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
-      expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
-      expect(color.trim()).toBe('rgb(0, 0, 0)');
-      expect(textAlignment).toBe('start');
+    await step('Testing SVG ', async () => {
+      const svgHolder = textfield.children[1].children[0];
+      expect(svgHolder, 'Should have display flex').toHaveStyle(
+        'display: flex'
+      );
+      const svgElements = svgHolder.querySelectorAll('svg');
+      expect(svgElements, 'Should have 1 svg').toHaveLength(1);
+
+      const svg = svgHolder.children[0].tagName.toLowerCase();
+      expect(svg, 'Should have svg element').toEqual('svg');
+    });
+
+    await step('Testing Supporting text', async () => {
+      const supportingText = textfield.children[2];
+
+      expect(supportingText, 'Should have font-size of 12px').toHaveStyle(
+        'font-size: 12px'
+      );
+      expect(supportingText, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(
+        supportingText,
+        'Should display Supporting text'
+      ).toHaveTextContent('Supporting text');
+      expect(
+        supportingText,
+        'Should have color of rgb(22, 162, 74)'
+      ).toHaveStyle('color: rgb(22, 162, 74)');
+    });
+
+    await step('Testing args', () => {
       expect(args.placeholder).toBe('0.123');
-      expect(textField).toHaveTextContent('Label');
-      expect(args.status).toBe('success');
-    });
-  },
-};
-
-export const WithSuffix: Story = {
-  args: {
-    label: 'Label',
-    placeholder: '0.123',
-    Suffix: <PlusIcon />,
-    supportingText: 'Supporting text',
-  },
-  play: async ({ args, canvasElement, step }) => {
-    const canvas = within(canvasElement);
-
-    const textField = canvas.getByRole('input');
-    const computedStyle = getComputedStyle(textField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = textField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
-
-    const inputElement = textField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('input'));
+      expect(args.supportingText).toBe('Supporting text');
+      expect(args.label).toBe('Label');
     });
 
-    await step('Check Property value and args', () => {
-      expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
-      expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
-      expect(color.trim()).toBe('rgb(0, 0, 0)');
-      expect(textAlignment).toBe('start');
-      expect(args.placeholder).toBe('0.123');
-      expect(textField).toHaveTextContent('Label');
+    await step('Testing label', async () => {
+      const label = textfield.children[0];
+      expect(label, 'To be rendered').toBeInTheDocument();
+      expect(label, 'Should have display inline').toHaveStyle(
+        'display: inline'
+      );
+      expect(label, 'Should have height of auto').toHaveStyle('height: auto');
+      expect(label, 'Should have color of rgb(0, 0, 0)').toHaveStyle(
+        'color: rgb(0, 0, 0)'
+      );
+      expect(label, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(label.childNodes.length, 'Should have 1 element as child').toBe(1);
+      expect(
+        label,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+    });
+
+    await step('Testing textfield input', async () => {
+      const inputField = textfield.children[1].children[1].children[0];
+      expect(inputField.tagName, 'Should be an input').toBe('INPUT');
+      expect(inputField, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(inputField, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(inputField, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(inputField, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(inputField, 'Should have cursor default').toHaveStyle(
+        'cursor: default'
+      );
+      expect(inputField, 'Should have a placeholder').toHaveAttribute(
+        'placeholder'
+      );
+
+      const placeholderValue = inputField.getAttribute('placeholder');
+      expect(placeholderValue, 'Should have placeholder of Input').toBe(
+        '0.123'
+      );
+
+      await step('Should insert 123 text in input', async () => {
+        await userEvent.type(inputField, INPUT_VALUE, {
+          delay: 100,
+        });
+
+        await waitFor(() => {
+          const newInput = canvas.getByLabelText('textfieldHolder');
+          const newInputField = newInput.children[1].children[1].children[0];
+          console.log('New input field >>', newInputField);
+          expect(
+            newInputField.getAttribute('value'),
+            'Should insert 123 as value'
+          ).toBe(INPUT_VALUE);
+        });
+      });
     });
   },
 };
@@ -179,28 +353,107 @@ export const WithTopLabel: Story = {
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const textfield = canvas.getByLabelText('textfieldHolder');
 
-    const textField = canvas.getByRole('input');
-    const computedStyle = getComputedStyle(textField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    const inputElement = textField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('input'));
+    await step('Testing textfield holder', async () => {
+      expect(textfield, 'To be rendered').toBeInTheDocument();
+      expect(textfield, 'Should have cursor default').toHaveStyle(
+        'cursor: default'
+      );
+      expect(textfield, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        textfield,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
     });
 
-    await step('Check property value and args', () => {
-      expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
-      expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
-      expect(color.trim()).toBe('rgb(0, 0, 0)');
-      expect(textAlignment).toBe('start');
+    await step('Testing label', async () => {
+      const label = textfield.children[0];
+      expect(label, 'To be rendered').toBeInTheDocument();
+      expect(label, 'Should have display inline').toHaveStyle(
+        'display: inline'
+      );
+      expect(label, 'Should have height of auto').toHaveStyle('height: auto');
+      expect(label, 'Should have color of rgb(0, 0, 0)').toHaveStyle(
+        'color: rgb(0, 0, 0)'
+      );
+      expect(label, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(label.childNodes.length, 'Should have 1 element as child').toBe(1);
+      expect(
+        label,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+    });
+
+    await step('Testing Supporting text', async () => {
+      const supportingText = textfield.children[2];
+
+      expect(supportingText, 'Should have font-size of 12px').toHaveStyle(
+        'font-size: 12px'
+      );
+      expect(supportingText, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(
+        supportingText,
+        'Should display Supporting text'
+      ).toHaveTextContent('Supporting text');
+      expect(supportingText, 'Should have color of rgb(0, 0, 0)').toHaveStyle(
+        'color: rgb(0, 0, 0)'
+      );
+    });
+
+    await step('Testing args', () => {
       expect(args.placeholder).toBe('0.123');
-      expect(textField).toHaveTextContent('Label');
+      expect(args.supportingText).toBe('Supporting text');
+      expect(args.label).toBe('Label');
+    });
+
+    await step('Testing textfield input', async () => {
+      const inputField = textfield.children[1].children[0].children[0];
+
+      expect(inputField.tagName, 'Should be an input').toBe('INPUT');
+      expect(inputField, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(inputField, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(
+        inputField,
+        'Should have border of 0px none rgb(0, 0, 0)'
+      ).toHaveStyle('border: 0px none rgb(0, 0, 0)');
+      expect(inputField, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(inputField, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(inputField, 'Should have cursor default').toHaveStyle(
+        'cursor: default'
+      );
+      expect(inputField, 'Should have a placeholder').toHaveAttribute(
+        'placeholder'
+      );
+
+      const placeholderValue = inputField.getAttribute('placeholder');
+      expect(placeholderValue, 'Should have placeholder of Input').toBe(
+        '0.123'
+      );
+      await step('Should insert 123 text in input', async () => {
+        await userEvent.type(inputField, INPUT_VALUE, {
+          delay: 100,
+        });
+
+        await waitFor(() => {
+          const newInput = canvas.getByLabelText('textfieldHolder');
+          const newInputField = newInput.children[1].children[0].children[0];
+          expect(
+            newInputField.getAttribute('value'),
+            'Should insert 123 as value'
+          ).toBe(INPUT_VALUE);
+        });
+      });
     });
   },
 };
@@ -215,32 +468,119 @@ export const Combined: Story = {
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const textfield = canvas.getByLabelText('textfieldHolder');
 
-    const textField = canvas.getByRole('input');
-    const computedStyle = getComputedStyle(textField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = textField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(2);
-
-    const inputElement = textField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('input'));
+    await step('Testing textfield holder', async () => {
+      expect(textfield, 'To be rendered').toBeInTheDocument();
+      expect(textfield, 'Should have cursor default').toHaveStyle(
+        'cursor: default'
+      );
+      expect(textfield, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        textfield,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
     });
 
-    await step('Check property value and args', () => {
-      expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
-      expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
-      expect(color.trim()).toBe('rgb(0, 0, 0)');
-      expect(textAlignment).toBe('start');
+    await step('Testing label', async () => {
+      const label = textfield.children[0];
+      expect(label, 'To be rendered').toBeInTheDocument();
+      expect(label, 'Should have display inline').toHaveStyle(
+        'display: inline'
+      );
+      expect(label, 'Should have height of auto').toHaveStyle('height: auto');
+      expect(label, 'Should have color of rgb(0, 0, 0)').toHaveStyle(
+        'color: rgb(0, 0, 0)'
+      );
+      expect(label, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(label.childNodes.length, 'Should have 1 element as child').toBe(1);
+      expect(
+        label,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+    });
+
+    await step('Testing SVG ', async () => {
+      const svgHolder = textfield.children[1].children[0];
+      expect(svgHolder, 'Should have display flex').toHaveStyle(
+        'display: flex'
+      );
+      const svgElements = svgHolder.querySelectorAll('svg');
+      expect(svgElements, 'Should have 1 svg').toHaveLength(1);
+
+      const svg = svgHolder.children[0].tagName.toLowerCase();
+      expect(svg, 'Should have svg element').toEqual('svg');
+    });
+
+    await step('Testing Supporting text', async () => {
+      const supportingText = textfield.children[2];
+
+      expect(supportingText, 'Should have font-size of 12px').toHaveStyle(
+        'font-size: 12px'
+      );
+      expect(supportingText, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(
+        supportingText,
+        'Should display Supporting text'
+      ).toHaveTextContent('Supporting text');
+      expect(supportingText, 'Should have color of rgb(0, 0, 0)').toHaveStyle(
+        'color: rgb(0, 0, 0)'
+      );
+    });
+
+    await step('Testing args', () => {
       expect(args.placeholder).toBe('0.123');
-      expect(textField).toHaveTextContent('Label');
+      expect(args.supportingText).toBe('Supporting text');
+      expect(args.label).toBe('Label');
+    });
+
+    await step('Testing textfield input', async () => {
+      const inputField = textfield.children[1].children[1].children[0];
+
+      expect(inputField.tagName, 'Should be an input').toBe('INPUT');
+      expect(inputField, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(inputField, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(
+        inputField,
+        'Should have border of 0px none rgb(0, 0, 0)'
+      ).toHaveStyle('border: 0px none rgb(0, 0, 0)');
+      expect(inputField, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(inputField, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(inputField, 'Should have cursor default').toHaveStyle(
+        'cursor: default'
+      );
+      expect(inputField, 'Should have a placeholder').toHaveAttribute(
+        'placeholder'
+      );
+
+      const placeholderValue = inputField.getAttribute('placeholder');
+      expect(placeholderValue, 'Should have placeholder of Input').toBe(
+        '0.123'
+      );
+      await step('Should insert 123 text in input', async () => {
+        await userEvent.type(inputField, INPUT_VALUE, {
+          delay: 100,
+        });
+
+        await waitFor(() => {
+          const newInput = canvas.getByLabelText('textfieldHolder');
+          const newInputField = newInput.children[1].children[1].children[0];
+          expect(
+            newInputField.getAttribute('value'),
+            'Should insert 123 as value'
+          ).toBe(INPUT_VALUE);
+        });
+      });
     });
   },
 };
@@ -254,32 +594,113 @@ export const Error: Story = {
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const textfield = canvas.getByLabelText('textfieldHolder');
 
-    const textField = canvas.getByRole('input');
-    const computedStyle = getComputedStyle(textField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = textField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
-
-    const inputElement = textField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('input'));
+    await step('Testing textfield holder', async () => {
+      expect(textfield, 'To be rendered').toBeInTheDocument();
+      expect(textfield, 'Should have cursor default').toHaveStyle(
+        'cursor: default'
+      );
+      expect(textfield, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        textfield,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
     });
 
-    await step('Check property value and args', () => {
-      expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
-      expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
-      expect(color.trim()).toBe('rgb(0, 0, 0)');
-      expect(textAlignment).toBe('start');
+    await step('Testing label', async () => {
+      const label = textfield.children[0];
+
+      expect(label, 'To be rendered').toBeInTheDocument();
+      expect(label, 'Should have display flex').toHaveStyle('display: flex');
+      expect(label, 'Should have height of 40px').toHaveStyle('height: 40px');
+      expect(label, 'Should have color of rgb(0, 0, 0)').toHaveStyle(
+        'color: rgb(0, 0, 0)'
+      );
+      expect(label, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(label.childNodes.length, 'Should have 2 element as child').toBe(2);
+      expect(
+        label,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+    });
+
+    await step('Testing SVG ', async () => {
+      const svgHolder = textfield.children[0].children[1];
+      expect(svgHolder, 'Should have display flex').toHaveStyle(
+        'display: flex'
+      );
+      const svgElements = svgHolder.querySelectorAll('svg');
+      expect(svgElements, 'Should have 1 svg').toHaveLength(1);
+
+      const svg = svgHolder.children[0].tagName.toLowerCase();
+      expect(svg, 'Should have svg element').toEqual('svg');
+    });
+
+    await step('Testing Supporting text', async () => {
+      const validAmount = textfield.children[1];
+
+      expect(validAmount, 'Should have font-size of 12px').toHaveStyle(
+        'font-size: 12px'
+      );
+      expect(validAmount, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(
+        validAmount,
+        'Should display Enter a valid amount'
+      ).toHaveTextContent('Enter a valid amount');
+      expect(validAmount, 'Should have color of rgb(229, 62, 62)').toHaveStyle(
+        'color: rgb(229, 62, 62)'
+      );
+    });
+
+    await step('Testing args', () => {
       expect(args.placeholder).toBe('0.123');
-      expect(args.status).toBe('error');
+      expect(args.supportingText).toBe('Enter a valid amount');
+    });
+
+    await step('Testing textfield input', async () => {
+      const inputField = textfield.children[0].children[0].children[0];
+
+      expect(inputField.tagName, 'Should be an input').toBe('INPUT');
+      expect(inputField, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(inputField, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(inputField, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(inputField, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(inputField, 'Should have cursor default').toHaveStyle(
+        'cursor: default'
+      );
+      expect(inputField, 'Should have a placeholder').toHaveAttribute(
+        'placeholder'
+      );
+
+      const placeholderValue = inputField.getAttribute('placeholder');
+      expect(placeholderValue, 'Should have placeholder of Input').toBe(
+        '0.123'
+      );
+      await step('Should insert 123 text in input', async () => {
+        await userEvent.type(inputField, INPUT_VALUE, {
+          delay: 100,
+        });
+
+        await waitFor(() => {
+          const newInput = canvas.getByLabelText('textfieldHolder');
+          const newInputField = newInput.children[0].children[0].children[0];
+          expect(
+            newInputField.getAttribute('value'),
+            'Should insert 123 as value'
+          ).toBe(INPUT_VALUE);
+        });
+      });
     });
   },
 };
@@ -295,33 +716,117 @@ export const ErrorCombined: Story = {
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const textfield = canvas.getByLabelText('textfieldHolder');
 
-    const textField = canvas.getByRole('input');
-    const computedStyle = getComputedStyle(textField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = textField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(2);
-
-    const inputElement = textField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('input'));
+    await step('Testing textfield holder', async () => {
+      expect(textfield, 'To be rendered').toBeInTheDocument();
+      expect(textfield, 'Should have cursor default').toHaveStyle(
+        'cursor: default'
+      );
+      expect(textfield, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        textfield,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
     });
 
-    await step('Check property value and args', () => {
-      expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
-      expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
-      expect(color.trim()).toBe('rgb(0, 0, 0)');
-      expect(textAlignment).toBe('start');
+    await step('Testing label', async () => {
+      const label = textfield.children[0];
+
+      expect(label, 'To be rendered').toBeInTheDocument();
+      expect(label, 'Should have display inline').toHaveStyle(
+        'display: inline'
+      );
+      expect(label, 'Should have height of auto').toHaveStyle('height: auto');
+      expect(label, 'Should have color of rgb(0, 0, 0)').toHaveStyle(
+        'color: rgb(0, 0, 0)'
+      );
+      expect(label, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(label.childNodes.length, 'Should have 1 element as child').toBe(1);
+      expect(
+        label,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+    });
+
+    await step('Testing SVG ', async () => {
+      const svgHolder = textfield.children[1].children[0];
+      expect(svgHolder, 'Should have display flex').toHaveStyle(
+        'display: flex'
+      );
+      const svgElements = svgHolder.querySelectorAll('svg');
+      expect(svgElements, 'Should have 1 svg').toHaveLength(1);
+
+      const svg = svgHolder.children[0].tagName.toLowerCase();
+      expect(svg, 'Should have svg element').toEqual('svg');
+    });
+
+    await step('Testing Supporting text', async () => {
+      const supportingText = textfield.children[2];
+
+      expect(supportingText, 'Should have font-size of 12px').toHaveStyle(
+        'font-size: 12px'
+      );
+      expect(supportingText, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(
+        supportingText,
+        'Should display Supporting text'
+      ).toHaveTextContent('Supporting text');
+      expect(
+        supportingText,
+        'Should have color of rgb(229, 62, 62)'
+      ).toHaveStyle('color: rgb(229, 62, 62)');
+    });
+
+    await step('Testing args', () => {
       expect(args.placeholder).toBe('0.123');
-      expect(textField).toHaveTextContent('Label');
-      expect(args.status).toBe('error');
+      expect(args.supportingText).toBe('Supporting text');
+      expect(args.label).toBe('Label');
+    });
+
+    await step('Testing textfield input', async () => {
+      const inputField = textfield.children[1].children[1].children[0];
+
+      expect(inputField.tagName, 'Should be an input').toBe('INPUT');
+      expect(inputField, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(inputField, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(inputField, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(inputField, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(inputField, 'Should have cursor default').toHaveStyle(
+        'cursor: default'
+      );
+      expect(inputField, 'Should have a placeholder').toHaveAttribute(
+        'placeholder'
+      );
+
+      const placeholderValue = inputField.getAttribute('placeholder');
+      expect(placeholderValue, 'Should have placeholder of Input').toBe(
+        '0.123'
+      );
+      await step('Should insert 123 text in input', async () => {
+        await userEvent.type(inputField, INPUT_VALUE, {
+          delay: 100,
+        });
+
+        await waitFor(() => {
+          const newInput = canvas.getByLabelText('textfieldHolder');
+          const newInputField = newInput.children[1].children[1].children[0];
+          expect(
+            newInputField.getAttribute('value'),
+            'Should insert 123 as value'
+          ).toBe(INPUT_VALUE);
+        });
+      });
     });
   },
 };
@@ -342,33 +847,114 @@ export const ErrorCombinedWithWrapper: Story = {
   ),
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const textfield = canvas.getByLabelText('textfieldHolder');
 
-    const textField = canvas.getByRole('input');
-    const computedStyle = getComputedStyle(textField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = textField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(2);
-
-    const inputElement = textField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('input'));
+    await step('Testing textfield holder', async () => {
+      expect(textfield, 'To be rendered').toBeInTheDocument();
+      expect(textfield, 'Should have cursor default').toHaveStyle(
+        'cursor: default'
+      );
+      expect(textfield, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(
+        textfield,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
     });
 
-    await step('Check property value and args', () => {
-      expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
-      expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
-      expect(color.trim()).toBe('rgb(0, 0, 0)');
-      expect(textAlignment).toBe('start');
+    await step('Testing label', async () => {
+      const label = textfield.children[0];
+      expect(label, 'To be rendered').toBeInTheDocument();
+      expect(label, 'Should have display block').toHaveStyle('display: block');
+      expect(label, 'Should have height of 20px').toHaveStyle('height: 20px');
+      expect(label, 'Should have color of rgb(0, 0, 0)').toHaveStyle(
+        'color: rgb(0, 0, 0)'
+      );
+      expect(label, 'Should have opacity of 1').toHaveStyle('opacity: 1');
+      expect(label.childNodes.length, 'Should have 1 element as child').toBe(1);
+      expect(
+        label,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
+    });
+
+    await step('Testing SVG ', async () => {
+      const svgHolder = textfield.children[1].children[0];
+      expect(svgHolder, 'Should have display flex').toHaveStyle(
+        'display: flex'
+      );
+      const svgElements = svgHolder.querySelectorAll('svg');
+      expect(svgElements, 'Should have 1 svg').toHaveLength(1);
+
+      const svg = svgHolder.children[0].tagName.toLowerCase();
+      expect(svg, 'Should have svg element').toEqual('svg');
+    });
+
+    await step('Testing Supporting text', async () => {
+      const supportingText = textfield.children[2];
+
+      expect(supportingText, 'Should have font-size of 12px').toHaveStyle(
+        'font-size: 12px'
+      );
+      expect(supportingText, 'Should have font-weight of 400').toHaveStyle(
+        'font-weight: 400'
+      );
+      expect(
+        supportingText,
+        'Should display Supporting text'
+      ).toHaveTextContent('Supporting text');
+      expect(
+        supportingText,
+        'Should have color of rgb(229, 62, 62)'
+      ).toHaveStyle('color: rgb(229, 62, 62)');
+    });
+
+    await step('Testing args', () => {
       expect(args.placeholder).toBe('0.123');
-      expect(textField).toHaveTextContent('Label');
-      expect(args.status).toBe('error');
+      expect(args.supportingText).toBe('Supporting text');
+      expect(args.label).toBe('Label');
+    });
+
+    await step('Testing textfield input', async () => {
+      const inputField = textfield.children[1].children[1].children[0];
+
+      expect(inputField.tagName, 'Should be an input').toBe('INPUT');
+      expect(inputField, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(inputField, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(inputField, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(inputField, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(inputField, 'Should have cursor default').toHaveStyle(
+        'cursor: default'
+      );
+      expect(inputField, 'Should have a placeholder').toHaveAttribute(
+        'placeholder'
+      );
+
+      const placeholderValue = inputField.getAttribute('placeholder');
+      expect(placeholderValue, 'Should have placeholder of Input').toBe(
+        '0.123'
+      );
+      await step('Should insert 123 text in input', async () => {
+        await userEvent.type(inputField, INPUT_VALUE, {
+          delay: 100,
+        });
+
+        await waitFor(() => {
+          const newInput = canvas.getByLabelText('textfieldHolder');
+          const newInputField = newInput.children[1].children[1].children[0];
+          expect(
+            newInputField.getAttribute('value'),
+            'Should insert 123 as value'
+          ).toBe(INPUT_VALUE);
+        });
+      });
     });
   },
 };
@@ -378,30 +964,37 @@ export const Disabled: Story = {
     disabled: true,
     placeholder: '0.123',
   },
-  play: async ({ args, canvasElement, step }) => {
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const textfield = canvas.getByLabelText('textfieldHolder');
 
-    const textField = canvas.getByRole('input');
-    const computedStyle = getComputedStyle(textField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    const inputElement = textField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Text field onClick', async () => {
-      await userEvent.click(canvas.getByRole('input'));
+    await step('Testing textfield holder', async () => {
+      expect(textfield, 'To be rendered').toBeInTheDocument();
+      expect(textfield, 'Should have cursor not-allowed').toHaveStyle(
+        'cursor: not-allowed'
+      );
+      expect(textfield, 'Should have opacity of 0.32').toHaveStyle(
+        'opacity: 0.32'
+      );
+      expect(
+        textfield,
+        'Should have background-color of rgba(0, 0, 0, 0)'
+      ).toHaveStyle('background-color: rgba(0, 0, 0, 0)');
     });
 
-    await step('Check property value and args', () => {
-      expect(border.trim()).toBe('0px none rgb(0, 0, 0)');
-      expect(background.substring(0, 16)).toBe('rgba(0, 0, 0, 0)');
-      expect(color.trim()).toBe('rgb(0, 0, 0)');
-      expect(textAlignment).toBe('start');
-      expect(args.placeholder).toBe('0.123');
-      expect(args.disabled).toBeTruthy();
+    await step('Testing textfield input', async () => {
+      const inputField = textfield.children[0].children[0].children[0];
+
+      expect(inputField.tagName, 'Should be an input').toBe('INPUT');
+      expect(inputField, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
+      expect(inputField, 'Should have font-weight of 500').toHaveStyle(
+        'font-weight: 500'
+      );
+      expect(inputField, 'Should have font-size of 16px').toHaveStyle(
+        'font-size: 16px'
+      );
     });
   },
 };
