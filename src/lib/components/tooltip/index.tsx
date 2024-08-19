@@ -107,18 +107,34 @@ export const TooltipWrapper: FC<PropsWithChildren<TooltipProps>> = ({
             height=".375rem"
             top={
               tooltipPosition === 'bottom'
-                ? '-.2343rem'
+                ? border
+                  ? '-0.23rem'
+                  : '-0.2rem'
                 : tooltipPosition === 'left' || tooltipPosition === 'right'
                 ? '50%'
                 : 'unset'
             }
-            left={tooltipPosition === 'right' ? '-.2343rem' : 'unset'}
-            right={tooltipPosition === 'left' ? '-.2343rem' : 'unset'}
+            left={
+              tooltipPosition === 'right'
+                ? border
+                  ? '-0.23rem'
+                  : '-0.2rem'
+                : 'unset'
+            }
+            right={
+              tooltipPosition === 'left'
+                ? border
+                  ? '-0.23rem'
+                  : '-0.2rem'
+                : 'unset'
+            }
             bottom={
               tooltipPosition === 'top'
-                ? '-.2343rem'
+                ? border
+                  ? '-0.23rem'
+                  : '-0.2rem'
                 : tooltipPosition === 'left' || tooltipPosition === 'right'
-                ? '0'
+                ? '50%'
                 : 'unset'
             }
             position="absolute"
