@@ -105,7 +105,12 @@ export const DropdownButton: FC<
                   {label}
                 </Typography>
 
-                <Box display="flex" alignItems="center" width="fit-content">
+                <Box
+                  display="flex"
+                  color="onSurface"
+                  alignItems="center"
+                  width="fit-content"
+                >
                   <ArrowBottomSecondarySVG
                     width="100%"
                     maxWidth="1.5rem"
