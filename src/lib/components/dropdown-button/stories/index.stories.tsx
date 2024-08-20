@@ -208,35 +208,24 @@ export const WithLabel: Story = {
 
     await step('Checking the dropdown content', () => {
       const dropdown = canvas.getByLabelText('dropdown');
-      const textElements = dropdown.getElementsByTagName('span');
 
       const firstChild = dropdown.firstChild && dropdown.firstChild;
-      const firstChildLength = firstChild ? firstChild?.childNodes.length : 0;
-
-      const middleChildLength = dropdown.childNodes[1].childNodes.length || 0;
-
       const lastChild = dropdown.lastChild && dropdown.lastChild;
-      const lastChildLength = lastChild ? lastChild?.childNodes.length : 0;
 
       expect(
-        firstChildLength + middleChildLength + lastChildLength,
-        'It expects that the dropdown has 6 elements'
-      ).toBe(6);
+        dropdown.childNodes,
+        'It expects that the dropdown has 2 elements'
+      ).toHaveLength(2);
 
       expect(
         firstChild,
         `It expects that the dropdown first child has the title Option 1`
-      ).toHaveTextContent(`${itemsList[0].title}`);
+      ).toHaveTextContent(itemsList[0].title);
 
       expect(
         lastChild,
         `It expects that the dropdown first child has the title Option 2`
       ).toHaveTextContent(`${itemsList[1].title}`);
-
-      expect(
-        textElements,
-        'It expects that the dropdown has 2 text elements'
-      ).toHaveLength(2);
     });
   },
 };
@@ -394,15 +383,15 @@ export const WithLabelRounded: Story = {
 
     await step('Checking the dropdown content', () => {
       const dropdown = canvas.getByLabelText('dropdown');
-      const textElements = dropdown.getElementsByTagName('span');
-      const firstChild = dropdown.firstChild;
-      const middleChild = dropdown.childNodes[1];
-      const lastChild = dropdown.lastChild;
+
+      const firstChild = dropdown.firstChild && dropdown.firstChild;
+      const middleChild = dropdown.childNodes[1] && dropdown.childNodes[1];
+      const lastChild = dropdown.lastChild && dropdown.lastChild;
 
       expect(
-        dropdown.childNodes.length,
+        dropdown.childNodes,
         'It expects that the dropdown has 3 elements'
-      ).toBe(3);
+      ).toHaveLength(3);
 
       expect(
         firstChild,
@@ -418,11 +407,6 @@ export const WithLabelRounded: Story = {
         lastChild,
         `It expects that the dropdown first child has the title Option 2`
       ).toHaveTextContent(`${itemsList[1].title}`);
-
-      expect(
-        textElements,
-        'It expects that the dropdown has 2 text elements'
-      ).toHaveLength(2);
     });
   },
 };
@@ -565,35 +549,24 @@ export const WithoutLabelOnlyIcon: Story = {
 
     await step('Checking the dropdown content', () => {
       const dropdown = canvas.getByLabelText('dropdown');
-      const textElements = dropdown.getElementsByTagName('span');
 
       const firstChild = dropdown.firstChild && dropdown.firstChild;
-      const firstChildLength = firstChild ? firstChild?.childNodes.length : 0;
-
-      const middleChildLength = dropdown.childNodes[1].childNodes.length || 0;
-
       const lastChild = dropdown.lastChild && dropdown.lastChild;
-      const lastChildLength = lastChild ? lastChild?.childNodes.length : 0;
 
       expect(
-        firstChildLength + middleChildLength + lastChildLength,
-        'It expects that the dropdown has 6 elements'
-      ).toBe(6);
+        dropdown.childNodes,
+        'It expects that the dropdown has 2 elements'
+      ).toHaveLength(2);
 
       expect(
         firstChild,
         `It expects that the dropdown first child has the title Option 1`
-      ).toHaveTextContent(`${itemsList[0].title}`);
+      ).toHaveTextContent(itemsList[0].title);
 
       expect(
         lastChild,
         `It expects that the dropdown first child has the title Option 2`
       ).toHaveTextContent(`${itemsList[1].title}`);
-
-      expect(
-        textElements,
-        'It expects that the dropdown has 2 text elements'
-      ).toHaveLength(2);
     });
   },
 };
