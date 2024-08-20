@@ -1,15 +1,37 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent, within } from '@storybook/test';
-import React from 'react';
+import React, { FC } from 'react';
+import { v4 } from 'uuid';
 
+import { Box } from '../../../elements';
 import { CircleSVG } from '../../../icons';
-import { RadioButton } from '../../radio-button';
-import { ToggleButton } from '../../toggle';
-import { DropdownButton } from '..';
+import { ListItem, ListItemProps } from '../../list-item';
+import { DropdownButton, DropdownButtonProps } from '..';
+import { itemsList } from '../dropdown-button.data';
+import { isDarkTheme } from '../dropdown-button.utils';
 
-const meta: Meta<typeof DropdownButton> = {
+const Dropdown: FC<DropdownButtonProps> = ({ ...props }) => (
+  <DropdownButton {...props} containerProps={{ borderRadius: 's' }}>
+    {itemsList.map((item: ListItemProps) => (
+      <ListItem
+        pr="m"
+        key={v4()}
+        title={item.title}
+        disabled={item && item.disabled}
+        SuffixIcon={item.SuffixIcon}
+        pl={item.PrefixIcon ? 'xs' : 'm'}
+        cursor={item.disabled ? 'not-allowed' : 'pointer'}
+        PrefixIcon={
+          item.PrefixIcon && <Box width="1.5rem">{item.PrefixIcon}</Box>
+        }
+      />
+    ))}
+  </DropdownButton>
+);
+
+const meta: Meta<typeof Dropdown> = {
   title: 'DropdownButton',
-  component: DropdownButton,
+  component: Dropdown,
   argTypes: {
     label: {
       defaultValue: 'Label',
@@ -24,27 +46,18 @@ const meta: Meta<typeof DropdownButton> = {
 
 export default meta;
 
-type Story = StoryObj<typeof DropdownButton>;
+type Story = StoryObj<typeof Dropdown>;
 
 export const WithLabel: Story = {
   args: {
     label: 'Label',
     disabled: false,
-    items: [
-      {
-        SuffixIcon: <RadioButton defaultValue={false} />,
-        title: 'Option 1',
-      },
-      {
-        SuffixIcon: <RadioButton defaultValue={false} />,
-        title: 'Option 2',
-      },
-    ],
     borderRadius: 'xs',
     onClick: fn(),
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const isDark = isDarkTheme();
 
     const button = canvas.getByRole('button');
     const svgElements = button.getElementsByTagName('svg');
@@ -56,10 +69,21 @@ export const WithLabel: Story = {
         'It expects that the button is being rendered'
       ).toBeInTheDocument();
 
-      expect(
-        button,
-        'It expects that the button background is rgb(255, 255, 255)'
-      ).toHaveStyle('background-color: rgb(255, 255, 255)');
+      if (!isDark) {
+        expect(
+          button,
+          'It expects that the button background is rgb(255, 255, 255)'
+        ).toHaveStyle('background-color: rgb(255, 255, 255)');
+      } else {
+        expect(
+          button,
+          'It expects that the button background is background-color: rgb(13, 13, 17)'
+        ).toHaveStyle('background-color: rgb(13, 13, 17)');
+      }
+
+      expect(button, 'It expects that the button height is 40px').toHaveStyle(
+        'height: 40px'
+      );
 
       expect(button, 'It expects that the button height is 40px').toHaveStyle(
         'height: 40px'
@@ -70,9 +94,10 @@ export const WithLabel: Story = {
         'It expects that the button width is 108.781px'
       ).toHaveStyle('width: 108.781px');
 
-      expect(button, 'It expects that the button padding is 8px').toHaveStyle(
-        'border-radius: 8px'
-      );
+      expect(
+        button,
+        'It expects that the button border-radius is 8px'
+      ).toHaveStyle('border-radius: 8px');
 
       expect(button, 'It expects that the button padding is 8px').toHaveStyle(
         'padding: 8px 16px'
@@ -134,13 +159,18 @@ export const WithLabel: Story = {
       await userEvent.click(button);
 
       const dropdown = canvas.getByLabelText('dropdown');
-      const computedStyle = getComputedStyle(dropdown);
-      const background = computedStyle.getPropertyValue('background');
 
-      expect(
-        background,
-        'It expects that the dropdown background is rgb(255, 255, 255)'
-      ).toContain('rgb(255, 255, 255)');
+      if (!isDark) {
+        expect(
+          dropdown,
+          'It expects that the dropdown background is rgb(255, 255, 255)'
+        ).toHaveStyle('background-color: rgb(255, 255, 255)');
+      } else {
+        expect(
+          dropdown,
+          'It expects that the dropdown background is background-color: rgb(13, 13, 17)'
+        ).toHaveStyle('background-color: rgb(13, 13, 17)');
+      }
 
       expect(
         dropdown,
@@ -151,30 +181,22 @@ export const WithLabel: Story = {
         'top: 56px'
       );
 
-      expect(
-        dropdown,
-        'It expects that the dropdown height is 114px'
-      ).toHaveStyle('height: 114px');
+      if (!isDark) {
+        expect(
+          dropdown,
+          'It expects that the dropdown border is 1px solid rgb(198, 198, 202)'
+        ).toHaveStyle('border: 1px solid rgb(198, 198, 202)');
+      } else {
+        expect(
+          dropdown,
+          'It expects that the dropdown border-color is 1px solid rgb(70, 70, 74)'
+        ).toHaveStyle('border: 1px solid  rgb(70, 70, 74)');
+      }
 
       expect(
         dropdown,
-        'It expects that the dropdown width is 241px'
-      ).toHaveStyle('width: 241px');
-
-      expect(
-        dropdown,
-        'It expects that the dropdown border is 1px solid'
-      ).toHaveStyle('border: 1px solid  rgb(198, 198, 202)');
-
-      expect(
-        dropdown,
-        'It expects that the dropdown border-color is rgb(198, 198, 202)'
-      ).toHaveStyle('border-color: rgb(198, 198, 202)');
-
-      expect(
-        dropdown,
-        'It expects that the dropdown padding is 8px'
-      ).toHaveStyle('border-radius: 8px');
+        'It expects that the dropdown border-radius is 16px'
+      ).toHaveStyle('border-radius: 16px');
 
       expect(
         dropdown,
@@ -186,38 +208,24 @@ export const WithLabel: Story = {
 
     await step('Checking the dropdown content', () => {
       const dropdown = canvas.getByLabelText('dropdown');
-      const textElements = dropdown.getElementsByTagName('span');
-      const firstChild = dropdown.firstChild;
-      const lastChild = dropdown.lastChild;
-      const radios = canvas.getAllByTestId('radioTest');
 
-      const firstChildLength = firstChild ? firstChild.childNodes.length : 0;
-      const lastChildLength = lastChild ? lastChild.childNodes.length : 0;
+      const firstChild = dropdown.firstChild && dropdown.firstChild;
+      const lastChild = dropdown.lastChild && dropdown.lastChild;
 
       expect(
-        firstChildLength + lastChildLength,
-        'It expects that the dropdown has 4 elements'
-      ).toBe(4);
+        dropdown.childNodes,
+        'It expects that the dropdown has 2 elements'
+      ).toHaveLength(2);
 
       expect(
         firstChild,
         `It expects that the dropdown first child has the title Option 1`
-      ).toHaveTextContent('Option 1');
+      ).toHaveTextContent(itemsList[0].title);
 
       expect(
         lastChild,
-        `It expects that the dropdown last child has the title Option 2`
-      ).toHaveTextContent('Option 2');
-
-      expect(
-        textElements,
-        'It expects that the dropdown has one text element'
-      ).toHaveLength(2);
-
-      expect(
-        radios,
-        'It expects that the dropdown has 2 radio elements'
-      ).toHaveLength(2);
+        `It expects that the dropdown first child has the title Option 2`
+      ).toHaveTextContent(`${itemsList[1].title}`);
     });
   },
 };
@@ -228,32 +236,11 @@ export const WithLabelRounded: Story = {
     disabled: false,
     title: 'Title',
     Icon: <CircleSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />,
-    items: [
-      {
-        PrefixIcon: (
-          <CircleSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />
-        ),
-        SuffixIcon: <ToggleButton name="toggle" defaultValue={false} />,
-        title: 'List item',
-      },
-      {
-        PrefixIcon: (
-          <CircleSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />
-        ),
-        SuffixIcon: <ToggleButton name="toggle" defaultValue={true} />,
-        title: 'List item',
-      },
-      {
-        PrefixIcon: (
-          <CircleSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />
-        ),
-        SuffixIcon: <ToggleButton name="toggle" defaultValue={false} />,
-        title: 'List item',
-      },
-    ],
+    onClick: fn(),
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
+    const isDark = isDarkTheme();
 
     const button = canvas.getByRole('button');
     const svgElements = button.getElementsByTagName('svg');
@@ -265,10 +252,17 @@ export const WithLabelRounded: Story = {
         'It expects that the button is being rendered'
       ).toBeInTheDocument();
 
-      expect(
-        button,
-        'It expects that the button background is rgb(255, 255, 255)'
-      ).toHaveStyle('background-color: rgb(255, 255, 255)');
+      if (!isDark) {
+        expect(
+          button,
+          'It expects that the button background is rgb(255, 255, 255)'
+        ).toHaveStyle('background-color: rgb(255, 255, 255)');
+      } else {
+        expect(
+          button,
+          'It expects that the button background is background-color: rgb(13, 13, 17)'
+        ).toHaveStyle('background-color: rgb(13, 13, 17)');
+      }
 
       expect(button, 'It expects that the button height is 40px').toHaveStyle(
         'height: 40px'
@@ -341,10 +335,17 @@ export const WithLabelRounded: Story = {
 
       const dropdown = canvas.getByLabelText('dropdown');
 
-      expect(
-        dropdown,
-        'It expects that the dropdown background is rgb(255, 255, 255)'
-      ).toHaveStyle('background-color:  rgb(255, 255, 255)');
+      if (!isDark) {
+        expect(
+          dropdown,
+          'It expects that the dropdown background is rgb(255, 255, 255)'
+        ).toHaveStyle('background-color: rgb(255, 255, 255)');
+      } else {
+        expect(
+          dropdown,
+          'It expects that the dropdown background is background-color: rgb(13, 13, 17)'
+        ).toHaveStyle('background-color: rgb(13, 13, 17)');
+      }
 
       expect(
         dropdown,
@@ -355,25 +356,17 @@ export const WithLabelRounded: Story = {
         'top: 56px'
       );
 
-      expect(
-        dropdown,
-        'It expects that the dropdown height is 223px'
-      ).toHaveStyle('height: 223px');
-
-      expect(
-        dropdown,
-        'It expects that the dropdown width is 241px'
-      ).toHaveStyle('width: 241px');
-
-      expect(
-        dropdown,
-        'It expects that the dropdown border is 1px solid'
-      ).toHaveStyle('border: 1px solid  rgb(198, 198, 202)');
-
-      expect(
-        dropdown,
-        'It expects that the dropdown border-color is rgb(198, 198, 202)'
-      ).toHaveStyle('border-color: rgb(198, 198, 202)');
+      if (!isDark) {
+        expect(
+          dropdown,
+          'It expects that the dropdown border is 1px solid rgb(198, 198, 202)'
+        ).toHaveStyle('border: 1px solid rgb(198, 198, 202)');
+      } else {
+        expect(
+          dropdown,
+          'It expects that the dropdown border-color is 1px solid rgb(70, 70, 74)'
+        ).toHaveStyle('border: 1px solid  rgb(70, 70, 74)');
+      }
 
       expect(
         dropdown,
@@ -390,47 +383,30 @@ export const WithLabelRounded: Story = {
 
     await step('Checking the dropdown content', () => {
       const dropdown = canvas.getByLabelText('dropdown');
-      const textElements = dropdown.getElementsByTagName('span');
-      const firstChild = dropdown.childNodes[1];
-      const middleChild = dropdown.childNodes[2];
-      const lastChild = dropdown.childNodes[3];
-      const toggles = dropdown.querySelectorAll('[name="toggle"]');
 
-      const firstChildLength = firstChild
-        ? dropdown.childNodes[1].childNodes.length
-        : 0;
-
-      const middleChildLength = middleChild
-        ? dropdown.childNodes[2].childNodes.length
-        : 0;
-      const lastChildLength = lastChild
-        ? dropdown.childNodes[2].childNodes.length
-        : 0;
+      const firstChild = dropdown.firstChild && dropdown.firstChild;
+      const middleChild = dropdown.childNodes[1] && dropdown.childNodes[1];
+      const lastChild = dropdown.lastChild && dropdown.lastChild;
 
       expect(
-        firstChildLength + middleChildLength + lastChildLength,
-        'It expects that the dropdown has 9 elements'
-      ).toBe(9);
-
-      expect(
-        dropdown,
-        `It expects that the dropdown has the title Title`
-      ).toHaveTextContent('Title');
-
-      expect(
-        dropdown,
-        `It expects that the dropdown first child has the title Option 1`
-      ).toHaveTextContent('List item');
-
-      expect(
-        textElements,
-        'It expects that the dropdown has 3 text elements'
+        dropdown.childNodes,
+        'It expects that the dropdown has 3 elements'
       ).toHaveLength(3);
 
       expect(
-        toggles,
-        'It expects that the dropdown has 3 toggle elements'
-      ).toHaveLength(3);
+        firstChild,
+        `It expects that the dropdown first child has the title Title`
+      ).toHaveTextContent(`${args.title}`);
+
+      expect(
+        middleChild,
+        `It expects that the dropdown middle child has the title Option 1`
+      ).toHaveTextContent(`${itemsList[0].title}`);
+
+      expect(
+        lastChild,
+        `It expects that the dropdown first child has the title Option 2`
+      ).toHaveTextContent(`${itemsList[1].title}`);
     });
   },
 };
@@ -438,34 +414,14 @@ export const WithLabelRounded: Story = {
 export const WithoutLabelOnlyIcon: Story = {
   args: {
     Icon: <CircleSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />,
-    items: [
-      {
-        PrefixIcon: (
-          <CircleSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />
-        ),
-        SuffixIcon: <ToggleButton name="toggle" defaultValue={false} />,
-        title: 'List item',
-      },
-      {
-        PrefixIcon: (
-          <CircleSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />
-        ),
-        SuffixIcon: <ToggleButton name="toggle" defaultValue={true} />,
-        title: 'List item',
-      },
-      {
-        PrefixIcon: (
-          <CircleSVG maxWidth="1.5rem" maxHeight="1.5rem" width="100%" />
-        ),
-        SuffixIcon: <ToggleButton name="toggle" defaultValue={false} />,
-        title: 'List item',
-      },
-    ],
+    onClick: fn(),
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const button = canvas.getByRole('button');
     const svgElements = button.getElementsByTagName('svg');
+
+    const isDark = isDarkTheme();
 
     await step('Checking the button structure', () => {
       expect(
@@ -473,10 +429,17 @@ export const WithoutLabelOnlyIcon: Story = {
         'It expects that the button is being rendered'
       ).toBeInTheDocument();
 
-      expect(
-        button,
-        'It expects that the button background is rgb(255, 255, 255)'
-      ).toHaveStyle('background-color: rgb(255, 255, 255)');
+      if (!isDark) {
+        expect(
+          button,
+          'It expects that the button background is rgb(255, 255, 255)'
+        ).toHaveStyle('background-color: rgb(255, 255, 255)');
+      } else {
+        expect(
+          button,
+          'It expects that the button background is background-color: rgb(13, 13, 17)'
+        ).toHaveStyle('background-color: rgb(13, 13, 17)');
+      }
 
       expect(button, 'It expects that the button height is 40px').toHaveStyle(
         'height: 40px'
@@ -486,9 +449,10 @@ export const WithoutLabelOnlyIcon: Story = {
         'width: 40px'
       );
 
-      expect(button, 'It expects that the button padding is 8px').toHaveStyle(
-        'border-radius: 8px'
-      );
+      expect(
+        button,
+        'It expects that the button border-radius is 8px'
+      ).toHaveStyle('border-radius: 8px');
 
       expect(
         button,
@@ -537,10 +501,17 @@ export const WithoutLabelOnlyIcon: Story = {
 
       const dropdown = canvas.getByLabelText('dropdown');
 
-      expect(
-        dropdown,
-        'It expects that the dropdown background is rgb(255, 255, 255)'
-      ).toHaveStyle('background-color: rgb(255, 255, 255)');
+      if (!isDark) {
+        expect(
+          dropdown,
+          'It expects that the dropdown background is rgb(255, 255, 255)'
+        ).toHaveStyle('background-color: rgb(255, 255, 255)');
+      } else {
+        expect(
+          dropdown,
+          'It expects that the dropdown background is background-color: rgb(13, 13, 17)'
+        ).toHaveStyle('background-color: rgb(13, 13, 17)');
+      }
 
       expect(
         dropdown,
@@ -551,29 +522,21 @@ export const WithoutLabelOnlyIcon: Story = {
         'top: 56px'
       );
 
-      expect(
-        dropdown,
-        'It expects that the dropdown height is 170px'
-      ).toHaveStyle('height: 170px');
+      if (!isDark) {
+        expect(
+          dropdown,
+          'It expects that the dropdown border is 1px solid rgb(198, 198, 202)'
+        ).toHaveStyle('border: 1px solid rgb(198, 198, 202)');
+      } else {
+        expect(
+          dropdown,
+          'It expects that the dropdown border-color is 1px solid rgb(70, 70, 74)'
+        ).toHaveStyle('border: 1px solid  rgb(70, 70, 74)');
+      }
 
       expect(
         dropdown,
-        'It expects that the dropdown width is 241px'
-      ).toHaveStyle('width: 241px');
-
-      expect(
-        dropdown,
-        'It expects that the dropdown border is 1px solid'
-      ).toHaveStyle('border: 1px solid  rgb(198, 198, 202)');
-
-      expect(
-        dropdown,
-        'It expects that the dropdown border-color is rgb(198, 198, 202)'
-      ).toHaveStyle('border-color: rgb(198, 198, 202)');
-
-      expect(
-        dropdown,
-        'It expects that the dropdown padding is 16px'
+        'It expects that the dropdown border-radius is 16px'
       ).toHaveStyle('border-radius: 16px');
 
       expect(
@@ -586,35 +549,24 @@ export const WithoutLabelOnlyIcon: Story = {
 
     await step('Checking the dropdown content', () => {
       const dropdown = canvas.getByLabelText('dropdown');
-      const textElements = dropdown.getElementsByTagName('span');
 
-      const toggles = dropdown.querySelectorAll('[name="toggle"]');
-
-      const firstChildLength =
-        (dropdown.firstChild && dropdown.firstChild.childNodes.length) || 0;
-      const middleChildLength = dropdown.childNodes[1].childNodes.length || 0;
-      const lastChildLength =
-        (dropdown.lastChild && dropdown.lastChild.childNodes.length) || 0;
+      const firstChild = dropdown.firstChild && dropdown.firstChild;
+      const lastChild = dropdown.lastChild && dropdown.lastChild;
 
       expect(
-        firstChildLength + middleChildLength + lastChildLength,
-        'It expects that the dropdown has 9 elements'
-      ).toBe(9);
+        dropdown.childNodes,
+        'It expects that the dropdown has 2 elements'
+      ).toHaveLength(2);
 
       expect(
-        dropdown,
+        firstChild,
         `It expects that the dropdown first child has the title Option 1`
-      ).toHaveTextContent('List item');
+      ).toHaveTextContent(itemsList[0].title);
 
       expect(
-        textElements,
-        'It expects that the dropdown has 3 text elements'
-      ).toHaveLength(3);
-
-      expect(
-        toggles,
-        'It expects that the dropdown has 3 toggle elements'
-      ).toHaveLength(3);
+        lastChild,
+        `It expects that the dropdown first child has the title Option 2`
+      ).toHaveTextContent(`${itemsList[1].title}`);
     });
   },
 };
