@@ -16,6 +16,7 @@ const TabItem: FC<TabItemProps> = ({
 
   return (
     <Box
+      role="tab"
       display="flex"
       cursor="pointer"
       onClick={onChange}
