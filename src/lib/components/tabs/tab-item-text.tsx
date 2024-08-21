@@ -16,6 +16,7 @@ const NavItemText: FC<PropsWithChildren<TabItemPropsItemTextProps>> = ({
   return (
     <Box
       py="0.635rem"
+      role="tabpanel"
       fontFamily="Proto"
       position="relative"
       px={px ?? ['2xl', '2xl', 'xl']}

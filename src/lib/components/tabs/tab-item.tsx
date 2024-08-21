@@ -21,6 +21,9 @@ const TabItem: FC<TabItemProps> = ({
       cursor="pointer"
       onClick={onChange}
       alignItems="center"
+      aria-label={`${item}`}
+      aria-selected={isSelected}
+      tabIndex={isSelected ? 0 : -1}
       borderRadius={type == 'circle' ? 'full' : 'xs'}
       nHover={{
         bg: isSelected ? 'unset' : `${colors.primary}14`,
@@ -32,4 +35,5 @@ const TabItem: FC<TabItemProps> = ({
     </Box>
   );
 };
+
 export default TabItem;
