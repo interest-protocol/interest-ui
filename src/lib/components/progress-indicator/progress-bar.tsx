@@ -44,6 +44,7 @@ export const ProgressBar: FC<PropsWithChildren<ProgressItemProps>> = ({
               height: '1rem',
             }
           : {
+              p: value ? size / 2.5 : 'unset',
               background: 'container',
               borderRadius: '999px',
               height: '100%',
