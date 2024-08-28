@@ -33,7 +33,6 @@ type Story = StoryObj<typeof ProgressIndicator>;
 export const SpecialBar: Story = {
   args: {
     value: 45,
-    size: 80,
     variant: 'special-bar',
   },
   play: async ({ args, canvasElement, step }) => {
@@ -82,6 +81,7 @@ export const NormalBar: Story = {
   args: {
     value: 45,
     variant: 'bar',
+    size: 260,
     status: 'normal',
   },
   play: async ({ args, canvasElement, step }) => {
