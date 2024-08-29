@@ -81,7 +81,7 @@ export const NormalBar: Story = {
   args: {
     value: 45,
     variant: 'bar',
-    size: 260,
+    size: 30,
     status: 'normal',
   },
   play: async ({ args, canvasElement, step }) => {
