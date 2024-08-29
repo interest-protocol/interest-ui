@@ -30,7 +30,7 @@ export const ProgressBar: FC<PropsWithChildren<ProgressItemProps>> = ({
             backgroundColor: 'highContainer',
           }
         : {
-            p: '1px',
+            p: '2.5px',
             borderStyle: 'solid',
             borderRadius: '999px',
             borderColor: 'primary',
