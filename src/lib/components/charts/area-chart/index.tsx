@@ -49,7 +49,7 @@ const AreaGraph: FC<BaseChartProps> = ({ data, height, width }) => {
         <Area
           type="monotone"
           dataKey="amount"
-          fillOpacity={0.5}
+          fillOpacity={0.7}
           stroke={colors['primary']}
           fill={`url(#chartGradient-${id})`}
           activeDot={{ stroke: 'transparent', r: 3.5 }}
