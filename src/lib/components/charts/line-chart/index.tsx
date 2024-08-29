@@ -9,11 +9,17 @@ import {
 } from 'recharts';
 
 import { Theme, useTheme } from '../../../theme';
-import { BaseChartProps } from '../charts.types';
+import { LineChartProps } from '../charts.types';
 import CustomTooltip from '../tooltip';
 import CustomXAxisTick from './x-axis-tick';
 
-const StepsChart: FC<BaseChartProps> = ({ data, height, width }) => {
+const LineGraph: FC<LineChartProps> = ({
+  data,
+  width,
+  height,
+  lineType,
+  withDots,
+}) => {
   const { colors } = useTheme() as Theme;
 
   return (
@@ -22,8 +28,8 @@ const StepsChart: FC<BaseChartProps> = ({ data, height, width }) => {
         data={data}
         margin={{
           top: 5,
-          right: 30,
           left: 20,
+          right: 30,
           bottom: 5,
         }}
       >
@@ -33,10 +39,10 @@ const StepsChart: FC<BaseChartProps> = ({ data, height, width }) => {
           stroke="outlineVariant"
         />
         <XAxis
+          dataKey="day"
           tickMargin={2}
           type="category"
           minTickGap={15}
-          dataKey="day"
           tickLine={false}
           tick={<CustomXAxisTick />}
           interval="preserveStartEnd"
@@ -44,8 +50,8 @@ const StepsChart: FC<BaseChartProps> = ({ data, height, width }) => {
         />
         <Tooltip
           animationDuration={600}
-          animationEasing="ease-in-out"
           content={<CustomTooltip />}
+          animationEasing="ease-in-out"
           contentStyle={{
             zIndex: 999,
           }}
@@ -56,9 +62,9 @@ const StepsChart: FC<BaseChartProps> = ({ data, height, width }) => {
           }}
         />
         <Line
-          dot={false}
+          dot={withDots}
+          type={lineType}
           dataKey="amount"
-          type="monotone"
           stroke={colors['primary']}
         />
       </LineChart>
@@ -66,4 +72,4 @@ const StepsChart: FC<BaseChartProps> = ({ data, height, width }) => {
   );
 };
 
-export default StepsChart;
+export default LineGraph;

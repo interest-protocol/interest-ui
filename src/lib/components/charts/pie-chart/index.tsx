@@ -12,10 +12,10 @@ import {
 import { Typography } from '../../../elements';
 import { Theme, useTheme } from '../../../theme';
 import CustomTooltip from '../tooltip';
-import { CircleChartProps } from './circle-chart.types';
 import CustomizedLabel from './customized-label';
+import { PieChartProps } from './pie-chart.types';
 
-const CircleChart: FC<CircleChartProps> = ({
+const PieGraph: FC<PieChartProps> = ({
   data,
   label,
   height,
@@ -74,4 +74,4 @@ const CircleChart: FC<CircleChartProps> = ({
   );
 };
 
-export default CircleChart;
+export default PieGraph;

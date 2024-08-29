@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import { Box, Typography } from '@interest-protocol/ui-kit';
+import { FC } from 'react';
 
-import { Box, Typography } from '../../../elements';
 import { CustomTooltipProps } from './tooltip.types';
 
 const CustomTooltip: FC<CustomTooltipProps> = ({ payload }) => {

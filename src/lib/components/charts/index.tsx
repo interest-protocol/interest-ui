@@ -1,25 +1,24 @@
 import React, { FC } from 'react';
 
 import { Box } from '../../elements';
+import AreaChart from './area-chart';
 import BarChart from './bar-chart';
 import { ChartsProps } from './charts.types';
 import { isPieChart } from './charts.utils';
-import CircleChart from './circle-chart';
-import LinearChart from './linear-chart';
-import StepsChart from './steps-chart';
+import LineChart from './line-chart';
+import PieChart from './pie-chart';
 
 const CommonChart = {
-  area: LinearChart,
+  area: AreaChart,
   bar: BarChart,
-  steps: StepsChart,
+  line: LineChart,
 };
 
 export const Chart: FC<ChartsProps> = (props) => {
   if (isPieChart(props))
     return (
-      // eslint-disable-next-line jsx-a11y/aria-role
-      <Box role="pieChart">
-        <CircleChart {...props} />
+      <Box aria-label="pie-chart-holder">
+        <PieChart {...props} />
       </Box>
     );
 
@@ -30,8 +29,7 @@ export const Chart: FC<ChartsProps> = (props) => {
   if (!Chart) return null;
 
   return (
-    // eslint-disable-next-line jsx-a11y/aria-role
-    <Box role="chart">
+    <Box aria-label="chart-holder">
       <Chart {...props} />
     </Box>
   );

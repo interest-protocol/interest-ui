@@ -6,7 +6,7 @@ import { BaseChartProps } from '../charts.types';
 import CustomTooltip from '../tooltip';
 import CustomizedAxisTick from './customized-axis-tick';
 
-const LinearChart: FC<BaseChartProps> = ({ data, height, width }) => {
+const AreaGraph: FC<BaseChartProps> = ({ data, height, width }) => {
   const id = useId();
   const { colors } = useTheme() as Theme;
 
@@ -38,8 +38,8 @@ const LinearChart: FC<BaseChartProps> = ({ data, height, width }) => {
         />
         <XAxis
           tickCount={6}
-          type="category"
           dataKey="day"
+          type="category"
           tickLine={false}
           interval="preserveStartEnd"
           tick={<CustomizedAxisTick />}
@@ -47,9 +47,9 @@ const LinearChart: FC<BaseChartProps> = ({ data, height, width }) => {
           angle={40}
         />
         <Area
-          type="linear"
+          type="monotone"
           dataKey="amount"
-          fillOpacity={0.15}
+          fillOpacity={0.5}
           stroke={colors['primary']}
           fill={`url(#chartGradient-${id})`}
           activeDot={{ stroke: 'transparent', r: 3.5 }}
@@ -59,4 +59,4 @@ const LinearChart: FC<BaseChartProps> = ({ data, height, width }) => {
   );
 };
 
-export default LinearChart;
+export default AreaGraph;

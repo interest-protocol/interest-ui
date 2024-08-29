@@ -6,4 +6,4 @@ interface Props {
   semanticColors: ReadonlyArray<TSemenaticColors>;
 }
 
-export type CircleChartProps = BaseChartProps & Props;
+export type PieChartProps = BaseChartProps & Props;
