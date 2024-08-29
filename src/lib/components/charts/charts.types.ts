@@ -12,16 +12,17 @@ export interface BaseChartProps {
   data: Array<DataChartProps>;
 }
 
-export interface AreaChartProps extends BaseChartProps {
-  variant: 'area';
+export interface BaseAreaLineChartProps extends BaseChartProps {
   lineType?: 'monotone';
   withDots?: boolean;
 }
 
-export interface LineChartProps extends BaseChartProps {
+export interface AreaChartProps extends BaseAreaLineChartProps {
+  variant: 'area';
+}
+
+export interface LineChartProps extends BaseAreaLineChartProps {
   variant: 'line';
-  lineType?: 'monotone';
-  withDots?: boolean;
 }
 
 export interface BarChartProps extends BaseChartProps {
