@@ -7,8 +7,8 @@ export type ProgressVariants = 'bar' | 'special-bar' | 'circle' | 'loading';
 export type ProgressStatus = 'normal' | 'success' | 'warning' | 'danger';
 
 export interface ProgressItemProps
-  extends StylinComponentProps,
-    Omit<BoxProps, 'variant'> {
+  extends Omit<StylinComponentProps, 'height'>,
+    Omit<BoxProps, 'variant' | 'height'> {
   size?: number;
   value: number;
   noAnimation?: boolean;
