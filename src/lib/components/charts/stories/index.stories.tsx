@@ -24,6 +24,7 @@ export const AreaChart: Story = {
   args: {
     variant: 'area',
     data: CHARTS_DATA,
+    lineType: 'monotone',
   },
 };
 

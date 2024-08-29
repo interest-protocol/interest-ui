@@ -12,7 +12,7 @@ const CustomCursor: FC = ({ x, y, height }: any) => {
         y1={y}
         x2={x + 7}
         y2={height}
-        stroke={colors['outline']}
+        stroke={colors['primary']}
         strokeWidth={0.5}
         strokeDasharray="3 3"
       />

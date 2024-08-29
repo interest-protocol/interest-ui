@@ -2,11 +2,17 @@ import React, { FC, useId } from 'react';
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis } from 'recharts';
 
 import { Theme, useTheme } from '../../../theme';
-import { BaseChartProps } from '../charts.types';
+import { AreaChartProps } from '../charts.types';
+import CustomizedAxisTick from '../customized-axis-tick';
 import CustomTooltip from '../tooltip';
-import CustomizedAxisTick from './customized-axis-tick';
 
-const AreaGraph: FC<BaseChartProps> = ({ data, height, width }) => {
+const AreaGraph: FC<AreaChartProps> = ({
+  data,
+  width,
+  height,
+  withDots,
+  lineType,
+}) => {
   const id = useId();
   const { colors } = useTheme() as Theme;
 
@@ -37,19 +43,20 @@ const AreaGraph: FC<BaseChartProps> = ({ data, height, width }) => {
           }}
         />
         <XAxis
+          angle={40}
           tickCount={6}
-          dataKey="day"
+          dataKey="label"
           type="category"
           tickLine={false}
           interval="preserveStartEnd"
           tick={<CustomizedAxisTick />}
           domain={['dataMin', 'dataMax']}
-          angle={40}
         />
         <Area
-          type="monotone"
-          dataKey="amount"
-          fillOpacity={0.7}
+          dot={withDots}
+          type={lineType}
+          dataKey="value"
+          fillOpacity={0.9}
           stroke={colors['primary']}
           fill={`url(#chartGradient-${id})`}
           activeDot={{ stroke: 'transparent', r: 3.5 }}

@@ -10,9 +10,8 @@ import {
 
 import { colors } from '../../../theme/dark/colors';
 import { BaseChartProps } from '../charts.types';
+import CustomXAxisTick from '../customized-axis-tick';
 import CustomTooltip from '../tooltip';
-import CustomCursor from './custom-cursor';
-import CustomXAxisTick from './x-axis-tick';
 
 const BarChartComponent: FC<BaseChartProps> = ({ data, height, width }) => (
   <ResponsiveContainer width={width || '100%'} height={height || 200}>
@@ -29,20 +28,19 @@ const BarChartComponent: FC<BaseChartProps> = ({ data, height, width }) => (
       <CartesianGrid opacity={0.25} vertical={false} stroke="outlineVariant" />
       <XAxis
         type="category"
-        dataKey="day"
+        dataKey="label"
         tickLine={false}
         tick={<CustomXAxisTick />}
         interval="preserveStartEnd"
       />
       <Tooltip
-        cursor={<CustomCursor />}
         contentStyle={{
           zIndex: 999,
         }}
-        animationEasing="ease-in-out"
         content={<CustomTooltip />}
+        animationEasing="ease-in-out"
       />
-      <Bar dataKey="amount" fill={colors['primary']} />
+      <Bar dataKey="value" fill={colors['primary']} />
     </BarChart>
   </ResponsiveContainer>
 );

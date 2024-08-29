@@ -4,33 +4,38 @@ import { Box } from '../../elements';
 import AreaChart from './area-chart';
 import BarChart from './bar-chart';
 import { ChartsProps } from './charts.types';
-import { isPieChart } from './charts.utils';
 import LineChart from './line-chart';
 import PieChart from './pie-chart';
 
-const CommonChart = {
-  area: AreaChart,
-  bar: BarChart,
-  line: LineChart,
-};
-
 export const Chart: FC<ChartsProps> = (props) => {
-  if (isPieChart(props))
-    return (
-      <Box aria-label="pie-chart-holder">
-        <PieChart {...props} />
-      </Box>
-    );
-
   const { variant } = props;
 
-  const Chart = CommonChart[variant];
-
-  if (!Chart) return null;
-
-  return (
-    <Box aria-label="chart-holder">
-      <Chart {...props} />
-    </Box>
-  );
+  switch (variant) {
+    case 'pie':
+      return (
+        <Box aria-label="pie-chart-holder">
+          <PieChart {...props} />
+        </Box>
+      );
+    case 'area':
+      return (
+        <Box aria-label="area-chart-holder">
+          <AreaChart {...props} />
+        </Box>
+      );
+    case 'line':
+      return (
+        <Box aria-label="line-chart-holder">
+          <LineChart {...props} />
+        </Box>
+      );
+    case 'bar':
+      return (
+        <Box aria-label="bar-chart-holder">
+          <BarChart {...props} />
+        </Box>
+      );
+    default:
+      return null;
+  }
 };

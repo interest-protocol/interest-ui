@@ -1,28 +1,41 @@
 import { TSemenaticColors } from './pie-chart/pie-chart.types';
 
 export interface DataChartProps {
-  [key: string]: string | number;
+  label: string;
+  description: string;
+  value: string | number;
 }
 
 export interface BaseChartProps {
-  data: Array<DataChartProps>;
-  height?: number | string;
   width?: number | string;
+  height?: number | string;
+  data: Array<DataChartProps>;
 }
 
-export interface LineChartProps extends BaseChartProps {
+export interface AreaChartProps extends BaseChartProps {
+  variant: 'area';
   lineType?: 'monotone';
   withDots?: boolean;
 }
 
+export interface LineChartProps extends BaseChartProps {
+  variant: 'line';
+  lineType?: 'monotone';
+  withDots?: boolean;
+}
+
+export interface BarChartProps extends BaseChartProps {
+  variant: 'bar';
+}
+
 export interface PieChartProps extends BaseChartProps {
-  variant: 'pie';
   label: string;
+  variant: 'pie';
   semanticColors: ReadonlyArray<TSemenaticColors>;
 }
 
-export interface CommonChartsProps extends BaseChartProps {
-  variant: 'bar' | 'area' | 'line';
-}
-
-export type ChartsProps = PieChartProps | CommonChartsProps;
+export type ChartsProps =
+  | AreaChartProps
+  | LineChartProps
+  | BarChartProps
+  | PieChartProps;

@@ -1,22 +1,19 @@
 import React, { FC } from 'react';
 
 import { Theme, useTheme } from '../../../../theme';
-
-interface CustomizedLabelProps {
-  label?: string;
-}
+import { CustomizedLabelProps } from './customized-label.types';
 
 const CustomizedLabel: FC<CustomizedLabelProps> = ({ label }) => {
-  const { dark } = useTheme() as Theme;
+  const { colors } = useTheme() as Theme;
 
   return (
     <g>
       <text
         dy="50%"
         dx="50%"
-        textAnchor="middle"
-        fill={dark ? 'white' : 'black'}
         fontSize={18}
+        textAnchor="middle"
+        fill={colors['onSurface']}
       >
         {label}
       </text>

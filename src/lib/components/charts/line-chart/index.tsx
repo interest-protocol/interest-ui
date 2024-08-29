@@ -10,8 +10,8 @@ import {
 
 import { Theme, useTheme } from '../../../theme';
 import { LineChartProps } from '../charts.types';
+import CustomXAxisTick from '../customized-axis-tick';
 import CustomTooltip from '../tooltip';
-import CustomXAxisTick from './x-axis-tick';
 
 const LineGraph: FC<LineChartProps> = ({
   data,
@@ -39,7 +39,7 @@ const LineGraph: FC<LineChartProps> = ({
           stroke="outlineVariant"
         />
         <XAxis
-          dataKey="day"
+          dataKey="label"
           tickMargin={2}
           type="category"
           minTickGap={15}
@@ -64,7 +64,7 @@ const LineGraph: FC<LineChartProps> = ({
         <Line
           dot={withDots}
           type={lineType}
-          dataKey="amount"
+          dataKey="value"
           stroke={colors['primary']}
         />
       </LineChart>
