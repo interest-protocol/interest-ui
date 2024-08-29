@@ -1,7 +1,7 @@
 import { StylinComponentProps } from '@stylin.js/react';
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 
-import { ListItemProps } from '..';
+import { MotionProps } from '../../elements';
 
 export type DropdownButtonElementProps = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
@@ -17,5 +17,5 @@ export interface DropdownButtonProps
   disabled?: boolean;
   selected?: boolean;
   onClick?: () => void;
-  items: ReadonlyArray<ListItemProps>;
+  containerProps?: MotionProps;
 }

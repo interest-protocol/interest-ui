@@ -2,15 +2,15 @@ import stylin from '@stylin.js/react';
 import React, {
   FC,
   forwardRef,
+  PropsWithChildren,
   PropsWithRef,
   RefAttributes,
   useEffect,
   useId,
   useState,
 } from 'react';
-import { v4 } from 'uuid';
 
-import { Box, ListItem, Motion, Theme, Typography, useTheme } from '../..';
+import { Box, Motion, Theme, Typography, useTheme } from '../..';
 import { wrapperVariants } from '../../constants/wrapper-variants';
 import useClickOutsideListenerRef from '../../hooks/use-click-outside-listener-ref';
 import { ArrowBottomSecondarySVG } from '../../icons';
@@ -23,8 +23,13 @@ const DropdownButtonElement = stylin<
   DropdownButtonElementProps & RefAttributes<unknown>
 >('button')();
 
-export const DropdownButton: FC<PropsWithRef<DropdownButtonProps>> = forwardRef(
-  ({ label, title, Icon, items, selected, ...props }, ref) => {
+export const DropdownButton: FC<
+  PropsWithRef<PropsWithChildren<DropdownButtonProps>>
+> = forwardRef(
+  (
+    { label, title, children, Icon, selected, containerProps, ...props },
+    ref
+  ) => {
     const { colors } = useTheme() as Theme;
     const [isFocused, setIsFocused] = useState(selected || false);
     const [isOpen, setIsOpen] = useState(false);
@@ -53,7 +58,13 @@ export const DropdownButton: FC<PropsWithRef<DropdownButtonProps>> = forwardRef(
     };
 
     return (
-      <Box id={BOX_ID} ref={BoxRef} position="relative">
+      <Box
+        id={BOX_ID}
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        ref={BoxRef}
+        position="relative"
+      >
         <Box onClick={handleDropdown}>
           <DropdownButtonElement
             gap="xs"
@@ -65,10 +76,10 @@ export const DropdownButton: FC<PropsWithRef<DropdownButtonProps>> = forwardRef(
             bg="lowestContainer"
             p={label ? 'xs' : '0'}
             pr={label ? 'm' : '0'}
-            pl={label ? (Icon ? 'xs' : 'm') : 'unset'}
             border={isFocused ? '4px solid' : '0'}
             borderRadius={label ? 'full' : 'xs'}
             width={label ? 'fit-content' : '2.5rem'}
+            pl={label ? (Icon ? 'xs' : 'm') : 'unset'}
             justifyContent={label ? 'unset' : 'center'}
             onBlur={() => setIsFocused(selected || false)}
             transition="background-color 300ms ease-in-out"
@@ -79,10 +90,11 @@ export const DropdownButton: FC<PropsWithRef<DropdownButtonProps>> = forwardRef(
           >
             {Icon && (
               <Box
-                width="1.5rem"
-                justifyContent="center"
-                alignItems="center"
                 display="flex"
+                width="1.5rem"
+                color="onSurface"
+                alignItems="center"
+                justifyContent="center"
               >
                 {Icon}
               </Box>
@@ -92,11 +104,17 @@ export const DropdownButton: FC<PropsWithRef<DropdownButtonProps>> = forwardRef(
                 <Typography variant="label" size="large" color="onSurface">
                   {label}
                 </Typography>
-                <Box width="fit-content" alignItems="center" display="flex">
+
+                <Box
+                  display="flex"
+                  color="onSurface"
+                  alignItems="center"
+                  width="fit-content"
+                >
                   <ArrowBottomSecondarySVG
+                    width="100%"
                     maxWidth="1.5rem"
                     maxHeight="1.5rem"
-                    width="100%"
                   />
                 </Box>
               </>
@@ -106,21 +124,21 @@ export const DropdownButton: FC<PropsWithRef<DropdownButtonProps>> = forwardRef(
 
         {isOpen && (
           <Motion
-            top="3.5rem"
-            aria-label="dropdown"
             zIndex={4}
+            top="3.5rem"
             overflow="hidden"
             initial="closed"
-            borderRadius={props.borderRadius || 's'}
             width="fit-content"
             border="1px solid"
             position="absolute"
             bg="lowestContainer"
+            aria-label="dropdown"
             variants={wrapperVariants}
             borderColor="outlineVariant"
             animate={isOpen ? 'open' : 'closed'}
             pointerEvents={isOpen ? 'auto' : 'none'}
             boxShadow="0px 2px 4px -2px rgba(13, 16, 23, 0.04), 0px 4px 8px -2px rgba(13, 16, 23, 0.12)"
+            {...containerProps}
           >
             {title && (
               <Box p="m" borderBottom="1px solid" borderColor="outlineVariant">
@@ -129,20 +147,7 @@ export const DropdownButton: FC<PropsWithRef<DropdownButtonProps>> = forwardRef(
                 </Typography>
               </Box>
             )}
-            {items.map((item) => (
-              <ListItem
-                pr="m"
-                key={v4()}
-                title={item.title}
-                disabled={item.disabled}
-                SuffixIcon={item.SuffixIcon}
-                pl={item.PrefixIcon ? 'xs' : 'm'}
-                cursor={item.disabled ? 'not-allowed' : 'pointer'}
-                PrefixIcon={
-                  item.PrefixIcon && <Box width="1.5rem">{item.PrefixIcon}</Box>
-                }
-              />
-            ))}
+            {children}
           </Motion>
         )}
       </Box>
