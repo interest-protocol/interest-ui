@@ -139,7 +139,7 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
               onBlur={handleBlur}
               onFocus={handleFocus}
               onChange={handleChange}
-              disabled={disabled}
+              disabled={disabled || !active}
               defaultValue={value || props.defaultValue}
               nPlaceholder={{
                 color: '#6F6F73',
