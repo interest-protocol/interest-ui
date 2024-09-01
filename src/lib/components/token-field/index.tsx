@@ -53,9 +53,8 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
       const isError = status === 'error';
       const isSuccess = status === 'success';
       const hasStatus = isError || isSuccess;
-      if (active) return '2px solid ' + colors.onSurface;
       if (disabled) return '1px solid ' + colors.outlineVariant;
-      if (isFocused) return '2px solid ' + colors.onSurface;
+      if (isFocused) return '2px solid ' + colors.primary;
       if (hasStatus)
         return '1px solid ' + colors[status as 'error' | 'success'];
     };
@@ -81,6 +80,7 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
       <Box
         opacity={disabled ? 0.32 : 1}
         cursor={disabled ? 'not-allowed' : 'default'}
+        aria-label="tokenFieldHolder"
       >
         <Box
           display="flex"
@@ -92,7 +92,7 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
           border={
             handleBorderStatus() ||
             '1px solid ' +
-              colors[variant === 'outline' ? 'outlineVariant' : 'container']
+              colors[variant === 'outline' ? 'outlineVariant' : 'primary']
           }
           {...fieldProps}
           {...(onActivate &&
@@ -139,7 +139,7 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
               onBlur={handleBlur}
               onFocus={handleFocus}
               onChange={handleChange}
-              disabled={disabled || !active}
+              disabled={disabled}
               defaultValue={value || props.defaultValue}
               nPlaceholder={{
                 color: '#6F6F73',

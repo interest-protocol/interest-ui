@@ -25,54 +25,111 @@ export default meta;
 
 type Story = StoryObj<typeof TokenField>;
 
-export const FilledWithToken: Story = {
+export const FilledDefault: Story = {
   args: {
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
     placeholder: 'Input',
     tokenName: 'Token Name',
-    handleMax: fn(),
+    disabled: false,
+    active: true,
+    variant: 'filled',
   },
 };
 
-export const FilledWithTokenWithoutLabel: Story = {
+export const FilledDefaultSuccess: Story = {
   args: {
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
     placeholder: 'Input',
     tokenName: 'Token Name',
-    handleMax: fn(),
+    disabled: false,
+    active: true,
+    variant: 'filled',
+    status: 'success',
   },
 };
 
-export const FilledWithLabelToTheLeft: Story = {
+export const FilledDefaultError: Story = {
   args: {
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
     placeholder: 'Input',
     tokenName: 'Token Name',
-    handleMax: fn(),
-  },
-};
-
-export const FilledWithTokenError: Story = {
-  args: {
+    disabled: false,
+    active: true,
+    variant: 'filled',
     status: 'error',
+  },
+};
+
+export const FilledDefaultDisabled: Story = {
+  args: {
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
     placeholder: 'Input',
     tokenName: 'Token Name',
+    disabled: true,
+    active: true,
+    variant: 'filled',
+  },
+};
+
+export const FilledWithBalance: Story = {
+  args: {
+    textAlign: 'right',
+    TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
+    placeholder: 'Input',
+    tokenName: 'Token Name',
+    disabled: false,
+    active: true,
+    balance: '123',
+    variant: 'filled',
     handleMax: fn(),
   },
 };
 
-export const FilledWithTokenDisabled: Story = {
+export const FilledWithBalanceSuccess: Story = {
   args: {
-    disabled: true,
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
     placeholder: 'Input',
     tokenName: 'Token Name',
+    disabled: false,
+    active: true,
+    balance: '123',
+    variant: 'filled',
+    status: 'success',
+    handleMax: fn(),
+  },
+};
+
+export const FilledWithBalanceError: Story = {
+  args: {
+    textAlign: 'right',
+    TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
+    placeholder: 'Input',
+    tokenName: 'Token Name',
+    disabled: false,
+    active: true,
+    balance: '123',
+    variant: 'filled',
+    status: 'error',
+    handleMax: fn(),
+  },
+};
+
+export const FilledWithBalanceDisabled: Story = {
+  args: {
+    textAlign: 'right',
+    TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
+    placeholder: 'Input',
+    tokenName: 'Token Name',
+    disabled: true,
+    active: true,
+    balance: '123',
+    variant: 'filled',
+    handleMax: fn(),
   },
 };
 
@@ -82,102 +139,196 @@ export const FilledWithoutTokenIcon: Story = {
     placeholder: 'Input',
     tokenName: 'Token Name',
     handleMax: fn(),
+    active: true,
+    variant: 'filled',
+  },
+};
+
+export const FilledWithoutTokenIconSuccess: Story = {
+  args: {
+    textAlign: 'right',
+    placeholder: 'Input',
+    tokenName: 'Token Name',
+    handleMax: fn(),
+    variant: 'filled',
+    active: true,
+    status: 'success',
   },
 };
 
 export const FilledWithoutTokenIconError: Story = {
   args: {
-    status: 'error',
     textAlign: 'right',
     placeholder: 'Input',
     tokenName: 'Token Name',
     handleMax: fn(),
+    variant: 'filled',
+    active: true,
+    status: 'error',
   },
 };
 
 export const FilledWithoutTokenIconDisabled: Story = {
   args: {
+    textAlign: 'right',
+    placeholder: 'Input',
+    tokenName: 'Token Name',
+    handleMax: fn(),
     disabled: true,
-    textAlign: 'right',
-    placeholder: 'Input',
-    tokenName: 'Token Name',
+    variant: 'filled',
   },
 };
 
-export const OutlineWithToken: Story = {
+export const OutlinedDefault: Story = {
   args: {
-    variant: 'outline',
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
     placeholder: 'Input',
     tokenName: 'Token Name',
-    handleMax: fn(),
+    disabled: false,
+    active: true,
+    variant: 'outline',
   },
 };
 
-export const OutlineWithLabelToTheLeft: Story = {
+export const OutlinedDefaultDefaultSuccess: Story = {
   args: {
-    variant: 'outline',
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
     placeholder: 'Input',
-
     tokenName: 'Token Name',
-
-    handleMax: fn(),
+    disabled: false,
+    active: true,
+    variant: 'outline',
+    status: 'success',
   },
 };
 
-export const OutlineWithTokenError: Story = {
+export const OutlineDefaultError: Story = {
   args: {
+    textAlign: 'right',
+    TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
+    placeholder: 'Input',
+    tokenName: 'Token Name',
+    disabled: false,
+    active: true,
+    variant: 'outline',
     status: 'error',
-    variant: 'outline',
+  },
+};
+
+export const OutlineDefaultDisabled: Story = {
+  args: {
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
     placeholder: 'Input',
     tokenName: 'Token Name',
+    disabled: true,
+    active: true,
+    variant: 'outline',
+  },
+};
+
+export const OutlineWithBalance: Story = {
+  args: {
+    textAlign: 'right',
+    TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
+    placeholder: 'Input',
+    tokenName: 'Token Name',
+    disabled: false,
+    active: true,
+    balance: '123',
+    variant: 'outline',
     handleMax: fn(),
   },
 };
 
-export const OutlineWithTokenDisabled: Story = {
+export const OutlineWithBalanceSuccess: Story = {
   args: {
-    disabled: true,
-    variant: 'outline',
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
     placeholder: 'Input',
     tokenName: 'Token Name',
+    disabled: false,
+    active: true,
+    balance: '123',
+    variant: 'outline',
+    status: 'success',
+    handleMax: fn(),
+  },
+};
+
+export const OutlineWithBalanceError: Story = {
+  args: {
+    textAlign: 'right',
+    TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
+    placeholder: 'Input',
+    tokenName: 'Token Name',
+    disabled: false,
+    active: true,
+    balance: '123',
+    variant: 'outline',
+    status: 'error',
+    handleMax: fn(),
+  },
+};
+
+export const OutlineWithBalanceDisabled: Story = {
+  args: {
+    textAlign: 'right',
+    TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
+    placeholder: 'Input',
+    tokenName: 'Token Name',
+    disabled: true,
+    active: true,
+    balance: '123',
+    variant: 'outline',
+    handleMax: fn(),
   },
 };
 
 export const OutlineWithoutTokenIcon: Story = {
   args: {
-    variant: 'outline',
     textAlign: 'right',
     placeholder: 'Input',
     tokenName: 'Token Name',
     handleMax: fn(),
+    active: true,
+    variant: 'outline',
+  },
+};
+
+export const OutlineWithoutTokenIconSuccess: Story = {
+  args: {
+    textAlign: 'right',
+    placeholder: 'Input',
+    tokenName: 'Token Name',
+    handleMax: fn(),
+    variant: 'outline',
+    active: true,
+    status: 'success',
   },
 };
 
 export const OutlineWithoutTokenIconError: Story = {
   args: {
-    status: 'error',
-    variant: 'outline',
     textAlign: 'right',
     placeholder: 'Input',
     tokenName: 'Token Name',
     handleMax: fn(),
+    variant: 'outline',
+    active: true,
+    status: 'error',
   },
 };
 
 export const OutlineWithoutTokenIconDisabled: Story = {
   args: {
-    disabled: true,
-    variant: 'outline',
     textAlign: 'right',
     placeholder: 'Input',
     tokenName: 'Token Name',
+    handleMax: fn(),
+    disabled: true,
+    variant: 'outline',
   },
 };
