@@ -1,4 +1,6 @@
-export const CHARTS_DATA = [
+import { DataChartProps } from '../charts.types';
+
+export const CHARTS_DATA: Array<DataChartProps> = [
   {
     value: 93,
     description: 'Thu, 15 Jan 2024 23:00:00 GMT',

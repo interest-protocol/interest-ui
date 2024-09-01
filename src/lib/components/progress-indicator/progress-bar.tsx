@@ -7,13 +7,14 @@ import { ProgressItemProps } from './progress-indicator.types';
 import { getProgressColor } from './progress-indicator.utils';
 
 export const ProgressBar: FC<PropsWithChildren<ProgressItemProps>> = ({
-  size,
+  size = 16,
   value,
   status,
   variant,
   ...props
 }) => {
   const { colors } = useTheme() as Theme;
+  const CURRENT_VALUE = value > 100 ? 100 : value < 0 ? 0 : value;
 
   return (
     <Box
@@ -21,32 +22,35 @@ export const ProgressBar: FC<PropsWithChildren<ProgressItemProps>> = ({
       role="progressbar"
       aria-valuemin={0}
       aria-valuemax={100}
-      aria-valuenow={value}
-      height={size || '1rem'}
+      aria-valuenow={CURRENT_VALUE}
+      height={size}
+      minHeight={16}
       {...(variant == 'bar'
         ? {
             backgroundColor: 'highContainer',
           }
         : {
-            backgroundColor: 'primary',
-            borderWidth: `${size ? size / 10 : 3}px`,
+            p: '2.5px',
             borderStyle: 'solid',
-            borderColor: 'primary',
             borderRadius: '999px',
+            borderColor: 'primary',
+            backgroundColor: 'primary',
           })}
       {...props}
     >
       <Box
-        width={`${value}%`}
+        width={`${CURRENT_VALUE}%`}
         {...(variant == 'bar'
           ? {
               background: getProgressColor(colors, status),
-              height: '1rem',
+              height: '100%',
             }
           : {
-              background: 'container',
+              minHeight: 8,
+              height: size - 8,
               borderRadius: '999px',
-              height: '100%',
+              background: 'container',
+              minWidth: CURRENT_VALUE ? size : 'unset',
             })}
       />
     </Box>
