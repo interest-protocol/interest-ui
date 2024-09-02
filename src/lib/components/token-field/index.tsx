@@ -12,6 +12,7 @@ import {
 } from 'react';
 import React from 'react';
 
+import { formatDollars } from '../../../utils';
 import { Button, Theme, useTheme } from '../../';
 import { Box, Typography } from '../../elements';
 import { TokenFieldElementProps, TokenFieldProps } from './token-field.types';
@@ -76,6 +77,8 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
     const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
       changeValue(e.target.value);
 
+    const usdValue = Number(value || 0);
+
     return (
       <Box
         opacity={disabled ? 0.32 : 1}
@@ -122,7 +125,7 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
             alignItems="stretch"
             flexDirection="column"
             justifyItems="center"
-            p={TokenIcon ? '2xs' : 'xs'}
+            px={TokenIcon ? '2xs' : 'xs'}
             mr={status ? '0.5rem' : 'unset'}
           >
             <TokenFieldElement
@@ -150,6 +153,9 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
                 })}
               {...props}
             />
+            <Typography variant="label" size="small" textAlign="right">
+              {usdValue ? formatDollars(usdValue) : '--'} USD
+            </Typography>
             {Bottom}
           </Box>
           {onActivate && (
@@ -181,7 +187,6 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
             justifyContent="space-between"
           >
             <Typography
-              pt="2xs"
               size="large"
               variant="label"
               fontSize="0.75rem"
@@ -196,6 +201,7 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
                 fontSize="xs"
                 variant="outline"
                 borderRadius="2xs"
+                disabled={disabled || !active}
                 onClick={handleMax}
               >
                 MAX
