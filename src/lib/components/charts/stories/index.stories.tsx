@@ -13,6 +13,9 @@ const meta: Meta<typeof Chart> = {
     data: {
       defaultValue: [],
     },
+    lineType: {
+      control: { type: 'text' },
+    },
   },
 };
 
