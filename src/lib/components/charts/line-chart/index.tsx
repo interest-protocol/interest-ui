@@ -62,8 +62,13 @@ const LineGraph: FC<LineChartProps> = ({
           }}
         />
         <Line
-          dot={withDots}
+          dot={
+            withDots
+              ? { stroke: colors['primary'], fill: 'white', r: 5.5 }
+              : false
+          }
           type={lineType}
+          activeDot={{ stroke: colors['primary'], fill: 'white', r: 5.5 }}
           dataKey="value"
           stroke={colors['primary']}
         />

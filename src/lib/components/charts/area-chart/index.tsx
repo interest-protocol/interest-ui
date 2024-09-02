@@ -53,13 +53,17 @@ const AreaGraph: FC<AreaChartProps> = ({
           domain={['dataMin', 'dataMax']}
         />
         <Area
-          dot={withDots}
+          dot={
+            withDots
+              ? { stroke: colors['primary'], fill: 'white', r: 5.5 }
+              : false
+          }
+          activeDot={{ stroke: colors['primary'], fill: 'white', r: 5.5 }}
           type={lineType}
           dataKey="value"
           fillOpacity={0.9}
           stroke={colors['primary']}
           fill={`url(#chartGradient-${id})`}
-          activeDot={{ stroke: 'transparent', r: 3.5 }}
         />
       </AreaChart>
     </ResponsiveContainer>
