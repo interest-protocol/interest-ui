@@ -16,6 +16,9 @@ const meta: Meta<typeof Chart> = {
     lineType: {
       control: { type: 'text' },
     },
+    withDots: {
+      control: { type: 'boolean' },
+    },
   },
 };
 
