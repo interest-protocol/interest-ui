@@ -6,52 +6,32 @@ import { Theme } from '../../theme';
 import { ProgressItemProps } from './progress-indicator.types';
 import { getProgressColor } from './progress-indicator.utils';
 
-export const ProgressBar: FC<PropsWithChildren<ProgressItemProps>> = ({
-  size = 16,
-  value,
-  status,
-  variant,
-  ...props
-}) => {
+export const ProgressBar: FC<
+  PropsWithChildren<Omit<ProgressItemProps, 'variant'>>
+> = ({ size = 16, value, status, isRounded, ...props }) => {
   const { colors } = useTheme() as Theme;
   const CURRENT_VALUE = value > 100 ? 100 : value < 0 ? 0 : value;
 
   return (
     <Box
       width="100%"
-      role="progressbar"
-      aria-valuemin={0}
-      aria-valuemax={100}
-      aria-valuenow={CURRENT_VALUE}
       height={size}
       minHeight={16}
-      {...(variant == 'bar'
-        ? {
-            backgroundColor: 'highContainer',
-          }
-        : {
-            p: '2.5px',
-            borderStyle: 'solid',
-            borderRadius: '999px',
-            borderColor: 'primary',
-            backgroundColor: 'primary',
-          })}
+      aria-valuemin={0}
+      role="progressbar"
+      aria-valuemax={100}
+      aria-valuenow={CURRENT_VALUE}
+      borderRadius={isRounded ? '999px' : 'unset'}
+      backgroundColor={`${status == 'normal' ? 'high' : status}Container`}
       {...props}
     >
       <Box
+        minHeight={8}
+        height="100%"
         width={`${CURRENT_VALUE}%`}
-        {...(variant == 'bar'
-          ? {
-              background: getProgressColor(colors, status),
-              height: '100%',
-            }
-          : {
-              minHeight: 8,
-              height: size - 8,
-              borderRadius: '999px',
-              background: 'container',
-              minWidth: CURRENT_VALUE ? size : 'unset',
-            })}
+        minWidth={CURRENT_VALUE ? size : 'unset'}
+        borderRadius={isRounded ? '999px' : 'unset'}
+        background={getProgressColor(colors, status)}
       />
     </Box>
   );

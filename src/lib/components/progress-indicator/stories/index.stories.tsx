@@ -30,16 +30,19 @@ export default meta;
 
 type Story = StoryObj<typeof ProgressIndicator>;
 
-export const SpecialBar: Story = {
+export const BarRounded: Story = {
   args: {
+    size: 40,
     value: 45,
-    variant: 'special-bar',
+    variant: 'bar',
+    isRounded: true,
+    status: 'primary',
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
     const progressBar = canvas.getByRole('progressbar');
 
-    await step('Check the Special Progress Bar Style', async () => {
+    await step('Check the Progress Bar Rounded Bar Style', async () => {
       expect(progressBar, 'Should be rendered').toBeInTheDocument();
       expect(progressBar, 'Should have the specific height').toHaveStyle(
         `height: ${args.size}px`
@@ -54,15 +57,15 @@ export const SpecialBar: Story = {
       expect(progressBar, 'Should have the specific border style').toHaveStyle(
         `border: 4px solid #0053DB`
       );
-      await step('Check the Special Progress Value', async () => {
+      await step('Check the Progress Bar Rounded Value', async () => {
         const progressValue = progressBar.children[0];
         expect(
           progressValue.getAttribute('height'),
-          'Special Progress Value should be specific height'
+          'Progress Bar Rounded Value should be specific height'
         ).toBe(`100%`);
         expect(
           progressValue.getAttribute('width'),
-          `Special Progress Value Width should be ${args.value}%`
+          `Progress Bar Rounded Value Width should be ${args.value}%`
         ).toBe(`${args.value}%`);
         expect(
           progressValue,
@@ -158,7 +161,7 @@ export const DangerousBar: Story = {
   args: {
     value: 95,
     variant: 'bar',
-    status: 'danger',
+    status: 'error',
   },
   play: async ({ args, canvasElement, step }) => {
     const canvas = within(canvasElement);
