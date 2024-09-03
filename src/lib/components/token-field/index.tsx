@@ -1,5 +1,5 @@
 import stylin from '@stylin.js/react';
-import React, {
+import {
   ChangeEvent,
   FC,
   FocusEvent,
@@ -10,42 +10,43 @@ import React, {
   useId,
   useState,
 } from 'react';
+import React from 'react';
 
-import { Button, LabelElementProps, Theme, useTheme } from '../..';
+import { formatDollars } from '../../../utils';
+import { Button, Theme, useTheme } from '../../';
 import { Box, Typography } from '../../elements';
 import { TokenFieldElementProps, TokenFieldProps } from './token-field.types';
 
 const TokenFieldElement = stylin<
   TokenFieldElementProps & RefAttributes<unknown>
 >('input')();
-const LabelElement = stylin<LabelElementProps>('label')();
 
 export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
   (
     {
-      Label,
-      isNotDefaultLabel,
+      Suffix,
       onBlur,
       status,
+      active,
+      balance,
       onFocus,
-      handleMax,
       variant,
       disabled,
       TokenIcon,
-      fieldProps,
       tokenName,
-      labelPosition,
-      supportingText,
+      handleMax,
+      fieldProps,
+      onActivate,
       ...props
     },
     ref
   ) => {
-    const { colors } = useTheme() as Theme;
-    const [focus, setFocus] = useState(false);
-    const [value, setValue] = useState<string>();
     const id = useId();
+    const { colors } = useTheme() as Theme;
+    const [focus, setFocus] = useState<boolean>(false);
+    const [value, setValue] = useState<string>();
 
-    const statusColor = focus || status === 'none' ? 'onSurface' : status;
+    const statusColor = focus || status === 'none' ? 'onSurface' : 'status';
 
     const handleBorderStatus = () => {
       const isFocused = focus && !disabled;
@@ -53,7 +54,7 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
       const isSuccess = status === 'success';
       const hasStatus = isError || isSuccess;
       if (disabled) return '1px solid ' + colors.outlineVariant;
-      if (isFocused) return '3px solid ' + colors.primary;
+      if (isFocused) return '2px solid ' + colors.primary;
       if (hasStatus)
         return '1px solid ' + colors[status as 'error' | 'success'];
     };
@@ -75,53 +76,35 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
     const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
       changeValue(e.target.value);
 
+    const usdValue = Number(value || 0);
+
     return (
       <Box
-        aria-label="input"
         opacity={disabled ? 0.32 : 1}
         cursor={disabled ? 'not-allowed' : 'default'}
+        aria-label="tokenFieldHolder"
       >
-        {Label && (
-          <LabelElement htmlFor={id}>
-            {!isNotDefaultLabel ? (
-              <Typography
-                mb="xs"
-                variant="body"
-                color="onSurface"
-                textAlign={labelPosition}
-                size={labelPosition === 'right' ? 'medium' : 'small'}
-                textTransform={
-                  labelPosition === 'right' ? 'uppercase' : 'capitalize'
-                }
-              >
-                {Label}
-              </Typography>
-            ) : (
-              Label
-            )}
-          </LabelElement>
-        )}
         <Box
+          px="xs"
           display="flex"
-          borderRadius="xs"
+          borderRadius="s"
           alignItems="center"
           py={TokenIcon ? '0' : 'xs'}
+          transition="all 300ms ease-in-out"
           bg={variant === 'outline' ? 'transparent' : 'container'}
           border={
             handleBorderStatus() ||
             '1px solid ' +
-              colors[variant === 'outline' ? 'outlineVariant' : 'container']
+              colors[variant === 'outline' ? 'outlineVariant' : 'primary']
           }
-          nHover={{
-            borderWidth: focus ? '3px' : disabled ? '1px' : '2px',
-            borderStyle: 'solid',
-            borderColor: !disabled ? colors.primary : colors.outlineVariant,
-          }}
-          transition="all 300ms ease-in-out"
           {...fieldProps}
+          {...(onActivate &&
+            !active && {
+              onClick: onActivate,
+            })}
         >
           <Box
-            p="xs"
+            py="xs"
             display="flex"
             color="onSurface"
             alignItems="center"
@@ -129,7 +112,11 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
           >
             <Box display="flex" alignItems="center">
               {TokenIcon}
-              <Typography variant="body" ml="l" size="large">
+              <Typography
+                variant="body"
+                ml={TokenIcon ? 'l' : 'xs'}
+                size="large"
+              >
                 {tokenName}
               </Typography>
             </Box>
@@ -141,49 +128,68 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
             display="flex"
             alignItems="stretch"
             flexDirection="column"
-            justifyContent="center"
-            p={TokenIcon ? 'xs' : 'm'}
-            mr={status ? '0.5rem' : 'unset'}
+            justifyItems="center"
+            mr={status ? '0.5rem' : Suffix ? 'xs' : 'unset'}
           >
             <TokenFieldElement
-              ref={ref}
               id={id}
+              ref={ref}
               all="unset"
               type="text"
               width="100%"
               fontSize="2xl"
               lineHeight="l"
               fontWeight="500"
-              disabled={disabled}
+              autoFocus={focus}
+              color={statusColor}
               onBlur={handleBlur}
               onFocus={handleFocus}
               onChange={handleChange}
-              color={statusColor}
+              disabled={disabled || !active}
               defaultValue={value || props.defaultValue}
               nPlaceholder={{
                 color: '#6F6F73',
               }}
+              {...(onActivate &&
+                !active && {
+                  pointerEvents: 'none',
+                })}
               {...props}
             />
+            <Typography variant="label" size="small" textAlign="right">
+              {usdValue ? formatDollars(usdValue) : '--'} USD
+            </Typography>
           </Box>
-          <Box display="flex" alignItems="center" justifyContent="center">
-            <Button
-              variant="text"
-              color="primary"
-              onClick={handleMax}
-              disabled={disabled}
-            >
-              MAX
-            </Button>
-          </Box>
+          {Suffix}
         </Box>
-        {supportingText && (
+        {active && balance && (
           <Box
-            pt="2xs"
-            fontSize="0.75rem"
-            color={disabled ? 'onSurface' : statusColor}
+            my="xs"
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
           >
-            {supportingText}
+            <Typography
+              size="large"
+              variant="label"
+              fontSize="0.75rem"
+              color={disabled ? 'onSurface' : statusColor}
+            >
+              Balance: {balance}
+            </Typography>
+            {handleMax && (
+              <Button
+                px="xs"
+                py="2xs"
+                fontSize="xs"
+                variant="outline"
+                borderRadius="2xs"
+                disabled={disabled || !active}
+                onClick={handleMax}
+              >
+                MAX
+              </Button>
+            )}
           </Box>
         )}
       </Box>

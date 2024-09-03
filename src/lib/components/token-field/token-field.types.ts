@@ -11,15 +11,16 @@ export type TokenFieldElementProps = Omit<
 export interface TokenFieldProps
   extends StylinComponentProps,
     TokenFieldElementProps {
-  Label?: ReactNode;
-  isNotDefaultLabel?: boolean;
+  active?: boolean;
+  balance?: string;
+  activeBg?: string;
   tokenName: string;
+  Suffix?: ReactNode;
   disabled?: boolean;
-  handleMax?: () => void;
-  fieldProps?: BoxProps;
-  supportingText?: string;
   TokenIcon?: ReactNode;
+  fieldProps?: BoxProps;
+  handleMax?: () => void;
+  onActivate?: () => void;
   variant?: 'filled' | 'outline';
-  labelPosition?: 'left' | 'right';
   status?: 'error' | 'success' | 'none';
 }

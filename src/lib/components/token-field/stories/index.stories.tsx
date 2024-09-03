@@ -1,6 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { expect, within } from '@storybook/test';
-import userEvent from '@testing-library/user-event';
+import { fn } from '@storybook/test';
 import React from 'react';
 
 import { TokenSVG } from '../../../icons';
@@ -14,11 +13,6 @@ const meta: Meta<typeof TokenField> = {
       defaultValue: false,
       control: { type: 'boolean' },
     },
-    labelPosition: {
-      defaultValue: 'right',
-      control: { type: 'radio' },
-      options: ['left', 'right'],
-    },
     textAlign: {
       defaultValue: 'right',
       control: { type: 'radio' },
@@ -31,580 +25,153 @@ export default meta;
 
 type Story = StoryObj<typeof TokenField>;
 
-export const FilledWithToken: Story = {
+export const FilledDefault: Story = {
   args: {
-    Label: 'Label',
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: 'Input',
-    labelPosition: 'right',
+    Suffix: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
+    placeholder: '--',
     tokenName: 'Token Name',
-    supportingText: 'Supporting text',
-  },
-  play: async ({ canvasElement, step }) => {
-    const canvas = within(canvasElement);
-
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = tokenField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-    });
-
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
+    disabled: false,
+    active: true,
+    variant: 'filled',
   },
 };
 
-export const FilledWithTokenWithoutLabel: Story = {
+export const FilledDefaultSuccess: Story = {
   args: {
-    Label: 'Label',
-    isNotDefaultLabel: true,
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: 'Input',
-    labelPosition: 'right',
+    placeholder: '--',
     tokenName: 'Token Name',
-    supportingText: 'Supporting text',
-  },
-  play: async ({ args, canvasElement, step }) => {
-    const canvas = within(canvasElement);
-
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = tokenField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-    });
-
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(args.isNotDefaultLabel).toBeTruthy();
-    expect(tokenField).toHaveTextContent('Label');
+    disabled: false,
+    active: true,
+    variant: 'filled',
+    status: 'success',
   },
 };
 
-export const FilledWithLabelToTheLeft: Story = {
+export const FilledDefaultError: Story = {
   args: {
-    Label: 'Label',
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: 'Input',
-    labelPosition: 'left',
+    placeholder: '--',
     tokenName: 'Token Name',
-    supportingText: 'Supporting text',
-  },
-  play: async ({ canvasElement, step }) => {
-    const canvas = within(canvasElement);
-
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = tokenField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-    });
-
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
-  },
-};
-
-export const FilledWithTokenError: Story = {
-  args: {
-    Label: 'Label',
+    disabled: false,
+    active: true,
+    variant: 'filled',
     status: 'error',
-    textAlign: 'right',
-    TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: 'Input',
-    labelPosition: 'right',
-    tokenName: 'Token Name',
-  },
-  play: async ({ args, canvasElement, step }) => {
-    const canvas = within(canvasElement);
-
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = tokenField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-    });
-
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
-    expect(args.status).toBe('error');
   },
 };
 
-export const FilledWithTokenDisabled: Story = {
+export const FilledDefaultDisabled: Story = {
   args: {
-    Label: 'Label',
-    disabled: true,
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: 'Input',
-    labelPosition: 'right',
+    placeholder: '--',
     tokenName: 'Token Name',
-    supportingText: 'Supporting text',
+    disabled: true,
+    active: true,
+    variant: 'filled',
   },
-  play: async ({ args, canvasElement, step }) => {
-    const canvas = within(canvasElement);
+};
 
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = tokenField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-    });
-
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
-    expect(args.disabled).toBeTruthy();
+export const FilledWithBalance: Story = {
+  args: {
+    textAlign: 'right',
+    TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
+    placeholder: '--',
+    tokenName: 'Token Name',
+    disabled: false,
+    active: true,
+    balance: '123',
+    variant: 'filled',
+    handleMax: fn(),
   },
 };
 
 export const FilledWithoutTokenIcon: Story = {
   args: {
-    Label: 'Label',
     textAlign: 'right',
-    placeholder: 'Input',
-    labelPosition: 'right',
+    placeholder: '--',
     tokenName: 'Token Name',
-    supportingText: 'Supporting text',
-  },
-  play: async ({ canvasElement, step }) => {
-    const canvas = within(canvasElement);
-
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-    });
-
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
+    handleMax: fn(),
+    active: true,
+    variant: 'filled',
   },
 };
 
-export const FilledWithoutTokenIconError: Story = {
+export const OutlinedDefault: Story = {
   args: {
-    Label: 'Label',
+    textAlign: 'right',
+    TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
+    placeholder: '--',
+    tokenName: 'Token Name',
+    disabled: false,
+    active: true,
+    variant: 'outline',
+  },
+};
+
+export const OutlinedDefaultDefaultSuccess: Story = {
+  args: {
+    textAlign: 'right',
+    TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
+    placeholder: '--',
+    tokenName: 'Token Name',
+    disabled: false,
+    active: true,
+    variant: 'outline',
+    status: 'success',
+  },
+};
+
+export const OutlineDefaultError: Story = {
+  args: {
+    textAlign: 'right',
+    TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
+    placeholder: '--',
+    tokenName: 'Token Name',
+    disabled: false,
+    active: true,
+    variant: 'outline',
     status: 'error',
-    textAlign: 'right',
-    placeholder: 'Input',
-    labelPosition: 'right',
-    tokenName: 'Token Name',
-  },
-  play: async ({ args, canvasElement, step }) => {
-    const canvas = within(canvasElement);
-
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-    });
-
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(args.status).toBe('error');
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
   },
 };
 
-export const FilledWithoutTokenIconDisabled: Story = {
+export const OutlineDefaultDisabled: Story = {
   args: {
+    textAlign: 'right',
+    TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
+    placeholder: '--',
+    tokenName: 'Token Name',
     disabled: true,
-    Label: 'Label',
-    textAlign: 'right',
-    placeholder: 'Input',
-    labelPosition: 'right',
-    tokenName: 'Token Name',
-    supportingText: 'Supporting text',
-  },
-  play: async ({ args, canvasElement, step }) => {
-    const canvas = within(canvasElement);
-
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-    });
-
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(args.disabled).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
+    active: true,
+    variant: 'outline',
   },
 };
 
-export const OutlineWithToken: Story = {
+export const OutlineWithBalance: Story = {
   args: {
-    Label: 'Label',
-    variant: 'outline',
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: 'Input',
-    labelPosition: 'right',
+    placeholder: '--',
     tokenName: 'Token Name',
-    supportingText: 'Supporting text',
-  },
-  play: async ({ canvasElement, step }) => {
-    const canvas = within(canvasElement);
-
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = tokenField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-    });
-
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
-  },
-};
-
-export const OutlineWithLabelToTheLeft: Story = {
-  args: {
-    Label: 'Label',
+    disabled: false,
+    active: true,
+    balance: '123',
     variant: 'outline',
-    textAlign: 'right',
-    TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: 'Input',
-    labelPosition: 'left',
-    tokenName: 'Token Name',
-    supportingText: 'Supporting text',
-  },
-  play: async ({ canvasElement, step }) => {
-    const canvas = within(canvasElement);
-
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = tokenField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-    });
-
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
-  },
-};
-
-export const OutlineWithTokenError: Story = {
-  args: {
-    Label: 'Label',
-    status: 'error',
-    variant: 'outline',
-    textAlign: 'right',
-    TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: 'Input',
-    labelPosition: 'right',
-    tokenName: 'Token Name',
-    supportingText: 'Supporting text',
-  },
-  play: async ({ args, canvasElement, step }) => {
-    const canvas = within(canvasElement);
-
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = tokenField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-    });
-
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(args.status).toBe('error');
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
-  },
-};
-
-export const OutlineWithTokenDisabled: Story = {
-  args: {
-    Label: 'Label',
-    disabled: true,
-    variant: 'outline',
-    textAlign: 'right',
-    TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: 'Input',
-    labelPosition: 'right',
-    tokenName: 'Token Name',
-    supportingText: 'Supporting text',
-  },
-  play: async ({ args, canvasElement, step }) => {
-    const canvas = within(canvasElement);
-
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    // check how many svg are in the button. In this case, can only be one in it
-    const svgElement = tokenField.querySelectorAll('svg');
-    expect(svgElement).toHaveLength(1);
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-    });
-
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
-    expect(args.disabled).toBeTruthy();
+    handleMax: fn(),
   },
 };
 
 export const OutlineWithoutTokenIcon: Story = {
   args: {
-    Label: 'Label',
-    variant: 'outline',
     textAlign: 'right',
-    placeholder: 'Input',
-    labelPosition: 'right',
+    placeholder: '--',
     tokenName: 'Token Name',
-    supportingText: 'Supporting text',
-  },
-  play: async ({ canvasElement, step }) => {
-    const canvas = within(canvasElement);
-
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-    });
-
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
-  },
-};
-
-export const OutlineWithoutTokenIconError: Story = {
-  args: {
-    Label: 'Label',
-    status: 'error',
+    handleMax: fn(),
+    active: true,
     variant: 'outline',
-    textAlign: 'right',
-    placeholder: 'Input',
-    labelPosition: 'right',
-    tokenName: 'Token Name',
-    supportingText: 'Supporting text',
-  },
-  play: async ({ args, canvasElement, step }) => {
-    const canvas = within(canvasElement);
-
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-    });
-
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
-    expect(args.status).toBe('error');
-  },
-};
-
-export const OutlineWithoutTokenIconDisabled: Story = {
-  args: {
-    Label: 'Label',
-    disabled: true,
-    variant: 'outline',
-    textAlign: 'right',
-    placeholder: 'Input',
-    labelPosition: 'right',
-    tokenName: 'Token Name',
-    supportingText: 'Supporting text',
-  },
-  play: async ({ args, canvasElement, step }) => {
-    const canvas = within(canvasElement);
-
-    const tokenField = canvas.getByRole('token-field');
-    const computedStyle = getComputedStyle(tokenField);
-    const border = computedStyle.getPropertyValue('border');
-    const color = computedStyle.getPropertyValue('color');
-    const background = computedStyle.getPropertyValue('background');
-    const textAlignment = computedStyle.getPropertyValue('text-align');
-
-    const inputElement = tokenField.querySelectorAll('input');
-    expect(inputElement).toHaveLength(1);
-
-    await step('Get token field max value', async () => {
-      await userEvent.click(canvas.getByRole('button'));
-    });
-
-    expect(border).toBeTruthy();
-    expect(background).toBeTruthy();
-    expect(color).toBe('rgb(0, 0, 0)');
-    expect(textAlignment).toBe('start');
-    expect(tokenField).toHaveTextContent('Label');
-    expect(args.disabled).toBeTruthy();
   },
 };
