@@ -1,19 +1,42 @@
-import { TSemenaticColors } from './circle-chart/circle-chart.types';
+import { TSemenaticColors } from './pie-chart/pie-chart.types';
+
+export interface DataChartProps {
+  label: string;
+  description: string;
+  value: string | number;
+}
 
 export interface BaseChartProps {
-  data: any;
-  height?: number | string;
   width?: number | string;
+  height?: number | string;
+  data: Array<DataChartProps>;
+}
+
+export interface BaseAreaLineChartProps extends BaseChartProps {
+  lineType?: 'monotone';
+  withDots?: boolean;
+}
+
+export interface AreaChartProps extends BaseAreaLineChartProps {
+  variant: 'area';
+}
+
+export interface LineChartProps extends BaseAreaLineChartProps {
+  variant: 'line';
+}
+
+export interface BarChartProps extends BaseChartProps {
+  variant: 'bar';
 }
 
 export interface PieChartProps extends BaseChartProps {
-  variant: 'pie';
   label: string;
+  variant: 'pie';
   semanticColors: ReadonlyArray<TSemenaticColors>;
 }
 
-export interface CommonChartsProps extends BaseChartProps {
-  variant: 'bar' | 'steps' | 'area';
-}
-
-export type ChartsProps = PieChartProps | CommonChartsProps;
+export type ChartsProps =
+  | AreaChartProps
+  | LineChartProps
+  | BarChartProps
+  | PieChartProps;

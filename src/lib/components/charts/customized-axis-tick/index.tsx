@@ -1,11 +1,10 @@
 import React, { FC } from 'react';
 
-import { Theme, useTheme } from '../../../../theme';
+import { Theme, useTheme } from '../../../theme';
+import { CustomXAxisTickProps } from './customized-axis-tick.types';
 
-const CustomizedAxisTick: FC<any> = (props: any) => {
-  const { dark } = useTheme() as Theme;
-
-  const { x, y, payload } = props;
+const CustomizedAxisTick: FC<CustomXAxisTickProps> = ({ x, y, payload }) => {
+  const { colors } = useTheme() as Theme;
 
   return (
     <g transform={`translate(${x},${y})`}>
@@ -18,9 +17,9 @@ const CustomizedAxisTick: FC<any> = (props: any) => {
         style={{
           fontFamily: 'Proto',
         }}
-        fill={dark ? 'white' : 'black'}
+        fill={colors['onSurface']}
       >
-        {payload.value}
+        {payload?.value}
       </text>
     </g>
   );

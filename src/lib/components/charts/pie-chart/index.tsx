@@ -12,14 +12,14 @@ import {
 import { Typography } from '../../../elements';
 import { Theme, useTheme } from '../../../theme';
 import CustomTooltip from '../tooltip';
-import { CircleChartProps } from './circle-chart.types';
 import CustomizedLabel from './customized-label';
+import { PieChartProps } from './pie-chart.types';
 
-const CircleChart: FC<CircleChartProps> = ({
+const PieGraph: FC<PieChartProps> = ({
   data,
   label,
-  height,
   width,
+  height,
   semanticColors,
 }) => {
   const { dark } = useTheme() as Theme;
@@ -28,14 +28,12 @@ const CircleChart: FC<CircleChartProps> = ({
     <ResponsiveContainer width={width || '100%'} height={height || 200}>
       <PieChart>
         <Pie
-          data={data}
           cy={85}
+          data={data}
+          nameKey="label"
+          dataKey="value"
           innerRadius={60}
           outerRadius={75}
-          dataKey="amount"
-          nameKey="day"
-          stroke=""
-          onClick={undefined}
           legendType="circle"
         >
           {data.map((_entry: unknown, index: number) => (
@@ -58,10 +56,10 @@ const CircleChart: FC<CircleChartProps> = ({
           formatter={(value) => (
             <Typography
               as="span"
-              variant="body"
               size="small"
-              fontSize={['xs', 's', 's', 's']}
+              variant="body"
               marginLeft="0.25rem"
+              fontSize={['xs', 's', 's', 's']}
             >
               {value}
             </Typography>
@@ -74,4 +72,4 @@ const CircleChart: FC<CircleChartProps> = ({
   );
 };
 
-export default CircleChart;
+export default PieGraph;

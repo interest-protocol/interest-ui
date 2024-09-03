@@ -1,38 +1,41 @@
 import React, { FC } from 'react';
 
 import { Box } from '../../elements';
+import AreaChart from './area-chart';
 import BarChart from './bar-chart';
 import { ChartsProps } from './charts.types';
-import { isPieChart } from './charts.utils';
-import CircleChart from './circle-chart';
-import LinearChart from './linear-chart';
-import StepsChart from './steps-chart';
-
-const CommonChart = {
-  area: LinearChart,
-  bar: BarChart,
-  steps: StepsChart,
-};
+import LineChart from './line-chart';
+import PieChart from './pie-chart';
 
 export const Chart: FC<ChartsProps> = (props) => {
-  if (isPieChart(props))
-    return (
-      // eslint-disable-next-line jsx-a11y/aria-role
-      <Box role="pieChart">
-        <CircleChart {...props} />
-      </Box>
-    );
-
   const { variant } = props;
 
-  const Chart = CommonChart[variant];
-
-  if (!Chart) return null;
-
-  return (
-    // eslint-disable-next-line jsx-a11y/aria-role
-    <Box role="chart">
-      <Chart {...props} />
-    </Box>
-  );
+  switch (variant) {
+    case 'pie':
+      return (
+        <Box aria-label="pie-chart-holder">
+          <PieChart {...props} />
+        </Box>
+      );
+    case 'area':
+      return (
+        <Box aria-label="area-chart-holder">
+          <AreaChart {...props} />
+        </Box>
+      );
+    case 'line':
+      return (
+        <Box aria-label="line-chart-holder">
+          <LineChart {...props} />
+        </Box>
+      );
+    case 'bar':
+      return (
+        <Box aria-label="bar-chart-holder">
+          <BarChart {...props} />
+        </Box>
+      );
+    default:
+      return null;
+  }
 };
