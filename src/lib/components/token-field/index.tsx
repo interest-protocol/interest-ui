@@ -24,14 +24,13 @@ const TokenFieldElement = stylin<
 export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
   (
     {
+      Suffix,
       onBlur,
       status,
       active,
-      Bottom,
       balance,
       onFocus,
       variant,
-      activeBg,
       disabled,
       TokenIcon,
       tokenName,
@@ -86,6 +85,7 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
         aria-label="tokenFieldHolder"
       >
         <Box
+          px="xs"
           display="flex"
           borderRadius="s"
           alignItems="center"
@@ -104,7 +104,7 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
             })}
         >
           <Box
-            p="xs"
+            py="xs"
             display="flex"
             color="onSurface"
             alignItems="center"
@@ -112,7 +112,11 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
           >
             <Box display="flex" alignItems="center">
               {TokenIcon}
-              <Typography variant="body" ml="l" size="large">
+              <Typography
+                variant="body"
+                ml={TokenIcon ? 'l' : 'xs'}
+                size="large"
+              >
                 {tokenName}
               </Typography>
             </Box>
@@ -125,8 +129,7 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
             alignItems="stretch"
             flexDirection="column"
             justifyItems="center"
-            px={TokenIcon ? '2xs' : 'xs'}
-            mr={status ? '0.5rem' : 'unset'}
+            mr={status ? '0.5rem' : Suffix ? 'xs' : 'unset'}
           >
             <TokenFieldElement
               id={id}
@@ -156,28 +159,8 @@ export const TokenField: FC<PropsWithRef<TokenFieldProps>> = forwardRef(
             <Typography variant="label" size="small" textAlign="right">
               {usdValue ? formatDollars(usdValue) : '--'} USD
             </Typography>
-            {Bottom}
           </Box>
-          {onActivate && (
-            <Box
-              mx="m"
-              display="flex"
-              width="1.5rem"
-              height="1.5rem"
-              cursor="pointer"
-              borderRadius="full"
-              alignItems="center"
-              justifyContent="center"
-              bg={active ? activeBg : 'white'}
-            >
-              <Box
-                borderRadius="full"
-                bg="lowestContainer"
-                width={active ? '0.75rem' : '0.25rem'}
-                height={active ? '0.75rem' : '1.25rem'}
-              />
-            </Box>
-          )}
+          {Suffix}
         </Box>
         {active && balance && (
           <Box

@@ -29,7 +29,8 @@ export const FilledDefault: Story = {
   args: {
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: 'Input',
+    Suffix: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
+    placeholder: '--',
     tokenName: 'Token Name',
     disabled: false,
     active: true,
