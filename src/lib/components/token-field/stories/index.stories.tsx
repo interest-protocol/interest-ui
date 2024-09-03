@@ -90,50 +90,6 @@ export const FilledWithBalance: Story = {
   },
 };
 
-export const FilledWithBalanceSuccess: Story = {
-  args: {
-    textAlign: 'right',
-    TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: '--',
-    tokenName: 'Token Name',
-    disabled: false,
-    active: true,
-    balance: '123',
-    variant: 'filled',
-    status: 'success',
-    handleMax: fn(),
-  },
-};
-
-export const FilledWithBalanceError: Story = {
-  args: {
-    textAlign: 'right',
-    TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: '--',
-    tokenName: 'Token Name',
-    disabled: false,
-    active: true,
-    balance: '123',
-    variant: 'filled',
-    status: 'error',
-    handleMax: fn(),
-  },
-};
-
-export const FilledWithBalanceDisabled: Story = {
-  args: {
-    textAlign: 'right',
-    TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: '--',
-    tokenName: 'Token Name',
-    disabled: true,
-    active: true,
-    balance: '123',
-    variant: 'filled',
-    handleMax: fn(),
-  },
-};
-
 export const FilledWithoutTokenIcon: Story = {
   args: {
     textAlign: 'right',
@@ -141,41 +97,6 @@ export const FilledWithoutTokenIcon: Story = {
     tokenName: 'Token Name',
     handleMax: fn(),
     active: true,
-    variant: 'filled',
-  },
-};
-
-export const FilledWithoutTokenIconSuccess: Story = {
-  args: {
-    textAlign: 'right',
-    placeholder: '--',
-    tokenName: 'Token Name',
-    handleMax: fn(),
-    variant: 'filled',
-    active: true,
-    status: 'success',
-  },
-};
-
-export const FilledWithoutTokenIconError: Story = {
-  args: {
-    textAlign: 'right',
-    placeholder: '--',
-    tokenName: 'Token Name',
-    handleMax: fn(),
-    variant: 'filled',
-    active: true,
-    status: 'error',
-  },
-};
-
-export const FilledWithoutTokenIconDisabled: Story = {
-  args: {
-    textAlign: 'right',
-    placeholder: '--',
-    tokenName: 'Token Name',
-    handleMax: fn(),
-    disabled: true,
     variant: 'filled',
   },
 };
@@ -244,50 +165,6 @@ export const OutlineWithBalance: Story = {
   },
 };
 
-export const OutlineWithBalanceSuccess: Story = {
-  args: {
-    textAlign: 'right',
-    TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: '--',
-    tokenName: 'Token Name',
-    disabled: false,
-    active: true,
-    balance: '123',
-    variant: 'outline',
-    status: 'success',
-    handleMax: fn(),
-  },
-};
-
-export const OutlineWithBalanceError: Story = {
-  args: {
-    textAlign: 'right',
-    TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: '--',
-    tokenName: 'Token Name',
-    disabled: false,
-    active: true,
-    balance: '123',
-    variant: 'outline',
-    status: 'error',
-    handleMax: fn(),
-  },
-};
-
-export const OutlineWithBalanceDisabled: Story = {
-  args: {
-    textAlign: 'right',
-    TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: '--',
-    tokenName: 'Token Name',
-    disabled: true,
-    active: true,
-    balance: '123',
-    variant: 'outline',
-    handleMax: fn(),
-  },
-};
-
 export const OutlineWithoutTokenIcon: Story = {
   args: {
     textAlign: 'right',
@@ -295,41 +172,6 @@ export const OutlineWithoutTokenIcon: Story = {
     tokenName: 'Token Name',
     handleMax: fn(),
     active: true,
-    variant: 'outline',
-  },
-};
-
-export const OutlineWithoutTokenIconSuccess: Story = {
-  args: {
-    textAlign: 'right',
-    placeholder: '--',
-    tokenName: 'Token Name',
-    handleMax: fn(),
-    variant: 'outline',
-    active: true,
-    status: 'success',
-  },
-};
-
-export const OutlineWithoutTokenIconError: Story = {
-  args: {
-    textAlign: 'right',
-    placeholder: '--',
-    tokenName: 'Token Name',
-    handleMax: fn(),
-    variant: 'outline',
-    active: true,
-    status: 'error',
-  },
-};
-
-export const OutlineWithoutTokenIconDisabled: Story = {
-  args: {
-    textAlign: 'right',
-    placeholder: '--',
-    tokenName: 'Token Name',
-    handleMax: fn(),
-    disabled: true,
     variant: 'outline',
   },
 };
