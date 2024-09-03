@@ -42,7 +42,7 @@ export const FilledDefaultSuccess: Story = {
   args: {
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: 'Input',
+    placeholder: '--',
     tokenName: 'Token Name',
     disabled: false,
     active: true,
@@ -55,7 +55,7 @@ export const FilledDefaultError: Story = {
   args: {
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: 'Input',
+    placeholder: '--',
     tokenName: 'Token Name',
     disabled: false,
     active: true,
@@ -68,7 +68,7 @@ export const FilledDefaultDisabled: Story = {
   args: {
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: 'Input',
+    placeholder: '--',
     tokenName: 'Token Name',
     disabled: true,
     active: true,
@@ -80,7 +80,7 @@ export const FilledWithBalance: Story = {
   args: {
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: 'Input',
+    placeholder: '--',
     tokenName: 'Token Name',
     disabled: false,
     active: true,
@@ -94,7 +94,7 @@ export const FilledWithBalanceSuccess: Story = {
   args: {
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: 'Input',
+    placeholder: '--',
     tokenName: 'Token Name',
     disabled: false,
     active: true,
@@ -109,7 +109,7 @@ export const FilledWithBalanceError: Story = {
   args: {
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: 'Input',
+    placeholder: '--',
     tokenName: 'Token Name',
     disabled: false,
     active: true,
@@ -124,7 +124,7 @@ export const FilledWithBalanceDisabled: Story = {
   args: {
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: 'Input',
+    placeholder: '--',
     tokenName: 'Token Name',
     disabled: true,
     active: true,
@@ -137,7 +137,7 @@ export const FilledWithBalanceDisabled: Story = {
 export const FilledWithoutTokenIcon: Story = {
   args: {
     textAlign: 'right',
-    placeholder: 'Input',
+    placeholder: '--',
     tokenName: 'Token Name',
     handleMax: fn(),
     active: true,
@@ -148,7 +148,7 @@ export const FilledWithoutTokenIcon: Story = {
 export const FilledWithoutTokenIconSuccess: Story = {
   args: {
     textAlign: 'right',
-    placeholder: 'Input',
+    placeholder: '--',
     tokenName: 'Token Name',
     handleMax: fn(),
     variant: 'filled',
@@ -160,7 +160,7 @@ export const FilledWithoutTokenIconSuccess: Story = {
 export const FilledWithoutTokenIconError: Story = {
   args: {
     textAlign: 'right',
-    placeholder: 'Input',
+    placeholder: '--',
     tokenName: 'Token Name',
     handleMax: fn(),
     variant: 'filled',
@@ -172,7 +172,7 @@ export const FilledWithoutTokenIconError: Story = {
 export const FilledWithoutTokenIconDisabled: Story = {
   args: {
     textAlign: 'right',
-    placeholder: 'Input',
+    placeholder: '--',
     tokenName: 'Token Name',
     handleMax: fn(),
     disabled: true,
@@ -184,7 +184,7 @@ export const OutlinedDefault: Story = {
   args: {
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: 'Input',
+    placeholder: '--',
     tokenName: 'Token Name',
     disabled: false,
     active: true,
@@ -196,7 +196,7 @@ export const OutlinedDefaultDefaultSuccess: Story = {
   args: {
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: 'Input',
+    placeholder: '--',
     tokenName: 'Token Name',
     disabled: false,
     active: true,
@@ -209,7 +209,7 @@ export const OutlineDefaultError: Story = {
   args: {
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: 'Input',
+    placeholder: '--',
     tokenName: 'Token Name',
     disabled: false,
     active: true,
@@ -222,7 +222,7 @@ export const OutlineDefaultDisabled: Story = {
   args: {
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: 'Input',
+    placeholder: '--',
     tokenName: 'Token Name',
     disabled: true,
     active: true,
@@ -234,7 +234,7 @@ export const OutlineWithBalance: Story = {
   args: {
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: 'Input',
+    placeholder: '--',
     tokenName: 'Token Name',
     disabled: false,
     active: true,
@@ -248,7 +248,7 @@ export const OutlineWithBalanceSuccess: Story = {
   args: {
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: 'Input',
+    placeholder: '--',
     tokenName: 'Token Name',
     disabled: false,
     active: true,
@@ -263,7 +263,7 @@ export const OutlineWithBalanceError: Story = {
   args: {
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: 'Input',
+    placeholder: '--',
     tokenName: 'Token Name',
     disabled: false,
     active: true,
@@ -278,7 +278,7 @@ export const OutlineWithBalanceDisabled: Story = {
   args: {
     textAlign: 'right',
     TokenIcon: <TokenSVG maxWidth="2.5rem" maxHeight="2.5rem" width="100%" />,
-    placeholder: 'Input',
+    placeholder: '--',
     tokenName: 'Token Name',
     disabled: true,
     active: true,
@@ -291,7 +291,7 @@ export const OutlineWithBalanceDisabled: Story = {
 export const OutlineWithoutTokenIcon: Story = {
   args: {
     textAlign: 'right',
-    placeholder: 'Input',
+    placeholder: '--',
     tokenName: 'Token Name',
     handleMax: fn(),
     active: true,
@@ -302,7 +302,7 @@ export const OutlineWithoutTokenIcon: Story = {
 export const OutlineWithoutTokenIconSuccess: Story = {
   args: {
     textAlign: 'right',
-    placeholder: 'Input',
+    placeholder: '--',
     tokenName: 'Token Name',
     handleMax: fn(),
     variant: 'outline',
@@ -314,7 +314,7 @@ export const OutlineWithoutTokenIconSuccess: Story = {
 export const OutlineWithoutTokenIconError: Story = {
   args: {
     textAlign: 'right',
-    placeholder: 'Input',
+    placeholder: '--',
     tokenName: 'Token Name',
     handleMax: fn(),
     variant: 'outline',
@@ -326,7 +326,7 @@ export const OutlineWithoutTokenIconError: Story = {
 export const OutlineWithoutTokenIconDisabled: Story = {
   args: {
     textAlign: 'right',
-    placeholder: 'Input',
+    placeholder: '--',
     tokenName: 'Token Name',
     handleMax: fn(),
     disabled: true,
