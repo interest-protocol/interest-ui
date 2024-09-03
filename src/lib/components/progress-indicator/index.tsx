@@ -7,12 +7,12 @@ import { ProgressCircle } from './progress-circle';
 
 export const ProgressIndicator: FC<
   PropsWithChildren<ProgressIndicatorProps>
-> = ({ size, value, status, variant, ...props }) => {
-  if (variant === 'bar' || variant === 'special-bar')
+> = ({ size, value, status, variant, isRounded, ...props }) => {
+  if (variant === 'bar')
     return (
       <ProgressBar
+        isRounded={isRounded}
         value={value ?? 0}
-        variant={variant}
         status={status}
         size={size}
         {...props}

@@ -7,6 +7,6 @@ export const getProgressColor = (
 ) => {
   if (status == 'success') return colors.success;
   if (status == 'warning') return colors.warning;
-  if (status == 'danger') return colors.error;
+  if (status == 'error') return colors.error;
   return colors.primary;
 };
