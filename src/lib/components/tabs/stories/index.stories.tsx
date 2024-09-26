@@ -1,33 +1,175 @@
 import { Meta, StoryObj } from '@storybook/react';
+import { expect, fireEvent, fn, within } from '@storybook/test';
 
 import { Tabs } from '..';
 
 const meta: Meta<typeof Tabs> = {
   title: 'Tabs',
   component: Tabs,
-  // argTypes: {
-  //   items: {
-  //     control: { type: 'text' },
-  //   },
-  //   info: {
-  //     control: { type: 'text' },
-  //   },
-  // },
+  argTypes: {},
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Tabs>;
 
-export const Normal: Story = {
+export const Circle: Story = {
   args: {
     items: ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
+    type: 'circle',
+    onChangeTab: fn(),
+    width: '',
+  },
+  play: async ({ canvasElement, step, args }) => {
+    let currentOption = 0;
+    const canvas = within(canvasElement);
+    const tabs = canvas.getByRole('tablist');
+
+    await step('Check the structure of the Tab Circular', async () => {
+      expect(
+        tabs,
+        'It is expected that the tab has a full border-radius'
+      ).toHaveStyle('border-radius: 159984px');
+      expect(
+        tabs,
+        'It is expected that the tab has a background #00000014'
+      ).toHaveStyle('background-color: #00000014');
+      expect(
+        tabs.childNodes.length,
+        `It is expected that the tab has ${args.items.length} tabItems`
+      ).toBe(args.items.length);
+    });
+
+    await step(
+      'Check that the selected option is correctly applied ',
+      async () => {
+        expect(
+          tabs.childNodes[currentOption].textContent,
+          `It is expected that the selected option will be option "${args.items[currentOption]}"`
+        ).toBe(args.items[currentOption]);
+        expect(
+          tabs.childNodes[currentOption],
+          'It is expected that the font-family of the selected item will be Satoshi'
+        ).toHaveStyle('font-family: Satoshi');
+        expect(
+          tabs.childNodes[currentOption],
+          'It is expected that the font-size of the selected item will be 16px'
+        ).toHaveStyle('font-size: 16px');
+        expect(
+          tabs.childNodes[currentOption],
+          'It is expected that the font-weight of the selected item will be 400'
+        ).toHaveStyle('font-weight: 400');
+        expect(
+          tabs.childNodes[currentOption],
+          'It is expected that the colour of the selected item will be black'
+        ).toHaveStyle('color: #000');
+        const tabItemWrapperSelected =
+          tabs.children[currentOption].children[0].childNodes[1];
+        expect(
+          tabItemWrapperSelected,
+          'It is expected that the selected option has a wrapper with "background-color #fff" over it'
+        ).toHaveStyle('background-color: #fff');
+        expect(
+          tabItemWrapperSelected,
+          'It is expected that the selected option has a wrapper with "border-radius: full" over it'
+        ).toHaveStyle('border-radius: 159984px');
+      }
+    );
+
+    await step('Check navigation between options', async () => {
+      currentOption++;
+      await fireEvent.click(tabs.children[currentOption]);
+
+      const newTabs = canvas.getByRole('tablist');
+      expect(
+        newTabs.children[currentOption].children[0].children.length,
+        'It is expected that the selected option has two nodes'
+      ).toBe(2);
+      expect(
+        args.onChangeTab,
+        'It is expected that the onChange function has been executed at least once'
+      ).toHaveBeenCalledOnce();
+    });
   },
 };
 
-export const CustomPx: Story = {
+export const Square: Story = {
   args: {
     items: ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
-    px: '0.5rem',
+    type: 'square',
+    onChangeTab: fn(),
+    width: '',
+  },
+  play: async ({ canvasElement, step, args }) => {
+    let currentOption = 0;
+    const canvas = within(canvasElement);
+    const tabs = canvas.getByRole('tablist');
+
+    await step('Check the structure of the Tab Square', async () => {
+      expect(
+        tabs,
+        'It is expected that the tab has a full border-radius'
+      ).toHaveStyle('border-radius: 10px');
+      expect(
+        tabs,
+        'It is expected that the tab has a background #00000014'
+      ).toHaveStyle('background-color: #00000014');
+      expect(
+        tabs.childNodes.length,
+        `It is expected that the tab has ${args.items.length} tabItems`
+      ).toBe(args.items.length);
+    });
+
+    await step(
+      'Check that the selected option is correctly applied ',
+      async () => {
+        expect(
+          tabs.childNodes[currentOption].textContent,
+          `It is expected that the selected option will be option "${args.items[currentOption]}"`
+        ).toBe(args.items[currentOption]);
+
+        expect(
+          tabs.childNodes[currentOption],
+          'It is expected that the font-family of the selected item will be Satoshi'
+        ).toHaveStyle('font-family: Satoshi');
+        expect(
+          tabs.childNodes[currentOption],
+          'It is expected that the font-size of the selected item will be 16px'
+        ).toHaveStyle('font-size: 16px');
+        expect(
+          tabs.childNodes[currentOption],
+          'It is expected that the font-weight of the selected item will be 400'
+        ).toHaveStyle('font-weight: 400');
+        expect(
+          tabs.childNodes[currentOption],
+          'It is expected that the colour of the selected item will be black'
+        ).toHaveStyle('color: #000');
+        const tabItemWrapperSelected =
+          tabs.children[currentOption].children[0].childNodes[1];
+        expect(
+          tabItemWrapperSelected,
+          'It is expected that the selected option has a wrapper with "background-colour #fff" over it'
+        ).toHaveStyle('background-color: #fff');
+        expect(
+          tabItemWrapperSelected,
+          'It is expected that the selected option has a wrapper with "border-radius: full" over it'
+        ).toHaveStyle('border-radius: 8px');
+      }
+    );
+
+    await step('Check navigation between options', async () => {
+      currentOption++;
+      await fireEvent.click(tabs.children[currentOption]);
+
+      const newTabs = canvas.getByRole('tablist');
+      expect(
+        args.onChangeTab,
+        'It is expected that the onChange function has been executed at least once'
+      ).toHaveBeenCalledOnce();
+      expect(
+        newTabs.children[currentOption].children[0].children.length,
+        'It is expected that the selected option has two nodes'
+      ).toBe(2);
+    });
   },
 };

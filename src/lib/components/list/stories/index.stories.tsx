@@ -1,10 +1,12 @@
 import { Meta, StoryObj } from '@storybook/react';
+import { expect, waitFor, within } from '@storybook/test';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { v4 } from 'uuid';
 
 import { ArrowRightIcon } from '../../../../storybook/icons';
 import { ListItem } from '../../list-item';
-import { SwitchButton } from '../../switch';
+import { ToggleButton } from '../../toggle';
 import { List } from '..';
 
 const meta: Meta<typeof List> = {
@@ -32,9 +34,7 @@ export const Normal: Story = {
       <ListItem
         title="List Option B"
         description="Supporting Text"
-        SuffixIcon={
-          <SwitchButton name={'switch'} defaultValue={false} labels="" />
-        }
+        SuffixIcon={<ToggleButton name={'toggle'} defaultValue={false} />}
         key={v4()}
       />,
       <ListItem
@@ -43,5 +43,34 @@ export const Normal: Story = {
         key={v4()}
       />,
     ],
+  },
+  play: async ({ args, canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    const list = canvas.getByRole('list');
+
+    await step('Initial validations in the list', async () => {
+      expect(list, 'Should be rendered').toBeInTheDocument();
+      expect(
+        list.children[0].textContent,
+        'should be the text to be shown in the list'
+      ).toBe(args.title);
+      expect(list.children, 'has only two elements').toHaveLength(2);
+      const listbox = list.children[1];
+      expect(listbox, 'is not visible when the list is not opened').toHaveStyle(
+        'display: none'
+      );
+    });
+
+    await step('List option validations', async () => {
+      await userEvent.click(list);
+      await waitFor(() => {
+        const listbox = canvas.getByRole('listbox');
+        expect(listbox, 'Should be rendered').toBeInTheDocument();
+        expect(
+          listbox.children,
+          `has the same quantity (${args.items.length}) that was passed in args`
+        ).toHaveLength(args.items.length);
+      });
+    });
   },
 };

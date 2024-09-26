@@ -1,26 +1,33 @@
 import { StylinComponentProps } from '@stylin.js/react';
-import { ProgressHTMLAttributes } from 'react';
+
+import { BoxProps } from '../../elements';
 
 export type ProgressVariants = 'bar' | 'circle' | 'loading';
 
-export type ProgressElementProps = Omit<
-  ProgressHTMLAttributes<HTMLProgressElement>,
-  'color' | 'translate' | 'content'
->;
+export type ProgressStatus =
+  | 'success'
+  | 'warning'
+  | 'primary'
+  | 'normal'
+  | 'error';
 
 export interface ProgressItemProps
-  extends StylinComponentProps,
-    ProgressElementProps {
+  extends Omit<StylinComponentProps, 'height'>,
+    Omit<BoxProps, 'variant' | 'height'> {
   size?: number;
   value: number;
+  isRounded?: boolean;
+  noAnimation?: boolean;
+  status?: ProgressStatus;
+  variant?: ProgressVariants;
 }
 
 export interface ProgressIndicatorProps
   extends Omit<ProgressItemProps, 'value'> {
-  variant: ProgressVariants;
   value?: number;
 }
 
 export interface CirclePathProps {
+  id: string;
   size: number;
 }

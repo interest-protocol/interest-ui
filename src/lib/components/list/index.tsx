@@ -10,15 +10,17 @@ export const List: FC<PropsWithChildren<ListProps>> = ({ title, items }) => {
 
   return (
     <Box
+      role="list"
+      width="max-content"
       onMouseEnter={() => setOpenList(true)}
       onMouseLeave={() => setOpenList(false)}
-      width={['100%', '100%', '22.5rem', '22.5rem']}
     >
       <ListItem
         title={title}
         SuffixIcon={
           <Motion
             display="flex"
+            role="listitem"
             width="0.313rem"
             height="0.626rem"
             color="onSurface"
@@ -39,6 +41,7 @@ export const List: FC<PropsWithChildren<ListProps>> = ({ title, items }) => {
       />
       <Motion
         width="100%"
+        role="listbox"
         initial={{ display: 'none' }}
         transition={{ duration: 0.05 }}
         animate={{ display: openList ? 'block' : 'none' }}

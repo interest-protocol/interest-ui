@@ -1,7 +1,8 @@
 import { ReactNode } from 'react';
 
-export interface TooltipProps {
+import { MotionProps } from '../../elements';
+
+export interface TooltipProps extends MotionProps {
   tooltipContent: string | ReactNode;
-  arrowPosition?: 'top' | 'bottom' | 'left' | 'right';
   tooltipPosition: 'top' | 'bottom' | 'left' | 'right';
 }

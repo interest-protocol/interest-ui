@@ -2,17 +2,25 @@ import { FC } from 'react';
 import React from 'react';
 
 import { SVGProps } from '../../icons/icons.types';
-import { Theme, useTheme } from '../../theme';
 
-export const Checkmark: FC<SVGProps> = ({ maxHeight, maxWidth }) => {
-  const { colors } = useTheme() as Theme;
-
+export const Checkmark: FC<SVGProps & { isIndeterminate?: boolean }> = ({
+  maxHeight,
+  maxWidth,
+  isIndeterminate,
+}) => {
   return (
-    <svg width={maxWidth} height={maxHeight} viewBox="0 0 24 24">
-      <path
-        d="M10 16.4L6 12.4L7.4 11L10 13.6L16.6 7L18 8.4L10 16.4Z"
-        fill={colors['primary.onPrimary']}
-      />
+    <svg width={maxWidth} height={maxHeight} viewBox="0 0 16 16">
+      {isIndeterminate ? (
+        <path
+          d="M2.66666 7.33333H13.3333V8.66667H2.66666V7.33333Z"
+          fill="white"
+        />
+      ) : (
+        <path
+          d="M14.2761 4L5.99999 12.2761L1.72385 8L2.66666 7.05719L5.99999 10.3905L13.3333 3.05719L14.2761 4Z"
+          fill="white"
+        />
+      )}
     </svg>
   );
 };

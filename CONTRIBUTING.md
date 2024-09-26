@@ -14,7 +14,7 @@ Feel free to contribute in any way you like, and if you feel comfortable doing s
 
 ## NVM Procedures
 
-You must use the project's node version to run `npm` or `yarn` commands. To switch your node version **we recommend to use the NVM** because of it's flexibility to manage node versions. To install the **NVM**, for windows or linux and mac, you can follow the steps by clicking on this link:
+You must use the project's node version to run `npm` or `yarn` commands. To toggle your node version **we recommend to use the NVM** because of it's flexibility to manage node versions. To install the **NVM**, for windows or linux and mac, you can follow the steps by clicking on this link:
 [NVM installation guide](https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/)
 
 When you done downloading and installing **NVM** in your machine, you can confirm that nvm is installed correctly by running in cmd the following command:

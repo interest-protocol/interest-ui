@@ -1,9 +1,10 @@
 import stylin, { variant } from '@stylin.js/react';
-import { CustomDomComponent, easeInOut, motion } from 'framer-motion';
-import React, { FC, PropsWithChildren } from 'react';
+import { CustomDomComponent, motion } from 'framer-motion';
+import React, { FC, PropsWithChildren, useEffect, useState } from 'react';
 
-import { Box } from '../../elements';
-import { ButtonElementProps, ButtonProps } from './button.types';
+import { Theme, useTheme } from '../../theme';
+import { ButtonElementProps, ButtonProps, NoIconButton } from './button.types';
+import { isIconButton } from './button.utils';
 
 const ButtonElement = stylin<ButtonElementProps>('button')(
   variant({
@@ -16,45 +17,80 @@ const MotionButton = motion(ButtonElement) as CustomDomComponent<ButtonProps>;
 
 export const Button: FC<PropsWithChildren<ButtonProps>> = ({
   children,
-  PrefixIcon,
-  SuffixIcon,
-  size = 'medium',
+  selected,
   ...props
-}) => (
-  <MotionButton
-    {...(props.variant !== 'icon' && {
-      py: size === 'medium' ? ['m', 'xl'] : 'm',
-      px: size === 'medium' ? ['2xl', '3xl'] : 'xl',
-    })}
-    whileTap={{
-      scale: props.disabled ? 1 : 0.97,
-      transition: { duration: 0.005, ease: easeInOut },
-    }}
-    whileHover={{
-      scale: props.disabled ? 1 : 1.05,
-      transition: { duration: 0.005, ease: easeInOut },
-    }}
-    {...props}
-  >
-    {props.variant == 'icon' ? (
-      <Box
-        as="span"
+}) => {
+  const [isFocused, setIsFocused] = useState(selected || false);
+  const { colors } = useTheme() as Theme;
+
+  useEffect(() => {
+    setIsFocused(Boolean(selected));
+  }, [selected]);
+
+  if (isIconButton(props))
+    return (
+      <MotionButton
+        p="xs"
         width="1.5rem"
         height="1.5rem"
         alignItems="center"
-        display="inline-flex"
+        position="relative"
+        display="flex"
+        borderColor={
+          props.variant == 'outline' && isFocused ? 'primary' : 'unset'
+        }
+        color={
+          (props.variant == 'outline' || props.variant == 'tonal') && isFocused
+            ? 'primary'
+            : props.variant == 'filled'
+            ? 'onPrimary'
+            : 'unset'
+        }
         justifyContent="center"
+        onBlur={() => setIsFocused(selected || false)}
+        {...props}
+        onClick={(e) => {
+          !selected && setIsFocused(true);
+          props.onClick?.(e);
+        }}
       >
         {children}
-      </Box>
-    ) : (
-      <>
-        {PrefixIcon}
-        {children}
-        {SuffixIcon}
-      </>
-    )}
-  </MotionButton>
-);
+      </MotionButton>
+    );
+
+  const { SuffixIcon, PrefixIcon } = props as NoIconButton;
+
+  return (
+    <MotionButton
+      py="s"
+      position="relative"
+      pr={SuffixIcon ? 'm' : 'xl'}
+      pl={PrefixIcon ? 'm' : 'xl'}
+      borderColor={
+        props.variant == 'outline' && isFocused ? 'primary' : 'unset'
+      }
+      color={
+        (props.variant == 'outline' || props.variant == 'tonal') && isFocused
+          ? 'primary'
+          : props.variant == 'filled'
+          ? 'onPrimary'
+          : 'unset'
+      }
+      onBlur={() => setIsFocused(selected || false)}
+      {...props}
+      onClick={(e) => {
+        !selected && setIsFocused(true);
+        props.onClick?.(e);
+      }}
+      {...(isFocused && {
+        boxShadow: `0 0 0 0.25rem ${colors.primary}29`,
+      })}
+    >
+      {PrefixIcon}
+      {children}
+      {SuffixIcon}
+    </MotionButton>
+  );
+};
 
 export * from './button.types';

@@ -1,34 +1,38 @@
 import { useTheme } from '@emotion/react';
-import stylin from '@stylin.js/react';
 import React, { FC, PropsWithChildren } from 'react';
 
+import { Box } from '../../elements';
 import { Theme } from '../../theme';
-import {
-  ProgressElementProps,
-  ProgressItemProps,
-} from './progress-indicator.types';
-import { getProgressBarColor } from './progress-indicator.utils';
+import { ProgressItemProps } from './progress-indicator.types';
+import { getProgressColor } from './progress-indicator.utils';
 
-const ProgressBarElement = stylin<ProgressElementProps>('progress')();
-
-export const ProgressBar: FC<PropsWithChildren<ProgressItemProps>> = ({
-  value,
-}) => {
+export const ProgressBar: FC<
+  PropsWithChildren<Omit<ProgressItemProps, 'variant'>>
+> = ({ size = 16, value, status, isRounded, ...props }) => {
   const { colors } = useTheme() as Theme;
+  const CURRENT_VALUE = value > 100 ? 100 : value < 0 ? 0 : value;
 
   return (
-    <ProgressBarElement
-      max="100"
+    <Box
       width="100%"
-      value={value}
-      height="0.25rem"
-      appearance="none"
-      nWebkitProgressBar={{
-        backgroundColor: 'surface.surfaceVariant',
-      }}
-      nWebkitProgressValue={{
-        background: getProgressBarColor(value, colors),
-      }}
-    />
+      height={size}
+      minHeight={16}
+      aria-valuemin={0}
+      role="progressbar"
+      aria-valuemax={100}
+      aria-valuenow={CURRENT_VALUE}
+      borderRadius={isRounded ? '999px' : 'unset'}
+      backgroundColor={`${status == 'normal' ? 'high' : status}Container`}
+      {...props}
+    >
+      <Box
+        minHeight={8}
+        height="100%"
+        width={`${CURRENT_VALUE}%`}
+        minWidth={CURRENT_VALUE ? size : 'unset'}
+        borderRadius={isRounded ? '999px' : 'unset'}
+        background={getProgressColor(colors, status)}
+      />
+    </Box>
   );
 };

@@ -1,34 +1,43 @@
 import { useTheme } from '@emotion/react';
 import React, { FC, useState } from 'react';
 import { getTrackBackground, Range } from 'react-range';
+import { v4 } from 'uuid';
 
 import { Box } from '../../elements';
 import { Theme } from '../../theme';
+import { RangeType } from './range-type';
 import { SliderProps } from './slider.types';
+import { ThumbWrapper } from './thumb-wrapper';
 
 const SliderElement: FC<SliderProps> = ({
   min = 0,
-  step = 1,
+  step,
   onChange,
   max = 100,
   initial = 0,
+  withoutTooltip,
   disabled = false,
+  bottomValue = false,
+  showZeroValue = false,
 }) => {
   const { colors } = useTheme() as Theme;
-  const [value, setValue] = useState(initial);
+  const [values, setValues] = useState(
+    Array.isArray(initial) ? initial : [initial]
+  );
 
-  const handleChange = ([innerValue]: Array<number>) => {
-    setValue(innerValue);
-    onChange?.(innerValue);
+  const handleChange = (innerValue: Array<number>) => {
+    setValues(innerValue);
+    onChange?.(innerValue[0]);
   };
 
   return (
     <Range
       max={max}
       min={min}
-      step={step}
-      values={[value]}
+      step={step || undefined}
+      values={values}
       disabled={disabled}
+      allowOverlap
       onChange={handleChange}
       renderTrack={({ props, children }) => (
         <Box
@@ -42,58 +51,38 @@ const SliderElement: FC<SliderProps> = ({
         >
           <Box
             width="100%"
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
             ref={props.ref}
-            height=".25rem"
+            aria-label="slider-line"
+            height="0.25rem"
             alignSelf="center"
             background={getTrackBackground({
               max: max,
               min: min || 0,
-              values: [value],
-              colors: [`${colors.primary}`, `${colors.primary}1F`],
+              values: values,
+              colors:
+                values.length == 1
+                  ? [`${colors.primary}`, 'rgba(0, 0, 0, 0.08)']
+                  : [
+                      'rgba(0, 0, 0, 0.08)',
+                      `${colors.primary}`,
+                      'rgba(0, 0, 0, 0.08)',
+                    ],
             })}
           >
             {children}
           </Box>
         </Box>
       )}
-      renderThumb={({ props, isDragged }) => (
-        <Box
-          {...props}
-          display="flex"
-          width="1.25rem"
-          height="1.25rem"
-          borderRadius="50%"
-          alignItems="center"
-          justifyContent="center"
-          backgroundColor={!disabled ? 'primary' : 'onSurface'}
-          cursor={disabled ? 'not-allowed !important' : 'pointer'}
-          boxShadow="-0.0313rem .0313rem .125rem .0125rem #0000007f"
-          nHover={
-            !disabled && {
-              boxShadow: `0 0 0 .625rem ${colors.primary}1F, -0.0313rem .0313rem .125rem .0125rem #0000007f`,
-            }
-          }
-        >
-          {isDragged && (
-            <Box
-              display="flex"
-              marginTop="-55px"
-              height="2.125rem"
-              fontSize=".875rem"
-              minWidth="1.75rem"
-              paddingTop=".25rem"
-              paddingBottom=".25rem"
-              justifyContent="center"
-              color="inverseOnSurface"
-              backgroundColor="primary"
-              clipPath="path('M0 2C0 0.89543 0.895431 0 2 0H26C27.1046 0 28 0.89543 28 2V22.5C28 23.1295 27.7036 23.7223 27.2 24.1L14 34L0.8 24.1C0.296388 23.7223 0 23.1295 0 22.5V2Z')"
-            >
-              {value}
-            </Box>
-          )}
-        </Box>
+      renderThumb={({ props }) => (
+        <ThumbWrapper disabled={disabled} thumbDetails={props} key={v4()}>
+          <RangeType
+            disabled={disabled}
+            value={values[props.key]}
+            withoutTooltip={withoutTooltip}
+            bottomValue={bottomValue}
+            showZeroValue={showZeroValue}
+          />
+        </ThumbWrapper>
       )}
     />
   );
