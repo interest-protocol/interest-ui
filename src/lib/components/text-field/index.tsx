@@ -75,7 +75,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
       <Box
         all="inherit"
         opacity={disabled ? 0.32 : 1}
-        cursor={disabled ? 'not-allowed' : 'default'}
+        cursor={disabled ? 'not-allowed' : 'text'}
         aria-label="textfieldHolder"
       >
         {label && (
@@ -131,6 +131,7 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
               fontSize="m"
               lineHeight="m"
               fontWeight="500"
+              autoFocus={focus}
               disabled={disabled}
               onBlur={handleBlur}
               onFocus={handleFocus}
