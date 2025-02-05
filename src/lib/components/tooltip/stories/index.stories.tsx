@@ -50,8 +50,6 @@ const customTooltipContentText = (
 
 export const withImage: Story = {
   args: {
-    border: '1px solid',
-    borderColor: 'outline',
     tooltipPosition: 'left',
     bg: 'rgb(255, 255, 255)',
     children: tooltipChildrenWithImage,
@@ -264,8 +262,6 @@ export const withImage: Story = {
 
 export const WithText: Story = {
   args: {
-    border: '1px solid',
-    borderColor: 'outline',
     tooltipPosition: 'left',
     children: tooltipChildren,
     bg: 'rgb(255, 255, 255)',

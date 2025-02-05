@@ -66,6 +66,7 @@ export const TooltipWrapper: FC<PropsWithChildren<TooltipProps>> = ({
         borderColor={borderColor}
         visibility={toggle ? 'visible' : 'hidden'}
         transition="opacity 0.2s, visibility 0.2s"
+        boxShadow="0 4px 6px rgba(0, 0, 0, 0.1)"
         {...props}
       >
         <Box
