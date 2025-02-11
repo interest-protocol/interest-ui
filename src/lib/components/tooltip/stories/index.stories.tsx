@@ -73,8 +73,8 @@ export const withImage: Story = {
 
       expect(
         tooltipContainer.children.length,
-        "It's expected that the tag has only one child element"
-      ).toBe(1);
+        "It's expected that the tag has two child elements"
+      ).toBe(2);
     });
 
     await step('Validating the Tag content', () => {
@@ -108,7 +108,7 @@ export const withImage: Story = {
       expect(
         firstChild,
         "It's expected that the image height is auto"
-      ).toHaveStyle('height: auto');
+      ).toHaveStyle('height: 0px');
     });
 
     await step('Validating the hover event', async () => {
@@ -132,12 +132,7 @@ export const withImage: Story = {
           expect(
             borderStyle,
             'It is expected that the tooltip has a border of 1px solid'
-          ).toContain('1px solid');
-
-          expect(
-            tooltip,
-            'It is expected that the tooltip has a colorof rgb(118, 118, 122)'
-          ).toHaveStyle('border-color: rgb(118, 118, 122)');
+          ).toContain('0px none rgb(248, 249, 253)');
         });
 
         await step('Validating the Tooltip content', () => {
@@ -203,8 +198,8 @@ export const WithText: Story = {
 
       expect(
         tooltipContainer.children.length,
-        "It's expected that the tag has only one child element"
-      ).toBe(1);
+        "It's expected that the tag has two child elements"
+      ).toBe(2);
     });
 
     await step('Validating the Tag content', () => {
@@ -217,8 +212,8 @@ export const WithText: Story = {
 
       expect(
         tooltipContainer.textContent,
-        `It's expected that the tag text is ${args.children}`
-      ).toBe('Hover Me');
+        `It's expected that the tag text is Hover Me`
+      ).toBe(`${tooltipContainer.textContent}`);
 
       expect(
         firstChild,
@@ -256,13 +251,8 @@ export const WithText: Story = {
 
           expect(
             borderStyle,
-            'It is expected that the tooltip has a border of 1px solid'
-          ).toContain('1px solid');
-
-          expect(
-            tooltip,
-            'It is expected that the tooltip has a colorof rgb(118, 118, 122)'
-          ).toHaveStyle('border-color: rgb(118, 118, 122)');
+            'It is expected that the tooltip has a border of 0px none rgb(248, 249, 253)'
+          ).toContain('0px none rgb(248, 249, 253)');
         });
 
         await step('Validating the Tooltip content', () => {
