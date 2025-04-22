@@ -1,7 +1,7 @@
-import { FC, PropsWithChildren, useState } from 'react';
+import { FC, PropsWithChildren, useEffect, useRef, useState } from 'react';
 import React from 'react';
 
-import { Box, Motion } from '../../elements';
+import { Box } from '../../elements';
 import { TooltipProps } from './tooltip.types';
 
 export const TooltipWrapper: FC<PropsWithChildren<TooltipProps>> = ({
@@ -9,10 +9,35 @@ export const TooltipWrapper: FC<PropsWithChildren<TooltipProps>> = ({
   children,
   borderColor,
   tooltipContent,
-  tooltipPosition,
+  tooltipContentMaxWidth,
   ...props
 }) => {
   const [toggle, setToggle] = useState(false);
+  const tooltipRef = useRef<HTMLDivElement>(null);
+  const cursorPosition = useRef({ x: 0, y: 0 });
+
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    cursorPosition.current = { x: event.clientX, y: event.clientY };
+    updateTooltipPosition();
+  };
+
+  const updateTooltipPosition = () => {
+    if (tooltipRef.current) {
+      tooltipRef.current.style.transform = `translate(${
+        cursorPosition.current.x + 20
+      }px, ${cursorPosition.current.y + 20}px)`;
+    }
+  };
+
+  useEffect(() => {
+    const animate = () => {
+      if (toggle && tooltipRef.current) {
+        updateTooltipPosition();
+      }
+      requestAnimationFrame(animate);
+    };
+    animate();
+  }, [toggle]);
 
   return (
     <Box
@@ -24,136 +49,36 @@ export const TooltipWrapper: FC<PropsWithChildren<TooltipProps>> = ({
       onMouseLeave={() => {
         setToggle(false);
       }}
+      onMouseMove={handleMouseMove}
       aria-label="tooltipContainer"
     >
       {children}
-      {toggle && (
-        <Motion
-          layout
-          initial={{ opacity: 0.2 }}
-          animate={{
-            opacity: 1,
-          }}
-          role="tooltip"
-          border={border}
-          position="absolute"
-          borderRadius=".25rem"
-          borderColor={borderColor}
-          transform={`translate(${
-            tooltipPosition === 'top' || tooltipPosition === 'bottom'
-              ? '-50%'
-              : tooltipPosition === 'left'
-              ? '-115%'
-              : tooltipPosition === 'right'
-              ? '115%'
-              : '0'
-          }, ${
-            tooltipPosition === 'top'
-              ? '-115%'
-              : tooltipPosition === 'bottom'
-              ? '115%'
-              : tooltipPosition === 'left' || tooltipPosition === 'right'
-              ? '-50%'
-              : '0'
-          })`}
-          top={
-            tooltipPosition === 'top'
-              ? '0'
-              : tooltipPosition === 'left' || tooltipPosition === 'right'
-              ? '50%'
-              : 'unset'
-          }
-          left={
-            tooltipPosition === 'left'
-              ? '0'
-              : tooltipPosition === 'top' || tooltipPosition === 'bottom'
-              ? '50%'
-              : 'unset'
-          }
-          right={tooltipPosition === 'right' ? '0' : 'unset'}
-          bottom={tooltipPosition === 'bottom' ? '0' : 'unset'}
-          {...props}
+      <Box
+        top="0"
+        left="0"
+        role="tooltip"
+        border={border}
+        ref={tooltipRef}
+        position="fixed"
+        pointerEvents="none"
+        borderRadius=".25rem"
+        opacity={toggle ? 1 : 0}
+        borderColor={borderColor}
+        visibility={toggle ? 'visible' : 'hidden'}
+        transition="opacity 0.2s, visibility 0.2s"
+        boxShadow="0 4px 6px rgba(0, 0, 0, 0.1)"
+        {...props}
+      >
+        <Box
+          p="0.5rem"
+          textAlign="center"
+          wordBreak="break-all"
+          overflowWrap="break-word"
+          maxWidth={tooltipContentMaxWidth ?? '20rem'}
         >
-          <Box p=".5rem">{tooltipContent}</Box>
-          <Box
-            borderLeft={
-              tooltipPosition === 'bottom' || tooltipPosition === 'right'
-                ? border
-                : 'unset'
-            }
-            borderBottom={
-              tooltipPosition === 'top' || tooltipPosition === 'right'
-                ? border
-                : 'unset'
-            }
-            borderRight={
-              tooltipPosition === 'top' || tooltipPosition === 'left'
-                ? border
-                : 'unset'
-            }
-            borderTop={
-              tooltipPosition === 'bottom' || tooltipPosition === 'left'
-                ? border
-                : 'unset'
-            }
-            borderColor={borderColor}
-            ml={
-              tooltipPosition === 'top' || tooltipPosition === 'bottom'
-                ? '50%'
-                : 'unset'
-            }
-            bg="inherit"
-            width=".375rem"
-            height=".375rem"
-            top={
-              tooltipPosition === 'bottom'
-                ? border
-                  ? '-0.23rem'
-                  : '-0.2rem'
-                : tooltipPosition === 'left' || tooltipPosition === 'right'
-                ? '50%'
-                : 'unset'
-            }
-            left={
-              tooltipPosition === 'right'
-                ? border
-                  ? '-0.23rem'
-                  : '-0.2rem'
-                : 'unset'
-            }
-            right={
-              tooltipPosition === 'left'
-                ? border
-                  ? '-0.23rem'
-                  : '-0.2rem'
-                : 'unset'
-            }
-            bottom={
-              tooltipPosition === 'top'
-                ? border
-                  ? '-0.23rem'
-                  : '-0.2rem'
-                : tooltipPosition === 'left' || tooltipPosition === 'right'
-                ? '50%'
-                : 'unset'
-            }
-            position="absolute"
-            transform={`translate(${
-              tooltipPosition === 'top'
-                ? '-50%'
-                : tooltipPosition === 'left' || tooltipPosition === 'right'
-                ? '0'
-                : '-50%'
-            }, ${
-              tooltipPosition === 'top'
-                ? '0'
-                : tooltipPosition === 'left' || tooltipPosition === 'right'
-                ? '-50%'
-                : '0%'
-            }) rotate(45deg)`}
-          />
-        </Motion>
-      )}
+          {tooltipContent}
+        </Box>
+      </Box>
     </Box>
   );
 };
