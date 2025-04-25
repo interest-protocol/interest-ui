@@ -1,6 +1,6 @@
 # [Interest](https://www.interestprotocol.com/) UI Kit
 
-<img width="50px"height="50px" src="./public/logo.png" />
+<img width="50px" height="50px" src="./public/logo.png" />
 
 Welcome to the UI kit repository used in the [Interest](https://www.interestprotocol.com/) portals, stay up-to-date on everything in an isolated environment.
 
