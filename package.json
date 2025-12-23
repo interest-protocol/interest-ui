@@ -15,6 +15,7 @@
   "homepage": "https://interest-ui.netlify.app/",
   "dependencies": {
     "@emotion/react": "^11.10.6",
+    "@stylin.js/elements": "^1.1.0",
     "@stylin.js/react": "^1.0.1",
     "@types/react-modal": "^3.16.0",
     "framer-motion": "^10.11.2",
