@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
 import React from 'react';
+import { Div } from '@stylin.js/elements';
 
 import { Button } from '..';
 
@@ -25,12 +26,12 @@ type Story = StoryObj<typeof Button>;
 
 export const AllVariants: Story = {
   render: () => (
-    <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+    <Div display="flex" gap="1rem" flexWrap="wrap">
       <Button variant="filled">Filled</Button>
       <Button variant="outline">Outline</Button>
       <Button variant="text">Text</Button>
       <Button variant="tonal">Tonal</Button>
-    </div>
+    </Div>
   ),
 };
 
