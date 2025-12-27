@@ -1,24 +1,14 @@
-import { StylinComponentProps } from '@stylin.js/react';
-import { ButtonHTMLAttributes, ReactNode } from 'react';
+export type TAG_TYPE =
+  | 'curve'
+  | 'stable'
+  | 'earn'
+  | 'success'
+  | 'staked'
+  | 'volatile';
 
-import { TagSizes, TagVariants } from '../../theme/theme.types';
-
-export type TagElementProps = Omit<
-  ButtonHTMLAttributes<HTMLButtonElement>,
-  | 'color'
-  | 'translate'
-  | 'content'
-  | 'onAnimationStart'
-  | 'onDragStart'
-  | 'onDragEnd'
-  | 'onDrag'
->;
-
-export interface TagProps
-  extends Omit<StylinComponentProps, 'transition'>,
-    TagElementProps {
-  size?: TagSizes;
-  onClose?: () => void;
-  PrefixIcon?: ReactNode;
-  variant: TagVariants;
+export interface TagProps {
+  type: TAG_TYPE;
+  label?: string;
+  small?: boolean;
+  onClick?: () => void;
 }

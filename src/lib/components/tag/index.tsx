@@ -1,75 +1,32 @@
-import stylin, { variant } from '@stylin.js/react';
-import { CustomDomComponent, easeInOut, motion } from 'framer-motion';
-import React, { FC, PropsWithChildren } from 'react';
+import React, { FC } from 'react';
+import { v4 } from 'uuid';
 
-import { Box, Typography } from '../../elements';
-import { TimesSVG } from '../../icons';
-import { TagElementProps, TagProps } from './tag.types';
-import { getSizePadding } from './tag.utils';
+import type { TagProps } from './tag.types';
+import { Button } from '../button';
+import { TAG_COLOR } from './tag.data';
 
-const TagElement = stylin<TagElementProps>('button')(
-  variant({
-    scale: 'tags',
-    property: 'variant',
-  })
-);
-
-const MotionTag = motion(TagElement) as CustomDomComponent<TagProps>;
-
-export const Tag: FC<PropsWithChildren<TagProps>> = ({
-  onClose,
-  children,
-  PrefixIcon,
-  size = 'large',
-  onClick,
-  ...props
-}) => (
-  <MotionTag
-    {...(props.variant === 'filled' || props.variant === 'outline'
-      ? {
-          px: getSizePadding(size),
-          py: getSizePadding(size),
-        }
-      : {})}
-    whileTap={{
-      scale: props.disabled ? 1 : 0.97,
-      transition: { duration: 0.005, ease: easeInOut },
-    }}
-    whileHover={{
-      scale: props.disabled ? 1 : 1.05,
-      transition: { duration: 0.005, ease: easeInOut },
-    }}
+const Tag: FC<TagProps> = ({ type, label, small, onClick }) => (
+  <Button
+    key={v4()}
+    px="0.5rem"
+    variant="filled"
+    fontWeight="500"
+    lineHeight="1rem"
     onClick={onClick}
-    {...props}
-    aria-labelledby="tag-title"
+    fontSize="0.75rem"
+    bg={TAG_COLOR[type].bg}
+    textTransform="capitalize"
+    color={TAG_COLOR[type].color}
+    py={small ? '0.05rem' : '0.25rem'}
+    border={`1px solid ${TAG_COLOR[type].bg}`}
+    cursor={onClick ? 'pointer' : 'default'}
+    nHover={{
+      borderColor: TAG_COLOR[type].color,
+      fontWeight: '500',
+    }}
   >
-    {PrefixIcon}
-    <Typography
-      as="p"
-      size={size}
-      variant="body"
-      id="tag-title"
-      pr={!onClose ? '0.625rem' : 'unset'}
-      pl={!PrefixIcon ? '0.625rem' : 'unset'}
-    >
-      {children}
-    </Typography>
-    {onClose && (
-      <Box
-        display="flex"
-        width="1.125rem"
-        height="1.125rem"
-        onClick={(e) => {
-          onClose();
-          e.stopPropagation();
-        }}
-        alignItems="center"
-        justifyContent="center"
-      >
-        <TimesSVG maxWidth="1.125rem" maxHeight="1.125rem" width="100%" />
-      </Box>
-    )}
-  </MotionTag>
+    {label || type}
+  </Button>
 );
 
-export * from './tag.types';
+export default Tag;
