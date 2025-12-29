@@ -9,5 +9,8 @@ export { default as MoneySignSVG } from './money-sign';
 export { default as RadioCircleSVG } from './radio-circle';
 export { default as TickSVG } from './tick';
 export { default as TimesSVG } from './times';
+export { default as FolderSVG } from './folder';
 export { default as TokenSVG } from './token';
 export { default as WarningSVG } from './warning';
+export { default as InfoSVG } from './info';
+export { default as ImageCardSVG } from './image-card';
