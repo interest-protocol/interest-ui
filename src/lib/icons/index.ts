@@ -14,3 +14,4 @@ export { default as TokenSVG } from './token';
 export { default as WarningSVG } from './warning';
 export { default as InfoSVG } from './info';
 export { default as ImageCardSVG } from './image-card';
+export { default as ChevronDownSVG } from './chevron-down';
