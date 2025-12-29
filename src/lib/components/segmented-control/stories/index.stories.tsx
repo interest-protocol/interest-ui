@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import SegmentedControl from '../';
 
 const meta = {
-  title: 'Components/SegmentedControl',
+  title: 'SegmentedControl',
   component: SegmentedControl,
   parameters: {
     layout: 'padded',
