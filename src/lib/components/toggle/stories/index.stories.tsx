@@ -1,1170 +1,374 @@
-import { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, waitFor, within } from '@storybook/test';
-import userEvent from '@testing-library/user-event';
-import React from 'react';
+import type { Meta, StoryObj } from '@storybook/react';
+import { expect, within, waitFor, userEvent } from '@storybook/test';
+import ToggleButton from '../';
 
-import { TickSVG, TimesSVG } from '../../../icons';
-import { ToggleButton } from '..';
-
-const meta: Meta<typeof ToggleButton> = {
+const meta = {
   title: 'Toggle',
   component: ToggleButton,
+  parameters: {
+    layout: 'padded',
+  },
+  tags: ['autodocs'],
   argTypes: {
+    name: {
+      control: 'text',
+      description: 'Input name attribute',
+    },
+    defaultValue: {
+      control: 'boolean',
+      description: 'Initial toggle state',
+    },
     disabled: {
-      defaultValue: false,
-      control: { type: 'boolean' },
+      control: 'boolean',
+      description: 'Whether the toggle is disabled',
+    },
+    labels: {
+      control: 'object',
+      description: 'Label and supporting label text',
     },
   },
-};
+} satisfies Meta<typeof ToggleButton>;
 
 export default meta;
+type Story = StoryObj<typeof meta>;
 
-type Story = StoryObj<typeof ToggleButton>;
-
-export const Normal: Story = {
+export const Default: Story = {
   args: {
-    name: 'toggle',
-    onChange: fn(),
+    name: 'default-toggle',
     defaultValue: false,
+    labels: {
+      label: 'Enable notifications',
+      supportingLabel: 'Receive updates about your account',
+    },
   },
-  play: async ({ canvasElement, args, step }) => {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Basic toggle button in its default inactive state. Displays a label and supporting text to provide context about what the toggle controls.',
+      },
+    },
+  },
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const toggleWrapper = canvas.getByRole('switch');
 
-    await step('Check the structure of the toogle wrapper', async () => {
-      expect(
-        toggleWrapper,
-        'It is expected that the element will be rendered'
-      ).toBeInTheDocument();
-      expect(
-        toggleWrapper,
-        'It is expected that the toggle wrapper has the display property as flex'
-      ).toHaveStyle('display: flex');
-      expect(
-        toggleWrapper,
-        'It is expected that the toggle wrapper has the align-items property as center'
-      ).toHaveStyle('align-items: center');
-      expect(
-        toggleWrapper.childNodes.length,
-        'It is expected that the toggle wrapper has two nodes'
-      ).toBe(2);
-    });
-
-    await step('Check the toogle element', async () => {
-      const toggle = toggleWrapper.children[0];
-      expect(
-        toggle.tagName,
-        'It is expected that the element tag is a Label'
-      ).toBe('LABEL');
-
-      await step('Check the input checkbox', async () => {
-        const toggleInput = toggle.children[0];
+    await step('should render toggle button', async () => {
+      const toggle = canvas.getByTestId('toggle-button');
+      await waitFor(() =>
         expect(
           toggle,
-          'It is expected that the toggle wrapper has the border-radius property as 159984px'
-        ).toHaveStyle('border-top-left-radius: 159984px');
-        expect(
-          toggleInput.tagName,
-          'It is expected that the element tag is a Input'
-        ).toBe('INPUT');
-        expect(
-          toggleInput,
-          'It is expected that the input has the display property as none'
-        ).toHaveStyle('display: none');
-        expect(
-          toggleInput.hasAttribute('type'),
-          'It is expected that the input has a type attribute'
-        ).toBeTruthy();
-        expect(
-          toggleInput.getAttribute('type'),
-          'It is expected that the input has the type attribute as checkbox'
-        ).toBe('checkbox');
-      });
-
-      await step('Check the toogle ui', async () => {
-        const toggleUI = toggle.children[1];
-        const toggleBall = toggleUI.children[0];
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the display property as flex'
-        ).toHaveStyle('display: flex');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the width property as 44px'
-        ).toHaveStyle('width: 44px');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the height property as 27.187px'
-        ).toHaveStyle('height: 27.1875px');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the cursor property as pointer'
-        ).toHaveStyle('cursor: pointer');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the border-radius property as 159984px'
-        ).toHaveStyle('border-top-left-radius: 159984px');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the align-items property as center'
-        ).toHaveStyle('align-items: center');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the background-color property as #1b1b1f3d'
-        ).toHaveStyle('background-color: #1b1b1f3d');
-
-        await step('Check the UI of the toggle ball', async () => {
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the width property as 20px'
-          ).toHaveStyle('width: 20px');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the height property as 20px'
-          ).toHaveStyle('height: 20px');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the border-radius property as 159984px'
-          ).toHaveStyle('border-top-left-radius: 159984px');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the display property as flex'
-          ).toHaveStyle('display: flex');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the align-items property as center'
-          ).toHaveStyle('align-items: center');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the background-color property as #fff'
-          ).toHaveStyle('background-color: #fff');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the transform property'
-          ).toHaveStyle('transform: matrix(1, 0, 0, 1, 4, 0)');
-          expect(
-            toggleBall.childNodes.length,
-            'It is expected that the toggle wrapper has a zero node'
-          ).toBe(0);
-        });
-      });
+          'It is expected that the toggle button is rendered'
+        ).toBeInTheDocument()
+      );
     });
 
-    await step("Check toggle's onChange event", async () => {
-      await userEvent.click(toggleWrapper.children[0]);
-
-      const newToggleWrapper = canvas.getByRole('switch');
-      await waitFor(() => {
+    await step('should render toggle track', async () => {
+      const track = canvas.getByTestId('toggle-track');
+      await waitFor(() =>
         expect(
-          newToggleWrapper.children[0].children[1],
-          'It is expected that the background of the toggle has changed colour'
-        ).toHaveStyle('background-color: #0053DB');
-        expect(
-          newToggleWrapper.children[0].children[1].children[0],
-          'It is expected that the toggle ball will change position'
-        ).toHaveStyle('transform: matrix(1, 0, 0, 1, 20.8, 0)');
-        expect(args.onChange).toHaveBeenCalledOnce();
-      });
+          track,
+          'It is expected that the toggle track is rendered'
+        ).toBeInTheDocument()
+      );
     });
+
+    await step('should render toggle thumb', async () => {
+      const thumb = canvas.getByTestId('toggle-thumb');
+      await waitFor(() =>
+        expect(
+          thumb,
+          'It is expected that the toggle thumb is rendered'
+        ).toBeInTheDocument()
+      );
+    });
+
+    await step('should render label text', async () => {
+      const label = canvas.getByTestId('toggle-label');
+      await waitFor(() =>
+        expect(
+          label,
+          "It is expected that the label displays 'Enable notifications'"
+        ).toHaveTextContent('Enable notifications')
+      );
+    });
+
+    await step('should render supporting label text', async () => {
+      const supportingLabel = canvas.getByTestId('toggle-supporting-label');
+      await waitFor(() =>
+        expect(
+          supportingLabel,
+          "It is expected that the supporting label displays 'Receive updates about your account'"
+        ).toHaveTextContent('Receive updates about your account')
+      );
+    });
+
+    await step('should have inactive state by default', async () => {
+      const track = canvas.getByTestId('toggle-track');
+      await waitFor(() =>
+        expect(
+          track,
+          'It is expected that the track has data-active attribute as false'
+        ).toHaveAttribute('data-active', 'false')
+      );
+    });
+
+    await step(
+      'should apply correct background color when inactive',
+      async () => {
+        const track = canvas.getByTestId('toggle-track');
+        await waitFor(() =>
+          expect(
+            track,
+            'It is expected that the track has background color #E2E2E63D when inactive'
+          ).toHaveStyle({ backgroundColor: '#E2E2E63D' })
+        );
+      }
+    );
   },
 };
 
-export const WithActiveIcon: Story = {
+export const Active: Story = {
   args: {
-    name: 'toggle',
+    name: 'active-toggle',
     defaultValue: true,
-    activeIcon: <TickSVG maxWidth=".875rem" maxHeight=".875rem" width="100%" />,
-    onChange: fn(),
+    labels: {
+      label: 'Dark mode',
+      supportingLabel: 'Use dark theme',
+    },
   },
-  play: async ({ canvasElement, args, step }) => {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Toggle button in its active state. Shows the different styling and color applied when the toggle is turned on.',
+      },
+    },
+  },
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const toggleWrapper = canvas.getByRole('switch');
 
-    await step('Check the structure of the toogle wrapper', async () => {
-      expect(
-        toggleWrapper,
-        'It is expected that the element will be rendered'
-      ).toBeInTheDocument();
-      expect(
-        toggleWrapper,
-        'It is expected that the toggle wrapper has the display property as flex'
-      ).toHaveStyle('display: flex');
-      expect(
-        toggleWrapper,
-        'It is expected that the toggle wrapper has the align-items property as center'
-      ).toHaveStyle('align-items: center');
-      expect(
-        toggleWrapper.childNodes.length,
-        'It is expected that the toggle wrapper has two nodes'
-      ).toBe(2);
-    });
-
-    await step('Check the toogle element', async () => {
-      const toggle = toggleWrapper.children[0];
-      expect(
-        toggle.tagName,
-        'It is expected that the element tag is a Label'
-      ).toBe('LABEL');
-
-      await step('Check the input checkbox', async () => {
-        const toggleInput = toggle.children[0];
+    await step('should render toggle in active state', async () => {
+      const toggle = canvas.getByTestId('toggle-button');
+      await waitFor(() =>
         expect(
           toggle,
-          'It is expected that the toggle wrapper has the border-radius property as 159984px'
-        ).toHaveStyle('border-top-left-radius: 159984px');
-        expect(
-          toggleInput.tagName,
-          'It is expected that the element tag is a Input'
-        ).toBe('INPUT');
-        expect(
-          toggleInput,
-          'It is expected that the input has the display property as none'
-        ).toHaveStyle('display: none');
-        expect(
-          toggleInput.hasAttribute('type'),
-          'It is expected that the input has a type attribute'
-        ).toBeTruthy();
-        expect(
-          toggleInput.getAttribute('type'),
-          'It is expected that the input has the type attribute as checkbox'
-        ).toBe('checkbox');
-      });
-
-      await step('Check the toogle ui', async () => {
-        const toggleUI = toggle.children[1];
-        const toggleBall = toggleUI.children[0];
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the display property as flex'
-        ).toHaveStyle('display: flex');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the width property as 44px'
-        ).toHaveStyle('width: 44px');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the height property as 27.187px'
-        ).toHaveStyle('height: 27.1875px');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the cursor property as pointer'
-        ).toHaveStyle('cursor: pointer');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the border-radius property as 159984px'
-        ).toHaveStyle('border-top-left-radius: 159984px');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the align-items property as center'
-        ).toHaveStyle('align-items: center');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the background-color property as #0053DB'
-        ).toHaveStyle('background-color: #0053DB');
-
-        await step('Check the UI of the toggle ball', async () => {
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the width property as 20px'
-          ).toHaveStyle('width: 20px');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the height property as 20px'
-          ).toHaveStyle('height: 20px');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the border-radius property as 159984px'
-          ).toHaveStyle('border-top-left-radius: 159984px');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the display property as flex'
-          ).toHaveStyle('display: flex');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the align-items property as center'
-          ).toHaveStyle('align-items: center');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the background-color property as #fff'
-          ).toHaveStyle('background-color: #fff');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the transform property'
-          ).toHaveStyle('transform: matrix(1, 0, 0, 1, 20.8, 0)');
-          expect(
-            toggleBall.childNodes.length,
-            'It is expected that the toggle wrapper has a single node'
-          ).toBe(1);
-        });
-      });
+          'It is expected that the toggle is rendered'
+        ).toBeInTheDocument()
+      );
     });
 
-    await step("Check toggle's onChange event", async () => {
-      await userEvent.click(toggleWrapper.children[0]);
+    await step('should have active state', async () => {
+      const track = canvas.getByTestId('toggle-track');
+      await waitFor(() =>
+        expect(
+          track,
+          'It is expected that the track has data-active attribute as true'
+        ).toHaveAttribute('data-active', 'true')
+      );
+    });
 
-      const newToggleWrapper = canvas.getByRole('switch');
-      await waitFor(() => {
+    await step(
+      'should apply correct background color when active',
+      async () => {
+        const track = canvas.getByTestId('toggle-track');
+        await waitFor(() =>
+          expect(
+            track,
+            'It is expected that the track has background color #B4C5FF when active'
+          ).toHaveStyle({ backgroundColor: '#B4C5FF' })
+        );
+      }
+    );
+
+    await step('should display dark mode label', async () => {
+      const label = canvas.getByTestId('toggle-label');
+      await waitFor(() =>
         expect(
-          newToggleWrapper.children[0].children[1],
-          'It is expected that the background of the toggle has changed colour'
-        ).toHaveStyle('background-color: #1b1b1f3d');
-        expect(
-          newToggleWrapper.children[0].children[1].children[0],
-          'It is expected that the toggle ball will change position'
-        ).toHaveStyle('transform: matrix(1, 0, 0, 1, 4, 0)');
-        expect(args.onChange).toHaveBeenCalledOnce();
-      });
+          label,
+          "It is expected that the label displays 'Dark mode'"
+        ).toHaveTextContent('Dark mode')
+      );
     });
   },
 };
 
-export const WithInactiveIcon: Story = {
+export const Disabled: Story = {
   args: {
-    name: 'toggle',
+    name: 'disabled-toggle',
     defaultValue: false,
-    inactiveIcon: (
-      <TimesSVG maxWidth=".875rem" maxHeight=".875rem" width="100%" />
-    ),
-    onChange: fn(),
-  },
-  play: async ({ canvasElement, args, step }) => {
-    const canvas = within(canvasElement);
-    const toggleWrapper = canvas.getByRole('switch');
-
-    await step('Check the structure of the toogle wrapper', async () => {
-      expect(
-        toggleWrapper,
-        'It is expected that the element will be rendered'
-      ).toBeInTheDocument();
-      expect(
-        toggleWrapper,
-        'It is expected that the toggle wrapper has the display property as flex'
-      ).toHaveStyle('display: flex');
-      expect(
-        toggleWrapper,
-        'It is expected that the toggle wrapper has the align-items property as center'
-      ).toHaveStyle('align-items: center');
-      expect(
-        toggleWrapper.childNodes.length,
-        'It is expected that the toggle wrapper has two nodes'
-      ).toBe(2);
-    });
-
-    await step('Check the toogle element', async () => {
-      const toggle = toggleWrapper.children[0];
-      expect(
-        toggle.tagName,
-        'It is expected that the element tag is a Label'
-      ).toBe('LABEL');
-
-      await step('Check the input checkbox', async () => {
-        const toggleInput = toggle.children[0];
-        expect(
-          toggle,
-          'It is expected that the toggle wrapper has the border-radius property as 159984px'
-        ).toHaveStyle('border-top-left-radius: 159984px');
-        expect(
-          toggleInput.tagName,
-          'It is expected that the element tag is a Input'
-        ).toBe('INPUT');
-        expect(
-          toggleInput,
-          'It is expected that the input has the display property as none'
-        ).toHaveStyle('display: none');
-        expect(
-          toggleInput.hasAttribute('type'),
-          'It is expected that the input has a type attribute'
-        ).toBeTruthy();
-        expect(
-          toggleInput.getAttribute('type'),
-          'It is expected that the input has the type attribute as checkbox'
-        ).toBe('checkbox');
-      });
-
-      await step('Check the toogle ui', async () => {
-        const toggleUI = toggle.children[1];
-        const toggleBall = toggleUI.children[0];
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the display property as flex'
-        ).toHaveStyle('display: flex');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the width property as 44px'
-        ).toHaveStyle('width: 44px');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the height property as 27.187px'
-        ).toHaveStyle('height: 27.1875px');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the cursor property as pointer'
-        ).toHaveStyle('cursor: pointer');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the border-radius property as 159984px'
-        ).toHaveStyle('border-top-left-radius: 159984px');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the align-items property as center'
-        ).toHaveStyle('align-items: center');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the background-color property as #1b1b1f3d'
-        ).toHaveStyle('background-color: #1b1b1f3d');
-
-        await step('Check the UI of the toggle ball', async () => {
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the width property as 20px'
-          ).toHaveStyle('width: 20px');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the height property as 20px'
-          ).toHaveStyle('height: 20px');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the border-radius property as 159984px'
-          ).toHaveStyle('border-top-left-radius: 159984px');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the display property as flex'
-          ).toHaveStyle('display: flex');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the align-items property as center'
-          ).toHaveStyle('align-items: center');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the background-color property as #fff'
-          ).toHaveStyle('background-color: #fff');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the transform property'
-          ).toHaveStyle('transform: matrix(1, 0, 0, 1, 4, 0)');
-          expect(
-            toggleBall.childNodes.length,
-            'It is expected that the toggle wrapper has a single node'
-          ).toBe(1);
-        });
-      });
-    });
-
-    await step("Check toggle's onChange event", async () => {
-      await userEvent.click(toggleWrapper.children[0]);
-
-      const newToggleWrapper = canvas.getByRole('switch');
-      await waitFor(() => {
-        expect(
-          newToggleWrapper.children[0].children[1],
-          'It is expected that the background of the toggle has changed colour'
-        ).toHaveStyle('background-color: #0053DB');
-        expect(
-          newToggleWrapper.children[0].children[1].children[0],
-          'It is expected that the toggle ball will change position'
-        ).toHaveStyle('transform: matrix(1, 0, 0, 1, 20.8, 0)');
-        expect(args.onChange).toHaveBeenCalledOnce();
-      });
-    });
-  },
-};
-
-export const WithActiveAndInactiveIcon: Story = {
-  args: {
-    name: 'toggle',
-    defaultValue: false,
-    activeIcon: <TickSVG maxWidth=".875rem" maxHeight=".875rem" width="100%" />,
-    inactiveIcon: (
-      <TimesSVG maxWidth=".875rem" maxHeight=".875rem" width="100%" />
-    ),
-    onChange: fn(),
-  },
-  play: async ({ canvasElement, args, step }) => {
-    const canvas = within(canvasElement);
-    const toggleWrapper = canvas.getByRole('switch');
-
-    await step('Check the structure of the toogle wrapper', async () => {
-      expect(
-        toggleWrapper,
-        'It is expected that the element will be rendered'
-      ).toBeInTheDocument();
-      expect(
-        toggleWrapper,
-        'It is expected that the toggle wrapper has the display property as flex'
-      ).toHaveStyle('display: flex');
-      expect(
-        toggleWrapper,
-        'It is expected that the toggle wrapper has the align-items property as center'
-      ).toHaveStyle('align-items: center');
-      expect(
-        toggleWrapper.childNodes.length,
-        'It is expected that the toggle wrapper has two nodes'
-      ).toBe(2);
-    });
-
-    await step('Check the toogle element', async () => {
-      const toggle = toggleWrapper.children[0];
-      expect(
-        toggle.tagName,
-        'It is expected that the element tag is a Label'
-      ).toBe('LABEL');
-
-      await step('Check the input checkbox', async () => {
-        const toggleInput = toggle.children[0];
-        expect(
-          toggle,
-          'It is expected that the toggle wrapper has the border-radius property as 159984px'
-        ).toHaveStyle('border-top-left-radius: 159984px');
-        expect(
-          toggleInput.tagName,
-          'It is expected that the element tag is a Input'
-        ).toBe('INPUT');
-        expect(
-          toggleInput,
-          'It is expected that the input has the display property as none'
-        ).toHaveStyle('display: none');
-        expect(
-          toggleInput.hasAttribute('type'),
-          'It is expected that the input has a type attribute'
-        ).toBeTruthy();
-        expect(
-          toggleInput.getAttribute('type'),
-          'It is expected that the input has the type attribute as checkbox'
-        ).toBe('checkbox');
-      });
-
-      await step('Check the toogle ui', async () => {
-        const toggleUI = toggle.children[1];
-        const toggleBall = toggleUI.children[0];
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the display property as flex'
-        ).toHaveStyle('display: flex');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the width property as 44px'
-        ).toHaveStyle('width: 44px');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the height property as 27.187px'
-        ).toHaveStyle('height: 27.1875px');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the cursor property as pointer'
-        ).toHaveStyle('cursor: pointer');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the border-radius property as 159984px'
-        ).toHaveStyle('border-top-left-radius: 159984px');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the align-items property as center'
-        ).toHaveStyle('align-items: center');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the background-color property as #1b1b1f3d'
-        ).toHaveStyle('background-color: #1b1b1f3d');
-
-        await step('Check the UI of the toggle ball', async () => {
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the width property as 20px'
-          ).toHaveStyle('width: 20px');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the height property as 20px'
-          ).toHaveStyle('height: 20px');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the border-radius property as 159984px'
-          ).toHaveStyle('border-top-left-radius: 159984px');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the display property as flex'
-          ).toHaveStyle('display: flex');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the align-items property as center'
-          ).toHaveStyle('align-items: center');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the background-color property as #fff'
-          ).toHaveStyle('background-color: #fff');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the transform property'
-          ).toHaveStyle('transform: matrix(1, 0, 0, 1, 4, 0)');
-          expect(
-            toggleBall.childNodes.length,
-            'It is expected that the toggle wrapper has a single node'
-          ).toBe(1);
-        });
-      });
-    });
-
-    await step("Check toggle's onChange event", async () => {
-      await userEvent.click(toggleWrapper.children[0]);
-
-      const newToggleWrapper = canvas.getByRole('switch');
-      await waitFor(() => {
-        expect(
-          newToggleWrapper.children[0].children[1],
-          'It is expected that the background of the toggle has changed colour'
-        ).toHaveStyle('background-color: #0053DB');
-        expect(
-          newToggleWrapper.children[0].children[1].children[0],
-          'It is expected that the toggle ball will change position'
-        ).toHaveStyle('transform: matrix(1, 0, 0, 1, 20.8, 0)');
-        expect(
-          newToggleWrapper.children[0].children[1].children[0].childNodes
-            .length,
-          'It is expected that the toggle ball has a single node'
-        ).toBe(1);
-        expect(args.onChange).toHaveBeenCalledOnce();
-      });
-    });
-  },
-};
-
-export const SelectedDisabled: Story = {
-  args: {
-    name: 'toggle',
     disabled: true,
-    onChange: fn(),
-    defaultValue: true,
+    labels: {
+      label: 'Disabled toggle',
+      supportingLabel: 'This toggle cannot be changed',
+    },
   },
-  play: async ({ canvasElement, args, step }) => {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Toggle button in disabled state. The toggle has reduced opacity and cannot be interacted with, preventing state changes.',
+      },
+    },
+  },
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const toggleWrapper = canvas.getByRole('switch');
 
-    await step('Check the structure of the toogle wrapper', async () => {
-      expect(
-        toggleWrapper,
-        'It is expected that the element will be rendered'
-      ).toBeInTheDocument();
-      expect(
-        toggleWrapper,
-        'It is expected that the toggle wrapper has the display property as flex'
-      ).toHaveStyle('display: flex');
-      expect(
-        toggleWrapper,
-        'It is expected that the toggle wrapper has the align-items property as center'
-      ).toHaveStyle('align-items: center');
-      expect(
-        toggleWrapper.childNodes.length,
-        'It is expected that the toggle wrapper has two nodes'
-      ).toBe(2);
-    });
-
-    await step('Check the toogle element', async () => {
-      const toggle = toggleWrapper.children[0];
-      expect(
-        toggle.tagName,
-        'It is expected that the element tag is a Label'
-      ).toBe('LABEL');
-
-      await step('Check the input checkbox', async () => {
-        const toggleInput = toggle.children[0];
+    await step('should render disabled toggle', async () => {
+      const toggle = canvas.getByTestId('toggle-button');
+      await waitFor(() =>
         expect(
           toggle,
-          'It is expected that the toggle wrapper has the border-radius property as 159984px'
-        ).toHaveStyle('border-top-left-radius: 159984px');
-        expect(
-          toggleInput.tagName,
-          'It is expected that the element tag is a Input'
-        ).toBe('INPUT');
-        expect(
-          toggleInput,
-          'It is expected that the input has the display property as none'
-        ).toHaveStyle('display: none');
-        expect(
-          toggleInput.hasAttribute('type'),
-          'It is expected that the input has a type attribute'
-        ).toBeTruthy();
-        expect(
-          toggleInput.getAttribute('type'),
-          'It is expected that the input has the type attribute as checkbox'
-        ).toBe('checkbox');
-      });
-
-      await step('Check the toogle ui', async () => {
-        const toggleUI = toggle.children[1];
-        const toggleBall = toggleUI.children[0];
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the display property as flex'
-        ).toHaveStyle('display: flex');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the width property as 44px'
-        ).toHaveStyle('width: 44px');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the height property as 27.187px'
-        ).toHaveStyle('height: 27.1875px');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the cursor property as pointer'
-        ).toHaveStyle('cursor: pointer');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the border-radius property as 159984px'
-        ).toHaveStyle('border-top-left-radius: 159984px');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the align-items property as center'
-        ).toHaveStyle('align-items: center');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the background-color property as #1b1b1f3d'
-        ).toHaveStyle('background-color: #1b1b1f3d');
-
-        await step('Check the UI of the toggle ball', async () => {
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the width property as 20px'
-          ).toHaveStyle('width: 20px');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the height property as 20px'
-          ).toHaveStyle('height: 20px');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the border-radius property as 159984px'
-          ).toHaveStyle('border-top-left-radius: 159984px');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the display property as flex'
-          ).toHaveStyle('display: flex');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the align-items property as center'
-          ).toHaveStyle('align-items: center');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the background-color property as #f8f9fd'
-          ).toHaveStyle('background-color: #f8f9fd');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the transform property'
-          ).toHaveStyle('transform: matrix(1, 0, 0, 1, 20.8, 0)');
-          expect(
-            toggleBall.childNodes.length,
-            'It is expected that the toggle wrapper has a zero node'
-          ).toBe(0);
-        });
-      });
+          'It is expected that the disabled toggle is rendered'
+        ).toBeInTheDocument()
+      );
     });
 
-    await step("Check toggle's onChange event", async () => {
-      await userEvent.click(toggleWrapper.children[0]);
+    await step('should have disabled attribute', async () => {
+      const input = canvas.getByTestId('toggle-input');
+      await waitFor(() =>
+        expect(
+          input,
+          'It is expected that the input is disabled'
+        ).toBeDisabled()
+      );
+    });
 
-      const newToggleWrapper = canvas.getByRole('switch');
-      await waitFor(() => {
+    await step('should have reduced opacity', async () => {
+      const track = canvas.getByTestId('toggle-track');
+      await waitFor(() =>
         expect(
-          newToggleWrapper.children[0].children[1],
-          'It is expected that the background of the toggle has changed colour'
-        ).toHaveStyle('background-color: #1b1b1f3d');
+          track,
+          'It is expected that the track has opacity 0.32 when disabled'
+        ).toHaveStyle({ opacity: '0.32' })
+      );
+    });
+
+    await step('should not change state when clicked', async () => {
+      const track = canvas.getByTestId('toggle-track');
+      await userEvent.click(track);
+
+      await waitFor(() =>
         expect(
-          newToggleWrapper.children[0].children[1].children[0],
-          'It is expected that the toggle ball will change position'
-        ).toHaveStyle('transform: matrix(1, 0, 0, 1, 20.8, 0)');
-        expect(args.onChange).toHaveBeenCalledTimes(0);
-      });
+          track,
+          'It is expected that the toggle remains inactive when clicked while disabled'
+        ).toHaveAttribute('data-active', 'false')
+      );
     });
   },
 };
 
-export const SingleLabel: Story = {
+export const Interactive: Story = {
   args: {
-    name: 'toggle',
-    defaultValue: true,
-    labels: { label: 'Toggle Label' },
-    onChange: fn(),
+    name: 'interactive-toggle',
+    defaultValue: false,
+    labels: {
+      label: 'Email notifications',
+      supportingLabel: 'Get email updates',
+    },
   },
-  play: async ({ canvasElement, args, step }) => {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Interactive example demonstrating toggle behavior. The toggle can be clicked multiple times to switch between states with proper visual feedback.',
+      },
+    },
+  },
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const toggleWrapper = canvas.getByRole('switch');
 
-    await step('Check the structure of the toogle wrapper', async () => {
-      expect(
-        toggleWrapper,
-        'It is expected that the element will be rendered'
-      ).toBeInTheDocument();
-      expect(
-        toggleWrapper,
-        'It is expected that the toggle wrapper has the display property as flex'
-      ).toHaveStyle('display: flex');
-      expect(
-        toggleWrapper,
-        'It is expected that the toggle wrapper has the align-items property as center'
-      ).toHaveStyle('align-items: center');
-      expect(
-        toggleWrapper.childNodes.length,
-        'It is expected that the toggle wrapper has two nodes'
-      ).toBe(2);
+    await step('should render toggle in initial state', async () => {
+      const track = canvas.getByTestId('toggle-track');
+      await waitFor(() =>
+        expect(
+          track,
+          'It is expected that the toggle starts with data-active attribute as false'
+        ).toHaveAttribute('data-active', 'false')
+      );
     });
 
-    await step('Check the toogle element', async () => {
-      const toggle = toggleWrapper.children[0];
-      expect(
-        toggle.tagName,
-        'It is expected that the element tag is a Label'
-      ).toBe('LABEL');
+    await step('should toggle state when clicked', async () => {
+      const track = canvas.getByTestId('toggle-track');
+      await userEvent.click(track);
 
-      await step('Check the input checkbox', async () => {
-        const toggleInput = toggle.children[0];
+      await waitFor(() =>
         expect(
-          toggle,
-          'It is expected that the toggle wrapper has the border-radius property as 159984px'
-        ).toHaveStyle('border-top-left-radius: 159984px');
-        expect(
-          toggleInput.tagName,
-          'It is expected that the element tag is a Input'
-        ).toBe('INPUT');
-        expect(
-          toggleInput,
-          'It is expected that the input has the display property as none'
-        ).toHaveStyle('display: none');
-        expect(
-          toggleInput.hasAttribute('type'),
-          'It is expected that the input has a type attribute'
-        ).toBeTruthy();
-        expect(
-          toggleInput.getAttribute('type'),
-          'It is expected that the input has the type attribute as checkbox'
-        ).toBe('checkbox');
-      });
-
-      await step('Check the toogle ui', async () => {
-        const toggleUI = toggle.children[1];
-        const toggleBall = toggleUI.children[0];
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the display property as flex'
-        ).toHaveStyle('display: flex');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the width property as 44px'
-        ).toHaveStyle('width: 44px');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the height property as 27.187px'
-        ).toHaveStyle('height: 27.1875px');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the cursor property as pointer'
-        ).toHaveStyle('cursor: pointer');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the border-radius property as 159984px'
-        ).toHaveStyle('border-top-left-radius: 159984px');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the align-items property as center'
-        ).toHaveStyle('align-items: center');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the background-color property as #0053DB'
-        ).toHaveStyle('background-color: #0053DB');
-
-        await step('Check the UI of the toggle ball', async () => {
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the width property as 20px'
-          ).toHaveStyle('width: 20px');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the height property as 20px'
-          ).toHaveStyle('height: 20px');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the border-radius property as 159984px'
-          ).toHaveStyle('border-top-left-radius: 159984px');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the display property as flex'
-          ).toHaveStyle('display: flex');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the align-items property as center'
-          ).toHaveStyle('align-items: center');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the background-color property as #fff'
-          ).toHaveStyle('background-color: #fff');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the transform property'
-          ).toHaveStyle('transform: matrix(1, 0, 0, 1, 20.8, 0)');
-          expect(
-            toggleBall.childNodes.length,
-            'It is expected that the toggle wrapper has a zero node'
-          ).toBe(0);
-        });
-      });
+          track,
+          'It is expected that the toggle has data-active attribute as true after first click'
+        ).toHaveAttribute('data-active', 'true')
+      );
     });
 
-    await step('Check the labels of the toggle element', async () => {
-      const labelsWrapper = toggleWrapper.children[1];
-      expect(
-        labelsWrapper,
-        'It is expected that the label wrapper has the display property as flex'
-      ).toHaveStyle('display: flex');
-      expect(
-        labelsWrapper,
-        'It is expected that the label wrapper has the flex-direction property as column'
-      ).toHaveStyle('flex-direction: column');
-      expect(
-        labelsWrapper,
-        'It is expected that the label wrapper has the margin-left property as 8px'
-      ).toHaveStyle('margin-left: 8px');
+    await step('should toggle back to inactive state', async () => {
+      const track = canvas.getByTestId('toggle-track');
+      await userEvent.click(track);
 
-      await step('Check the primary label', async () => {
-        const primaryLabel = labelsWrapper.children[0];
+      await waitFor(() =>
         expect(
-          primaryLabel.tagName,
-          'It is expected that the element tag is a P'
-        ).toBe('P');
-        expect(
-          primaryLabel,
-          'It is expected that the primary label has the font-family property as Satoshi'
-        ).toHaveStyle('font-family: Satoshi');
-        expect(
-          primaryLabel,
-          'It is expected that the primary label has the font-weight property as 500'
-        ).toHaveStyle('font-weight: 500');
-        expect(
-          primaryLabel,
-          'It is expected that the primary label has the font-size property as 16px'
-        ).toHaveStyle('font-size: 16px');
-      });
+          track,
+          'It is expected that the toggle has data-active attribute as false after second click'
+        ).toHaveAttribute('data-active', 'false')
+      );
     });
 
-    await step("Check toggle's onChange event", async () => {
-      await userEvent.click(toggleWrapper.children[0]);
+    await step('should apply correct colors during toggle', async () => {
+      const track = canvas.getByTestId('toggle-track');
 
-      const newToggleWrapper = canvas.getByRole('switch');
-      await waitFor(() => {
+      await userEvent.click(track);
+      await waitFor(() =>
         expect(
-          newToggleWrapper.children[0].children[1],
-          'It is expected that the background of the toggle has changed colour'
-        ).toHaveStyle('background-color: #1b1b1f3d');
-        expect(
-          newToggleWrapper.children[0].children[1].children[0],
-          'It is expected that the toggle ball will change position'
-        ).toHaveStyle('transform: matrix(1, 0, 0, 1, 4, 0)');
-        expect(args.onChange).toHaveBeenCalledOnce();
-      });
+          track,
+          'It is expected that the track has background color #B4C5FF when toggled on'
+        ).toHaveStyle({ backgroundColor: '#B4C5FF' })
+      );
     });
   },
 };
 
-export const DoubleLabel: Story = {
+export const NoLabels: Story = {
   args: {
-    name: 'toggle',
-    defaultValue: true,
-    labels: { label: 'Toggle Label', supportingLabel: 'Supporting text' },
-    onChange: fn(),
+    name: 'no-labels-toggle',
+    defaultValue: false,
   },
-  play: async ({ canvasElement, args, step }) => {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Toggle without any labels. Useful when the toggle is used in contexts where the purpose is clear from surrounding content.',
+      },
+    },
+  },
+  play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
-    const toggleWrapper = canvas.getByRole('switch');
 
-    await step('Check the structure of the toogle wrapper', async () => {
-      expect(
-        toggleWrapper,
-        'It is expected that the element will be rendered'
-      ).toBeInTheDocument();
-      expect(
-        toggleWrapper,
-        'It is expected that the toggle wrapper has the display property as flex'
-      ).toHaveStyle('display: flex');
-      expect(
-        toggleWrapper,
-        'It is expected that the toggle wrapper has the align-items property as center'
-      ).toHaveStyle('align-items: center');
-      expect(
-        toggleWrapper.childNodes.length,
-        'It is expected that the toggle wrapper has two nodes'
-      ).toBe(2);
-    });
-
-    await step('Check the toogle element', async () => {
-      const toggle = toggleWrapper.children[0];
-      expect(
-        toggle.tagName,
-        'It is expected that the element tag is a Label'
-      ).toBe('LABEL');
-
-      await step('Check the input checkbox', async () => {
-        const toggleInput = toggle.children[0];
+    await step('should render toggle without labels', async () => {
+      const toggle = canvas.getByTestId('toggle-button');
+      await waitFor(() =>
         expect(
           toggle,
-          'It is expected that the toggle wrapper has the border-radius property as 159984px'
-        ).toHaveStyle('border-top-left-radius: 159984px');
-        expect(
-          toggleInput.tagName,
-          'It is expected that the element tag is a Input'
-        ).toBe('INPUT');
-        expect(
-          toggleInput,
-          'It is expected that the input has the display property as none'
-        ).toHaveStyle('display: none');
-        expect(
-          toggleInput.hasAttribute('type'),
-          'It is expected that the input has a type attribute'
-        ).toBeTruthy();
-        expect(
-          toggleInput.getAttribute('type'),
-          'It is expected that the input has the type attribute as checkbox'
-        ).toBe('checkbox');
-      });
-
-      await step('Check the toogle ui', async () => {
-        const toggleUI = toggle.children[1];
-        const toggleBall = toggleUI.children[0];
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the display property as flex'
-        ).toHaveStyle('display: flex');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the width property as 44px'
-        ).toHaveStyle('width: 44px');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the height property as 27.187px'
-        ).toHaveStyle('height: 27.1875px');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the cursor property as pointer'
-        ).toHaveStyle('cursor: pointer');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the border-radius property as 159984px'
-        ).toHaveStyle('border-top-left-radius: 159984px');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the align-items property as center'
-        ).toHaveStyle('align-items: center');
-        expect(
-          toggleUI,
-          'It is expected that the toggle UI has the background-color property as #0053DB'
-        ).toHaveStyle('background-color: #0053DB');
-
-        await step('Check the UI of the toggle ball', async () => {
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the width property as 20px'
-          ).toHaveStyle('width: 20px');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the height property as 20px'
-          ).toHaveStyle('height: 20px');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the border-radius property as 159984px'
-          ).toHaveStyle('border-top-left-radius: 159984px');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the display property as flex'
-          ).toHaveStyle('display: flex');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the align-items property as center'
-          ).toHaveStyle('align-items: center');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the background-color property as #fff'
-          ).toHaveStyle('background-color: #fff');
-          expect(
-            toggleBall,
-            'It is expected that the toggle ball has the transform property'
-          ).toHaveStyle('transform: matrix(1, 0, 0, 1, 20.8, 0)');
-          expect(
-            toggleBall.childNodes.length,
-            'It is expected that the toggle wrapper has a single node'
-          ).toBe(0);
-        });
-      });
+          'It is expected that the toggle is rendered'
+        ).toBeInTheDocument()
+      );
     });
 
-    await step('Check the labels of the toggle element', async () => {
-      const labelsWrapper = toggleWrapper.children[1];
-      expect(
-        labelsWrapper,
-        'It is expected that the label wrapper has the display property as flex'
-      ).toHaveStyle('display: flex');
-      expect(
-        labelsWrapper,
-        'It is expected that the label wrapper has the flex-direction property as column'
-      ).toHaveStyle('flex-direction: column');
-      expect(
-        labelsWrapper,
-        'It is expected that the label wrapper has the margin-left property as 8px'
-      ).toHaveStyle('margin-left: 8px');
-
-      await step('Check the primary label', async () => {
-        const primaryLabel = labelsWrapper.children[0];
+    await step('should render empty label element', async () => {
+      const label = canvas.getByTestId('toggle-label');
+      await waitFor(() =>
         expect(
-          primaryLabel.tagName,
-          'It is expected that the element tag is a P'
-        ).toBe('P');
-        expect(
-          primaryLabel,
-          'It is expected that the primary label has the font-family property as Satoshi'
-        ).toHaveStyle('font-family: Satoshi');
-        expect(
-          primaryLabel,
-          'It is expected that the primary label has the font-weight property as 500'
-        ).toHaveStyle('font-weight: 500');
-        expect(
-          primaryLabel,
-          'It is expected that the primary label has the font-size property as 16px'
-        ).toHaveStyle('font-size: 16px');
-      });
-
-      await step('Check the supporting label', async () => {
-        const supportingLabel = labelsWrapper.children[1];
-        expect(
-          supportingLabel.tagName,
-          'It is expected that the element tag is a P'
-        ).toBe('P');
-        expect(
-          supportingLabel,
-          'It is expected that the supporting label has the font-family property as Satoshi'
-        ).toHaveStyle('font-family: Satoshi');
-        expect(
-          supportingLabel,
-          'It is expected that the supporting label has the font-weight property as 500'
-        ).toHaveStyle('font-weight: 500');
-        expect(
-          supportingLabel,
-          'It is expected that the supporting label has the font-size property as 12px'
-        ).toHaveStyle('font-size: 12px');
-        expect(
-          supportingLabel,
-          'It is expected that the supporting label has the color property as #1B1B1FB8'
-        ).toHaveStyle('color: #1B1B1FB8');
-      });
+          label,
+          'It is expected that the label element is empty'
+        ).toBeEmptyDOMElement()
+      );
     });
 
-    await step("Check toggle's onChange event", async () => {
-      await userEvent.click(toggleWrapper.children[0]);
-
-      const newToggleWrapper = canvas.getByRole('switch');
-      await waitFor(() => {
+    await step('should render empty supporting label element', async () => {
+      const supportingLabel = canvas.getByTestId('toggle-supporting-label');
+      await waitFor(() =>
         expect(
-          newToggleWrapper.children[0].children[1],
-          'It is expected that the background of the toggle has changed colour'
-        ).toHaveStyle('background-color: #1b1b1f3d');
-        expect(
-          newToggleWrapper.children[0].children[1].children[0],
-          'It is expected that the toggle ball will change position'
-        ).toHaveStyle('transform: matrix(1, 0, 0, 1, 4, 0)');
-        expect(args.onChange).toHaveBeenCalledOnce();
-      });
+          supportingLabel,
+          'It is expected that the supporting label element is empty'
+        ).toBeEmptyDOMElement()
+      );
     });
   },
 };
