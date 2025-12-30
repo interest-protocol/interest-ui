@@ -1,21 +1,12 @@
-import { StylinComponentProps } from '@stylin.js/react';
-import { ButtonHTMLAttributes, ReactNode } from 'react';
+export interface DropdownOptionProps {
+  value: string;
+  label: string;
+}
 
-import { MotionProps } from '../../elements';
-
-export type DropdownButtonElementProps = Omit<
-  ButtonHTMLAttributes<HTMLButtonElement>,
-  'color' | 'translate' | 'height' | 'width' | 'content' | 'onClick'
->;
-
-export interface DropdownButtonProps
-  extends StylinComponentProps,
-    DropdownButtonElementProps {
-  label?: string;
-  title?: string;
-  Icon: ReactNode;
-  disabled?: boolean;
-  selected?: boolean;
-  onClick?: () => void;
-  containerProps?: MotionProps;
+export interface DropdownProps {
+  isRounded?: boolean;
+  defaultIndex?: number;
+  placeholder?: string;
+  onClick?: (value: string) => void;
+  options: ReadonlyArray<DropdownOptionProps>;
 }

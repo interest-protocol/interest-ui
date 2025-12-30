@@ -1,159 +1,139 @@
-import stylin from '@stylin.js/react';
-import React, {
-  FC,
-  forwardRef,
-  PropsWithChildren,
-  PropsWithRef,
-  RefAttributes,
-  useEffect,
-  useId,
-  useState,
-} from 'react';
+import { Div, DivElementProps, P } from '@stylin.js/elements';
+import { not } from 'ramda';
+import React, { FC, useEffect, useRef, useState } from 'react';
+import { v4 } from 'uuid';
 
-import { Box, Motion, Theme, Typography, useTheme } from '../..';
-import { wrapperVariants } from '../../constants/wrapper-variants';
-import useClickOutsideListenerRef from '../../hooks/use-click-outside-listener-ref';
-import { ArrowBottomSecondarySVG } from '../../icons';
-import {
-  DropdownButtonElementProps,
-  DropdownButtonProps,
-} from './dropdown-button.types';
+import { DropdownOptionProps, DropdownProps } from './dropdown-button.types';
+import { CaretDownSVG } from '../../icons';
 
-const DropdownButtonElement = stylin<
-  DropdownButtonElementProps & RefAttributes<unknown>
->('button')();
+const Dropdown: FC<DropdownProps> = ({
+  options,
+  onClick,
+  isRounded,
+  placeholder,
+  defaultIndex,
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [currentOption, setCurrentOption] = useState<
+    DropdownOptionProps | undefined
+  >(defaultIndex ? options[defaultIndex] : undefined);
+  const ref = useRef<DivElementProps>(null);
 
-export const DropdownButton: FC<
-  PropsWithRef<PropsWithChildren<DropdownButtonProps>>
-> = forwardRef(
-  (
-    { label, title, children, Icon, selected, containerProps, ...props },
-    ref
-  ) => {
-    const { colors } = useTheme() as Theme;
-    const [isFocused, setIsFocused] = useState(selected || false);
-    const [isOpen, setIsOpen] = useState(false);
-    const BOX_ID = useId();
+  const handleVolumeFilter = (option: DropdownOptionProps) => {
+    setCurrentOption(option);
+    setIsOpen(not);
+    onClick?.(option.value);
+  };
 
-    useEffect(() => {
-      setIsFocused(Boolean(selected));
-    }, [selected]);
-
-    const closeDropdown = (event: any) => {
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
       if (
-        event?.path?.some((node: any) => node?.id == BOX_ID) ||
-        event?.composedPath()?.some((node: any) => node?.id == BOX_ID)
+        ref.current &&
+        !(ref.current as unknown as HTMLDivElement).contains(
+          event.target as Node
+        )
       )
-        return;
-
-      setIsOpen(false);
+        setIsOpen(false);
     };
 
-    const BoxRef = useClickOutsideListenerRef<HTMLDivElement>(closeDropdown);
+    if (isOpen) document.addEventListener('mousedown', handleClickOutside);
+    else document.removeEventListener('mousedown', handleClickOutside);
 
-    const handleDropdown = () => {
-      setIsOpen(!isOpen);
-      !selected && setIsFocused(true);
-      props.onClick?.();
-    };
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isOpen]);
 
-    return (
-      <Box
-        id={BOX_ID}
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        ref={BoxRef}
-        position="relative"
+  return (
+    <Div ref={ref} position="relative" data-testid="dropdown">
+      <Div
+        px="1rem"
+        py="0.75rem"
+        display="flex"
+        gap="0.75rem"
+        bg="#9CA3AF1A"
+        cursor="pointer"
+        alignItems="center"
+        minWidth="8.375rem"
+        width="fit-content"
+        whiteSpace="nowrap"
+        justifyContent="space-between"
+        border="1px solid #9CA3AF1A"
+        onClick={() => setIsOpen(not)}
+        transition="all 250ms ease-in-out"
+        borderRadius={isRounded ? '9999rem' : '0.75rem'}
+        borderColor={isOpen ? '#B4C5FF' : '#9CA3AF1A'}
+        nHover={{
+          borderColor: '#B4C5FF',
+        }}
+        data-testid="dropdown-toggle"
       >
-        <Box onClick={handleDropdown}>
-          <DropdownButtonElement
-            gap="xs"
-            ref={ref}
-            display="flex"
-            height="2.5rem"
-            cursor="pointer"
-            alignItems="center"
-            bg="lowestContainer"
-            p={label ? 'xs' : '0'}
-            pr={label ? 'm' : '0'}
-            border={isFocused ? '4px solid' : '0'}
-            borderRadius={label ? 'full' : 'xs'}
-            width={label ? 'fit-content' : '2.5rem'}
-            pl={label ? (Icon ? 'xs' : 'm') : 'unset'}
-            justifyContent={label ? 'unset' : 'center'}
-            onBlur={() => setIsFocused(selected || false)}
-            transition="background-color 300ms ease-in-out"
-            borderColor={isFocused ? colors.primary + '14' : 'transparent'}
-            nActive={{ bg: colors.primary + '14', color: colors.onSurface }}
-            nHover={{ bg: !isFocused ? colors.primary + '14' : 'transparent' }}
-            {...props}
-          >
-            {Icon && (
-              <Box
-                display="flex"
-                width="1.5rem"
-                color="onSurface"
-                alignItems="center"
-                justifyContent="center"
-              >
-                {Icon}
-              </Box>
-            )}
-            {label && (
-              <>
-                <Typography variant="label" size="large" color="onSurface">
-                  {label}
-                </Typography>
+        <P
+          fontSize="1rem"
+          fontWeight="400"
+          fontFamily="Satoshi"
+          whiteSpace="nowrap"
+          color={currentOption?.label ? '#fff' : '#6B7280'}
+          data-testid="dropdown-label"
+        >
+          {currentOption?.label || placeholder || 'Select'}
+        </P>
+        <Div
+          width="1rem"
+          display="flex"
+          flexShrink={0}
+          flex="0 0 auto"
+          height="1.25rem"
+          alignItems="center"
+          justifyContent="center"
+          transition="transform 0.3s ease"
+          transform={isOpen ? 'rotate(180deg)' : 'rotate(0deg)'}
+          data-testid="dropdown-caret"
+        >
+          <CaretDownSVG
+            width="100%"
+            maxWidth="1rem"
+            color="#9CA3AF"
+            maxHeight="1.25rem"
+          />
+        </Div>
+      </Div>
 
-                <Box
-                  display="flex"
-                  color="onSurface"
-                  alignItems="center"
-                  width="fit-content"
-                >
-                  <ArrowBottomSecondarySVG
-                    width="100%"
-                    maxWidth="1.5rem"
-                    maxHeight="1.5rem"
-                  />
-                </Box>
-              </>
-            )}
-          </DropdownButtonElement>
-        </Box>
+      {isOpen && (
+        <Div
+          left="0"
+          zIndex="10"
+          width="fill-available"
+          bg="#1F2937"
+          overflow="hidden"
+          position="absolute"
+          borderRadius="0.75rem"
+          top="calc(100% + 0.25rem)"
+          boxShadow="0 4px 12px #00000033"
+          data-testid="dropdown-menu"
+        >
+          {options.map(({ value, label }, index) => (
+            <Div
+              key={v4()}
+              p="0.75rem"
+              cursor="pointer"
+              width="fill-available"
+              fontSize="0.875rem"
+              transition="all 0.2s ease"
+              color={currentOption?.value === value ? '#B4C5FF' : '#E5E7EB'}
+              bg={currentOption?.value === value ? '#374151' : 'transparent'}
+              nHover={{
+                bg: '#4B5563',
+              }}
+              onClick={() => handleVolumeFilter({ label, value })}
+              data-testid={`dropdown-option-${index}`}
+              data-value={value}
+            >
+              {label}
+            </Div>
+          ))}
+        </Div>
+      )}
+    </Div>
+  );
+};
 
-        {isOpen && (
-          <Motion
-            zIndex={4}
-            top="3.5rem"
-            overflow="hidden"
-            initial="closed"
-            width="fit-content"
-            border="1px solid"
-            position="absolute"
-            bg="lowestContainer"
-            aria-label="dropdown"
-            variants={wrapperVariants}
-            borderColor="outlineVariant"
-            animate={isOpen ? 'open' : 'closed'}
-            pointerEvents={isOpen ? 'auto' : 'none'}
-            boxShadow="0px 2px 4px -2px rgba(13, 16, 23, 0.04), 0px 4px 8px -2px rgba(13, 16, 23, 0.12)"
-            {...containerProps}
-          >
-            {title && (
-              <Box p="m" borderBottom="1px solid" borderColor="outlineVariant">
-                <Typography variant="label" size="large" color="onSurface">
-                  {title}
-                </Typography>
-              </Box>
-            )}
-            {children}
-          </Motion>
-        )}
-      </Box>
-    );
-  }
-);
-
-DropdownButton.displayName = 'DropdownButton';
-export * from './dropdown-button.types';
+export default Dropdown;
