@@ -1,69 +1,52 @@
-import { useTheme } from '@emotion/react';
-import { not } from 'ramda';
+import { Div } from '@stylin.js/elements';
 import React, { FC, useState } from 'react';
 
-import { Box, Motion } from '../../elements';
-import { RadioCircleSVG } from '../../icons';
-import { Theme } from '../../theme';
 import { RadioButtonProps } from './radio-button.types';
 
-export const RadioButton: FC<RadioButtonProps> = ({
+const RadioButton: FC<RadioButtonProps> = ({
+  selected,
   onClick,
+  size = '1.25rem',
+  innerSize = '0.625rem',
+  color = '#B4C5FF',
   disabled,
-  defaultValue,
 }) => {
-  const { colors } = useTheme() as Theme;
-  const [selected, setSelected] = useState(defaultValue ?? false);
+  const [currentSelect, setCurrentSelect] = useState(selected);
 
-  const color = colors[selected ? 'primary' : 'onSurface'];
-
-  const variants = {
-    hover: {
-      boxShadow: `${disabled ? 'disabled' : `${color}14`} 0px 0px 0px 0.625rem`,
-    },
-    withoutHover: { boxShadow: 'unset' },
-  };
-
-  const handleChange = () => {
+  const handleClick = () => {
     if (disabled) return;
-    setSelected(not);
-    onClick?.(not(selected));
+
+    setCurrentSelect(!currentSelect);
+    onClick?.();
   };
 
   return (
-    <Box
-      gap="1rem"
+    <Div
+      width={size}
+      height={size}
       display="flex"
-      flexWrap="wrap"
-      onClick={handleChange}
+      borderRadius="50%"
+      alignItems="center"
+      onClick={handleClick}
+      justifyContent="center"
+      border={`2px solid ${disabled ? '#E2E2E63D' : color}`}
+      transition="all 0.15s ease-in-out"
+      bg={currentSelect ? (disabled ? '#E2E2E63D' : color) : 'transparent'}
       cursor={disabled ? 'not-allowed' : 'pointer'}
-      aria-label="radioWrapper"
+      data-testid="radio-button"
+      data-selected={currentSelect}
     >
-      <Motion
-        display="flex"
-        width="1.25rem"
-        height="1.25rem"
-        whileHover="hover"
-        borderRadius="50%"
-        alignItems="center"
-        variants={variants}
-        initial="withoutHover"
-        justifyContent="center"
-        transition={{ duration: 0.5 }}
-        color={disabled ? 'onSurface' : color}
-        opacity={disabled ? '0.32' : '1'}
-        role="radio"
-      >
-        <RadioCircleSVG
-          width="100%"
-          height="100%"
-          maxWidth="1.25rem"
-          maxHeight="1.25rem"
-          isChecked={selected}
+      {currentSelect && (
+        <Div
+          bg="#FFFFFF"
+          width={innerSize}
+          height={innerSize}
+          borderRadius="50%"
+          data-testid="radio-button-inner"
         />
-      </Motion>
-    </Box>
+      )}
+    </Div>
   );
 };
 
-export * from './radio-button.types';
+export default RadioButton;

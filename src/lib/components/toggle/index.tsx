@@ -112,11 +112,9 @@ const ToggleButton: FC<PropsWithChildren<CheckedButtonProps>> = ({
           </Motion>
         </Div>
       </LabelElement>
-      <Div display="flex" ml="0.5rem" flexDirection="column">
+      <Div color="#E2E2E6B8" display="flex" ml="0.5rem" flexDirection="column">
         <Label data-testid="toggle-label">{labels?.label}</Label>
-        <P color={`#E2E2E6B8`} data-testid="toggle-supporting-label">
-          {labels?.supportingLabel}
-        </P>
+        <P data-testid="toggle-supporting-label">{labels?.supportingLabel}</P>
       </Div>
     </Div>
   );
