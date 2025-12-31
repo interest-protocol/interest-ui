@@ -8,6 +8,7 @@ export type TooltipChartProps = TooltipProps<any, any> & {
   payload?: ReadonlyArray<TooltipPayloadProps>;
   labelMap?: Record<string, string>;
 };
+
 interface TooltipPayloadProps {
   value: number;
   name: string | number;
