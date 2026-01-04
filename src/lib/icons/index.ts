@@ -17,3 +17,4 @@ export { default as ImageCardSVG } from './image-card';
 export { default as ChevronDownSVG } from './chevron-down';
 export { default as ExternalLinkSVG } from './external-link';
 export { default as CaretDownSVG } from './caret-down';
+export { default as WrapSVG } from './wrap';
