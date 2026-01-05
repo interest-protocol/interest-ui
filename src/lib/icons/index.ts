@@ -20,3 +20,4 @@ export { default as CaretDownSVG } from './caret-down';
 export { default as ListSVG } from './list';
 export { default as CaretLeftSVG } from './caret-left';
 export { default as CaretRightSVG } from './caret-right';
+export { default as WrapSVG } from './wrap';
