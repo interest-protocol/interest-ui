@@ -3,7 +3,7 @@ import { expect, within, waitFor } from '@storybook/test';
 import PercentageBar from '../index';
 
 const meta = {
-  title: 'PercentageBar',
+  title: 'Interest Protocol/Percentage Bar',
   component: PercentageBar,
   parameters: {
     layout: 'padded',

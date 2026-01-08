@@ -4,7 +4,7 @@ import { Chart } from '..';
 import { CHARTS_DATA } from './charts.data';
 
 const meta: Meta<typeof Chart> = {
-  title: 'Chart',
+  title: 'Interest Protocol/Chart',
   component: Chart,
   argTypes: {
     variant: {

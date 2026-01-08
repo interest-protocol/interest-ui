@@ -3,7 +3,7 @@ import { expect, within, waitFor } from '@storybook/test';
 import CombinedChart from '../index';
 
 const meta = {
-  title: 'CombinedChart',
+  title: 'Interest Protocol/Combined Chart',
   component: CombinedChart,
   parameters: {
     layout: 'padded',

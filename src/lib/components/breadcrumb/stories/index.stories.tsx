@@ -6,7 +6,7 @@ import { Div } from '@stylin.js/elements';
 import Breadcrumb from '../index';
 
 const meta: Meta<typeof Breadcrumb> = {
-  title: 'Breadcrumb',
+  title: 'Interest Protocol/Breadcrumb',
   component: Breadcrumb,
   argTypes: {
     basePage: {

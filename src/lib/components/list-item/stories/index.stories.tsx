@@ -8,7 +8,7 @@ import { RadioButton, ToggleButton } from '../../';
 import { ListItem } from '..';
 
 const meta: Meta<typeof ListItem> = {
-  title: 'ListItem',
+  title: 'Old Elements/List Item',
   component: ListItem,
   argTypes: {
     title: {

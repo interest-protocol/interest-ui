@@ -7,7 +7,7 @@ import CollapseCardInfo from '..';
 import { CollapseCardInfoProps } from '../collapse-card-info.types';
 
 const meta: Meta<typeof CollapseCardInfo> = {
-  title: 'CollapseCardInfo',
+  title: 'Interest Protocol/Collapse Card Info',
   component: CollapseCardInfo,
   argTypes: {
     title: {

@@ -3,7 +3,7 @@ import { expect, within, waitFor } from '@storybook/test';
 import Navbar from '../';
 
 const meta = {
-  title: 'Navbar',
+  title: 'Interest Protocol/Navbar',
   component: Navbar,
   parameters: {
     layout: 'padded',

@@ -4,7 +4,7 @@ import TooltipChart from '../index';
 import { formatMoney } from '../../../../utils';
 
 const meta = {
-  title: 'TooltipChart',
+  title: 'Interest Protocol/Tooltip Chart',
   component: TooltipChart,
   parameters: {
     layout: 'padded',

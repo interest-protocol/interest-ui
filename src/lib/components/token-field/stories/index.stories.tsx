@@ -6,7 +6,7 @@ import { TokenSVG } from '../../../icons';
 import { TokenField } from '..';
 
 const meta: Meta<typeof TokenField> = {
-  title: 'TokenField',
+  title: 'Old Elements/Token Field',
   component: TokenField,
   argTypes: {
     disabled: {

@@ -10,7 +10,7 @@ import { ToggleButton } from '../../toggle';
 import { List } from '..';
 
 const meta: Meta<typeof List> = {
-  title: 'List',
+  title: 'Old Elements/List',
   component: List,
   argTypes: {
     title: {

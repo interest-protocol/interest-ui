@@ -5,7 +5,7 @@ import Tabs from '../index';
 import { Div } from '@stylin.js/elements';
 
 const meta = {
-  title: 'Tabs',
+  title: 'Interest Protocol/Tabs',
   component: Tabs,
   parameters: {
     layout: 'padded',

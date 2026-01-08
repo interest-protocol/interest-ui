@@ -21,3 +21,5 @@ export { default as ListSVG } from './list';
 export { default as CaretLeftSVG } from './caret-left';
 export { default as CaretRightSVG } from './caret-right';
 export { default as WrapSVG } from './wrap';
+export { default as NoSearchSVG } from './no-search';
+export { default as CaretUpDownSVG } from './caret-up-down';

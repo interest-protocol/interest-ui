@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import SegmentedControl from '../';
 
 const meta = {
-  title: 'SegmentedControl',
+  title: 'Interest Protocol/Segmented Control',
   component: SegmentedControl,
   parameters: {
     layout: 'padded',

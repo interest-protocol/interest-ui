@@ -4,7 +4,7 @@ import { expect, fn, userEvent, within } from '@storybook/test';
 import { Dialog, IDialogButton } from '..';
 
 const meta: Meta<typeof Dialog> = {
-  title: 'Dialog',
+  title: 'Old Elements/Dialog',
   component: Dialog,
   argTypes: {
     title: {

@@ -9,7 +9,7 @@ const mockOptions = [
 ];
 
 const meta = {
-  title: 'Dropdown',
+  title: 'Interest Protocol/Dropdown',
   component: Dropdown,
   parameters: {
     layout: 'padded',
