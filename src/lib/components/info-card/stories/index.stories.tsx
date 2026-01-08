@@ -7,7 +7,7 @@ import { MoneySignSVG } from '../../../icons';
 import { InfoCard } from '..';
 
 const meta: Meta<typeof InfoCard> = {
-  title: 'InfoCard',
+  title: 'Old Elements/Info Card',
   component: InfoCard,
   argTypes: {
     title: {

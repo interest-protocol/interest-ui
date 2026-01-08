@@ -14,7 +14,7 @@ const Tooltip: FC<PropsWithChildren<TooltipProps>> = (args) => {
 };
 
 const meta: Meta<typeof Tooltip> = {
-  title: 'Tooltip',
+  title: 'Old Elements/Tooltip',
   component: Tooltip,
   argTypes: {},
 };

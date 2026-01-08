@@ -68,8 +68,10 @@ export const TextField: FC<PropsWithRef<TextFieldProps>> = forwardRef(
 
     const changeValue = (input: string) => setValue(input);
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
       changeValue(e.target.value);
+      props.onChange?.(e);
+    };
 
     return (
       <Box

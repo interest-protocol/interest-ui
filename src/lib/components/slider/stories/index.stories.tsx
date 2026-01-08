@@ -5,7 +5,7 @@ import { Slider } from '..';
 import { convertREMtoPX } from '../slider.utils';
 
 const meta: Meta<typeof Slider> = {
-  title: 'Slider',
+  title: 'Old Elements/Slider',
   component: Slider,
   argTypes: {
     disabled: {

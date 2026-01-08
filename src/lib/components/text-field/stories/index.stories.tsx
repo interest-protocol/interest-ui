@@ -7,7 +7,7 @@ import { Box } from '../../../elements';
 import { TextField } from '..';
 
 const meta: Meta<typeof TextField> = {
-  title: 'TextField',
+  title: 'Old Elements/TextField',
   component: TextField,
   argTypes: {
     disabled: {

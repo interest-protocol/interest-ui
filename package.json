@@ -15,6 +15,7 @@
   "homepage": "https://interest-ui.netlify.app/",
   "dependencies": {
     "@emotion/react": "^11.10.6",
+    "@stylin.js/elements": "^1.1.0",
     "@stylin.js/react": "^1.0.1",
     "@types/react-modal": "^3.16.0",
     "framer-motion": "^10.11.2",
@@ -57,8 +58,8 @@
     "@types/ramda": "^0.30.2",
     "@types/react": "^18.0.31",
     "@types/uuid": "^9.0.1",
-    "@typescript-eslint/eslint-plugin": "^5.57.0",
-    "@typescript-eslint/parser": "^5.57.0",
+    "@typescript-eslint/eslint-plugin": "^8.50.1",
+    "@typescript-eslint/parser": "^8.50.1",
     "babel-loader": "^8.3.0",
     "babel-plugin-ramda": "^2.1.1",
     "commitlint-config-gitmoji": "^2.3.1",
