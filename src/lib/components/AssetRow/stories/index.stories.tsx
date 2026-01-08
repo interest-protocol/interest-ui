@@ -18,7 +18,7 @@ const mockTokenIcon = (
 );
 
 const meta = {
-  title: 'AssetRow',
+  title: 'Interest Protocol/Asset Row',
   component: AssetRow,
   parameters: {
     layout: 'padded',

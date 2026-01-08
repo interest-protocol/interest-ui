@@ -6,7 +6,7 @@ import { Div } from '@stylin.js/elements';
 import { Button } from '..';
 
 const meta: Meta<typeof Button> = {
-  title: 'Button',
+  title: 'Interest Protocol/Button',
   component: Button,
   argTypes: {
     variant: {

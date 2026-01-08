@@ -6,7 +6,7 @@ import React from 'react';
 import { Div } from '@stylin.js/elements';
 
 const meta = {
-  title: 'Sidebar',
+  title: 'Interest Protocol/Sidebar',
   component: Sidebar,
   parameters: {
     layout: 'padded',

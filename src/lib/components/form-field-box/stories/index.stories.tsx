@@ -5,7 +5,7 @@ import React from 'react';
 import FormFieldBox from '../index';
 
 const meta: Meta<typeof FormFieldBox> = {
-  title: 'Form Field Box',
+  title: 'Interest Protocol/Form Field Box',
   component: FormFieldBox,
   parameters: {
     layout: 'centered',

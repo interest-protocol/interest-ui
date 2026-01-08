@@ -48,7 +48,7 @@ const Modal: FC<ModalProps> = (args) => {
 };
 
 const meta: Meta<typeof Modal> = {
-  title: 'Modal',
+  title: 'Old Elements/Modal',
   component: Modal,
   argTypes: {
     isOpen: {

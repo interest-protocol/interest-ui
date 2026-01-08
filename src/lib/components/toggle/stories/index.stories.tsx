@@ -3,7 +3,7 @@ import { expect, within, waitFor, userEvent } from '@storybook/test';
 import ToggleButton from '../';
 
 const meta = {
-  title: 'Toggle',
+  title: 'Interest Protocol/Toggle',
   component: ToggleButton,
   parameters: {
     layout: 'padded',

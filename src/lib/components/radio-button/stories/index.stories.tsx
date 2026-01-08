@@ -3,7 +3,7 @@ import { expect, within, waitFor } from '@storybook/test';
 import RadioButton from '../index';
 
 const meta = {
-  title: 'Radio Button',
+  title: 'Old Elements/Radio Button',
   component: RadioButton,
   parameters: {
     layout: 'padded',

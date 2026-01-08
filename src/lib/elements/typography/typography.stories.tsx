@@ -4,7 +4,7 @@ import { expect, within } from '@storybook/test';
 import { Typography } from '.';
 
 const meta: Meta<typeof Typography> = {
-  title: 'Typography',
+  title: 'Old Elements/Typography',
   component: Typography,
   argTypes: {
     fontWeight: {

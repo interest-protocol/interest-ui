@@ -7,7 +7,7 @@ import { Div } from '@stylin.js/elements';
 import Tag from '../index';
 
 const meta: Meta<typeof Tag> = {
-  title: 'Tag',
+  title: 'Interest Protocol/Tag',
   component: Tag,
   argTypes: {
     type: {

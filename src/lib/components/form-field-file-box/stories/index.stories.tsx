@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import FormFieldFileBox from '../index';
 
 const meta = {
-  title: 'FormFieldFileBox',
+  title: 'Interest Protocol/Form Field File Box',
   component: FormFieldFileBox,
   parameters: {
     layout: 'centered',

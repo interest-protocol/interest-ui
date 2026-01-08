@@ -4,7 +4,7 @@ import { expect, within } from '@storybook/test';
 import { ProgressIndicator } from '..';
 
 const meta: Meta<typeof ProgressIndicator> = {
-  title: 'Progress Indicator',
+  title: 'Old Elements/Progress Indicator',
   component: ProgressIndicator,
   argTypes: {
     variant: {
